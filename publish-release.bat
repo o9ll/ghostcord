@@ -35,9 +35,7 @@ echo.
 :: ── 1. Mise à jour des versions dans les fichiers ─────────────────────────────
 echo  [1/8] Mise a jour de la version vers %VERSION%...
 
-powershell -NoProfile -Command "(Get-Content 'package.json') -replace '\"version\": \"[^\"]+\"', '\"version\": \"%VERSION%\"' ^| Set-Content 'package.json'"
-
-powershell -NoProfile -Command "(Get-Content 'src\nightcordplugins\nightcordUpdater\index.tsx') -replace 'const CURRENT_VERSION = \"[^\"]+\"', 'const CURRENT_VERSION = \"%VERSION%\"' ^| Set-Content 'src\nightcordplugins\nightcordUpdater\index.tsx'" 2>nul
+powershell -NoProfile -Command "$c = Get-Content -Raw 'package.json'; $c = $c -replace '\"version\": \"[^\"]+\"', '\"version\": \"%VERSION%\"'; [IO.File]::WriteAllText((Resolve-Path 'package.json').Path, $c)"
 
 echo  [1/8] Version mise a jour.
 
@@ -47,7 +45,7 @@ echo  [2/8] Committer et pusher le code source...
 git add .
 git diff --quiet --cached
 if errorlevel 1 (
-    git commit -m "build: release v%VERSION%"
+    git commit -m "build: release v%VERSION% - !NOTES!"
 ) else (
     echo  Aucun changement a committer.
 )
@@ -153,7 +151,7 @@ for /f "usebackq" %%d in (`powershell -NoProfile -Command "Get-Date -Format 'yyy
     echo   "installerUrl": "https://github.com/nightcordoff/nightcord/releases/latest/download/Nightcord-Installer.exe",
     echo   "distUrl": "https://github.com/nightcordoff/nightcord/releases/latest/download/nightcord-dist.zip",
     echo   "downloadUrl": "https://github.com/nightcordoff/nightcord/releases/latest/download/desktop.asar",
-    echo   "changelog": "%NOTES%"
+    echo   "changelog": "!NOTES!"
     echo }
 ) > "%VERSION_JSON%"
 
@@ -177,7 +175,7 @@ gh release create "v%VERSION%" ^
     "%VERSION_JSON%#version.json" ^
     --repo nightcordoff/nightcord ^
     --title "Nightcord v%VERSION%" ^
-    --notes "%NOTES%" ^
+    --notes "!NOTES!" ^
     --latest
 
 if errorlevel 1 (
