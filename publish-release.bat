@@ -6,8 +6,8 @@
 
 setlocal EnableDelayedExpansion
 
-set VERSION=%~1
-set NOTES=%~2
+set "VERSION=%~1"
+set "NOTES=%~2"
 
 if "%VERSION%"=="" (
     echo [ERREUR] Usage: publish-release.bat VERSION "Notes de version"
