@@ -1,22 +1,4 @@
-﻿/*
- * Vencord, a modification for Discord's desktop app
- * Copyright (c) 2022 Vendicated and contributors
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
-
-import "./updater";
+﻿import "./updater";
 import "./ipcPlugins";
 import "./settings";
 
@@ -40,8 +22,6 @@ mkdirSync(USERPLUGINS_DIR, { recursive: true });
 
 registerCspIpcHandlers();
 
-// ── Early start of ghost-server on Nightcord launch ──────────────
-// The server runs in the background from startup to avoid delay on first click
 import * as ghostNative from "../nightcordplugins/ghostClient/native";
 (async () => {
     try {
@@ -78,12 +58,9 @@ function getThemeData(fileName: string) {
     return readFile(safePath, "utf-8");
 }
 
-// ── Native Keyboard & Mouse Simulation (Style Python / PyAutoGUI) ──
-// On regroupe tout dans une seule commande PS pour la performance et la fiabilité
 ipcMain.handle(IpcEvents.WORLD_BOMB_TYPE, async (event, text: string, delay: number = 50) => {
     const { exec } = require("child_process");
 
-    // Echapper les caractères pour PowerShell
     let psScript = `Add-Type -AssemblyName System.Windows.Forms; `;
     for (const char of text) {
         let safeChar = char;
@@ -115,7 +92,7 @@ ipcMain.handle(IpcEvents.WORLD_BOMB_PRESS_BACKSPACE, (event) => {
 
 ipcMain.handle(IpcEvents.WORLD_BOMB_CLICK, (event, x: number, y: number) => {
     const { exec } = require("child_process");
-    // Simulation d'un clic système réel (Win32) aux coordonnées écran
+
     const psCmd = `
         Add-Type -MemberDefinition '[DllImport("user32.dll")] public static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);' -Name "Win32" -Namespace Win32 -PassThru | Out-Null;
         [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point(${x}, ${y});
@@ -125,9 +102,6 @@ ipcMain.handle(IpcEvents.WORLD_BOMB_CLICK, (event, x: number, y: number) => {
     exec(`powershell -Command "Add-Type -AssemblyName System.Windows.Forms; ${psCmd}"`);
 });
 
-// ── Séquence complète WorldBomb — clic auto centre fenêtre + frappe + ENTER ──
-// Utilise -EncodedCommand (base64 UTF-16LE) pour bypasser ExecutionPolicy Restricted
-// sur les PC des utilisateurs sans avoir besoin de créer des fichiers temporaires.
 ipcMain.handle(IpcEvents.WORLD_BOMB_SEQUENCE, async (
     event,
     word: string,
@@ -139,24 +113,20 @@ ipcMain.handle(IpcEvents.WORLD_BOMB_SEQUENCE, async (
     return new Promise<void>((resolve, reject) => {
         const { spawn } = require("child_process");
 
-        // Centre de la fenêtre Discord — dynamique
         const win = BrowserWindow.fromWebContents(event.sender);
         const bounds = win?.getBounds() ?? { x: 0, y: 0, width: 1280, height: 720 };
         const centerX = targetX >= 0 ? targetX : Math.round(bounds.x + bounds.width / 2);
         const centerY = targetY >= 0 ? targetY : Math.round(bounds.y + bounds.height / 2);
 
-        // Récupérer le handle natif (HWND)
         const hWnd = win?.getNativeWindowHandle();
         let hWndStr = "0";
         try {
             if (hWnd && hWnd.length >= 4) {
-                // Sur x64, HWND est un Buffer de 8 bytes en little-endian
-                // On lit comme uint32 les 4 bytes bas (les HWND Windows restent dans 32 bits en pratique)
-                // readUInt32LE est safe pour tous les HWND réels Windows
+
                 const lo = hWnd.readUInt32LE(0);
                 const hi = hWnd.length >= 8 ? hWnd.readUInt32LE(4) : 0;
                 if (hi !== 0) {
-                    // HWND > 32 bits — on construit le nombre via BigInt pour éviter la perte de précision
+
                     hWndStr = (BigInt(hi) * 0x100000000n + BigInt(lo)).toString();
                 } else {
                     hWndStr = lo.toString();
@@ -176,7 +146,6 @@ ipcMain.handle(IpcEvents.WORLD_BOMB_SEQUENCE, async (
         lines.push(`  $sig = '[DllImport("user32.dll")] public static extern void mouse_event(uint a, uint b, uint c, uint d, uint e); [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr h); [DllImport("user32.dll")] public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);'`);
         lines.push(`  Add-Type -MemberDefinition $sig -Name WinAPI -Namespace NC -ErrorAction SilentlyContinue`);
 
-        // Focus Window
         lines.push(`  $handle = [IntPtr]::Zero`);
         lines.push(`  if (${hWndStr} -ne 0) { $handle = [IntPtr]${hWndStr} }`);
         lines.push(`  else {`);
@@ -188,13 +157,11 @@ ipcMain.handle(IpcEvents.WORLD_BOMB_SEQUENCE, async (
         lines.push(`    Start-Sleep -Milliseconds 10`);
         lines.push(`  }`);
 
-        // Click
         lines.push(`  [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point(${centerX}, ${centerY})`);
         lines.push(`  [NC.WinAPI]::mouse_event(2, 0, 0, 0, 0)`);
         lines.push(`  [NC.WinAPI]::mouse_event(4, 0, 0, 0, 0)`);
         lines.push(`  Start-Sleep -Milliseconds 10`);
 
-        // Type each character
         for (const char of word) {
             const minMs = Math.max(10, Math.round(1000 / (lps * 1.5)));
             const maxMs = Math.max(minMs + 1, Math.round(1000 / lps));
@@ -226,7 +193,6 @@ ipcMain.handle(IpcEvents.WORLD_BOMB_SEQUENCE, async (
 
         const psScript = lines.join("\r\n");
 
-        // Encode en UTF-16LE base64 — bypasse ExecutionPolicy sans fichier temporaire
         const utf16buf = Buffer.from(psScript, "utf16le");
         const encoded = utf16buf.toString("base64");
 
@@ -253,7 +219,6 @@ ipcMain.handle(IpcEvents.WORLD_BOMB_SEQUENCE, async (
     });
 });
 
-// ── Global Keyboard Hook (KeyboardSounds) ──
 let globalHookProcess: any = null;
 ipcMain.handle(IpcEvents.KEYBOARD_SOUNDS_START_GLOBAL, (event) => {
     if (globalHookProcess) return;
@@ -360,12 +325,10 @@ ipcMain.handle(IpcEvents.KEYBOARD_SOUNDS_STOP_GLOBAL, () => {
     }
 });
 
-// Retourne la position actuelle du curseur souris (pour calibration du clic du jeu)
 ipcMain.handle(IpcEvents.WORLD_BOMB_GET_CURSOR_POS, () => {
     return screen.getCursorScreenPoint();
 });
 
-// Ouvre la fenêtre externe Stream Proof
 let streamProofWindow: BrowserWindow | null = null;
 ipcMain.handle(IpcEvents.WORLD_BOMB_OPEN_WINDOW, (event, lps: number = 50, humanChance: number = 10, safeMode: boolean = false, theme: string = "", playMode: string = "Normal", noSpace: boolean = false, groqKey: string = "") => {
     if (streamProofWindow) {
@@ -450,7 +413,7 @@ body { margin: 0; padding: 16px; background: transparent; overflow: hidden; font
         "https://raw.githubusercontent.com/hbenbel/French-Dictionary/refs/heads/master/dictionary/dictionary.csv"
     ];
     
-    // Charger le dictionnaire
+
     Promise.all(dictUrls.map(url => fetch(url).then(async res => {
         if (!res.ok) return [];
         if (url.endsWith('.json')) return await res.json();
@@ -467,7 +430,6 @@ body { margin: 0; padding: 16px; background: transparent; overflow: hidden; font
             document.getElementById('status').style.color = "#ef4444";
         });
 
-    // Charger les mots du thème
     if (theme.trim().length > 0) {
         fetch("https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + encodeURIComponent(theme) + "&utf8=&format=json&srlimit=1")
             .then(r => r.json())
@@ -615,7 +577,7 @@ body { margin: 0; padding: 16px; background: transparent; overflow: hidden; font
             }
         }
         
-        // Appelle la séquence (WorldBombSequence) native du main process
+
         ipcRenderer.invoke("WorldBombSequence", bestWord, lps, humanChance)
             .then(() => {
                 document.getElementById('status').innerText = "Prêt !";
@@ -650,7 +612,7 @@ body { margin: 0; padding: 16px; background: transparent; overflow: hidden; font
         writeFileSync(htmlPath, htmlContent, "utf-8");
         streamProofWindow.loadFile(htmlPath);
     } catch (e) {
-        // Fallback to data URL if file writing fails
+
         streamProofWindow.loadURL("data:text/html;charset=utf-8," + encodeURIComponent(htmlContent));
     }
 
@@ -732,7 +694,6 @@ ipcMain.on(IpcEvents.GET_MONACO_THEME, e => {
     e.returnValue = nativeTheme.shouldUseDarkColors ? "vs-dark" : "vs-light";
 });
 
-// ── Screen capture — returns available sources from main process ──
 ipcMain.handle(IpcEvents.GET_DESKTOP_SOURCES, async () => {
     try {
         const sources = await desktopCapturer.getSources({
@@ -768,7 +729,6 @@ ipcMain.handle(IpcEvents.OPEN_MONACO_EDITOR, async () => {
 
     monacoWin.once("closed", () => { monacoWin = null; });
 
-    // Allow loading Monaco from CDN by bypasssing CSP for this window
     monacoWin.webContents.session.webRequest.onHeadersReceived((details, callback) => {
         callback({
             responseHeaders: {
@@ -802,33 +762,32 @@ app.on("before-quit", async event => {
 
 ipcMain.handle(IpcEvents.GET_RENDERER_CSS, () => readFile(RENDERER_CSS_PATH, "utf-8"));
 
-// ── Acrylic / background material (Windows 10/11) ──
 ipcMain.handle(IpcEvents.SET_WINDOW_BACKGROUND_MATERIAL, (event, material: "none" | "acrylic" | "mica" | "tabbed") => {
     const win = BrowserWindow.fromWebContents(event.sender);
     if (!win) return;
     try {
-        // @ts-ignore
+
         const canSetMaterial = typeof win.setBackgroundMaterial === "function";
-        // @ts-ignore
+
         const canSetVibrancy = typeof win.setVibrancy === "function";
 
         if (material === "none") {
             win.setBackgroundColor("#36393f");
             if (canSetMaterial) {
-                // @ts-ignore
+
                 win.setBackgroundMaterial("none");
             }
             if (canSetVibrancy) {
-                // @ts-ignore
+
                 win.setVibrancy(null);
             }
         } else {
             win.setBackgroundColor("#00000000");
             if (canSetMaterial) {
-                // @ts-ignore
+
                 win.setBackgroundMaterial(material);
             } else if (canSetVibrancy) {
-                // @ts-ignore
+
                 win.setVibrancy(material === "acrylic" ? "acrylic" : "under-window");
             }
         }
@@ -837,7 +796,6 @@ ipcMain.handle(IpcEvents.SET_WINDOW_BACKGROUND_MATERIAL, (event, material: "none
     }
 });
 
-// ── SoundCord Player — Thumbnail Toolbar Windows ──
 const THUMBAR_ICONS = {
     prev: "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAY0lEQVR4nGNgGLngPxIgRy+MzUKpI9DFmKhpGAMDGS4kFCQkuZCY8CXKhaREFEEXkhrrOF1ITvJhYMDjQkYooJqByAZT1UCYocQaTFKyIcZQknMKIdeSnfXIiTCiAblJbGAAADXRMBdqfKdTAAAAAElFTkSuQmCC",
     next: "iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAZklEQVR4nOXUMQrAMAxDUbXk/ld2lwoMwbGcein5YxMeylLg7MzMqvcZv93Rpd1RE+jhVpBoFV6CHm4FiSqwDHp4dT6qYIaWFwLA9dYCRhCTn5xBTFqoYkCysAKxcOEONvXlp/CfHp4sPAHr7DkEAAAAAElFTkSuQmCC",
@@ -891,14 +849,8 @@ if (IS_DISCORD_DESKTOP) {
     });
 }
 
-// ── Nightcord Relaunch — redémarre l'app Electron complètement ──
-// VencordNative.nightcord.relaunch() envoie RELAUNCH_APP = "NightcordRelaunchApp"
-// VesktopNative.app.relaunch() envoie aussi RELAUNCH_APP
-// Les boutons "Restart" dans les plugins settings (index.tsx) passent par VencordNative.nightcord.relaunch()
 ipcMain.handle(IpcEvents.RELAUNCH_APP, async () => {
-    // Dans l'architecture Nightcord, app.asar est un dossier (pas un vrai .asar),
-    // donc app.isPackaged retourne false même en .exe packagé.
-    // On utilise TOUJOURS spawn(process.execPath) sur Windows pour garantir le redémarrage.
+
     if (process.platform === "win32") {
         const { spawn } = await import("node:child_process");
         spawn(process.execPath, process.argv.slice(1), {
@@ -912,46 +864,59 @@ ipcMain.handle(IpcEvents.RELAUNCH_APP, async () => {
     app.exit(0);
 });
 
-
-
-// ── Nightcord Updater — downloads a Setup.exe from a URL and runs it ──
 ipcMain.handle(IpcEvents.NIGHTCORD_DOWNLOAD_AND_RUN, async (_, url: string) => {
     const https = require("https");
-    const http = require("http");
     const os = require("os");
     const path = require("path");
     const fs = require("original-fs");
     const { exec } = require("child_process");
 
     const tmpPath = path.join(os.tmpdir(), "NightcordUpdate-Setup.exe");
+    const allowedHosts = new Set([
+        "github.com",
+        "objects.githubusercontent.com",
+        "github-releases.githubusercontent.com"
+    ]);
+    const validateUpdateUrl = (value: string) => {
+        const parsed = new URL(value);
+        if (parsed.protocol !== "https:" || !allowedHosts.has(parsed.hostname)) {
+            throw new Error("Untrusted update URL");
+        }
+        return parsed;
+    };
+    validateUpdateUrl(url);
 
     await new Promise<void>((resolve, reject) => {
-        const file = fs.createWriteStream(tmpPath);
-        const protocol = url.startsWith("https") ? https : http;
 
-        const request = (redirectUrl: string) => {
-            protocol.get(redirectUrl, (res: any) => {
-                // Suit les redirections (GitHub envoie un 302)
+        const resolveRedirects = (redirectUrl: string, maxRedirects = 10) => {
+            if (maxRedirects === 0) { reject(new Error("Too many redirects")); return; }
+            validateUpdateUrl(redirectUrl);
+            https.get(redirectUrl, (res: any) => {
                 if (res.statusCode === 301 || res.statusCode === 302) {
-                    file.close();
-                    return request(res.headers.location);
+                    if (!res.headers.location) { reject(new Error("Missing redirect location")); return; }
+                    res.resume(); // consomme la réponse pour libérer le socket
+                    return resolveRedirects(res.headers.location, maxRedirects - 1);
                 }
                 if (res.statusCode !== 200) {
+                    res.resume();
                     reject(new Error(`HTTP ${res.statusCode}`));
                     return;
                 }
+
+                const file = fs.createWriteStream(tmpPath);
                 res.pipe(file);
                 file.on("finish", () => file.close(() => resolve()));
+                file.on("error", (err: any) => { fs.unlink(tmpPath, () => { }); reject(err); });
+                res.on("error", (err: any) => { fs.unlink(tmpPath, () => { }); reject(err); });
             }).on("error", (err: any) => {
                 fs.unlink(tmpPath, () => { });
                 reject(err);
             });
         };
 
-        request(url);
+        resolveRedirects(url);
     });
 
-    // Lance l'installeur en mode détaché pour qu'il survive à la fermeture de Discord
     const { spawn } = require("child_process");
     const child = spawn(tmpPath, ["/SILENT"], {
         detached: true,
@@ -962,11 +927,10 @@ ipcMain.handle(IpcEvents.NIGHTCORD_DOWNLOAD_AND_RUN, async (_, url: string) => {
     return true;
 });
 
-// ── VB-Audio Virtual Cable — Automatic Detection and Installation ──────────────
 ipcMain.handle(IpcEvents.CHECK_VB_CABLE, async () => {
     if (process.platform !== "win32") return { installed: false };
     const { existsSync } = require("fs");
-    // Chemins standards après installation
+
     const p1 = "C:\\Program Files\\VB\\Cable\\VBCABLE_ControlPanel.exe";
     const p2 = "C:\\Program Files (x86)\\VB\\Cable\\VBCABLE_ControlPanel.exe";
     return { installed: existsSync(p1) || existsSync(p2) };
@@ -984,12 +948,11 @@ ipcMain.handle(IpcEvents.INSTALL_VB_CABLE, async () => {
     const tmpDir = path.join(os.tmpdir(), "Nightcord-VBCable");
     const tmpZip = path.join(os.tmpdir(), "VBCable_Setup.zip");
 
-    // Nettoyage préalable
     try { if (fs.existsSync(tmpDir)) fs.rmSync(tmpDir, { recursive: true, force: true }); } catch { }
     fs.mkdirSync(tmpDir, { recursive: true });
 
     return new Promise((resolve) => {
-        // Commande PowerShell : Téléchargement -> Extraction -> Execution de l'installeur (x64 car Nightcord est x64)
+
         const psCmd = `
             Invoke-WebRequest -Uri "${zipUrl}" -OutFile "${tmpZip}";
             Expand-Archive -Path "${tmpZip}" -DestinationPath "${tmpDir}" -Force;
@@ -1003,7 +966,7 @@ ipcMain.handle(IpcEvents.INSTALL_VB_CABLE, async () => {
             } else {
                 resolve({ success: true });
             }
-            // Nettoyage asynchrone
+
             try { fs.unlinkSync(tmpZip); } catch { }
         });
     });
