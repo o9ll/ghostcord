@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Vencord, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
@@ -25,45 +25,14 @@ import { Notice } from "@components/Notice";
 import { Paragraph } from "@components/Paragraph";
 import { SettingsTab, wrapTab } from "@components/settings/tabs/BaseTab";
 import { Margins } from "@utils/margins";
-import { showToast, Toasts } from "@webpack/common";
 import { React } from "@webpack/common";
 
 function BackupAndRestoreTab() {
-    const [importing, setImporting] = React.useState(false);
-
-    const handleImportPlugins = async (mode: "folder" | "files") => {
-        setImporting(true);
-        try {
-            const res = await VencordNative.nightcord.importPlugins(mode);
-            if (res.canceled) return;
-            if (!res.ok) {
-                showToast("Import failed", Toasts.Type.FAILURE);
-                return;
-            }
-            const count = res.imported.length;
-            const errCount = res.errors?.length ?? 0;
-            if (count > 0) {
-                const rebuildMsg = (res as any).rebuilt
-                    ? " — rebuilding Nightcord, it will restart automatically"
-                    : " — reload Discord to apply";
-                showToast(
-                    `${count} plugin${count > 1 ? "s" : ""} imported${errCount > 0 ? ` (${errCount} errors)` : ""}${rebuildMsg}`,
-                    Toasts.Type.SUCCESS
-                );
-            } else if (errCount > 0) {
-                showToast(`Import failed: ${res.errors![0]}`, Toasts.Type.FAILURE);
-            }
-        } catch (e: any) {
-            showToast(`Error: ${e?.message ?? String(e)}`, Toasts.Type.FAILURE);
-        } finally {
-            setImporting(false);
-        }
-    };
     return (
         <SettingsTab>
             <Heading className={Margins.top16}>Backup & Restore</Heading>
             <Paragraph className={Margins.bottom20}>
-                Import and export your Equicord settings as a JSON file. This allows you to easily transfer your settings to another device, or recover them after reinstalling Equicord or Discord.
+                Import and export your Nightcord settings as a JSON file. This allows you to easily transfer your settings to another device, or recover them after reinstalling Nightcord or Discord.
             </Paragraph>
 
             <Notice.Warning className={Margins.bottom20}>
@@ -74,54 +43,29 @@ function BackupAndRestoreTab() {
                 Importing a settings file will overwrite your current settings. Make sure to export a backup first if you want to keep your current configuration.
             </Notice.Warning>
 
-            <Heading>What's included in a backup</Heading>
+            <Heading>What is included in a backup</Heading>
             <Paragraph className={Margins.bottom20}>
-                • Custom QuickCSS<br />
-                • Theme Links<br />
-                • Plugin Settings<br />
-                • DataStore Data
+                Custom QuickCSS, Theme Links, Plugin Settings, DataStore Data
             </Paragraph>
 
             <Divider className={Margins.bottom20} />
 
             <Heading>Import Settings</Heading>
             <Paragraph className={Margins.bottom16}>
-                Select a previously exported settings file to restore your configuration. This will replace all your current settings with the ones from the backup.
+                Select a previously exported settings file to restore your configuration.
             </Paragraph>
 
             <Flex gap="8px" className={Margins.bottom20} style={{ flexWrap: "wrap" }}>
-                <Button
-                    onClick={() => uploadSettingsBackup("all")}
-                    size="small"
-                    variant="secondary"
-                >
+                <Button onClick={() => uploadSettingsBackup("all")} size="small" variant="secondary">
                     Import All Settings
                 </Button>
-                <Button
-                    onClick={() => handleImportPlugins("folder")}
-                    size="small"
-                    disabled={importing}
-                >
-                    {importing ? "Importing..." : "Import Plugin Folder"}
+                <Button onClick={() => uploadSettingsBackup("plugins")} size="small">
+                    Import Plugins Only
                 </Button>
-                <Button
-                    onClick={() => handleImportPlugins("files")}
-                    size="small"
-                    variant="secondary"
-                    disabled={importing}
-                >
-                    {importing ? "Importing..." : "Import Plugin Files (.tsx / .js...)"}
-                </Button>
-                <Button
-                    onClick={() => uploadSettingsBackup("css")}
-                    size="small"
-                >
+                <Button onClick={() => uploadSettingsBackup("css")} size="small">
                     Import QuickCSS
                 </Button>
-                <Button
-                    onClick={() => uploadSettingsBackup("datastore")}
-                    size="small"
-                >
+                <Button onClick={() => uploadSettingsBackup("datastore")} size="small">
                     Import DataStore
                 </Button>
             </Flex>
@@ -130,33 +74,20 @@ function BackupAndRestoreTab() {
 
             <Heading>Export Settings</Heading>
             <Paragraph className={Margins.bottom16}>
-                Download your current settings as a backup file. You can export everything at once, or choose to export only specific parts of your configuration.
+                Download your current settings as a backup file.
             </Paragraph>
 
             <Flex gap="8px" style={{ flexWrap: "wrap" }}>
-                <Button
-                    onClick={() => downloadSettingsBackup("all")}
-                    size="small"
-                    variant="secondary"
-                >
+                <Button onClick={() => downloadSettingsBackup("all")} size="small" variant="secondary">
                     Export All Settings
                 </Button>
-                <Button
-                    onClick={() => downloadSettingsBackup("plugins")}
-                    size="small"
-                >
+                <Button onClick={() => downloadSettingsBackup("plugins")} size="small">
                     Export Plugins
                 </Button>
-                <Button
-                    onClick={() => downloadSettingsBackup("css")}
-                    size="small"
-                >
+                <Button onClick={() => downloadSettingsBackup("css")} size="small">
                     Export QuickCSS
                 </Button>
-                <Button
-                    onClick={() => downloadSettingsBackup("datastore")}
-                    size="small"
-                >
+                <Button onClick={() => downloadSettingsBackup("datastore")} size="small">
                     Export DataStore
                 </Button>
             </Flex>
