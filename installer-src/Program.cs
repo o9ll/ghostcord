@@ -76,22 +76,36 @@ namespace NightcordInstaller
                 env = await CoreWebView2Environment.CreateAsync(null, userDataFolder);
                 await _webView.EnsureCoreWebView2Async(env);
             }
-            catch (Exception ex) when (
-                ex is System.Runtime.InteropServices.COMException ||
-                ex.HResult == unchecked((int)0x80070002) ||
-                ex.Message.Contains("WebView2") ||
-                ex.Message.Contains("0x80070002")
-            )
+            catch (Exception ex)
             {
-                // WebView2 Runtime not installed on this machine
-                MessageBox.Show(
-                    "Microsoft Edge WebView2 Runtime is required to run the Nightcord Installer but was not found on your system.\n\n" +
-                    "Please download and install it from:\nhttps://aka.ms/webview2\n\n" +
-                    "After installing, restart the Nightcord Installer.",
-                    "WebView2 Runtime Required",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                bool isWebView2Missing = ex is System.Runtime.InteropServices.COMException ||
+                                         ex.HResult == unchecked((int)0x80070002) ||
+                                         ex.Message.IndexOf("webview2", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                                         ex.Message.Contains("0x80070002") ||
+                                         ex.GetType().Name.Contains("WebView2");
+
+                if (isWebView2Missing)
+                {
+                    MessageBox.Show(
+                        "Microsoft Edge WebView2 Runtime is required to run the Nightcord Installer but was not found on your system.\n\n" +
+                        "Please download and install it from:\nhttps://aka.ms/webview2\n\n" +
+                        "After installing, restart the Nightcord Installer.",
+                        "WebView2 Runtime Required",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Failed to initialize the installer GUI:\n\n" + ex.Message + "\n\n" +
+                        "Please ensure the Microsoft Edge WebView2 Runtime is installed.\n" +
+                        "You can download it from:\nhttps://aka.ms/webview2",
+                        "Initialization Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
                 Application.Exit();
                 return;
             }
