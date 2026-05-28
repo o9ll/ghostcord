@@ -35,7 +35,7 @@ echo.
 :: ── 1. Mise à jour des versions dans les fichiers ─────────────────────────────
 echo  [1/8] Mise a jour de la version vers %VERSION%...
 
-powershell -NoProfile -Command "$c = Get-Content -Raw 'package.json'; $c = $c -replace '\"version\": \"[^\"]+\"', '\"version\": \"%VERSION%\"'; [IO.File]::WriteAllText((Resolve-Path 'package.json').Path, $c)"
+node -e "const fs = require('fs'); const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8')); pkg.version = '%VERSION%'; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 4) + '\n', 'utf8');"
 
 echo  [1/8] Version mise a jour.
 
