@@ -8,7 +8,7 @@
 [![Discord](https://img.shields.io/badge/Discord-Join%20us-5865F2?logo=discord\&logoColor=white)](https://discord.gg/nightcord)
 [![License](https://img.shields.io/badge/license-GPL%20v3-a855f7)](./LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows-3b82f6.svg?logo=windows\&logoColor=white)](https://git.nightcord.su/nightcord/nightcord)
-[![Website](https://img.shields.io/badge/website-nightcord.online-5865F2?logo=googlechrome\&logoColor=white)](https://nightcord.online)
+[![Website](https://img.shields.io/badge/website-nightcord.su-5865F2?logo=googlechrome\&logoColor=white)](https://nightcord.su)
 
 ---
 
