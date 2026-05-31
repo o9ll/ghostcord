@@ -1,56 +1,37 @@
 import {progress, status} from "../stores/installation";
 import {remote} from "electron";
-import {promises as fs, createWriteStream} from "fs";
+import {promises as fs} from "fs";
+import {createWriteStream} from "fs";
 import path from "path";
 import phin from "phin";
 import https from "https";
 import {execSync} from "child_process";
-
+import {killDiscord, startDiscord} from "./utils/kill";
 import {log, lognewline} from "./utils/log";
-import succeed from "./utils/succeed";
-import fail from "./utils/fail";
-import exists from "./utils/exists";
-import reset from "./utils/reset";
-import kill from "./utils/kill";
-import {showRestartNotice} from "./utils/notices";
-import doSanityCheck from "./utils/sanity";
 
-const MAKE_DIR_PROGRESS = 10;
+const MAKE_DIR_PROGRESS = 5;
 const FETCH_RELEASE_PROGRESS = 15;
 const DOWNLOAD_PACKAGE_PROGRESS = 75;
 const EXTRACTION_PROGRESS = 90;
 const INJECT_SHIM_PROGRESS = 98;
 const RESTART_DISCORD_PROGRESS = 100;
 
+
 const RELEASE_API = "https://git.nightcord.su/api/v1/repos/nightcord/nightcord/releases/latest";
 const DIST_ZIP = "nightcord-dist.zip";
-const PRE_INJECTION_WAIT_MS = 2000;
-
 const distDir = path.join(process.env.LOCALAPPDATA, "Nightcord", "dist");
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+const safeExists = async (p) => {
+    try { await fs.access(p); return true; } catch { return false; }
+};
 
-function getResourcesPath(discordCorePath) {
-    let current = discordCorePath;
-    for (let i = 0; i < 5; i++) {
-        const resources = path.join(current, "resources");
-        if (fs.exists ? fs.existsSync(resources) : true) {
-            // Check if resources exists or if we can see app.asar in current
-            if (path.basename(current) === "resources" || (fs.existsSync && fs.existsSync(path.join(current, "app.asar")))) {
-                return current;
-            }
-            if (fs.existsSync && fs.existsSync(resources)) {
-                return resources;
-            }
-        }
-        const parent = path.dirname(current);
-        if (parent === current) break;
-        current = parent;
-    }
-    return path.join(discordCorePath, "..", "..", "..", "resources");
-}
+const safeStat = async (p) => {
+    try { return await fs.stat(p); } catch { return null; }
+};
+
+const safeDelete = async (p) => {
+    try { await fs.unlink(p); } catch {}
+};
 
 async function copyDirectory(src, dest) {
     await fs.mkdir(dest, { recursive: true });
@@ -75,13 +56,13 @@ async function cleanModulePatches(resourcesPath) {
         ];
 
         for (const modulesDir of modulesSearchPaths) {
-            if (!(await exists(modulesDir))) continue;
+            if (!(await safeExists(modulesDir))) continue;
 
             const dirs = await fs.readdir(modulesDir);
             for (const d of dirs) {
                 if (!d.startsWith("discord_desktop_core")) continue;
                 const corePath = path.join(modulesDir, d, "discord_desktop_core");
-                if (!(await exists(corePath))) continue;
+                if (!(await safeExists(corePath))) continue;
 
                 const patchedFiles = [
                     path.join(corePath, "index.js"),
@@ -90,7 +71,7 @@ async function cleanModulePatches(resourcesPath) {
                 ];
 
                 for (const pf of patchedFiles) {
-                    if (!(await exists(pf))) continue;
+                    if (!(await safeExists(pf))) continue;
                     const content = await fs.readFile(pf, "utf-8");
                     const isPatched = content.toLowerCase().includes("vencord") ||
                                       content.toLowerCase().includes("equicord") ||
@@ -105,7 +86,7 @@ async function cleanModulePatches(resourcesPath) {
                     let restored = false;
                     for (const ext of backupExts) {
                         const bk = pf + ext;
-                        if (await exists(bk)) {
+                        if (await safeExists(bk)) {
                             await fs.copyFile(bk, pf);
                             await fs.unlink(bk);
                             restored = true;
@@ -113,34 +94,34 @@ async function cleanModulePatches(resourcesPath) {
                         }
                     }
                     if (!restored) {
-                        await fs.unlink(pf).catch(() => {});
+                        await safeDelete(pf);
                     }
                 }
 
                 const innerAppDir = path.join(corePath, "app");
-                if (await exists(innerAppDir)) {
+                if (await safeExists(innerAppDir)) {
                     const innerPkg = path.join(innerAppDir, "package.json");
-                    if (await exists(innerPkg)) {
+                    if (await safeExists(innerPkg)) {
                         const pkgContent = await fs.readFile(innerPkg, "utf-8");
                         const isMod = pkgContent.toLowerCase().includes("vencord") ||
                                       pkgContent.toLowerCase().includes("equicord") ||
                                       pkgContent.toLowerCase().includes("openasar");
                         if (isMod) {
-                            await fs.rmdir(innerAppDir, { recursive: true }).catch(() => {});
+                            try { await fs.rm(innerAppDir, { recursive: true, force: true }); } catch {}
                         }
                     }
                 }
             }
         }
     } catch (err) {
-        log(`⚠️ Clean module warning: ${err.message}`);
+        log(`[Nightcord] CleanModulePatches warning: ${err.message}`);
     }
 }
 
 function downloadFileAsync(url, destPath, onProgress) {
     return new Promise((resolve, reject) => {
         const file = createWriteStream(destPath);
-        https.get(url, { headers: { "User-Agent": "Nightcord-Installer/3.0" } }, (response) => {
+        https.get(url, { headers: { "User-Agent": "Nightcord-Installer/3.0" }, rejectUnauthorized: false }, (response) => {
             if (response.statusCode === 302 || response.statusCode === 301) {
                 file.close();
                 downloadFileAsync(response.headers.location, destPath, onProgress).then(resolve).catch(reject);
@@ -170,7 +151,7 @@ function downloadFileAsync(url, destPath, onProgress) {
             });
         }).on("error", (err) => {
             file.close();
-            fs.unlink(destPath).catch(() => {});
+            safeDelete(destPath);
             reject(err);
         });
     });
@@ -180,6 +161,7 @@ const getJSON = phin.defaults({
     method: "GET",
     parse: "json",
     followRedirects: true,
+    core: { rejectUnauthorized: false },
     headers: { "User-Agent": "Nightcord-Installer/3.0", "Accept": "application/json" }
 });
 
@@ -225,21 +207,14 @@ async function downloadDist() {
 
     lognewline("Extracting package...");
     try {
-        try {
-            await fs.rmdir(distDir, { recursive: true });
-        } catch {
-            try {
-                await fs.rm ? await fs.rm(distDir, { recursive: true, force: true }) : null;
-            } catch {}
-        }
+        try { await fs.rm(distDir, { recursive: true, force: true }); } catch {}
         await fs.mkdir(distDir, { recursive: true });
         
-        // Native Windows Powershell Extraction
         execSync(`powershell.exe -NoProfile -Command "Expand-Archive -Path '${tmpZip}' -DestinationPath '${distDir}' -Force"`);
         log("✅ Package extracted successfully");
         progress.set(EXTRACTION_PROGRESS);
         
-        try { await fs.unlink(tmpZip); } catch {}
+        await safeDelete(tmpZip);
     }
     catch (error) {
         log("❌ Failed to extract package");
@@ -248,63 +223,10 @@ async function downloadDist() {
     }
 }
 
-async function injectShims(paths) {
-    const progressPerLoop = (INJECT_SHIM_PROGRESS - progress.value) / paths.length;
-    for (const discordPath of paths) {
-        log(`Injecting into Discord at: ${discordPath}`);
-        try {
-            const resourcesPath = getResourcesPath(discordPath);
-            const appDir = path.join(resourcesPath, "app");
-            const backup = path.join(resourcesPath, "_app.asar");
-            const appAsar = path.join(resourcesPath, "app.asar");
-            const appBase = path.dirname(resourcesPath);
-
-            log("1. Removing existing mod injection...");
-            if (await exists(appDir)) {
-                await fs.rmdir(appDir, { recursive: true });
-            }
-
-            if (await exists(appAsar)) {
-                const stats = await fs.stat(appAsar);
-                if (stats.size < 2000000) {
-                    await fs.unlink(appAsar);
-                }
-            }
-
-            const thirdPartyBackups = ["_app.asar", "original_app.asar", "app.asar.bak"];
-            for (const bkName of thirdPartyBackups) {
-                const bkPath = path.join(resourcesPath, bkName);
-                if (await exists(bkPath)) {
-                    const stats = await fs.stat(bkPath);
-                    if (stats.size > 2000000) {
-                        if (!(await exists(appAsar))) {
-                            await fs.copyFile(bkPath, appAsar);
-                            log(`Restored original app.asar from backup: ${bkName}`);
-                        }
-                        break;
-                    }
-                }
-            }
-
-            log("2. Cleaning up other client mod traces...");
-            await cleanModulePatches(resourcesPath);
-
-            log("3. Configuring Nightcord loader...");
-            if (!(await exists(appAsar)) && !(await exists(backup))) {
-                throw new Error("Critical error: no valid app.asar found. Please reinstall Discord.");
-            }
-
-            if (await exists(appAsar)) {
-                if (await exists(backup)) await fs.unlink(backup);
-                await fs.rename(appAsar, backup);
-            }
-
-            log("4. Creating app loader directory...");
-            await fs.mkdir(appDir, { recursive: true });
-            await fs.writeFile(path.join(appDir, "package.json"), JSON.stringify({ name: "nightcord", main: "index.js" }));
-
-            const patcher = path.join(distDir, "patcher.js").replace(/\\/g, "/");
-            const loaderCode = `// Nightcord Injector
+async function writeLoader(appDir) {
+    const patcher = path.join(distDir, "patcher.js").replace(/\\/g, "/");
+    await fs.writeFile(path.join(appDir, "package.json"), JSON.stringify({ name: "nightcord", main: "index.js" }));
+    const loaderCode = `// Nightcord Injector
 "use strict";
 const fs = require('fs');
 const path = require('path');
@@ -316,100 +238,145 @@ const patcherPath = fs.existsSync(primary) ? primary : fs.existsSync(fallback) ?
 if (!fs.existsSync(patcherPath)) throw new Error('[Nightcord] patcher.js not found. Expected at: ' + primary);
 require(patcherPath);
 `;
-            await fs.writeFile(path.join(appDir, "index.js"), loaderCode);
+    await fs.writeFile(path.join(appDir, "index.js"), loaderCode);
+}
 
-            log("5. Copying extra binaries (ffmpeg, node)...");
-            const filesToCopy = ["ffmpeg.exe", "ffmpeg.dll", "node.exe", "yt-dlp.exe"];
-            for (const f of filesToCopy) {
-                const src = path.join(distDir, f);
-                if (await exists(src)) {
-                    await fs.copyFile(src, path.join(appBase, f));
+async function copyAssetsToDiscord(resPath) {
+    log("Copying binaries...");
+    const appBase = path.dirname(resPath);
+
+    const filesToCopy = ["ffmpeg.exe", "ffmpeg.dll", "node.exe", "yt-dlp.exe"];
+    for (const f of filesToCopy) {
+        const src = path.join(distDir, f);
+        if (await safeExists(src)) {
+            await fs.copyFile(src, path.join(appBase, f));
+        }
+    }
+
+    log("Copying directories...");
+    const dirsToCopy = ["mac", "multi-instance-icons", "modules", "ghost-server"];
+    for (const d of dirsToCopy) {
+        const src = path.join(distDir, d);
+        if (await safeExists(src)) {
+            await copyDirectory(src, path.join(appBase, d));
+        }
+    }
+
+    log("Patching build info...");
+    const buildInfoPath = path.join(resPath, "build_info.json");
+    if (await safeExists(buildInfoPath)) {
+        try {
+            const content = await fs.readFile(buildInfoPath, "utf-8");
+            if (!content.includes('"localModulesRoot"')) {
+                const idx = content.lastIndexOf('}');
+                if (idx !== -1) {
+                    const patched = content.substring(0, idx) + ',\n  "localModulesRoot": "modules"\n' + content.substring(idx);
+                    await fs.writeFile(buildInfoPath, patched);
                 }
             }
+        }
+        catch (err) {
+            log(`⚠️ build_info patch error: ${err.message}`);
+        }
+    }
+}
 
-            log("6. Copying assets directories...");
-            const dirsToCopy = ["mac", "multi-instance-icons", "modules", "ghost-server"];
-            for (const d of dirsToCopy) {
-                const src = path.join(distDir, d);
-                if (await exists(src)) {
-                    await copyDirectory(src, path.join(appBase, d));
-                }
+async function injectShims(paths) {
+    process.noAsar = true;
+    const progressPerLoop = (INJECT_SHIM_PROGRESS - progress.value) / paths.length;
+    for (const resPath of paths) { // Now receives resources path from paths.js
+        log(`Injecting into Discord at: ${resPath}`);
+        try {
+            const appDir = path.join(resPath, "app");
+            const backup = path.join(resPath, "_app.asar");
+            const appAsar = path.join(resPath, "app.asar");
+
+            log("Closing Discord...");
+            killDiscord(resPath, log);
+
+            log("1. Removing previous mod injection (Vencord / Equicord / OpenAsar)...");
+            if (await safeExists(appDir)) {
+                try { await fs.rm(appDir, { recursive: true, force: true }); } catch {}
             }
 
-            log("7. Patching build_info.json...");
-            const buildInfoPath = path.join(resourcesPath, "build_info.json");
-            if (await exists(buildInfoPath)) {
-                try {
-                    const content = await fs.readFile(buildInfoPath, "utf-8");
-                    if (!content.includes('"localModulesRoot"')) {
-                        const idx = content.lastIndexOf('}');
-                        if (idx !== -1) {
-                            const patched = content.substring(0, idx) + ',\n  "localModulesRoot": "modules"\n' + content.substring(idx);
-                            await fs.writeFile(buildInfoPath, patched);
-                        }
+            const asarStat = await safeStat(appAsar);
+            if (asarStat && asarStat.size < 2000000) {
+                await safeDelete(appAsar);
+            }
+
+            const thirdPartyBackups = ["_app.asar", "original_app.asar", "app.asar.bak"];
+            for (const bkName of thirdPartyBackups) {
+                const bkPath = path.join(resPath, bkName);
+                const bkStat = await safeStat(bkPath);
+                if (bkStat && bkStat.size > 2000000) {
+                    const curStat = await safeStat(appAsar);
+                    if (!curStat || curStat.size < 2000000) {
+                        if (await safeExists(appAsar)) await safeDelete(appAsar);
+                        await fs.copyFile(bkPath, appAsar);
                     }
-                }
-                catch (err) {
-                    log(`⚠️ build_info patch error: ${err.message}`);
+                    break;
                 }
             }
+
+            await cleanModulePatches(resPath);
+
+            log("2. Configuring Nightcord loader...");
+            if (!(await safeExists(appAsar)) && !(await safeExists(backup))) {
+                throw new Error("Critical error: no valid app.asar found. Please reinstall Discord from discord.com/download and try again.");
+            }
+
+            if (await safeExists(appAsar)) {
+                if (await safeExists(backup)) await safeDelete(backup);
+                await fs.rename(appAsar, backup); // Rename is atomic!
+            }
+
+            log("3. Creating app directory...");
+            await fs.mkdir(appDir, { recursive: true });
+            await writeLoader(appDir);
+            await copyAssetsToDiscord(resPath);
+
+            log("4. Starting Discord...");
+            startDiscord(resPath);
 
             log("✅ Injection successful!");
             progress.set(progress.value + progressPerLoop);
         }
         catch (err) {
-            log(`❌ Could not inject into ${discordPath}`);
+            log(`❌ Could not inject into ${resPath}`);
             log(`❌ ${err.message}`);
             return err;
         }
     }
 }
 
-export default async function(config) {
-    await reset();
-    const sane = doSanityCheck(config);
-    if (!sane) return fail();
-
-    const channels = Object.keys(config);
-    const paths = Object.values(config);
-
-    lognewline("Creating required directories...");
+export default async function(paths) {
     try {
-        await fs.mkdir(path.dirname(distDir), { recursive: true });
-        progress.set(MAKE_DIR_PROGRESS);
+        log("Starting Install...");
+        lognewline("Creating required directories...");
+        const localAppData = process.env.LOCALAPPDATA;
+        if (!localAppData) throw new Error("LOCALAPPDATA environment variable is missing.");
+        await fs.mkdir(path.join(localAppData, "Nightcord"), { recursive: true });
         log("✅ Local AppData directory prepared");
-    }
-    catch (err) {
-        log(`❌ Failed to create local directory: ${distDir}`);
+        progress.set(MAKE_DIR_PROGRESS);
+        lognewline("Downloading Nightcord package...");
+        const distLocal = path.join(__dirname, "dist", "patcher.js");
+        const hasLocalDist = await safeExists(distLocal);
+        if (hasLocalDist) {
+            log("✅ Using local dist folder");
+        } else {
+            await downloadDist();
+        }
+
+        lognewline("Injecting Nightcord shims...");
+        const err = await injectShims(Object.values(paths));
+        if (err) return false;
+
+        progress.set(RESTART_DISCORD_PROGRESS);
+        lognewline("Install complete!");
+        return true;
+    } catch (err) {
+        lognewline("❌ Installation failed");
         log(`❌ ${err.message}`);
-        return fail();
+        return false;
     }
-
-    lognewline("Downloading Nightcord package...");
-    try {
-        await downloadDist();
-    }
-    catch (err) {
-        return fail();
-    }
-
-    lognewline("Killing Discord...");
-    const stopErr = await kill(channels, 0, false);
-    if (stopErr) return fail();
-
-    log(`Waiting ${PRE_INJECTION_WAIT_MS / 1000} seconds for file locks to clear...`);
-    await sleep(PRE_INJECTION_WAIT_MS);
-
-    lognewline("Injecting Nightcord shims...");
-    const injectErr = await injectShims(paths);
-    if (injectErr) return fail();
-    progress.set(INJECT_SHIM_PROGRESS);
-
-    lognewline("Restarting Discord...");
-    const restartErr = await kill(channels, (RESTART_DISCORD_PROGRESS - progress.value) / channels.length);
-    if (restartErr) showRestartNotice(); 
-    else log("✅ Discord restarted");
-    progress.set(RESTART_DISCORD_PROGRESS);
-
-    succeed();
 }

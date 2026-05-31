@@ -1,143 +1,116 @@
+import {progress, status} from "../stores/installation";
 import {promises as fs} from "fs";
 import path from "path";
-
-import {progress} from "../stores/installation";
-
+import {killDiscord, startDiscord} from "./utils/kill";
 import {log, lognewline} from "./utils/log";
-import succeed from "./utils/succeed";
-import fail from "./utils/fail";
-import exists from "./utils/exists";
-import reset from "./utils/reset";
-import kill from "./utils/kill";
-import {showRestartNotice} from "./utils/notices";
-import doSanityCheck from "./utils/sanity";
 
 const DELETE_SHIM_PROGRESS = 85;
 const RESTART_DISCORD_PROGRESS = 100;
 
-function getResourcesPath(discordCorePath) {
-    let current = discordCorePath;
-    for (let i = 0; i < 5; i++) {
-        const resources = path.join(current, "resources");
-        if (fs.exists ? fs.existsSync(resources) : true) {
-            if (path.basename(current) === "resources" || (fs.existsSync && fs.existsSync(path.join(current, "app.asar")))) {
-                return current;
-            }
-            if (fs.existsSync && fs.existsSync(resources)) {
-                return resources;
-            }
-        }
-        const parent = path.dirname(current);
-        if (parent === current) break;
-        current = parent;
-    }
-    return path.join(discordCorePath, "..", "..", "..", "resources");
-}
+const safeExists = async (p) => {
+    try { await fs.access(p); return true; } catch { return false; }
+};
+
+const safeStat = async (p) => {
+    try { return await fs.stat(p); } catch { return null; }
+};
+
+const safeDelete = async (p) => {
+    try { await fs.unlink(p); } catch {}
+};
 
 async function deleteShims(paths) {
+    process.noAsar = true;
     const progressPerLoop = (DELETE_SHIM_PROGRESS - progress.value) / paths.length;
-    for (const discordPath of paths) {
-        log(`Removing Nightcord from: ${discordPath}`);
+    for (const resPath of paths) { // Receiving resources path from paths.js
+        log(`Removing Nightcord from: ${resPath}`);
         try {
-            const resourcesPath = getResourcesPath(discordPath);
-            const appDir = path.join(resourcesPath, "app");
-            const backup = path.join(resourcesPath, "_app.asar");
-            const appAsar = path.join(resourcesPath, "app.asar");
-            const appBase = path.dirname(resourcesPath);
+            const appDir = path.join(resPath, "app");
+            const backup = path.join(resPath, "_app.asar");
+            const appAsar = path.join(resPath, "app.asar");
 
-            log("1. Removing loader directory...");
-            if (await exists(appDir)) {
-                const pkgPath = path.join(appDir, "package.json");
-                if (await exists(pkgPath)) {
-                    const pkgContent = await fs.readFile(pkgPath, "utf-8");
-                    if (pkgContent.includes('"nightcord"')) {
-                        await fs.rmdir(appDir, { recursive: true });
-                        log("✅ App loader directory deleted");
+            log("Closing Discord...");
+            killDiscord(resPath, log);
+
+            log("1. Removing injected folder...");
+            if (await safeExists(appDir)) {
+                const pkg = path.join(appDir, "package.json");
+                if (await safeExists(pkg)) {
+                    const content = await fs.readFile(pkg, "utf-8");
+                    if (content.includes('"nightcord"')) {
+                        try { await fs.rm(appDir, { recursive: true, force: true }); } catch {}
                     }
                 }
             }
 
-            log("2. Restoring original app.asar...");
-            if (await exists(appAsar)) {
-                const stats = await fs.stat(appAsar);
-                if (stats.size < 1000000) {
-                    await fs.unlink(appAsar);
-                }
+            log("2. Restoring original files...");
+            const asarStat = await safeStat(appAsar);
+            if (asarStat && asarStat.size < 1000000) {
+                await safeDelete(appAsar);
             }
 
-            if (await exists(backup)) {
-                if (!(await exists(appAsar))) {
-                    await fs.rename(backup, appAsar);
-                    log("✅ Original app.asar restored from backup");
+            if (await safeExists(backup)) {
+                if (!(await safeExists(appAsar))) {
+                    await fs.rename(backup, appAsar); // Atomic rename!
                 } else {
-                    await fs.unlink(backup);
-                    log("✅ Backup _app.asar removed (original already active)");
+                    await safeDelete(backup);
                 }
             }
 
-            log("3. Restoring build_info.json...");
-            const buildInfoPath = path.join(resourcesPath, "build_info.json");
-            if (await exists(buildInfoPath)) {
+            log("3. Cleaning up assets...");
+            const appBase = path.dirname(resPath);
+            
+            const buildInfoPath = path.join(resPath, "build_info.json");
+            if (await safeExists(buildInfoPath)) {
                 try {
-                    let content = await fs.readFile(buildInfoPath, "utf-8");
-                    if (content.includes('"localModulesRoot"')) {
-                        content = content.replace(/,\s*"localModulesRoot"\s*:\s*"modules"\s*/g, "");
-                        await fs.writeFile(buildInfoPath, content);
-                        log("✅ Removed localModulesRoot from build_info.json");
+                    let json = await fs.readFile(buildInfoPath, "utf-8");
+                    if (json.includes('"localModulesRoot"')) {
+                        json = json.replace(/,\s*"localModulesRoot"\s*:\s*"modules"\s*/, "");
+                        await fs.writeFile(buildInfoPath, json);
                     }
-                }
-                catch (err) {
-                    log(`⚠️ build_info patch removal error: ${err.message}`);
-                }
+                } catch {}
             }
 
-            log("4. Cleaning copied binaries...");
-            const filesToClean = ["node.exe", "yt-dlp.exe", "ffmpeg.exe", "ffmpeg.dll"];
+            const filesToClean = ["node.exe", "yt-dlp.exe", "ffmpeg.exe"];
             for (const f of filesToClean) {
-                const p = path.join(appBase, f);
-                if (await exists(p)) {
-                    await fs.unlink(p);
+                await safeDelete(path.join(appBase, f));
+            }
+
+            const dirsToClean = ["mac", "multi-instance-icons", "ghost-server"];
+            for (const dir of dirsToClean) {
+                const p = path.join(appBase, dir);
+                if (await safeExists(p)) {
+                    try { await fs.rm(p, { recursive: true, force: true }); } catch {}
                 }
             }
 
-            log("5. Cleaning asset directories...");
-            const dirsToClean = ["mac", "multi-instance-icons", "ghost-server", "modules"];
-            for (const d of dirsToClean) {
-                const p = path.join(appBase, d);
-                if (await exists(p)) {
-                    await fs.rmdir(p, { recursive: true });
-                }
-            }
+            log("4. Restarting Discord...");
+            startDiscord(resPath);
 
-            log("✅ Uninjection complete!");
+            log("✅ Uninstallation successful!");
             progress.set(progress.value + progressPerLoop);
-        }
-        catch (err) {
-            log(`❌ Could not remove Nightcord from ${discordPath}`);
+        } catch (err) {
+            log(`❌ Could not remove Nightcord from ${resPath}`);
             log(`❌ ${err.message}`);
             return err;
         }
     }
 }
 
-export default async function(config) {
-    await reset();
-    const sane = doSanityCheck(config);
-    if (!sane) return fail();
+export default async function(paths) {
+    try {
+        log("Starting Uninstall...");
+        lognewline("Deleting Nightcord loader and restoring files...");
+        
+        const err = await deleteShims(Object.values(paths));
+        if (err) return false;
 
-    const channels = Object.keys(config);
-    const paths = Object.values(config);
-
-    lognewline("Deleting Nightcord loader and restoring files...");
-    const deleteErr = await deleteShims(paths);
-    if (deleteErr) return fail();
-    progress.set(DELETE_SHIM_PROGRESS);
-
-    lognewline("Killing Discord...");
-    const killErr = await kill(channels, (RESTART_DISCORD_PROGRESS - progress.value) / channels.length);
-    if (killErr) showRestartNotice(); 
-    else log("✅ Discord restarted");
-    progress.set(RESTART_DISCORD_PROGRESS);
-
-    succeed();
+        progress.set(RESTART_DISCORD_PROGRESS);
+        lognewline("Uninstall complete!");
+        return true;
+    } catch (err) {
+        lognewline("❌ Uninstallation failed");
+        log(`❌ ${err.message}`);
+        return false;
+    }
 }

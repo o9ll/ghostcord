@@ -1,92 +1,71 @@
-import {execFile} from "child_process";
-import path from "path";
-import findProcess from "find-process";
-import kill from "tree-kill";
-import {shell} from "electron";
-import {progress} from "../../stores/installation";
-import {log} from "./log";
+/**
+ * Exact port of C# KillDiscord() and StartDiscord() from Program.cs
+ */
+const path = require("path");
+const fs   = require("fs");
+const {execSync, execFileSync} = require("child_process");
 
-const platforms = {stable: "Discord", ptb: "Discord PTB", canary: "Discord Canary"};
-const windowsExecutables = {
-    stable: "Discord.exe",
-    ptb: "DiscordPTB.exe",
-    canary: "DiscordCanary.exe"
-};
-
-function execFileAsync(file, args) {
-    return new Promise((resolve, reject) => {
-        execFile(file, args, (err, stdout = "", stderr = "") => {
-            if (err) reject(err);
-            else resolve({stdout, stderr});
-        });
-    });
+/**
+ * Determine the Discord process name from the resources path.
+ * Mirrors: resPath.Contains("DiscordPTB") ? "DiscordPTB" : ...
+ */
+function getProcName(resPath) {
+    if (resPath.includes("DiscordPTB"))          return "DiscordPTB";
+    if (resPath.includes("DiscordCanary"))        return "DiscordCanary";
+    if (resPath.includes("DiscordDevelopment"))   return "DiscordDevelopment";
+    return "Discord";
 }
 
-async function killWindowsProcesses(channels, shouldRestart) {
-    const binByChannel = new Map();
-    const results = await execFileAsync("tasklist", []);
+/**
+ * Port of C# KillDiscord(resPath):
+ *   foreach (var process in Process.GetProcessesByName(procName))
+ *       process.Kill(); process.WaitForExit(3000);
+ *   Thread.Sleep(1000);
+ */
+export function killDiscord(resPath, log) {
+    const procName = getProcName(resPath);
+    const exeName  = procName + ".exe";
 
-    for (const channel of channels) {
-        const processName = windowsExecutables[channel];
-        if (!processName || !results.stdout.includes(processName)) {
-            log(`✅ ${platforms[channel]} not running`);
-            continue;
-        }
+    if (log) log(`Closing ${procName}...`);
 
-        try {
-            const found = await findProcess("name", processName.replace(".exe", ""), true);
-            const parentPids = found.map(p => p.ppid);
-            const discordPid = found.find(p => parentPids.includes(p.pid)) ?? found[0];
-            if (discordPid?.bin) binByChannel.set(channel, discordPid.bin);
-        } catch {}
-
-        log("Attempting to kill " + processName.replace(".exe", ""));
-        await execFileAsync("taskkill", ["/IM", processName, "/F", "/T"]);
-    }
-
-    if (!shouldRestart) return;
-
-    for (const channel of channels) {
-        const bin = binByChannel.get(channel);
-        if (bin) setTimeout(() => shell.openPath(bin), 1000);
-    }
-}
-
-export default async function killProcesses(channels, progressPerLoop, shouldRestart = true) {
+    // Kill with /F (force, like Kill()) /T (tree, kills child processes too)
     try {
-        if (process.platform === "win32") {
-            await killWindowsProcesses(channels, shouldRestart);
-            for (const channel of channels) {
-                progress.set(progress.value + progressPerLoop);
-            }
-            return;
-        }
-
-        for (const channel of channels) {
-            let processName = platforms[channel];
-            if (process.platform === "darwin") processName = platforms[channel];
-            else processName = platforms[channel].replace(" ", "");
-
-            log("Attempting to kill " + processName);
-            const results = await findProcess("name", processName, true);
-            if (!results || !results.length) {
-                log(`✅ ${processName} not running`);
-                progress.set(progress.value + progressPerLoop);
-                continue;
-            }
-
-            const parentPids = results.map(p => p.ppid);
-            const discordPid = results.find(p => parentPids.includes(p.pid)) ?? results[0];
-            const bin = process.platform === "darwin" ? path.resolve(discordPid.bin, "..", "..", "..") : discordPid.bin;
-            await new Promise(r => kill(discordPid.pid, r));
-            if (shouldRestart) setTimeout(() => shell.openPath(bin), 1000);
-            progress.set(progress.value + progressPerLoop);
-        }
+        execSync(`taskkill /IM "${exeName}" /F /T`, { stdio: "ignore" });
+    } catch (e) {
+        // Not running — same behaviour as GetProcessesByName returning empty
     }
-    catch (err) {
-        const symbol = shouldRestart ? "⚠️" : "❌";
-        log(`${symbol} Could not kill Discord processes`);
-        log(`${symbol} ${err.message}`);
-        return err;
+
+    // WaitForExit(3000): poll tasklist until the process is gone (up to 3s)
+    const deadline = Date.now() + 3000;
+    while (Date.now() < deadline) {
+        try {
+            const out = execSync("tasklist /FI \"IMAGENAME eq " + exeName + "\" /NH", { encoding: "utf8" });
+            if (!out.includes(exeName)) break;
+        } catch (_) { break; }
+        // Small busy-wait slice (Atomics.wait would need SharedArrayBuffer)
+        const end = Date.now() + 100;
+        while (Date.now() < end) {}
+    }
+
+    // Thread.Sleep(1000)
+    const sleep = Date.now() + 1000;
+    while (Date.now() < sleep) {}
+}
+
+/**
+ * Port of C# StartDiscord(resPath):
+ *   var exe = Path.Combine(Path.GetDirectoryName(resPath), "..", "Update.exe");
+ *   if (File.Exists(exe)) Process.Start(exe, "--processStart Discord.exe");
+ */
+export function startDiscord(resPath) {
+    const procName = getProcName(resPath);
+    const exeName  = procName + ".exe";
+    // resPath = app-X.X.XXXX\resources  →  go up 2 levels to get to the Discord channel dir
+    const updateExe = path.join(resPath, "..", "..", "Update.exe");
+    if (fs.existsSync(updateExe)) {
+        try {
+            const {exec} = require("child_process");
+            exec(`"${updateExe}" --processStart ${exeName}`);
+        } catch (_) {}
     }
 }
