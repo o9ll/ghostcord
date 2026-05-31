@@ -46,13 +46,12 @@
       "target": {
         "target": "portable",
         "arch": [
-          "ia32"
+          "x64"
         ]
       }
     },
     "portable": {
-      "requestExecutionLevel": "user",
-      "useZip": true
+      "requestExecutionLevel": "user"
     },
     "mac": {
       "artifactName": "${productName}-Mac.${ext}",
