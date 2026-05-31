@@ -443,17 +443,17 @@ fn runProcess(argv: []const []const u8) ![]u8 {
 }
 
 fn jsStringLiteral(allocator: std.mem.Allocator, value: []const u8) ![]u8 {
-    var list = std.ArrayList(u8).init(allocator);
-    try list.append('"');
+    var list: std.ArrayList(u8) = .empty;
+    try list.append(allocator, '"');
     for (value) |c| {
         switch (c) {
-            '\\' => try list.appendSlice("\\\\"),
-            '"' => try list.appendSlice("\\\""),
-            else => try list.append(c),
+            '\\' => try list.appendSlice(allocator, "\\\\"),
+            '"' => try list.appendSlice(allocator, "\\\""),
+            else => try list.append(allocator, c),
         }
     }
-    try list.append('"');
-    return list.toOwnedSlice();
+    try list.append(allocator, '"');
+    return list.toOwnedSlice(allocator);
 }
 
 fn getRequiredEnv(allocator: std.mem.Allocator, key: []const u8) ![]u8 {
@@ -530,7 +530,7 @@ fn copyFileAbsolute(src: []const u8, dst: []const u8) !void {
     var dst_dir = try cwd.openDir(getIo(), dst_dir_path, .{});
     defer dst_dir.close(getIo());
 
-    try src_dir.copyFile(getIo(), src_name, dst_dir, dst_name, .{});
+    try src_dir.copyFile(src_name, dst_dir, dst_name, getIo(), .{});
 }
 
 fn copyDirectoryAbsolute(allocator: std.mem.Allocator, src: []const u8, dst: []const u8) !void {
