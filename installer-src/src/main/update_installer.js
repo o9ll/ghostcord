@@ -2,12 +2,12 @@ import {dialog, shell} from "electron";
 import phin from "phin";
 const semverGreaterThan = require("semver/functions/gt");
 const {version} = require("../../package.json");
-const {domain} = require("../../../domain.json"); 
+const {domain} = require("../../domain.json"); 
 
 const getJSON = phin.defaults({
     method: "GET",
     parse: "json",
-    headers: {"User-Agent": "Nightcord Installer"},
+    headers: {"User-Agent": `Nightcord Installer/${version}`},
     followRedirects: true
 });
 
