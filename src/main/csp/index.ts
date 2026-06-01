@@ -1,4 +1,4 @@
-import { NativeSettings } from "@main/settings";
+﻿import { NativeSettings } from "@main/settings";
 import { session } from "electron";
 
 type PolicyMap = Record<string, string[]>;
@@ -64,6 +64,17 @@ export const CspPolicies: PolicyMap = {
     "*.sndcdn.com": CSPSrc,
     "soundcloud.com": CSPSrc,
     "*.soundcloud.com": CSPSrc,
+
+    // hCaptcha (Discord captcha system)
+    "hcaptcha.com": ImageScriptsAndCssSrc,
+    "*.hcaptcha.com": ImageScriptsAndCssSrc,
+    "newassets.hcaptcha.com": ImageScriptsAndCssSrc,
+    "imgs.hcaptcha.com": ImageScriptsAndCssSrc,
+    "api2.hcaptcha.com": ImageScriptsAndCssSrc,
+
+    // Cloudflare Turnstile / cdn-cgi captcha
+    "challenges.cloudflare.com": ImageScriptsAndCssSrc,
+    "*.cloudflare.com": ImageScriptsAndCssSrc,
 };
 
 const findHeader = (headers: PolicyMap, headerName: Lowercase<string>) => {
@@ -154,5 +165,5 @@ export function initCsp() {
         cb({ cancel: false, responseHeaders });
     });
 
-    session.defaultSession.webRequest.onHeadersReceived = () => { };
 }
+
