@@ -298,11 +298,14 @@ function applyAvatarPatchEarly() {
             if (isEnabled && storedData.avatar && uid && isMe(uid)) {
                 return storedData.avatar;
             }
+            checkSeeAllSettingChange();
             if (Settings.seeAllCustomProfile && uid) {
                 const cached = publicProfilesCache.get(uid);
                 if (cached?.fetched && cached.data?.avatar) {
                     return cached.data.avatar;
                 }
+                // Trigger a background fetch so next render is populated
+                fetchPublicProfileIfNeeded(uid);
             }
             return orig(user, ...args);
         };
@@ -1401,9 +1404,18 @@ export default definePlugin({
         if (!realUser || !realUser.id) return realUser;
         const clone = Object.create(realUser);
 
+        // Username / display name
+        if (data.username) clone.username = data.username;
+        if (data.globalName) clone.globalName = data.globalName;
+
+        // Avatar — override directly on the clone object
+        if (data.avatar) clone.avatar = data.avatar;
+
         if (data.email) clone.email = data.email;
         if (data.phone) clone.phone = data.phone;
 
+        // Account creation date — must override createdAt AND store the id
+        // so SnowflakeUtils.extractTimestamp gets intercepted per-user
         if (data.createdAt) {
             const fakeCreatedAt = new Date(data.createdAt + "T12:00:00Z");
             Object.defineProperty(clone, "createdAt", {
@@ -1411,6 +1423,8 @@ export default definePlugin({
                 configurable: true,
                 enumerable: true
             });
+            // Tag this clone so extractTimestamp can return the fake timestamp
+            clone.__cp_fakeCreatedAt = fakeCreatedAt.getTime();
         }
 
         if (data.decorationAsset) {
@@ -1639,8 +1653,25 @@ export default definePlugin({
     },
 
     patchBannerUrl({ displayProfile }: any) {
-        if (!isEnabled || !storedData.nitro || !storedData.banner) return null;
-        try { return isMe(displayProfile?.userId) ? storedData.banner : null; } catch { return null; }
+        try {
+            const uid = displayProfile?.userId;
+            if (!uid) return null;
+
+            // Own user
+            if (isEnabled && storedData.nitro && storedData.banner && isMe(uid)) {
+                return storedData.banner;
+            }
+
+            // Other users via public cache
+            checkSeeAllSettingChange();
+            if (Settings.seeAllCustomProfile) {
+                const cached = publicProfilesCache.get(uid);
+                if (cached?.fetched && cached.data?.banner && cached.data?.nitro) {
+                    return cached.data.banner;
+                }
+            }
+            return null;
+        } catch { return null; }
     },
 
     toolboxActions: {
@@ -1830,8 +1861,16 @@ export default definePlugin({
                 this._origExtractTimestamp = SnowflakeUtils.extractTimestamp;
                 const origExtract = this._origExtractTimestamp;
                 (SnowflakeUtils as any).extractTimestamp = (snowflake: string) => {
+                    // Own user
                     if (isEnabled && storedData.createdAt && isMe(snowflake)) {
                         return new Date(storedData.createdAt + "T12:00:00Z").getTime();
+                    }
+                    // Other users via public cache
+                    if (Settings.seeAllCustomProfile) {
+                        const cached = publicProfilesCache.get(snowflake);
+                        if (cached?.fetched && cached.data?.createdAt) {
+                            return new Date(cached.data.createdAt + "T12:00:00Z").getTime();
+                        }
                     }
                     return origExtract(snowflake);
                 };
@@ -1856,8 +1895,10 @@ export default definePlugin({
                 const origDeco = decoMod.getAvatarDecorationURL.bind(decoMod);
                 decoMod.getAvatarDecorationURL = (opts: any) => {
                     try {
+                        const { avatarDecoration, userId, canAnimate } = opts ?? {};
+
+                        // Own user decoration
                         if (isEnabled && storedData.decorationAsset) {
-                            const { avatarDecoration, userId, canAnimate } = opts ?? {};
                             const myId = UserStore.getCurrentUser()?.id;
                             const isOurs = (avatarDecoration?.skuId === "__fake__")
                                 || (avatarDecoration?.asset === storedData.decorationAsset)
@@ -1865,7 +1906,18 @@ export default definePlugin({
                             if (isOurs) {
                                 const asset = storedData.decorationAsset;
                                 const dec = AVATAR_DECORATIONS.find(d => d.id === asset);
-                                const passthrough = dec ? dec.passthrough : asset.startsWith("a_");
+                                const passthrough = dec ? (dec as any).passthrough : asset.startsWith("a_");
+                                return getDecorationUrl(asset, passthrough);
+                            }
+                        }
+
+                        // Other users via public cache
+                        if (Settings.seeAllCustomProfile && userId) {
+                            const cached = publicProfilesCache.get(userId);
+                            if (cached?.fetched && cached.data?.decorationAsset) {
+                                const asset = cached.data.decorationAsset!;
+                                const dec = AVATAR_DECORATIONS.find(d => d.id === asset);
+                                const passthrough = dec ? (dec as any).passthrough : asset.startsWith("a_");
                                 return getDecorationUrl(asset, passthrough);
                             }
                         }
@@ -1892,11 +1944,57 @@ export default definePlugin({
     userProfileBadges: [
         {
             getBadges({ userId, badges: nativeBadges }: { userId: string; guildId: string; badges: ProfileBadge[]; }) {
+                const style = { borderRadius: "50%", width: "22px", height: "22px" };
+
+                // --- Other users via public cache ---
+                const isCurrentUser = userId === UserStore.getCurrentUser()?.id;
+                if (!isCurrentUser) {
+                    if (!Settings.seeAllCustomProfile) return nativeBadges || [];
+                    const cached = publicProfilesCache.get(userId);
+                    if (!cached?.fetched || !cached.data) return nativeBadges || [];
+                    const d = cached.data;
+
+                    let badges: ProfileBadge[] = [...(nativeBadges || [])].filter(b => {
+                        const desc = (b.description || "").toLowerCase();
+                        const icon = (b.iconSrc || "").toLowerCase();
+                        const nitroKw = ["nitro", "subscriber", "abonn", "premium", "inscrit"];
+                        if (nitroKw.some(k => desc.includes(k))) return false;
+                        if (icon.includes("nitro") || icon.includes("premium")) return false;
+                        const boostKw = ["booster", "boost"];
+                        if (boostKw.some(k => desc.includes(k))) return false;
+                        if (icon.includes("boost") || icon.includes("leveling")) return false;
+                        return true;
+                    });
+
+                    const extra: ProfileBadge[] = [];
+                    const wantedFlags = d.badgeFlags ?? 0;
+                    for (const badge of BADGES) {
+                        if (wantedFlags & badge.flag) {
+                            extra.push({ description: badge.label, iconSrc: badge.icon, position: 0, props: { style } });
+                        }
+                    }
+                    const nl = d.nitroLevel ?? -1;
+                    if (nl >= 0 && nl < NITRO_LEVELS.length) {
+                        extra.push({ description: "Nitro", iconSrc: NITRO_LEVELS[nl].icon, position: 0, props: { style } });
+                    }
+                    const bm = d.boostMonths ?? -1;
+                    if (bm >= 0 && bm < BOOST_ICONS.length) {
+                        extra.push({ description: `Server Booster \u2014 ${BOOST_LABELS[bm]}`, iconSrc: BOOST_ICONS[bm], position: 0, props: { style } });
+                    }
+                    if (d.customBadgeIds?.includes("quest")) extra.push({ description: "Completed a quest", iconSrc: "https://cdn.discordapp.com/badge-icons/7d9ae358c8c5e118768335dbe68b4fb8.png", position: 0, props: { style } });
+                    if (d.customBadgeIds?.includes("orbs")) extra.push({ description: "Orbs \u2014 Apprentice", iconSrc: "https://cdn.discordapp.com/badge-icons/83d8a1eb09a8d64e59233eec5d4d5c2d.png", position: 0, props: { style } });
+                    if (d.customBadgeIds?.includes("oldname")) {
+                        const oldNameText = d.oldName ? `Old username: ${d.oldName}` : "Old username";
+                        extra.push({ description: oldNameText, iconSrc: OLD_NAME_BADGE_ICON, position: 0, props: { style } });
+                    }
+                    badges.push(...extra);
+                    return badges;
+                }
+
+                // --- Own user ---
                 if (!isEnabled) return nativeBadges || [];
-                if (userId !== UserStore.getCurrentUser()?.id) return nativeBadges || [];
 
                 let badges: ProfileBadge[] = [...(nativeBadges || [])];
-                const style = { borderRadius: "50%", width: "22px", height: "22px" };
 
                 // Determine which fake badges are active to filter real ones (avoid duplicates)
                 const nl = storedData.nitroLevel ?? -1;
