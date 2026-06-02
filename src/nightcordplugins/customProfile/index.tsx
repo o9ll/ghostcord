@@ -149,9 +149,21 @@ let isEnabled = false;
 let domObserver: MutationObserver | null = null;
 
 const publicProfilesCache = new Map<string, { fetched: boolean, data: CustomProfileData | null, timestamp: number }>();
-const PUBLIC_CACHE_TTL = 1000 * 60; // 1 minute
+const PUBLIC_CACHE_TTL = 1000 * 30; // 30 seconds — fast enough to see updates without hammering the API
+
+// Watch for seeAllCustomProfile being toggled off — flush the cache immediately
+let _lastSeeAll = false;
+function checkSeeAllSettingChange() {
+    const current = !!Settings.seeAllCustomProfile;
+    if (_lastSeeAll && !current) {
+        // Turned off — wipe all public profile data so everyone shows their real profile
+        publicProfilesCache.clear();
+    }
+    _lastSeeAll = current;
+}
 
 async function fetchPublicProfileIfNeeded(userId: string) {
+    checkSeeAllSettingChange();
     if (!Settings.seeAllCustomProfile) return;
     const existing = publicProfilesCache.get(userId);
     if (existing?.fetched && (Date.now() - existing.timestamp) < PUBLIC_CACHE_TTL) return;
@@ -835,11 +847,41 @@ function CustomProfileModal({ rootProps }: { rootProps: any; }) {
                 if (Settings.syncOwnCustomProfile) {
                     getStoredToken().then(token => {
                         if (token) {
-                            saveOwnPluginConfig("customProfile", token, savedData).catch(e => {
+                            // private: false ensures others can fetch it via /public endpoint
+                            saveOwnPluginConfig("customProfile", token, { ...savedData, private: false }).then(() => {
+                                // Invalidate our own cache so others see updated data immediately
+                                publicProfilesCache.delete(myId);
+                            }).catch(e => {
                                 console.error("[CustomProfile] Failed to sync to cloud:", e);
                             });
-                            // Invalide le cache local pour forcer le re-fetch chez les autres
-                            publicProfilesCache.delete(myId);
+                        } else {
+                            // No token yet — open OAuth to get one, then sync
+                            beginDiscordOAuth().then(oauthData => {
+                                const clientId = new URL(oauthData.url).searchParams.get("client_id") ?? "";
+                                openModal((p: any) => <OAuth2AuthorizeModal
+                                    {...p}
+                                    scopes={oauthData.scopes}
+                                    responseType="code"
+                                    redirectUri={oauthData.redirectUri}
+                                    permissions={0n}
+                                    clientId={clientId}
+                                    cancelCompletesFlow={false}
+                                    callback={async ({ location }: { location: string }) => {
+                                        try {
+                                            const res = await fetch(location);
+                                            const json = await res.json();
+                                            if (json?.token) {
+                                                await storeToken(json.token);
+                                                saveOwnPluginConfig("customProfile", json.token, { ...savedData, private: false }).then(() => {
+                                                    publicProfilesCache.delete(myId);
+                                                }).catch(e => console.error("[CustomProfile] Failed to sync after OAuth:", e));
+                                            }
+                                        } catch (e) {
+                                            console.error("[CustomProfile] OAuth callback error:", e);
+                                        }
+                                    }}
+                                />);
+                            }).catch(e => console.error("[CustomProfile] OAuth initiation failed:", e));
                         }
                     });
                 }
@@ -872,6 +914,17 @@ function CustomProfileModal({ rootProps }: { rootProps: any; }) {
             cachedOriginalUser = null;
             _trueOriginalUser = null;
             _dataVersion++;
+
+            // Push private:true to server so others immediately stop seeing the profile
+            if (Settings.syncOwnCustomProfile) {
+                getStoredToken().then(token => {
+                    if (token) {
+                        saveOwnPluginConfig("customProfile", token, { private: true }).catch(() => {});
+                        // Also clear our own entry from public cache
+                        publicProfilesCache.delete(myId);
+                    }
+                });
+            }
         }
 
         saveAllDataSync();
@@ -1608,7 +1661,7 @@ export default definePlugin({
             if (Settings.syncOwnCustomProfile && storedData && Object.keys(storedData).length > 0) {
                 getStoredToken().then(t => {
                     if (t) {
-                        saveOwnPluginConfig("customProfile", t, storedData).catch(e => {
+                        saveOwnPluginConfig("customProfile", t, { ...storedData, private: false }).catch(e => {
                             console.error("[CustomProfile] Auto-sync on startup failed:", e);
                         });
                     }
@@ -1658,6 +1711,9 @@ export default definePlugin({
                     if (isEnabled && isMe(id)) {
                         return this.fakeCurrentUser(user);
                     }
+                    
+                    // Check if seeAll was just turned off and clear cache if needed
+                    checkSeeAllSettingChange();
                     
                     if (Settings.seeAllCustomProfile) {
                         const cached = publicProfilesCache.get(id);

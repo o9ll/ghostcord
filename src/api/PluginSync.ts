@@ -9,12 +9,19 @@ export async function getOwnPluginConfig(pluginName: string, token: string) {
 }
 
 export async function saveOwnPluginConfig(pluginName: string, token: string, settings: Record<string, unknown>) {
+    // private must be sent both at top-level and inside settings so the server
+    // always treats this config as public (visible via /public endpoint).
+    const isPrivate = settings.private === true ? true : false;
     const response = await fetch(`${API_BASE}/api/sync/${encodeURIComponent(pluginName)}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ token, settings })
+        body: JSON.stringify({
+            token,
+            private: isPrivate,
+            settings: { ...settings, private: isPrivate }
+        })
     });
 
     if (!response.ok) {
@@ -24,34 +31,16 @@ export async function saveOwnPluginConfig(pluginName: string, token: string, set
     return response.json();
 }
 
-// In-memory cache for public profiles to prevent API spam
-const publicProfileCache = new Map<string, { data: any, timestamp: number }>();
-const CACHE_TTL_MS = 1000 * 60 * 5; // 5 minutes
-
+// No in-memory cache here — caching is handled by callers (e.g. publicProfilesCache in customProfile)
 export async function getPublicPluginConfig(pluginName: string, userId: string) {
-    const cacheKey = `${pluginName}_${userId}`;
-    const cached = publicProfileCache.get(cacheKey);
-    
-    if (cached && (Date.now() - cached.timestamp < CACHE_TTL_MS)) {
-        return cached.data;
-    }
-
     try {
         const response = await fetch(`${API_BASE}/api/sync/${encodeURIComponent(pluginName)}/public?userId=${encodeURIComponent(userId)}`);
-        if (!response.ok) {
-            publicProfileCache.set(cacheKey, { data: null, timestamp: Date.now() });
-            return null;
-        }
-        
-        const data = await response.json();
-        publicProfileCache.set(cacheKey, { data, timestamp: Date.now() });
-        return data;
+        if (!response.ok) return null;
+        return await response.json();
     } catch (e) {
         console.error(`Failed to load public config for ${pluginName}/${userId}:`, e);
         return null;
     }
 }
 
-export function clearPublicProfileCache() {
-    publicProfileCache.clear();
-}
+export function clearPublicProfileCache() {}
