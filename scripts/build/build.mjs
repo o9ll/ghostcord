@@ -1,4 +1,4 @@
-﻿#!/usr/bin/node
+#!/usr/bin/node
 /*
  * Vencord, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
@@ -25,7 +25,6 @@ import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 
 import { BUILD_TIMESTAMP, commonOpts, exists, globPlugins, IS_DEV, IS_REPORTER, IS_COMPANION_TEST, IS_STANDALONE, IS_UPDATER_DISABLED, resolvePluginName, VERSION, commonRendererPlugins, watch, buildOrWatchAll, stringifyValues, IS_ANTI_CRASH_TEST } from "./common.mjs";
-import { obfuscateDir } from "./obfuscate.mjs";
 
 const defines = stringifyValues({
     IS_STANDALONE,
@@ -239,19 +238,6 @@ await Promise.all([
         main: "main.js"
     }))
 ]);
-
-// ── Obfuscation permanently disabled ────────────────────────
-/*
-if (!watch && !IS_DEV) {
-    await Promise.all([
-        obfuscateDir("dist/desktop"),
-        obfuscateDir("dist/nightcord"),
-    ]);
-} else {
-    console.log("[build] Obfuscation skipped in dev/watch mode.");
-}
-*/
-console.log("[build] Obfuscation disabled (plain source code).");
 
 await Promise.all([
     createPackage("dist/desktop", "dist/desktop.asar"),
