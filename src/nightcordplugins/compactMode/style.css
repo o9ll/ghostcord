@@ -1,9 +1,6 @@
 /* Compact Mode - replace all Nightcord plugin UI with a single compact toggle icon */
 
-/* When compact mode is active, hide user area buttons */
-body.nightcord-compact .vc-user-area-btns {
-    display: none !important;
-}
+
 
 /* Compact Popout Menu Styles */
 .compact-popout-container {
