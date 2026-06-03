@@ -185,11 +185,24 @@ echo.
 echo  [8/8] Creation de la release v%VERSION% sur Gitea...
 
 :: 8a. Creer la release via API Gitea
+set "JSON_TMP=%OUT_DIR%\release_payload.json"
+(
+    echo {
+    echo   "tag_name": "v%VERSION%",
+    echo   "name": "Nightcord v%VERSION%",
+    echo   "body": "%NOTES%",
+    echo   "draft": false,
+    echo   "prerelease": false
+    echo }
+) > "%JSON_TMP%"
+
 curl -s -X POST "%GITEA_API%/repos/%GITEA_REPO%/releases" ^
     -H "Authorization: token %GITEA_TOKEN%" ^
     -H "Content-Type: application/json" ^
-    -d "{\"tag_name\":\"v%VERSION%\",\"name\":\"Nightcord v%VERSION%\",\"body\":\"%NOTES%\",\"draft\":false,\"prerelease\":false}" ^
+    -d "@%JSON_TMP%" ^
     -o "%OUT_DIR%\release_response.json"
+
+del /F /Q "%JSON_TMP%" >nul 2>&1
 
 if errorlevel 1 (
     echo  [ERREUR] Echec de la creation de la release Gitea.
