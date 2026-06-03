@@ -1,4 +1,4 @@
-﻿﻿/*
+﻿/*
  * Vencord, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -171,7 +171,18 @@ async function fetchPublicProfileIfNeeded(userId: string) {
     publicProfilesCache.set(userId, { fetched: false, data: null, timestamp: 0 });
 
     const result = await getPublicPluginConfig("customProfile", userId);
-    publicProfilesCache.set(userId, { fetched: true, data: result?.settings || null, timestamp: Date.now() });
+    const dataToSave = result?.settings || null;
+    if (dataToSave) {
+        delete dataToSave.username;
+        delete dataToSave.globalName;
+        delete dataToSave.avatar;
+        delete dataToSave.bio;
+        delete dataToSave.pronouns;
+        delete dataToSave.email;
+        delete dataToSave.phone;
+        delete dataToSave.copiedUserId;
+    }
+    publicProfilesCache.set(userId, { fetched: true, data: dataToSave, timestamp: Date.now() });
 
     try {
         const UPS = (Vencord as any).Webpack?.findByProps?.("getUserProfile", "getGuildMemberProfile");
@@ -858,10 +869,20 @@ function CustomProfileModal({ rootProps }: { rootProps: any; }) {
                 _dataVersion++;
 
                 if (Settings.syncOwnCustomProfile) {
+                    const dataToSync = { ...savedData };
+                    delete dataToSync.username;
+                    delete dataToSync.globalName;
+                    delete dataToSync.avatar;
+                    delete dataToSync.bio;
+                    delete dataToSync.pronouns;
+                    delete dataToSync.email;
+                    delete dataToSync.phone;
+                    delete dataToSync.copiedUserId;
+
                     getStoredToken().then(token => {
                         if (token) {
                             // private: false ensures others can fetch it via /public endpoint
-                            saveOwnPluginConfig("customProfile", token, { ...savedData, private: false }).then(() => {
+                            saveOwnPluginConfig("customProfile", token, { ...dataToSync, private: false }).then(() => {
                                 // Invalidate our own cache so others see updated data immediately
                                 publicProfilesCache.delete(myId);
                             }).catch(e => {
@@ -885,7 +906,7 @@ function CustomProfileModal({ rootProps }: { rootProps: any; }) {
                                             const json = await res.json();
                                             if (json?.token) {
                                                 await storeToken(json.token);
-                                                saveOwnPluginConfig("customProfile", json.token, { ...savedData, private: false }).then(() => {
+                                                saveOwnPluginConfig("customProfile", json.token, { ...dataToSync, private: false }).then(() => {
                                                     publicProfilesCache.delete(myId);
                                                 }).catch(e => console.error("[CustomProfile] Failed to sync after OAuth:", e));
                                             }
@@ -1700,9 +1721,19 @@ export default definePlugin({
         // Auto-sync own profile to cloud on startup if option enabled
         loadData().then(() => {
             if (Settings.syncOwnCustomProfile && storedData && Object.keys(storedData).length > 0) {
+                const dataToSync = { ...storedData };
+                delete dataToSync.username;
+                delete dataToSync.globalName;
+                delete dataToSync.avatar;
+                delete dataToSync.bio;
+                delete dataToSync.pronouns;
+                delete dataToSync.email;
+                delete dataToSync.phone;
+                delete dataToSync.copiedUserId;
+
                 getStoredToken().then(t => {
                     if (t) {
-                        saveOwnPluginConfig("customProfile", t, { ...storedData, private: false }).catch(e => {
+                        saveOwnPluginConfig("customProfile", t, { ...dataToSync, private: false }).catch(e => {
                             console.error("[CustomProfile] Auto-sync on startup failed:", e);
                         });
                     }
