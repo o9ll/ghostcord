@@ -113,9 +113,14 @@ echo " [5/8] Compilation de Nightcord-Installer.exe..."
 
 mkdir -p "$OUT_DIR"
 
-if ! pwsh -NoProfile -ExecutionPolicy Bypass -File "build-installer.ps1" 2>/dev/null \
-   && ! powershell -NoProfile -ExecutionPolicy Bypass -File "build-installer.ps1" 2>/dev/null; then
-    echo " [ERREUR] Compilation de l'installeur echouee (pwsh/powershell introuvable ou erreur)."
+if command -v pwsh >/dev/null 2>&1; then
+    pwsh -NoProfile -ExecutionPolicy Bypass -File "build-installer.ps1"
+elif command -v powershell >/dev/null 2>&1; then
+    powershell -NoProfile -ExecutionPolicy Bypass -File "build-installer.ps1"
+elif [[ -x "./build-installer.sh" ]]; then
+    ./build-installer.sh
+else
+    echo " [ERREUR] Aucun build-installer compatible trouve (pwsh, powershell ou build-installer.sh)."
     exit 1
 fi
 
