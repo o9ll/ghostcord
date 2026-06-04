@@ -180,6 +180,20 @@ EOF
 
 echo " [7/8] version.json mis a jour."
 
+TAG_NAME="v$VERSION"
+
+if git rev-parse "$TAG_NAME" >/dev/null 2>&1; then
+    echo " Tag local $TAG_NAME deja present."
+else
+    git tag "$TAG_NAME"
+fi
+
+if git ls-remote --tags origin "refs/tags/$TAG_NAME" | grep -q "$TAG_NAME"; then
+    echo " Tag distant $TAG_NAME deja present."
+else
+    git push origin "$TAG_NAME"
+fi
+
 # ── 8. Publier sur Gitea Releases ─────────────────────────────────────────────
 echo ""
 echo " [8/8] Creation de la release v$VERSION sur Gitea..."
@@ -189,7 +203,7 @@ RELEASE_RESPONSE=$(curl -s -X POST "$GITEA_API/repos/$GITEA_REPO/releases" \
     -H "Authorization: token $GITEA_TOKEN" \
     -H "Content-Type: application/json" \
     -d "{
-  \"tag_name\": \"v$VERSION\",
+  \"tag_name\": \"$TAG_NAME\",
   \"name\": \"Nightcord v$VERSION\",
   \"body\": \"$NOTES\",
   \"draft\": false,
