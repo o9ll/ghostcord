@@ -204,6 +204,7 @@ RELEASE_RESPONSE=$(curl -s -X POST "$GITEA_API/repos/$GITEA_REPO/releases" \
     -H "Content-Type: application/json" \
     -d "{
   \"tag_name\": \"$TAG_NAME\",
+  \"target_commitish\": \"master\",
   \"name\": \"Nightcord v$VERSION\",
   \"body\": \"$NOTES\",
   \"draft\": false,
