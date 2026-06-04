@@ -123,7 +123,7 @@ function handleVisibilityChange() {
 
 export default definePlugin({
     name: "CancelFriendRequest",
-    enabledByDefault: false,
+    enabledByDefault: true,
     description: "Cancels a pending friend request by clicking the button again.",
     authors: [{ name: "Nightcord", id: 0n }],
 

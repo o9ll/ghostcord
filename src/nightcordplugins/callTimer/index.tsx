@@ -114,7 +114,7 @@ export default definePlugin({
     managedStyle: alignedChatInputFix,
     settings,
 
-    enabledByDefault: false,
+    enabledByDefault: true,
     isModified: true,
     startTime: 0,
     interval: void 0 as NodeJS.Timeout | undefined,

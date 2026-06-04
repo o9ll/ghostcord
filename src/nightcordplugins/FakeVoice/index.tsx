@@ -98,7 +98,7 @@ export default definePlugin({
     description: "Appear muted or deaf while listening. By mushzi.",
     authors: [{ name: "mushzi", id: 449282863582412850n }],
     dependencies: ["CommandsAPI", "UserAreaAPI"],
-    enabledByDefault: false,
+    enabledByDefault: true,
 
     patches: [
         {

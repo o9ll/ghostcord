@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Vencord, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -347,7 +347,7 @@ function MassDMButton() {
 /* ── Plugin definition ── */
 export default definePlugin({
     name: "MassDM",
-    enabledByDefault: false,
+    enabledByDefault: true,
     description: "Sends a message to all your friends with an anti-rate-limit delay.",
     authors: [{ name: "Nightcord", id: 0n }],
     headerBarButton: { icon: MassDMIcon, render: MassDMButton },

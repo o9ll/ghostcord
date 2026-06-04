@@ -365,7 +365,7 @@ async function cloneServer(
                     try {
                         webhook = await apiCall("post", `/channels/${targetChId}/webhooks`, {
                             name: "ServerCloner",
-                            enabledByDefault: false
+                            enabledByDefault: true
                         });
                     } catch (e: any) {
                         log({ text: `  Webhook creation error for channel ${targetChId}: ${e?.message || e}`, type: "err" });

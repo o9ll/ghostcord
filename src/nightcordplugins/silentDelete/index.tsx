@@ -108,7 +108,7 @@ export default definePlugin({
     ],
     dependencies: ["MessagePopoverAPI", "CommandsAPI"],
     settings,
-    enabledByDefault: false,
+    enabledByDefault: true,
 
     contextMenus: {
         "message": messageContextMenuPatch
