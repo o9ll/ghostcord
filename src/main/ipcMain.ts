@@ -64,6 +64,7 @@ export function validateSender(event: any): boolean {
 }
 
 function verifySignature(filePath: string): Promise<boolean> {
+    if (process.platform !== "win32") return Promise.resolve(true);
     const { execFile } = require("child_process");
     return new Promise<boolean>((resolve) => {
         execFile("powershell.exe", [
@@ -103,6 +104,7 @@ function getThemeData(fileName: string) {
 
 ipcMain.handle(IpcEvents.WORLD_BOMB_TYPE, async (event, text: string, delay: number = 50) => {
     if (!validateSender(event)) throw new Error("Unauthorized IPC invocation");
+    if (process.platform !== "win32") return;
     const { spawn } = require("child_process");
     const { writeFileSync, unlinkSync, mkdtempSync, rmSync } = require("fs");
     const { join } = require("path");
@@ -145,6 +147,7 @@ ipcMain.handle(IpcEvents.WORLD_BOMB_TYPE, async (event, text: string, delay: num
 });
 
 function runPowershellScript(psScript: string): Promise<void> {
+    if (process.platform !== "win32") return Promise.resolve();
     const { spawn } = require("child_process");
     const { writeFileSync, unlinkSync, mkdtempSync, rmSync } = require("fs");
     const { join } = require("path");
@@ -211,6 +214,7 @@ ipcMain.handle(IpcEvents.WORLD_BOMB_SEQUENCE, async (
     targetY: number = -1
 ) => {
     if (!validateSender(event)) throw new Error("Unauthorized IPC invocation");
+    if (process.platform !== "win32") return;
     const { spawn } = require("child_process");
     const { writeFileSync, unlinkSync, mkdtempSync, rmSync } = require("fs");
     const { join } = require("path");
