@@ -16,8 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import { isPluginEnabled } from "@api/PluginManager";
 import { BaseText } from "@components/BaseText";
 import ErrorBoundary from "@components/ErrorBoundary";
+import PermissionsViewerPlugin from "@plugins/permissionsViewer";
+import openRolesAndUsersPermissionsModal from "@plugins/permissionsViewer/components/RolesAndUsersPermissions";
+import { sortPermissionOverwrites } from "@plugins/permissionsViewer/utils";
 import { classes } from "@utils/misc";
 import { formatDuration } from "@utils/text";
 import type { Channel, RoleOrUserPermission } from "@vencord/discord-types";
@@ -141,7 +145,14 @@ function HiddenChannelLockScreen({ channel }: { channel: Channel; }) {
             });
         }
 
-        // Removed PermissionsViewer dependency
+        if (isPluginEnabled(PermissionsViewerPlugin.name)) {
+            setPermissions(sortPermissionOverwrites(Object.values(permissionOverwrites).map(overwrite => ({
+                type: overwrite.type,
+                id: overwrite.id,
+                overwriteAllow: overwrite.allow,
+                overwriteDeny: overwrite.deny
+            })), guild_id));
+        }
     }, [channelId]);
 
     return (
@@ -262,6 +273,26 @@ function HiddenChannelLockScreen({ channel }: { channel: Channel; }) {
                 }
                 <div className={cl("allowed-users-and-roles-container")}>
                     <div className={cl("allowed-users-and-roles-container-title")}>
+                        {isPluginEnabled(PermissionsViewerPlugin.name) && (
+                            <Tooltip text="Permission Details">
+                                {({ onMouseLeave, onMouseEnter }) => (
+                                    <button
+                                        onMouseLeave={onMouseLeave}
+                                        onMouseEnter={onMouseEnter}
+                                        className={cl("allowed-users-and-roles-container-permdetails-btn")}
+                                        onClick={() => openRolesAndUsersPermissionsModal(permissions, GuildStore.getGuild(channel.guild_id), channel.name)}
+                                    >
+                                        <svg
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path fill="currentColor" d="M7 12.001C7 10.8964 6.10457 10.001 5 10.001C3.89543 10.001 3 10.8964 3 12.001C3 13.1055 3.89543 14.001 5 14.001C6.10457 14.001 7 13.1055 7 12.001ZM14 12.001C14 10.8964 13.1046 10.001 12 10.001C10.8954 10.001 10 10.8964 10 12.001C10 13.1055 10.8954 14.001 12 14.001C13.1046 14.001 14 13.1055 14 12.001ZM19 10.001C20.1046 10.001 21 10.8964 21 12.001C21 13.1055 20.1046 14.001 19 14.001C17.8954 14.001 17 13.1055 17 12.001C17 10.8964 17.8954 10.001 19 10.001Z" />
+                                        </svg>
+                                    </button>
+                                )}
+                            </Tooltip>
+                        )}
                         <BaseText size="lg" weight="bold">Allowed users and roles:</BaseText>
                         <Tooltip text={defaultAllowedUsersAndRolesDropdownState ? "Hide Allowed Users and Roles" : "View Allowed Users and Roles"}>
                             {({ onMouseLeave, onMouseEnter }) => (

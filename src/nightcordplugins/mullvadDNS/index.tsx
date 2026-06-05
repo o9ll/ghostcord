@@ -28,7 +28,7 @@ enum ResolutionMode {
     PLAIN_DNS = "plain_dns"
 }
 
-const logger = new Logger("TeteDeMull", "#a6da95");
+const logger = new Logger("SecureDNS", "#a6da95");
 
 const SIESTE_TIME = 2000;
 const PAR_MIN = 60_000;
@@ -265,7 +265,7 @@ const devLog = (lvl: LogLevel, ...msg: unknown[]) => {
 };
 
 const pousseToast = (msg: string, type = Toasts.Type.MESSAGE) => {
-    if (cfgNotify) showToast(`[TeteDeMull] ${msg}`, type);
+    if (cfgNotify) showToast(`[SecureDNS] ${msg}`, type);
 };
 
 const estCible = (h: string) => {
@@ -317,14 +317,14 @@ const buildFetchInp = (inp: RequestInfo | URL, url: string): RequestInfo | URL =
 };
 
 export default definePlugin({
-    name: "TeteDeMull",
+    name: "SecureDNS",
     description: "Resolve client application hosts through a secure DNS over HTTPS.",
     tags: ["Privacy", "Utility"],
     authors: [{ name: ">Snayz", id: 1361345963175968779n }],
     settings,
 
     start() {
-        const TAG = "TeteDeMull";
+        const TAG = "SecureDNS";
         const VER = "1.1.0";
         loadCachedSettings();
         const origFetch = window.fetch;

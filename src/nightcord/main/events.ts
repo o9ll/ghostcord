@@ -14,3 +14,8 @@ export const AppEvents = new EventEmitter<{
     setTrayVariant: ["tray" | "trayUnread" | "traySpeaking" | "trayIdle" | "trayMuted" | "trayDeafened"];
     voiceCallStateChanged: [boolean];
 }>();
+
+// FIX FUITE MEMOIRE : sans setMaxListeners, Node.js émet un warning dès 11 listeners
+// et peut retenir les références même après removeListener() dans certains cas.
+// On borne à 20 : tray (2) + appBadge (1) + ipc (1) + futurs listeners = largement suffisant.
+AppEvents.setMaxListeners(20);

@@ -353,9 +353,6 @@ function buildBrowserWindowOptions(): BrowserWindowConstructorOptions {
             // disable renderer backgrounding to prevent the app from unloading when in the background
             backgroundThrottling: false
         },
-        // FIX 1: quand customTitleBar ou frameless (noFrame=true), utiliser titleBarStyle:"hidden"
-        // sur Windows/Linux. frame:false seul supprime toute zone draggable OS -> fenetre immobile.
-        // titleBarStyle:"hidden" garde la zone de drag native invisible mais fonctionnelle.
         ...(noFrame && process.platform !== "darwin"
             ? { frame: false, titleBarStyle: "hidden" }
             : { frame: !noFrame }),
@@ -394,6 +391,16 @@ function buildBrowserWindowOptions(): BrowserWindowConstructorOptions {
     return options;
 }
 
+// Helper : maximize la fenetre uniquement si elle ne l'est pas encore et qu'elle n'est pas detruite.
+// Utilise un delai pour laisser Discord terminer son initialisation fullscreen IPC avant d'agir.
+function safeMaximizeLater(win: BrowserWindow, delayMs = 2500) {
+    setTimeout(() => {
+        if (!win.isDestroyed() && !win.isMaximized()) {
+            win.maximize();
+        }
+    }, delayMs);
+}
+
 function createMainWindow() {
     // Clear up previous settings listeners
     removeSettingsListeners();
@@ -429,13 +436,11 @@ function createMainWindow() {
 
     initWindowBoundsListeners(win);
 
-    // FIX 2: on ne force plus setFullScreen(true) sur enter-html-full-screen.
-    // L'ancien code causait un blocage : quand Discord passait une video en plein ecran HTML5,
-    // Electron forcait le fullscreen natif de l'OS -> les utilisateurs ne pouvaient plus
-    // sortir du fullscreen ou redimensionner la fenetre normalement.
-    // On laisse Discord gerer son propre fullscreen HTML sans toucher a la fenetre Electron.
+    // Ne pas écouter enter-html-full-screen ici — c'est géré dans patcher.ts via
+    // les handlers enter/leave-html-full-screen sur la BrowserWindow patchée.
+    // On écoute seulement leave-html-full-screen comme filet de sécurité pour s'assurer
+    // que le fullscreen natif est bien quitté si Discord sort du mode HTML FS.
     win.on("leave-html-full-screen", () => {
-        // S'assurer que le fullscreen natif est bien quitte si Discord sort du mode HTML FS
         if (win.isFullScreen()) win.setFullScreen(false);
     });
 
@@ -454,11 +459,8 @@ function createMainWindow() {
     win.webContents.setUserAgent(BrowserUserAgent);
     addSplashLog();
 
-    // if the open-url event is fired (in index.ts) while starting up, darwinURL will be set. If not fall back to checking the process args (which Windows and Linux use for URI calling.)
-    // win.webContents.session.clearCache().then(() => {
     loadUrl(darwinURL || process.argv.find(arg => arg.startsWith("discord://")));
     addSplashLog();
-    // });
 
     return win;
 }
@@ -469,7 +471,6 @@ export function loadUrl(uri: string | undefined) {
     const branch = Settings.store.discordBranch;
     const subdomain = branch === "canary" || branch === "ptb" ? `${branch}.` : "";
 
-    // we do not rely on 'did-finish-load' because it fires even if loadURL fails which triggers early detruction of the splash
     mainWin
         .loadURL(`https://${subdomain}discord.com/${uri ? new URL(uri).pathname.slice(1) || "app" : "app"}`)
         .then(() => AppEvents.emit("appLoaded"))
@@ -490,7 +491,6 @@ export async function createWindows() {
     if (Settings.store.enableSplashScreen !== false) {
         splash = await createSplashWindow(startMinimized);
 
-        // SteamOS letterboxes and scales it terribly, so just full screen it
         if (isDeckGameMode) splash.setFullScreen(true);
         addSplashLog();
     }
@@ -507,19 +507,39 @@ export async function createWindows() {
 
         if (!startMinimized) {
             if (splash) mainWin?.show();
-            // FIX 3: on ne maximize que si maximized=true ET windowBounds absent.
-            // L'ancien code maximizait systematiquement si maximized=true, meme quand l'utilisateur
-            // avait redimensionne la fenetre -> toujours bloque en plein ecran au demarrage.
+
+            // FIX PRINCIPAL : maximize() différé de 2.5s.
+            //
+            // Problème : Discord émet DISCORD_WINDOW_TOGGLE_FULLSCREEN automatiquement
+            // pendant son initialisation (~500ms après le chargement de la page) pour
+            // synchroniser son état fullscreen interne. Si on appelle maximize() juste
+            // après show(), on se retrouve dans cette séquence :
+            //   1. maximize() → état "maximized" mais pas fullscreen
+            //   2. Discord émet DISCORD_WINDOW_TOGGLE_FULLSCREEN
+            //   3. Notre handler : isFullScreen()=false → setFullScreen(true)
+            //   4. L'OS met la fenêtre en fullscreen natif
+            //   5. L'overlay fullscreen OS capture tous les inputs → app figée
+            //   6. Les animations continuent car le renderer tourne normalement
+            //   7. F11 sort du fullscreen → inputs restaurés
+            //
+            // Solution en deux volets :
+            // A) Dans patcher.ts : le handler DISCORD_WINDOW_TOGGLE_FULLSCREEN ignore
+            //    les appels pendant les 2 premières secondes (_fullscreenReady flag).
+            // B) Ici : on diffère maximize() de 2.5s pour être sûr que le guard est
+            //    actif AVANT que Discord émette son signal fullscreen IPC.
+            //
+            // Même fix pour les thèmes : quand un thème est appliqué, Discord recharge
+            // partiellement et réémet le signal fullscreen → même blocage → même fix.
             const shouldMaximize = State.store.maximized === true
                 && !isDeckGameMode
                 && !State.store.windowBounds;
-            if (shouldMaximize) mainWin?.maximize();
+            if (shouldMaximize) {
+                safeMaximizeLater(mainWin, 2500);
+            }
         }
 
         if (isDeckGameMode) {
-            // always use entire display
             mainWin?.setFullScreen(true);
-
             askToApplySteamLayout(mainWin);
         }
 
@@ -528,14 +548,15 @@ export async function createWindows() {
                 && !mainWin?.isMaximized()
                 && !isDeckGameMode
                 && !State.store.windowBounds;
-            if (shouldMaximize) mainWin?.maximize();
+            if (shouldMaximize) {
+                safeMaximizeLater(mainWin, 2500);
+            }
         });
     });
 
     mainWin.webContents.on("did-navigate", (_, url: string, responseCode: number) => {
-        updateSplashMessage(""); // clear the splash message
+        updateSplashMessage("");
 
-        // check url to ensure app doesn't loop
         if (responseCode >= 300 && new URL(url).pathname !== "/app") {
             loadUrl(undefined);
             console.warn(`'did-navigate': Caught bad page response: ${responseCode}, redirecting to main app`);

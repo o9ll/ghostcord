@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Vencord, a Discord client mod
  * Copyright (c) 2024 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -196,7 +196,7 @@ function StealthModeButton() {
             onClick={toggleStealthMode}
             variant={enabled ? "dangerPrimary" : "primary"}
         >
-            {enabled ? "âœ“ Stealth Mode Enabled â€” Click to disable" : "Enable Stealth Mode"}
+            {enabled ? "✓ Stealth Mode Enabled — Click to disable" : "Enable Stealth Mode"}
         </Button>
     );
 }

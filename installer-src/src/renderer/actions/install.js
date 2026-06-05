@@ -242,6 +242,38 @@ require(patcherPath);
     await fs.writeFile(path.join(appDir, "index.js"), loaderCode);
 }
 
+async function applyDefaultPluginsSetting() {
+    try {
+        const prefsPath = path.join(process.env.APPDATA, "Nightcord", "settings", "installer-prefs.json");
+        let defaultPlugins = true;
+        try {
+            const raw = JSON.parse(await fs.readFile(prefsPath, "utf-8"));
+            defaultPlugins = raw.defaultPlugins !== false;
+        } catch { }
+
+        if (!defaultPlugins) {
+            const settingsDir = path.join(process.env.APPDATA, "Nightcord", "settings");
+            const settingsPath = path.join(settingsDir, "settings.json");
+            await fs.mkdir(settingsDir, { recursive: true });
+            let existing = {};
+            try { existing = JSON.parse(await fs.readFile(settingsPath, "utf-8")); } catch {}
+            existing.plugins = {};
+            await fs.writeFile(settingsPath, JSON.stringify(existing, null, 2), "utf-8");
+            log("✅ Default plugins disabled (minimal install)");
+        }
+    } catch (err) {
+        log(`⚠️ Could not apply plugin settings: ${err.message}`);
+    }
+}
+
+async function shouldAutoRestart() {
+    try {
+        const prefsPath = path.join(process.env.APPDATA, "Nightcord", "settings", "installer-prefs.json");
+        const raw = JSON.parse(await fs.readFile(prefsPath, "utf-8"));
+        return raw.autoRestart !== false;
+    } catch { return true; }
+}
+
 async function copyAssetsToDiscord(resPath) {
     log("Copying binaries...");
     const appBase = path.dirname(resPath);
@@ -285,7 +317,7 @@ async function copyAssetsToDiscord(resPath) {
 async function injectShims(paths) {
     process.noAsar = true;
     const progressPerLoop = (INJECT_SHIM_PROGRESS - progress.value) / paths.length;
-    for (const resPath of paths) { // Now receives resources path from paths.js
+    for (const resPath of paths) {
         log(`Injecting into Discord at: ${resPath}`);
         try {
             const appDir = path.join(resPath, "app");
@@ -332,7 +364,7 @@ async function injectShims(paths) {
                 for (let i = 0; i < 5; i++) {
                     try {
                         if (await safeExists(backup)) await safeDelete(backup);
-                        await fs.rename(appAsar, backup); // Rename is atomic!
+                        await fs.rename(appAsar, backup);
                         renameSuccess = true;
                         break;
                     } catch (err) {
@@ -352,10 +384,15 @@ async function injectShims(paths) {
             log("3. Creating app directory...");
             await fs.mkdir(appDir, { recursive: true });
             await writeLoader(appDir);
+            await applyDefaultPluginsSetting();
             await copyAssetsToDiscord(resPath);
 
-            log("4. Starting Discord...");
-            startDiscord(resPath);
+            if (await shouldAutoRestart()) {
+                log("4. Starting Discord...");
+                startDiscord(resPath);
+            } else {
+                log("4. Skipping Discord restart (disabled in options).");
+            }
 
             log("✅ Injection successful!");
             progress.set(progress.value + progressPerLoop);

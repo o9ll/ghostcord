@@ -6,7 +6,7 @@ import updateInstaller from "./update_installer";
 const isDevelopment = process.env.NODE_ENV !== "production";
 app.name = "Nightcord";
 
-let mainWindow; // global reference to mainWindow (necessary to prevent window from being garbage collected)
+let mainWindow;
 
 function createMainWindow() {
     const window = new BrowserWindow({
@@ -18,6 +18,7 @@ function createMainWindow() {
         fullscreenable: false,
         maximizable: false,
         backgroundColor: "#0c0d10",
+        show: false,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -40,6 +41,11 @@ function createMainWindow() {
         }));
     }
 
+    window.once("ready-to-show", () => {
+        window.show();
+        window.focus();
+    });
+
     window.on("closed", () => {
         mainWindow = null;
     });
@@ -51,8 +57,6 @@ function createMainWindow() {
         });
     });
 
-    // force <a> tags to open in browser
-
     window.webContents.on("new-window", (e, url) => {
         e.preventDefault();
         shell.openExternal(url);
@@ -61,19 +65,16 @@ function createMainWindow() {
     return window;
 }
 
-// quit application when all windows are closed
 app.on("window-all-closed", () => {
-    if (process.platform === "darwin") return; // on macOS it is common for applications to stay open until the user explicitly quits
+    if (process.platform === "darwin") return;
     app.quit();
 });
 
-// on macOS it is common to re-create a window even after all windows have been closed
 app.on("activate", () => {
     if (mainWindow !== null) return;
     mainWindow = createMainWindow();
 });
 
-// create main BrowserWindow when electron is ready
 app.on("ready", async () => {
     mainWindow = createMainWindow();
     if (!process.env.BD_SKIP_UPDATECHECK) updateInstaller();

@@ -19,10 +19,18 @@ const safeDelete = async (p) => {
     try { await fs.unlink(p); } catch {}
 };
 
+async function shouldAutoRestart() {
+    try {
+        const prefsPath = path.join(process.env.APPDATA, "Nightcord", "settings", "installer-prefs.json");
+        const raw = JSON.parse(await fs.readFile(prefsPath, "utf-8"));
+        return raw.autoRestart !== false;
+    } catch { return true; }
+}
+
 async function deleteShims(paths) {
     process.noAsar = true;
     const progressPerLoop = (DELETE_SHIM_PROGRESS - progress.value) / paths.length;
-    for (const resPath of paths) { // Receiving resources path from paths.js
+    for (const resPath of paths) {
         log(`Removing Nightcord from: ${resPath}`);
         try {
             const appDir = path.join(resPath, "app");
@@ -51,7 +59,7 @@ async function deleteShims(paths) {
 
             if (await safeExists(backup)) {
                 if (!(await safeExists(appAsar))) {
-                    await fs.rename(backup, appAsar); // Atomic rename!
+                    await fs.rename(backup, appAsar);
                 } else {
                     await safeDelete(backup);
                 }
@@ -84,8 +92,12 @@ async function deleteShims(paths) {
                 }
             }
 
-            log("4. Restarting Discord...");
-            startDiscord(resPath);
+            if (await shouldAutoRestart()) {
+                log("4. Restarting Discord...");
+                startDiscord(resPath);
+            } else {
+                log("4. Skipping Discord restart (disabled in options).");
+            }
 
             log("✅ Uninstallation successful!");
             progress.set(progress.value + progressPerLoop);

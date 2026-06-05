@@ -2,11 +2,50 @@
     import {remote} from "electron";
     import quit from "../actions/quit";
     import {onMount} from "svelte";
+    import {promises as fs} from "fs";
+    import path from "path";
 
     export let macButtons;
 
     const pkgVersion = remote.app.getVersion();
     let displayVersion = pkgVersion;
+
+    // Settings modal state
+    let showSettings = false;
+    let prefDefaultPlugins = true;
+    let prefAutoUpdate = true;
+    let prefAutoRestart = true;
+    let savedVisible = false;
+
+    const prefsPath = path.join(process.env.APPDATA, "Nightcord", "settings", "installer-prefs.json");
+
+    async function loadPrefs() {
+        try {
+            const raw = await fs.readFile(prefsPath, "utf-8");
+            const obj = JSON.parse(raw);
+            prefDefaultPlugins = obj.defaultPlugins !== false;
+            prefAutoUpdate = obj.autoUpdate !== false;
+            prefAutoRestart = obj.autoRestart !== false;
+        } catch {
+            prefDefaultPlugins = true;
+            prefAutoUpdate = true;
+            prefAutoRestart = true;
+        }
+    }
+
+    async function savePrefs() {
+        try {
+            await fs.mkdir(path.dirname(prefsPath), { recursive: true });
+            await fs.writeFile(prefsPath, JSON.stringify({ defaultPlugins: prefDefaultPlugins, autoUpdate: prefAutoUpdate, autoRestart: prefAutoRestart }, null, 2), "utf-8");
+        } catch {}
+        savedVisible = true;
+        setTimeout(() => { savedVisible = false; }, 2200);
+    }
+
+    function openSettings() {
+        loadPrefs();
+        showSettings = true;
+    }
 
     onMount(() => {
         const https = require("https");
@@ -37,12 +76,18 @@
     function minimize() {
         remote.BrowserWindow.getFocusedWindow().minimize();
     }
-
 </script>
 
 <header class="titlebar {macButtons === true ? "type-mac" : "type-standard"}">
     <span class="title">Nightcord Installer v{displayVersion}</span>
     <div class="window-controls">
+        <!-- Settings button -->
+        <button tabindex="-1" class="btn-settings" on:click={openSettings} title="Nightcord Options">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M10.56 1.1c-.46.05-.7.53-.64.98.18 1.16-.19 2.2-.98 2.53-.8.33-1.79-.15-2.49-1.1-.27-.36-.78-.52-1.14-.24-.77.59-1.45 1.27-2.04 2.04-.28.36-.12.87.24 1.14.96.7 1.43 1.7 1.1 2.49-.33.8-1.37 1.16-2.53.98-.45-.07-.93.18-.99.64a11.1 11.1 0 0 0 0 2.88c.06.46.54.7.99.64 1.16-.18 2.2.19 2.53.98.33.8-.14 1.79-1.1 2.49-.36.27-.52.78-.24 1.14.59.77 1.27 1.45 2.04 2.04.36.28.87.12 1.14-.24.7-.95 1.7-1.43 2.49-1.1.8.33 1.16 1.37.98 2.53-.07.45.18.93.64.99a11.1 11.1 0 0 0 2.88 0c.46-.06.7-.54.64-.99-.18-1.16.19-2.2.98-2.53.8-.33 1.79.14 2.49 1.1.27.36.78.52 1.14.24.77-.59 1.45-1.27 2.04-2.04.28-.36.12-.87-.24-1.14-.96-.7-1.43-1.7-1.1-2.49.33-.8 1.37-1.16 2.53-.98.45.07.93-.18.99-.64a11.1 11.1 0 0 0 0-2.88c-.06-.46-.54-.7-.99-.64-1.16.18-2.2-.19-2.53-.98-.33-.8.14-1.79 1.1-2.49.36-.27.52-.78.24-1.14a11.07 11.07 0 0 0-2.04-2.04c-.36-.28-.87-.12-1.14.24-.7.96-1.7 1.43-2.49 1.1-.8-.33-1.16-1.37-.98-2.53.07-.45-.18-.93-.64-.99a11.1 11.1 0 0 0-2.88 0ZM16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd"/>
+            </svg>
+        </button>
+
         {#if macButtons === true}
             <button tabindex="-1" on:click={quit} id="close">
                 <svg width="12" height="12" viewBox="0 0 12 12">
@@ -69,6 +114,59 @@
         {/if}
     </div>
 </header>
+
+<!-- Settings modal -->
+{#if showSettings}
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div class="modal-overlay" on:click={() => showSettings = false}>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div class="modal-box" on:click|stopPropagation>
+        <div class="modal-header">
+            <span class="modal-title">Nightcord Options</span>
+            <button class="modal-close" on:click={() => showSettings = false}>&#x2715;</button>
+        </div>
+
+        <div class="toggle-row">
+            <div class="toggle-info">
+                <div class="toggle-label">Default config</div>
+                <div class="toggle-desc">Enable default plugins after installation.</div>
+            </div>
+            <label class="switch">
+                <input type="checkbox" bind:checked={prefDefaultPlugins}>
+                <span class="track"></span>
+            </label>
+        </div>
+
+        <div class="toggle-row">
+            <div class="toggle-info">
+                <div class="toggle-label">Auto update</div>
+                <div class="toggle-desc">Automatically install updates when available.</div>
+            </div>
+            <label class="switch">
+                <input type="checkbox" bind:checked={prefAutoUpdate}>
+                <span class="track"></span>
+            </label>
+        </div>
+
+        <div class="toggle-row">
+            <div class="toggle-info">
+                <div class="toggle-label">Discord auto restart</div>
+                <div class="toggle-desc">Restart Discord after install / uninstall.</div>
+            </div>
+            <label class="switch">
+                <input type="checkbox" bind:checked={prefAutoRestart}>
+                <span class="track"></span>
+            </label>
+        </div>
+
+        <div class="modal-footer">
+            <button class="save-btn" on:click={savePrefs}>
+                {#if savedVisible}&#x2713; Saved{:else}Save{/if}
+            </button>
+        </div>
+    </div>
+</div>
+{/if}
 
 <style>
     .titlebar {
@@ -111,8 +209,24 @@
         border: none;
     }
 
-    /* Standard Titlebar */
+    /* Settings button */
+    .btn-settings {
+        height: 28px;
+        width: 36px;
+        background: transparent;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: color 0.15s, transform 0.2s;
+        -webkit-app-region: no-drag;
+    }
+    .btn-settings:hover {
+        color: var(--accent);
+        transform: rotate(45deg);
+        background: transparent !important;
+    }
+    .btn-settings svg { fill: currentColor; }
 
+    /* Standard Titlebar */
     .type-standard button {
         height: 28px;
         width: 40px;
@@ -146,7 +260,6 @@
     }
 
     /* Mac Titlebar */
-
     .type-mac {
         justify-content: space-between;
     }
@@ -192,4 +305,133 @@
         background-color: var(--bg3-alt);
         box-shadow: inset 0 0 0 1px rgba(255,255,255,0.012);
     }
+
+    /* Modal */
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(4, 4, 5, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+    }
+
+    .modal-box {
+        background: var(--bg2);
+        border: 1px solid var(--bg4);
+        border-radius: 6px;
+        padding: 14px 16px 12px;
+        width: 260px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        animation: popIn 0.15s ease-out;
+    }
+
+    @keyframes popIn {
+        from { transform: scale(0.95); opacity: 0; }
+        to   { transform: scale(1);    opacity: 1; }
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .modal-title {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .modal-close {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        font-size: 11px;
+        width: auto !important;
+        height: auto !important;
+        padding: 1px 4px !important;
+        transition: color 0.15s;
+        line-height: 1;
+    }
+    .modal-close:hover { color: var(--text-light); background: transparent !important; }
+
+    .toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 7px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .toggle-row:last-of-type { border-bottom: none; }
+
+    .toggle-info { flex: 1; }
+
+    .toggle-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text-normal);
+    }
+
+    .toggle-desc {
+        font-size: 10px;
+        color: var(--text-muted);
+        margin-top: 1px;
+    }
+
+    /* Toggle switch */
+    .switch {
+        position: relative;
+        width: 30px;
+        height: 17px;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .track {
+        position: absolute;
+        inset: 0;
+        background: var(--bg4);
+        border-radius: 17px;
+        border: 1px solid rgba(255,255,255,0.06);
+        transition: background 0.2s;
+        cursor: pointer;
+    }
+    .track::before {
+        content: '';
+        position: absolute;
+        width: 11px; height: 11px;
+        left: 2px; top: 2px;
+        background: var(--text-muted);
+        border-radius: 50%;
+        transition: transform 0.2s, background 0.2s;
+    }
+    .switch input:checked + .track { background: var(--accent); border-color: var(--accent); }
+    .switch input:checked + .track::before {
+        transform: translateX(13px);
+        background: #fff;
+    }
+
+    .modal-footer { margin-top: 10px; }
+
+    .save-btn {
+        width: 100% !important;
+        padding: 6px;
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s;
+        height: auto !important;
+    }
+    .save-btn:hover { background: var(--accent-hover); }
 </style>

@@ -5,16 +5,35 @@
  */
 
 import { app, BrowserWindow, ipcMain } from "electron";
-import { autoUpdater, UpdateInfo } from "electron-updater";
+import { existsSync, readFileSync } from "fs";
 import { join } from "path";
+import { autoUpdater, UpdateInfo } from "electron-updater";
 import { IpcEvents, UpdaterIpcEvents } from "shared/IpcEvents";
 import { STATIC_DIR } from "shared/paths";
 import { Millis } from "shared/utils/millis";
 
 import { State } from "./settings";
+import { DATA_DIR } from "./constants";
 import { handle } from "./utils/ipcWrappers";
 import { makeLinksOpenExternally } from "./utils/makeLinksOpenExternally";
 import { loadView } from "./vesktopStatic";
+
+// Lecture des prefs installeur (%AppData%\Nightcord\settings\installer-prefs.json)
+function readInstallerPrefs() {
+    const defaults = { defaultPlugins: true, autoUpdate: true };
+    try {
+        const p = join(DATA_DIR, "settings", "installer-prefs.json");
+        if (existsSync(p)) {
+            const raw = JSON.parse(readFileSync(p, "utf-8"));
+            return { defaultPlugins: raw.defaultPlugins !== false, autoUpdate: raw.autoUpdate !== false };
+        }
+    } catch { }
+    return defaults;
+}
+const _installerPrefs = readInstallerPrefs();
+
+// Exporte les prefs pour que d'autres modules puissent les lire (ex: plugin defaultPlugins)
+export const installerPrefs = _installerPrefs;
 
 let updaterWindow: BrowserWindow | null = null;
 
@@ -23,6 +42,10 @@ autoUpdater.on("update-available", update => {
     if ((State.store.updater?.snoozeUntil ?? 0) > Date.now()) return;
     if (update.version === app.getVersion()) return;
     if (updaterWindow && !updaterWindow.isDestroyed()) return;
+
+    // Si autoUpdate est désactivé, on ne s'ouvre pas automatiquement.
+    // L'utilisateur devra aller dans Settings > Updater pour voir la mise à jour.
+    if (!_installerPrefs.autoUpdate) return;
 
     openUpdater(update);
 });
@@ -94,7 +117,11 @@ function openUpdater(update: UpdateInfo) {
     });
     makeLinksOpenExternally(updaterWindow);
 
-    handle(UpdaterIpcEvents.GET_DATA, () => ({ update, version: app.getVersion() }));
+    handle(UpdaterIpcEvents.GET_DATA, () => ({
+        update,
+        version: app.getVersion(),
+        autoUpdate: _installerPrefs.autoUpdate
+    }));
     handle(UpdaterIpcEvents.INSTALL, async () => {
         await autoUpdater.downloadUpdate();
         // L'utilisateur a cliqué "Installer" — on installe et redémarre

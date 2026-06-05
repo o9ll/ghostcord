@@ -22,8 +22,6 @@ import { existsSync as fsExistsSync, statSync as fsStatSync } from "original-fs"
 import { dirname, join } from "path";
 
 import { registerMediaPermissionsForSession } from "../nightcord/main/mediaPermissions";
-// Note: nightcordTray removed — Nightcord injects silently into Discord,
-// Discord manages its own tray icon (same behaviour as Equicord).
 import { RendererSettings } from "./settings";
 import { patchTrayMenu } from "./trayMenu";
 import { IS_VANILLA } from "./utils/constants";
@@ -34,8 +32,6 @@ console.log("[Nightcord] Starting up...");
 const injectorPath = require.main!.filename;
 
 // The original app.asar
-// With Discord's newUpdater system, _app.asar may not exist as a real file.
-// In that case, fall back to process.resourcesPath which points to Discord's resources folder.
 const _asarFromInjector = join(dirname(injectorPath), "..", "_app.asar");
 const _asarFromResources = join(process.resourcesPath, "_app.asar");
 const asarPath = (fsExistsSync(_asarFromInjector) && !fsStatSync(_asarFromInjector).isDirectory())
@@ -85,7 +81,6 @@ if (!IS_VANILLA) {
                 const isMainWindow = options.title === "Discord";
                 options.webPreferences.preload = join(__dirname, "preload.js");
                 options.webPreferences.sandbox = false;
-                // work around discord unloading when in background
                 options.webPreferences.backgroundThrottling = false;
 
                 let ses = options.webPreferences.session;
@@ -154,9 +149,7 @@ if (!IS_VANILLA) {
                                 isFakeFullScreen = true;
                                 originalBounds = this.getBounds();
                                 isMaximizedBefore = this.isMaximized();
-
                                 const display = electron.screen.getDisplayMatching(originalBounds).bounds;
-
                                 this.setResizable(false);
                                 this.setBounds(display);
                                 this.setAlwaysOnTop(true, "screen-saver");
@@ -182,12 +175,15 @@ if (!IS_VANILLA) {
                 };
 
                 this.isFullScreen = () => {
-                    if (isTransparent) {
-                        return isFakeFullScreen;
-                    }
+                    if (isTransparent) return isFakeFullScreen;
                     return superIsFullScreen();
                 };
 
+                // ── Fullscreen via HTML5 (vidéo plein écran, etc.) ──
+                // On branche enter/leave-html-full-screen dans les deux modes pour que
+                // les vrais plein écrans HTML5 fonctionnent correctement.
+                // DISCORD_WINDOW_TOGGLE_FULLSCREEN est neutralisé plus bas — il ne
+                // passera JAMAIS par setFullScreen natif.
                 if (isTransparent) {
                     this.on("enter-html-full-screen", () => {
                         if (!isFakeFullScreen) this.setFullScreen(true);
@@ -195,10 +191,26 @@ if (!IS_VANILLA) {
                     this.on("leave-html-full-screen", () => {
                         if (isFakeFullScreen) this.setFullScreen(false);
                     });
+                } else {
+                    this.on("enter-html-full-screen", () => {
+                        if (!superIsFullScreen()) superSetFullScreen(true);
+                    });
+                    this.on("leave-html-full-screen", () => {
+                        if (superIsFullScreen()) superSetFullScreen(false);
+                    });
                 }
 
+                // ── F11 géré ici, côté main process ──
+                // On intercepte F11 via before-input-event pour basculer le fullscreen
+                // utilisateur. C'est la SEULE source légitime de toggle fullscreen manuel.
+                this.webContents.on("before-input-event", (event, input) => {
+                    if (input.type === "keyDown" && input.key === "F11" && !input.control && !input.shift && !input.alt && !input.meta) {
+                        event.preventDefault();
+                        this.setFullScreen(!this.isFullScreen());
+                    }
+                });
+
                 // Apply Windows background material after window creation.
-                // Win11 uses setBackgroundMaterial; Win10 falls back to vibrancy.
                 if (process.platform === "win32" && winMaterial && winMaterial !== "none") {
                     try {
                         let applied = false;
@@ -227,8 +239,6 @@ if (!IS_VANILLA) {
         }
     }
     Object.assign(BrowserWindow, electron.BrowserWindow);
-    // esbuild may rename our BrowserWindow, which leads to it being excluded
-    // from getFocusedWindow(), so this is necessary
     Object.defineProperty(BrowserWindow, "name", { value: "BrowserWindow", configurable: true });
 
     // Replace electrons exports with our custom BrowserWindow
@@ -252,15 +262,20 @@ if (!IS_VANILLA) {
         registerMediaPermissionsForSession(session.defaultSession);
     });
 
-    // Intercept native Discord DISCORD_WINDOW_TOGGLE_FULLSCREEN IPC.
-    // MUST be registered synchronously HERE — before require(discord) below.
-    // Discord registers its own handler at module load time (synchronously).
-    // If we wait for app.whenReady(), Discord's handler is already registered
-    // and ipcMain.handle() throws "Attempted to register a second handler" → crash.
+    // ── Neutralisation de DISCORD_WINDOW_TOGGLE_FULLSCREEN ──
     //
-    // Strategy: patch ipcMain.handle itself to catch ALL duplicate registrations
-    // (not just fullscreen). If a second handler is registered for the same channel,
-    // we silently ignore it instead of crashing.
+    // PROBLÈME RACINE : Discord émet cet IPC automatiquement à chaque démarrage
+    // ET à chaque rechargement de thème pour "synchroniser" son état interne.
+    // L'ancien handler faisait `win.setFullScreen(!win.isFullScreen())` — un toggle
+    // aveugle. Résultat : fenêtre maximisée + isFullScreen()=false → setFullScreen(true)
+    // → overlay OS fullscreen → tous les inputs bloqués, app figée. F11 sortait du
+    // fullscreen et débloquait. Le fix du délai de 2s ne suffisait pas car les thèmes
+    // rechargent Discord après ce délai.
+    //
+    // SOLUTION : on intercepte le handler Discord et on le remplace par un no-op
+    // complet. Le fullscreen utilisateur est désormais géré exclusivement via F11
+    // intercepté dans before-input-event ci-dessus — ce qui est à la fois plus propre
+    // et impossible à déclencher accidentellement par Discord.
     {
         const _originalHandle = electron.ipcMain.handle.bind(electron.ipcMain);
         const FULLSCREEN_CHANNEL = "DISCORD_WINDOW_TOGGLE_FULLSCREEN";
@@ -270,9 +285,11 @@ if (!IS_VANILLA) {
             if (channel === FULLSCREEN_CHANNEL) {
                 if (_fullscreenPatched) return;
                 _fullscreenPatched = true;
-                _originalHandle(FULLSCREEN_CHANNEL, (event: electron.IpcMainInvokeEvent) => {
-                    const win = electron.BrowserWindow.fromWebContents(event.sender);
-                    if (win) win.setFullScreen(!win.isFullScreen());
+                // No-op : on enregistre un handler vide pour que Discord ne crash pas
+                // ("no handler registered"), mais on ne fait RIEN — le fullscreen est
+                // géré par before-input-event (F11) côté main process.
+                _originalHandle(FULLSCREEN_CHANNEL, (_event: electron.IpcMainInvokeEvent) => {
+                    // Intentionnellement vide.
                 });
                 return;
             }

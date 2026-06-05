@@ -553,6 +553,106 @@
       letter-spacing: 0.05em;
     }
 
+
+    /* ── Nightcord Options sub-modal ───────────────────────────────────── */
+    .nc-options-overlay {
+      position: fixed; top: 42px; left: 0; right: 0; bottom: 0;
+      background: rgba(11,11,24,0.92);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 200; backdrop-filter: blur(6px);
+      opacity: 0; pointer-events: none; transition: opacity .25s;
+    }
+    .nc-options-overlay.visible { opacity: 1; pointer-events: all; }
+
+    .nc-options-container {
+      width: 58%;
+      background: rgba(17,17,42,0.98);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 26px 28px 22px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+      animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .nc-options-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .nc-options-header h2 {
+      font-size: 16px; font-weight: 700; color: var(--text); font-family: var(--font);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nc-options-header h2 svg { color: var(--accent); }
+    .nc-options-close {
+      background: transparent; border: none; color: var(--muted);
+      cursor: pointer; font-size: 16px; transition: color .15s;
+    }
+    .nc-options-close:hover { color: var(--error); }
+
+    .nc-toggle-row {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px; padding: 14px 16px;
+      background: rgba(30,30,69,0.4);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      transition: border-color .15s;
+    }
+    .nc-toggle-row:hover { border-color: rgba(123,108,255,0.4); }
+    .nc-toggle-row:last-child { margin-bottom: 0; }
+
+    .nc-toggle-info { flex: 1; }
+    .nc-toggle-label {
+      font-size: 13px; font-weight: 700; color: var(--text); font-family: var(--font);
+      margin-bottom: 4px;
+    }
+    .nc-toggle-desc {
+      font-size: 11px; color: var(--muted); font-family: var(--font); line-height: 1.5;
+    }
+
+    /* Toggle switch */
+    .nc-switch { position: relative; width: 42px; height: 24px; flex-shrink: 0; margin-top: 2px; }
+    .nc-switch input { opacity: 0; width: 0; height: 0; }
+    .nc-switch-track {
+      position: absolute; inset: 0; background: rgba(107,106,153,0.3);
+      border: 1px solid var(--border); border-radius: 24px;
+      cursor: pointer; transition: background .2s, border-color .2s;
+    }
+    .nc-switch-track::before {
+      content: ''; position: absolute;
+      width: 16px; height: 16px; left: 3px; top: 3px;
+      background: var(--muted); border-radius: 50%;
+      transition: transform .2s, background .2s;
+    }
+    .nc-switch input:checked + .nc-switch-track {
+      background: rgba(123,108,255,0.3);
+      border-color: var(--accent);
+    }
+    .nc-switch input:checked + .nc-switch-track::before {
+      transform: translateX(18px);
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--glow);
+    }
+
+    .nc-options-save {
+      width: 100%; margin-top: 16px; padding: 11px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white; border: none; border-radius: 8px;
+      font-family: var(--font); font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: opacity .15s, transform .15s;
+      box-shadow: 0 4px 16px rgba(123,108,255,0.35);
+    }
+    .nc-options-save:hover { opacity: 0.9; transform: translateY(-1px); }
+    .nc-options-save:active { transform: none; }
+
+    .nc-options-saved {
+      font-size: 11px; color: var(--success); font-family: var(--font-mono);
+      text-align: center; margin-top: 8px; opacity: 0;
+      transition: opacity .3s;
+    }
+    .nc-options-saved.show { opacity: 1; }
+    /* ──────────────────────────────────────────────────────────────────── */
+
     .btn-link-icon {
       width: 20px;
       height: 20px;
@@ -656,6 +756,12 @@
               <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
             </svg>
             <span>Official Website</span>
+          </button>
+          <button class="btn-setting-link" id="btn-nc-options" onclick="openNcOptions()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="btn-link-icon" style="color:var(--accent)">
+              <path fill-rule="evenodd" d="M10.56 1.1c-.46.05-.7.53-.64.98.18 1.16-.19 2.2-.98 2.53-.8.33-1.79-.15-2.49-1.1-.27-.36-.78-.52-1.14-.24-.77.59-1.45 1.27-2.04 2.04-.28.36-.12.87.24 1.14.96.7 1.43 1.7 1.1 2.49-.33.8-1.37 1.16-2.53.98-.45-.07-.93.18-.99.64a11.1 11.1 0 0 0 0 2.88c.06.46.54.7.99.64 1.16-.18 2.2.19 2.53.98.33.8-.14 1.79-1.1 2.49-.36.27-.52.78-.24 1.14.59.77 1.27 1.45 2.04 2.04.36.28.87.12 1.14-.24.7-.95 1.7-1.43 2.49-1.1.8.33 1.16 1.37.98 2.53-.07.45.18.93.64.99a11.1 11.1 0 0 0 2.88 0c.46-.06.7-.54.64-.99-.18-1.16.19-2.2.98-2.53.8-.33 1.79.14 2.49 1.1.27.36.78.52 1.14.24.77-.59 1.45-1.27 2.04-2.04.28-.36.12-.87-.24-1.14-.96-.7-1.43-1.7-1.1-2.49.33-.8 1.37-1.16 2.53-.98.45.07.93-.18.99-.64a11.1 11.1 0 0 0 0-2.88c-.06-.46-.54-.7-.99-.64-1.16.18-2.2-.19-2.53-.98-.33-.8.14-1.79 1.1-2.49.36-.27.52-.78.24-1.14a11.07 11.07 0 0 0-2.04-2.04c-.36-.28-.87-.12-1.14.24-.7.96-1.7 1.43-2.49 1.1-.8-.33-1.16-1.37-.98-2.53.07-.45-.18-.93-.64-.99a11.1 11.1 0 0 0-2.88 0ZM16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd"/>
+            </svg>
+            <span>Nightcord Options</span>
           </button>
           <button class="btn-setting-link btn-github" onclick="window.nightcord.openUrl('https://git.nightcord.ru/nightcord/nightcord')">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="btn-link-icon">
@@ -927,6 +1033,84 @@
     loadDiscords();
     loadLatestVersion();
   </script>
+
+  <!-- Sous-modale Nightcord Options -->
+  <div class="nc-options-overlay" id="nc-options-overlay" onclick="closeNcOptions(event)">
+    <div class="nc-options-container" onclick="event.stopPropagation()">
+      <div class="nc-options-header">
+        <h2>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" d="M10.56 1.1c-.46.05-.7.53-.64.98.18 1.16-.19 2.2-.98 2.53-.8.33-1.79-.15-2.49-1.1-.27-.36-.78-.52-1.14-.24-.77.59-1.45 1.27-2.04 2.04-.28.36-.12.87.24 1.14.96.7 1.43 1.7 1.1 2.49-.33.8-1.37 1.16-2.53.98-.45-.07-.93.18-.99.64a11.1 11.1 0 0 0 0 2.88c.06.46.54.7.99.64 1.16-.18 2.2.19 2.53.98.33.8-.14 1.79-1.1 2.49-.36.27-.52.78-.24 1.14.59.77 1.27 1.45 2.04 2.04.36.28.87.12 1.14-.24.7-.95 1.7-1.43 2.49-1.1.8.33 1.16 1.37.98 2.53-.07.45.18.93.64.99a11.1 11.1 0 0 0 2.88 0c.46-.06.7-.54.64-.99-.18-1.16.19-2.2.98-2.53.8-.33 1.79.14 2.49 1.1.27.36.78.52 1.14.24.77-.59 1.45-1.27 2.04-2.04.28-.36.12-.87-.24-1.14-.96-.7-1.43-1.7-1.1-2.49.33-.8 1.37-1.16 2.53-.98.45.07.93-.18.99-.64a11.1 11.1 0 0 0 0-2.88c-.06-.46-.54-.7-.99-.64-1.16.18-2.2-.19-2.53-.98-.33-.8.14-1.79 1.1-2.49.36-.27.52-.78.24-1.14a11.07 11.07 0 0 0-2.04-2.04c-.36-.28-.87-.12-1.14.24-.7.96-1.7 1.43-2.49 1.1-.8-.33-1.16-1.37-.98-2.53.07-.45-.18-.93-.64-.99a11.1 11.1 0 0 0-2.88 0ZM16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd"/>
+          </svg>
+          Nightcord Options
+        </h2>
+        <button class="nc-options-close" onclick="document.getElementById('nc-options-overlay').classList.remove('visible')">&#x2715;</button>
+      </div>
+
+      <div class="nc-toggle-row">
+        <div class="nc-toggle-info">
+          <div class="nc-toggle-label">Config par defaut</div>
+          <div class="nc-toggle-desc">
+            Actif : tous les plugins marques &ldquo;actif par defaut&rdquo; dans Nightcord seront actifs apres installation.<br>
+            Inactif : aucun plugin ne sera actif &mdash; installation minimaliste.
+          </div>
+        </div>
+        <label class="nc-switch">
+          <input type="checkbox" id="toggle-default-plugins" checked>
+          <span class="nc-switch-track"></span>
+        </label>
+      </div>
+
+      <div class="nc-toggle-row">
+        <div class="nc-toggle-info">
+          <div class="nc-toggle-label">Mise a jour automatique</div>
+          <div class="nc-toggle-desc">
+            Actif : Nightcord propose les mises a jour avec un compteur 10 s et les installe automatiquement.<br>
+            Inactif : les mises a jour sont proposees mais tu dois cliquer toi-meme pour les installer.
+          </div>
+        </div>
+        <label class="nc-switch">
+          <input type="checkbox" id="toggle-auto-update" checked>
+          <span class="nc-switch-track"></span>
+        </label>
+      </div>
+
+      <button class="nc-options-save" onclick="saveNcOptions()">Enregistrer</button>
+      <div class="nc-options-saved" id="nc-options-saved">&#x2713; Options enregistrees</div>
+    </div>
+  </div>
+
+  <script>
+    let _ncPrefs = { defaultPlugins: true, autoUpdate: true };
+
+    function loadNcPrefs() {
+      try {
+        const raw = window.nightcord.getInstallerSettings();
+        if (raw && typeof raw === 'object') _ncPrefs = Object.assign(_ncPrefs, raw);
+      } catch(e) { console.warn('loadNcPrefs error', e); }
+      document.getElementById('toggle-default-plugins').checked = !!_ncPrefs.defaultPlugins;
+      document.getElementById('toggle-auto-update').checked     = !!_ncPrefs.autoUpdate;
+    }
+
+    function openNcOptions() {
+      loadNcPrefs();
+      document.getElementById('nc-options-overlay').classList.add('visible');
+    }
+
+    function closeNcOptions(e) {
+      if (e.target === document.getElementById('nc-options-overlay'))
+        document.getElementById('nc-options-overlay').classList.remove('visible');
+    }
+
+    function saveNcOptions() {
+      _ncPrefs.defaultPlugins = document.getElementById('toggle-default-plugins').checked;
+      _ncPrefs.autoUpdate     = document.getElementById('toggle-auto-update').checked;
+      try { window.nightcord.setInstallerSettings(_ncPrefs); } catch(e) {}
+      const el = document.getElementById('nc-options-saved');
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 2200);
+    }
+  </script>
+
 </body>
 </html>
-
