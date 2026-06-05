@@ -355,7 +355,7 @@ const old = {
       "tooltip": "Verified"
     }
   ],
-  "1086802921984893038": [
+  "1098251321682968597": [
     {
       "badge": "https://i.imgur.com/Wyw0BqM.png",
       "tooltip": "Partner"

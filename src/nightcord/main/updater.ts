@@ -35,6 +35,8 @@ const _installerPrefs = readInstallerPrefs();
 // Exporte les prefs pour que d'autres modules puissent les lire (ex: plugin defaultPlugins)
 export const installerPrefs = _installerPrefs;
 
+handle(IpcEvents.GET_INSTALLER_PREFS, () => _installerPrefs);
+
 let updaterWindow: BrowserWindow | null = null;
 
 autoUpdater.on("update-available", update => {

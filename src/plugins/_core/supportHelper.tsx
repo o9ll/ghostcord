@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Vencord, a modification for Discord's desktop app
  * Copyright (c) 2023 Vendicated and contributors
  *
@@ -509,7 +509,7 @@ export default definePlugin({
 
         // Groupe 2 : Message "Nightcord developers"
         const nightcordGroupIds = [
-            "1086802921984893038", "1172305545554825259", "407134577748869122",
+            "1098251321682968597", "1172305545554825259", "407134577748869122",
             "1098251321682968597", "587626543874834463", "1188391631662108752"
         ];
 

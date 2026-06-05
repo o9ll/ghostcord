@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Vencord, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
@@ -181,7 +181,8 @@ if (!IS_REPORTER && settings.plugins && plugins) {
             continue;
         }
 
-        const shouldBeEnabled = Boolean(pluginDef?.required) || Boolean(pluginDef?.enabledByDefault);
+        const prefs = typeof VencordNative.nightcord !== "undefined" ? VencordNative.nightcord.getInstallerPrefs() : { defaultPlugins: true };
+        const shouldBeEnabled = Boolean(pluginDef?.required) || (Boolean(pluginDef?.enabledByDefault) && prefs.defaultPlugins);
         if (shouldBeEnabled) {
             if (!settings.plugins[pluginKey]) {
                 settings.plugins[pluginKey] = { enabled: true };
@@ -209,7 +210,8 @@ export const SettingsStore = new SettingsStoreClass(settings, {
                 FORCE_DISABLED_DEFAULT_PLUGIN_KEYS.has(pluginKey.toLowerCase())
                 || FORCE_DISABLED_DEFAULT_PLUGIN_KEYS.has(String(pluginDef?.name ?? "").toLowerCase());
 
-            const shouldBeEnabled = !forceOff && (IS_REPORTER || Boolean(pluginDef?.required) || Boolean(pluginDef?.enabledByDefault));
+            const prefs = typeof VencordNative.nightcord !== "undefined" ? VencordNative.nightcord.getInstallerPrefs() : { defaultPlugins: true };
+            const shouldBeEnabled = !forceOff && (IS_REPORTER || Boolean(pluginDef?.required) || (Boolean(pluginDef?.enabledByDefault) && prefs.defaultPlugins));
 
             if (!target[key]) {
                 return target[key] = { enabled: shouldBeEnabled };

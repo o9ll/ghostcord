@@ -36,7 +36,7 @@ import { openNotificationSettingsModal } from "./NotificationSettings";
 const cl = classNameFactory("vc-vencord-tab-");
 
 const DEV_TEAM_IDS = [
-    { id: "1086802921984893038", role: "Owner" },
+    { id: "1098251321682968597", role: "Owner" },
     { id: "171356978310938624", role: "Co-Owner" }
 ];
 
