@@ -74,6 +74,8 @@ jobs:
       - name: Upload nightcord-dist.zip to Release
         uses: softprops/action-gh-release@v2
         with:
-          files: nightcord-dist.zip
+          files: |
+            nightcord-dist.zip
+            dist/desktop.asar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
