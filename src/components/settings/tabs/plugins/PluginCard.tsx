@@ -12,12 +12,14 @@ import { classNameFactory } from "@utils/css";
 import { Logger } from "@utils/Logger";
 import { ModalCloseButton, ModalContent, ModalHeader, ModalRoot, ModalSize,openModal } from "@utils/modal";
 import { OptionType, Plugin } from "@utils/types";
+import { Button } from "@components/Button";
 import { React, showToast, Text, Toasts } from "@webpack/common";
 import { Settings } from "Vencord";
 import {domain} from "../../../../../DOMAIN.json";
 
 import { TUTORIAL_CACHE } from "./components/Common";
 import { openPluginModal } from "./PluginModal";
+import { TUTORIAL_PLUGIN_NAMES } from "./tutorialList";
 
 const logger = new Logger("PluginCard");
 const cl = classNameFactory("vc-plugins-");
@@ -27,54 +29,33 @@ interface PluginCardProps extends React.HTMLProps<HTMLDivElement> {
     disabled?: boolean;
     onRestartNeeded(name: string, key: string): void;
     isNew?: boolean;
+    hasTutorial?: boolean;
     onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
     onMouseLeave?: React.MouseEventHandler<HTMLDivElement>;
 }
 
-function useTutorialExists(pluginName: string) {
-    const [exists, setExists] = React.useState<boolean | null>(
-        TUTORIAL_CACHE.has(pluginName) ? TUTORIAL_CACHE.get(pluginName)! : null
-    );
+/**
+ * Populate TUTORIAL_CACHE from the static list and call onProgress immediately.
+ * No network requests — avoids CORS issues when fetching from git.nightcord.online.
+ */
+export function loadTutorials(pluginNames: string[], onProgress: (found: Set<string>) => void) {
+    const found = new Set<string>();
 
-    React.useEffect(() => {
-        if (TUTORIAL_CACHE.has(pluginName)) {
-            setExists(TUTORIAL_CACHE.get(pluginName)!);
-            return;
-        }
+    for (const name of pluginNames) {
+        const has = TUTORIAL_PLUGIN_NAMES.has(name);
+        TUTORIAL_CACHE.set(name, has);
+        if (has) found.add(name);
+    }
 
-        let cancelled = false;
-        fetch(
-            `https://git.${domain}/nightcord-tutorials/raw/branch/main/videos/${pluginName}.mp4`,
-            { method: "HEAD" }
-        )
-            .then(res => {
-                if (!cancelled) {
-                    const found = res.ok;
-                    TUTORIAL_CACHE.set(pluginName, found);
-                    setExists(found);
-                    // Force le rafraÃ®chissement global pour le filtre
-                    window.dispatchEvent(new CustomEvent("nightcord-tutorial-detected", { detail: { pluginName, found } }));
-                }
-            })
-            .catch(() => {
-                if (!cancelled) {
-                    TUTORIAL_CACHE.set(pluginName, false);
-                    setExists(false);
-                }
-            });
-
-        return () => { cancelled = true; };
-    }, [pluginName]);
-
-    return exists;
+    onProgress(found);
 }
 
-export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, onMouseLeave, isNew }: PluginCardProps) {
+
+export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, onMouseLeave, isNew, hasTutorial }: PluginCardProps) {
     const settings = Settings.plugins[plugin.name];
     const isEnabled = () => isPluginEnabled(plugin.name);
-    const hasTutorial = useTutorialExists(plugin.name);
 
-    function toggleEnabled() {
+    function doToggleEnabled() {
         const wasEnabled = isEnabled();
 
         if (!wasEnabled) {
@@ -120,6 +101,44 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
         settings.enabled = !wasEnabled;
     }
 
+    function toggleEnabled() {
+        const wasEnabled = isEnabled();
+        if (!wasEnabled && plugin.name.toLowerCase() === "autoresponder") {
+            openModal(props => (
+                <ModalRoot {...props} size={ModalSize.SMALL}>
+                    <ModalHeader separator={false}>
+                        <Text variant="heading-lg/semibold">Autoresponder Warning</Text>
+                        <ModalCloseButton onClick={props.onClose} />
+                    </ModalHeader>
+                    <ModalContent>
+                        <Text variant="text-md/normal" style={{ marginBottom: 16 }}>
+                            Are you sure you want to enable the Autoresponder plugin? An AI will automatically reply to your DMs when you are unavailable.
+                        </Text>
+                    </ModalContent>
+                    <div style={{ padding: "16px", display: "flex", justifyContent: "flex-end", gap: "8px" }}>
+                        <Button
+                            variant="link"
+                            onClick={props.onClose}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            variant="primary"
+                            onClick={() => {
+                                props.onClose();
+                                doToggleEnabled();
+                            }}
+                        >
+                            Enable
+                        </Button>
+                    </div>
+                </ModalRoot>
+            ));
+            return;
+        }
+        doToggleEnabled();
+    }
+
     const openTutorialVideo = (e: React.MouseEvent) => {
         e.stopPropagation();
         const videoUrl = `https://git.${domain}/nightcord/nightcord-tutorials/raw/branch/main/videos/${plugin.name}.mp4`;
@@ -127,7 +146,7 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
             <ModalRoot {...props} size={ModalSize.DYNAMIC} className="nc-tutorial-modal">
                 <ModalHeader separator={false}>
                     <Text variant="heading-xl/bold" style={{ flex: 1, color: "#fff" }}>
-                        {plugin.name} â€” Tutorial
+                        {plugin.name} – Tutorial
                     </Text>
                     <ModalCloseButton onClick={props.onClose} />
                 </ModalHeader>
@@ -224,5 +243,3 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
             } />
     );
 }
-
-

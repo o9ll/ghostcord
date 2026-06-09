@@ -9,6 +9,11 @@ import "./styles.css";
 import { findGroupChildrenByChildId } from "@api/ContextMenu";
 import { DataStore } from "@api/index";
 import { definePluginSettings } from "@api/Settings";
+import { LinkButton } from "@components/Button";
+import { Card } from "@components/Card";
+import { Heading } from "@components/Heading";
+import { Margins } from "@utils/margins";
+import { Paragraph } from "@components/Paragraph";
 import { showApiKeyWarning } from "@utils/apiKeyWarning";
 import { ModalCloseButton,ModalRoot, openModal } from "@utils/modal";
 import definePlugin, { OptionType } from "@utils/types";
@@ -16,6 +21,7 @@ import { findByPropsLazy } from "@webpack";
 import { ChannelStore, FluxDispatcher, IconUtils, Menu,React, RelationshipStore, RestAPI, useEffect, useRef, UserStore, useState } from "@webpack/common";
 
 import { getGroqKey, groqChat,setGroqKey } from "./groqManager";
+import { t } from "../autoTranslateNightcord";
 
 // ── Settings ───────────────────────────────────────────────────────────────────
 
@@ -544,18 +550,18 @@ Rules:
                     </div>
                     <div className="nai-header-info">
                         <div className="nai-header-title-row">
-                            <span className="nai-header-title">Nightcord AI</span>
+                            <span className="nai-header-title">{t("Nightcord AI")}</span>
                             <span className="nai-header-badge">{providerLabel}</span>
                         </div>
                         <div className="nai-header-status">
                             <span className={`nai-dot ${hasKey ? "nai-dot--on" : "nai-dot--off"}`} />
-                            {hasKey ? "Online" : "⚠ API Key missing"}
+                            {hasKey ? t("Online") : t("⚠ API key missing")}
                         </div>
                     </div>
                 </div>
                 <div className="nai-header-right">
                     {messages.length > 0 && (
-                        <button className="nai-icon-btn" title="Clear history"
+                        <button className="nai-icon-btn" title={t("Clear history")}
                             onClick={() => { setMessages([]); DataStore.set(DS_KEY, []); }}>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14H6L5 6" /><path d="M9 6V4h6v2" />
@@ -584,9 +590,9 @@ Rules:
                                     </defs>
                                 </svg>
                             </div>
-                            <p className="nai-empty-title">How can I help you?</p>
+                            <p className="nai-empty-title">{t("How can I help you?")}</p>
                             <p className="nai-empty-sub">
-                                {hasKey ? "Ask anything!" : "Configure your API key in Equicord Settings → Plugins → NightcordAI"}
+                                {hasKey ? t("Ask anything!") : t("Configure ta clé API dans Equicord Settings ? Plugins ? NightcordAI")}
                             </p>
                             <div className="nai-chips">
                                 {hasKey
@@ -595,7 +601,7 @@ Rules:
                                             {s}
                                         </button>
                                     ))
-                                    : <button className="nai-chip nai-chip--link" onClick={() => showApiKeyWarning("NightcordAI")}>🔑 Groq Key (free)</button>
+                                    : <button className="nai-chip nai-chip--link" onClick={() => showApiKeyWarning("NightcordAI")}>{t("?? Clé Groq (gratuit)")}</button>
                                 }
                             </div>
                         </div>
@@ -691,7 +697,7 @@ Rules:
                         className="nai-attach-btn"
                         onClick={() => fileInputRef.current?.click()}
                         disabled={loading || !hasKey}
-                        title="Attach a file"
+                        title={t("Attach a file")}
                     >
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
@@ -704,7 +710,7 @@ Rules:
                         onChange={e => setInput(e.target.value)}
                         onKeyDown={handleKeyDown}
                         onPaste={handlePaste}
-                        placeholder={hasKey ? "Send a message… (Enter = send, Ctrl+V = paste image)" : "Configure your API key first…"}
+                        placeholder={hasKey ? t("Send a message… (Enter = send, Ctrl+V = paste image)") : t("Configure your API key first…")}
                         disabled={loading || !hasKey}
                         rows={1}
                     />
@@ -719,7 +725,7 @@ Rules:
                         }
                     </button>
                 </div>
-                <p className="nai-hint">Shift+Enter for new line · Local history (100 messages)</p>
+                <p className="nai-hint">{t("Shift+Enter for new line · Local history (100 messages)")}</p>
             </div>
 
         </div>
@@ -754,7 +760,7 @@ function NightcordAINavButton({ selected }: { selected?: boolean; }) {
                     <path fill="currentColor" fillRule="evenodd" d="M12 21c5.52 0 10-1.86 10-6 0-5.59-2.8-10.07-4.26-11.67a1 1 0 1 0-1.48 1.34 14.8 14.8 0 0 1 2.35 3.86A10.23 10.23 0 0 0 12 6C9.47 6 7.15 7.02 5.4 8.53a14.8 14.8 0 0 1 2.34-3.86 1 1 0 1 0-1.48-1.34A18.65 18.65 0 0 0 2 15c0 4.14 4.48 6 10 6Zm0-12c3.87 0 7 2 7 4.2S15.87 17 12 17s-7-1.6-7-3.8C5 11 8.13 9 12 9Z" clipRule="evenodd" />
                 </svg>
             </div>
-            <span className="nai-nav-label">Nightcord AI</span>
+            <span className="nai-nav-label">{t("Nightcord AI")}</span>
             <span className="nai-nav-pill">AI</span>
         </div>
     );
@@ -768,6 +774,23 @@ export default definePlugin({
     description: "AI Chat (Groq) integrated in Discord. Replaces 'Shop' in the DM panel.",
     authors: [{ name: "Nightcord", id: 0n }],
     settings,
+
+    settingsAboutComponent() {
+        return (
+            <Card>
+                <Heading tag="h5">How to get a Groq API key</Heading>
+                <Paragraph>
+                    Create a free account on <strong>console.groq.com</strong>, then go to <strong>API Keys</strong> and click <strong>Create API Key</strong>. Copy the key and paste it in the <strong>Api Key</strong> field above.
+                </Paragraph>
+                <Paragraph style={{ marginTop: 6 }}>
+                    The Groq API is <strong>free</strong> and gives access to fast LLMs (Llama, Mixtral…).
+                </Paragraph>
+                <LinkButton size="small" href="https://console.groq.com/keys" className={Margins.top8}>
+                    Create API Key
+                </LinkButton>
+            </Card>
+        );
+    },
 
     patches: [
         {

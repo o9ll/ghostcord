@@ -181,7 +181,7 @@ if (!IS_REPORTER && settings.plugins && plugins) {
             continue;
         }
 
-        const prefs = typeof VencordNative.nightcord !== "undefined" ? VencordNative.nightcord.getInstallerPrefs() : { defaultPlugins: true };
+        const prefs = getCachedPrefs();
         const shouldBeEnabled = Boolean(pluginDef?.required) || (Boolean(pluginDef?.enabledByDefault) && prefs.defaultPlugins);
         if (shouldBeEnabled) {
             if (!settings.plugins[pluginKey]) {
@@ -191,6 +191,13 @@ if (!IS_REPORTER && settings.plugins && plugins) {
             }
         }
     }
+}
+
+let _cachedPrefs: any = null;
+function getCachedPrefs() {
+    if (_cachedPrefs !== null) return _cachedPrefs;
+    _cachedPrefs = typeof VencordNative.nightcord !== "undefined" ? VencordNative.nightcord.getInstallerPrefs() : { defaultPlugins: true };
+    return _cachedPrefs;
 }
 
 export const SettingsStore = new SettingsStoreClass(settings, {
@@ -210,7 +217,7 @@ export const SettingsStore = new SettingsStoreClass(settings, {
                 FORCE_DISABLED_DEFAULT_PLUGIN_KEYS.has(pluginKey.toLowerCase())
                 || FORCE_DISABLED_DEFAULT_PLUGIN_KEYS.has(String(pluginDef?.name ?? "").toLowerCase());
 
-            const prefs = typeof VencordNative.nightcord !== "undefined" ? VencordNative.nightcord.getInstallerPrefs() : { defaultPlugins: true };
+            const prefs = getCachedPrefs();
             const shouldBeEnabled = !forceOff && (IS_REPORTER || Boolean(pluginDef?.required) || (Boolean(pluginDef?.enabledByDefault) && prefs.defaultPlugins));
 
             if (!target[key]) {

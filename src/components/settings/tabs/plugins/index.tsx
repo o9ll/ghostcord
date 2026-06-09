@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Vencord, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
@@ -19,8 +19,8 @@
 import "./styles.css";
 
 import * as DataStore from "@api/DataStore";
-import { isPluginEnabled, stopPlugin } from "@api/PluginManager";
-import { useSettings } from "@api/Settings";
+import { isPluginEnabled, startPlugin, stopPlugin } from "@api/PluginManager";
+import { Settings, useSettings } from "@api/Settings";
 import { Button } from "@components/Button";
 import { Card } from "@components/Card";
 import { Divider } from "@components/Divider";
@@ -36,15 +36,16 @@ import { Logger } from "@utils/Logger";
 import { Margins } from "@utils/margins";
 import { classes } from "@utils/misc";
 import { relaunch } from "@utils/native";
-import { useAwaiter, useIntersection } from "@utils/react";
+import { useAwaiter } from "@utils/react";
 import { Alerts, lodash, Parser, React, Select as DiscordSelect, TextInput, Toasts, Tooltip, useCallback, useMemo, useState } from "@webpack/common";
 import { JSX } from "react";
 
 import Plugins, { ExcludedPlugins, PluginMeta } from "~plugins";
 
 import { PluginCard } from "./PluginCard";
-import { openWarningModal } from "./PluginModal";
+import { openPluginModal, openResetDefaultsModal, openWarningModal } from "./PluginModal";
 import { StockPluginsCard } from "./PluginStatCards";
+import { TUTORIAL_PLUGIN_NAMES } from "./tutorialList";
 import { UIElementsButton } from "./UIElements";
 
 export const cl = classNameFactory("vc-plugins-");
@@ -61,7 +62,7 @@ function showErrorToast(message: string) {
     });
 }
 
-function ReloadRequiredCard({ required, enabledPlugins, openWarningModal, resetCheckAndDo }) {
+function ReloadRequiredCard({ required, enabledPlugins, openWarningModal, resetCheckAndDo, applyDefaultConfigCheckAndDo }) {
     return (
         <Card className={classes(cl("info-card"), required && "vc-warning-card")}>
             {required ? (
@@ -81,18 +82,32 @@ function ReloadRequiredCard({ required, enabledPlugins, openWarningModal, resetC
                     <Paragraph>Plugins with a cog wheel have settings you can modify!</Paragraph>
                 </>
             )}
-            {enabledPlugins.length > 0 && !required && (
-                <Button
-                    variant="secondary"
-                    size="small"
-                    className={"vc-plugins-disable-warning vc-modal-align-reset"}
-                    onClick={() => {
-                        return openWarningModal(null, undefined, false, enabledPlugins.length, resetCheckAndDo);
-                    }}
-                >
-                    Disable All Plugins
-                </Button>
-            )}
+            <div style={{ display: "flex", gap: "8px" }}>
+                {enabledPlugins.length > 0 && !required && (
+                    <Button
+                        variant="secondary"
+                        size="small"
+                        className={"vc-plugins-disable-warning vc-modal-align-reset"}
+                        onClick={() => {
+                            return openWarningModal(null, undefined, false, enabledPlugins.length, resetCheckAndDo);
+                        }}
+                    >
+                        Disable All Plugins
+                    </Button>
+                )}
+                {!required && (
+                    <Button
+                        variant="secondary"
+                        size="small"
+                        className={"vc-plugins-disable-warning vc-modal-align-reset"}
+                        onClick={() => {
+                            return openResetDefaultsModal(applyDefaultConfigCheckAndDo);
+                        }}
+                    >
+                        Apply Default Config
+                    </Button>
+                )}
+            </div>
         </Card>
     );
 }
@@ -133,9 +148,6 @@ function ExcludedPluginsList({ search }: { search: string; }) {
 
 import { SearchStatus, TUTORIAL_CACHE } from "./components/Common";
 
-// @ts-ignore
-window.TUTORIAL_CACHE = TUTORIAL_CACHE;
-
 // Fallback select natif si le composant Discord n'est pas trouvé
 function NativeSelect({ options, select, isSelected }: any) {
     const currentVal = options.find((o: any) => isSelected(o.value))?.value ?? options.find((o: any) => o.default)?.value ?? options[0]?.value;
@@ -169,6 +181,15 @@ interface PluginSettingsProps {
 export default function PluginSettings({ premiumOnly = false }: PluginSettingsProps) {
     const settings = useSettings();
     const changes = React.useMemo(() => new ChangeList<string>(), []);
+
+    // Static list — no fetch, no CORS issues.
+    // Also populate TUTORIAL_CACHE so the SearchStatus.TUTORIAL filter works.
+    const tutorialPlugins = useMemo(() => {
+        for (const name of Object.values(Plugins).map(p => p.name).filter(Boolean)) {
+            TUTORIAL_CACHE.set(name, TUTORIAL_PLUGIN_NAMES.has(name));
+        }
+        return TUTORIAL_PLUGIN_NAMES;
+    }, []);
 
     React.useEffect(() => {
         return () => {
@@ -233,15 +254,20 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
         setSearchInput(query);
         debouncedSetSearch(query);
     }, [debouncedSetSearch]);
-    const onStatusChange = useCallback((status: SearchStatus) => {
-        setSearchValue(prev => ({ ...prev, status }));
-    }, []);
 
-    // Rafraîchir quand un tuto est détecté
-    React.useEffect(() => {
-        const handler = () => setSearchValue(prev => ({ ...prev }));
-        window.addEventListener("nightcord-tutorial-detected", handler);
-        return () => window.removeEventListener("nightcord-tutorial-detected", handler);
+    const BATCH_SIZE = 40;
+    const [visibleCount, setVisibleCount] = React.useState(BATCH_SIZE);
+
+    // isLoadingMore prevents the sentinel from triggering multiple concurrent loads
+    const isLoadingMore = React.useRef(false);
+    const sentinelRef = React.useRef<HTMLDivElement>(null);
+
+    const onStatusChange = useCallback((status: SearchStatus) => {
+        isLoadingMore.current = false;
+        setVisibleCount(BATCH_SIZE);
+        React.startTransition(() => {
+            setSearchValue(prev => ({ ...prev, status }));
+        });
     }, []);
 
     const pluginFilter = useCallback((plugin: typeof Plugins[keyof typeof Plugins], newPluginsSet: Set<string> | null) => {
@@ -256,6 +282,8 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
         const { status } = searchValue;
         const enabled = isPluginEnabled(plugin.name);
 
+        const pluginMeta = PluginMeta[plugin.name];
+
         switch (status) {
             case SearchStatus.DISABLED:
                 if (enabled) return false;
@@ -264,20 +292,20 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
                 if (!enabled) return false;
                 break;
             case SearchStatus.NIGHTCORD:
-                if (!PluginMeta[plugin.name].folderName.startsWith("src/nightcordplugins/")) return false;
+                if (!pluginMeta?.folderName?.startsWith("src/nightcordplugins/")) return false;
                 break;
             case SearchStatus.OTHERS:
-                if (PluginMeta[plugin.name].folderName.startsWith("src/nightcordplugins/") || PluginMeta[plugin.name].folderName.startsWith("src/plugins/_")) return false;
-                if (!PluginMeta[plugin.name].folderName.startsWith("src/plugins/")) return false;
+                if (pluginMeta?.folderName?.startsWith("src/nightcordplugins/") || pluginMeta?.folderName?.startsWith("src/plugins/_")) return false;
+                if (!pluginMeta?.folderName?.startsWith("src/plugins/")) return false;
                 break;
             case SearchStatus.VENCORD:
-                if (!PluginMeta[plugin.name].folderName.startsWith("src/plugins/")) return false;
+                if (!pluginMeta?.folderName?.startsWith("src/plugins/")) return false;
                 break;
             case SearchStatus.NEW:
                 if (!newPluginsSet?.has(plugin.name)) return false;
                 break;
             case SearchStatus.USER_PLUGINS:
-                if (!PluginMeta[plugin.name]?.userPlugin) return false;
+                if (!pluginMeta?.userPlugin) return false;
                 break;
             case SearchStatus.API_PLUGINS:
                 if (!plugin.name.endsWith("API")) return false;
@@ -315,10 +343,11 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
 
     const handleRestartNeeded = useCallback((name: string, key: string) => changes.handleChange(`${name}:${key}`), [changes]);
 
-    const { nightcordPlugins, othersPlugins, requiredPlugins } = useMemo(() => {
-        const nightcordPlugins = [] as JSX.Element[];
-        const othersPlugins = [] as JSX.Element[];
-        const requiredPlugins = [] as JSX.Element[];
+    // Only filter/categorize plugin DATA here — no JSX created yet
+    const { nightcordData, othersData, requiredData } = useMemo(() => {
+        const nightcordData: typeof sortedPlugins = [];
+        const othersData: typeof sortedPlugins = [];
+        const requiredData: typeof sortedPlugins = [];
 
         const showApi = searchValue.status === SearchStatus.API_PLUGINS;
         for (const p of sortedPlugins) {
@@ -327,47 +356,56 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
 
             if (!pluginFilter(p, newPluginsSet)) continue;
 
-            const isRequired = p.required || p.isDependency || depMap[p.name]?.some(d => settings.plugins[d]?.enabled);
+            const isRequired = p.required || p.isDependency || depMap[p.name]?.some(d => isPluginEnabled(d));
 
             if (isRequired) {
-                const tooltipText = p.required || !depMap[p.name]
-                    ? "This plugin is required for Nightcord to function."
-                    : <PluginDependencyList deps={depMap[p.name]?.filter(d => settings.plugins[d]?.enabled)} />;
-
-                requiredPlugins.push(
-                    <Tooltip text={tooltipText} key={p.name}>
-                        {({ onMouseLeave, onMouseEnter }) => (
-                            <PluginCard
-                                onMouseLeave={onMouseLeave}
-                                onMouseEnter={onMouseEnter}
-                                onRestartNeeded={handleRestartNeeded}
-                                disabled={true}
-                                plugin={p}
-                            />
-                        )}
-                    </Tooltip>
-                );
+                requiredData.push(p);
             } else {
                 const folderName = PluginMeta[p.name]?.folderName ?? "";
-                const isNightcord = folderName.startsWith("src/nightcordplugins/");
-                const card = (
-                    <PluginCard
-                        onRestartNeeded={handleRestartNeeded}
-                        disabled={false}
-                        plugin={p}
-                        isNew={newPluginsSet?.has(p.name)}
-                        key={p.name}
-                    />
-                );
-                if (isNightcord) {
-                    nightcordPlugins.push(card);
+                if (folderName.startsWith("src/nightcordplugins/")) {
+                    nightcordData.push(p);
                 } else {
-                    othersPlugins.push(card);
+                    othersData.push(p);
                 }
             }
         }
-        return { nightcordPlugins, othersPlugins, requiredPlugins };
-    }, [sortedPlugins, searchValue, newPluginsSet, depMap, settings.plugins, pluginFilter, handleRestartNeeded]);
+        return { nightcordData, othersData, requiredData };
+    }, [sortedPlugins, searchValue, newPluginsSet, depMap, pluginFilter]);
+
+    const allDataLength = nightcordData.length + othersData.length;
+    const hasMore = visibleCount < allDataLength;
+
+    // Store allDataLength in a ref so the observer callback always sees the latest value
+    // without needing it as a dependency (which would cause reconnect loops).
+    const allDataLengthRef = React.useRef(allDataLength);
+    allDataLengthRef.current = allDataLength;
+
+    // Mount the IntersectionObserver only once — never reconnect on re-renders.
+    React.useEffect(() => {
+        const el = sentinelRef.current;
+        if (!el) return;
+
+        const observer = new IntersectionObserver(
+            entries => {
+                if (entries[0].isIntersecting && !isLoadingMore.current) {
+                    const total = allDataLengthRef.current;
+                    setVisibleCount(v => {
+                        if (v >= total) return v; // nothing left to load
+                        isLoadingMore.current = true;
+                        React.startTransition(() => {
+                            setTimeout(() => { isLoadingMore.current = false; }, 250);
+                        });
+                        return Math.min(v + BATCH_SIZE, total);
+                    });
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        observer.observe(el);
+        return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); // empty deps — observer is mounted once, uses refs for fresh values
 
     function resetCheckAndDo() {
         let restartNeeded = false;
@@ -409,6 +447,85 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
         }
     }
 
+    function applyDefaultConfigCheckAndDo() {
+        try {
+            let restartNeeded = false;
+            let modifiedCount = 0;
+
+            for (const pluginName in Plugins) {
+                const plugin = Plugins[pluginName];
+
+                // Les plugins APIs ne peuvent pas être configurés directement
+                if (pluginName.endsWith("API")) continue;
+
+                const shouldBeEnabled = Boolean(plugin.required) || Boolean(plugin.enabledByDefault);
+                const currentlyEnabled = isPluginEnabled(pluginName);
+
+                if (currentlyEnabled !== shouldBeEnabled) {
+                    const pluginSettings = settings.plugins[pluginName];
+
+                    if (plugin.patches?.length) {
+                        pluginSettings.enabled = shouldBeEnabled;
+                        changes.handleChange(pluginName);
+                        restartNeeded = true;
+                        modifiedCount++;
+                        continue;
+                    }
+
+                    if (shouldBeEnabled) {
+                        const result = startPlugin(plugin);
+                        if (!result) {
+                            logger.error(`Error while starting plugin ${pluginName}`);
+                            showErrorToast(`Error while starting plugin ${pluginName}`);
+                        } else {
+                            pluginSettings.enabled = true;
+                            modifiedCount++;
+                        }
+                    } else {
+                        const result = stopPlugin(plugin);
+                        if (!result) {
+                            logger.error(`Error while stopping plugin ${pluginName}`);
+                            showErrorToast(`Error while stopping plugin ${pluginName}`);
+                        } else {
+                            pluginSettings.enabled = false;
+                            modifiedCount++;
+                        }
+                    }
+                }
+            }
+
+            if (restartNeeded) {
+                Alerts.show({
+                    title: "Restart Required",
+                    body: (
+                        <>
+                            <p style={{ textAlign: "center" }}>Some plugins require a restart to apply their default configuration.</p>
+                            <p style={{ textAlign: "center" }}>Would you like to restart now?</p>
+                        </>
+                    ),
+                    confirmText: "Restart Now",
+                    cancelText: "Later",
+                    onConfirm: () => relaunch()
+                });
+            } else {
+                Toasts.show({
+                    message: `Default config applied. ${modifiedCount} plugin(s) modified.`,
+                    type: Toasts.Type.SUCCESS,
+                    id: Toasts.genId(),
+                    options: { position: Toasts.Position.BOTTOM }
+                });
+            }
+        } catch (err: any) {
+            Toasts.show({
+                message: `Failed: ${err?.message ?? err}`,
+                type: Toasts.Type.FAILURE,
+                id: Toasts.genId(),
+                options: { position: Toasts.Position.BOTTOM }
+            });
+            logger.error("Apply Default Config crashed:", err);
+        }
+    }
+
     // Code directly taken from supportHelper.tsx
     const { totalStockPlugins, totalUserPlugins, enabledStockPlugins, enabledUserPlugins, enabledPlugins } = useMemo(() => {
         const isApiPlugin = (plugin: string) => plugin.endsWith("API") || Plugins[plugin].required;
@@ -422,29 +539,52 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
         const enabledUserPlugins = enabledPlugins.filter(p => PluginMeta[p].userPlugin).length;
         return { totalStockPlugins, totalUserPlugins, enabledStockPlugins, enabledUserPlugins, enabledPlugins };
     }, [settings.plugins]);
-    const allPlugins = [...nightcordPlugins, ...othersPlugins];
-    const pluginsToLoad = Math.min(36, allPlugins.length);
-    const [visibleCount, setVisibleCount] = React.useState(pluginsToLoad);
-    const loadMore = React.useCallback(() => {
-        setVisibleCount(v => Math.min(v + pluginsToLoad, allPlugins.length));
-    }, [allPlugins.length]);
 
-    const dLoadMore = useMemo(() => debounce(loadMore, 100), [loadMore]);
+    // Slice DATA first, then create JSX only for visible items
+    const nightcordVisibleData = nightcordData.slice(0, Math.min(visibleCount, nightcordData.length));
+    const othersVisibleData = othersData.slice(0, Math.max(0, visibleCount - nightcordData.length));
 
-    const [sentinelRef, isSentinelVisible] = useIntersection();
-    React.useEffect(() => {
-        if (isSentinelVisible && visibleCount < allPlugins.length) {
-            dLoadMore();
-        }
-    }, [isSentinelVisible, visibleCount, allPlugins.length, dLoadMore]);
+    const makeCard = (p: typeof sortedPlugins[number]) => (
+        <ErrorBoundary fallback={<div style={{ color: "red", padding: 8 }}>Failed to render {p.name}.</div>} key={p.name}>
+            <PluginCard
+                onRestartNeeded={handleRestartNeeded}
+                disabled={false}
+                plugin={p}
+                isNew={newPluginsSet?.has(p.name)}
+                hasTutorial={tutorialPlugins.has(p.name)}
+            />
+        </ErrorBoundary>
+    );
 
-    // Split visible count between the two sections proportionally
-    const nightcordVisible = nightcordPlugins.slice(0, Math.min(visibleCount, nightcordPlugins.length));
-    const othersVisible = othersPlugins.slice(0, Math.max(0, visibleCount - nightcordPlugins.length));
+    const makeRequiredCard = (p: typeof sortedPlugins[number]) => {
+        const tooltipText = p.required || !depMap[p.name]
+            ? "This plugin is required for Nightcord to function."
+            : <PluginDependencyList deps={depMap[p.name]?.filter(d => isPluginEnabled(d))} />;
+        return (
+            <ErrorBoundary fallback={<div style={{ color: "red", padding: 8 }}>Failed to render {p.name}.</div>} key={p.name}>
+                <Tooltip text={tooltipText}>
+                    {({ onMouseLeave, onMouseEnter }) => (
+                        <PluginCard
+                            onMouseLeave={onMouseLeave}
+                            onMouseEnter={onMouseEnter}
+                            onRestartNeeded={handleRestartNeeded}
+                            disabled={true}
+                            plugin={p}
+                            hasTutorial={tutorialPlugins.has(p.name)}
+                        />
+                    )}
+                </Tooltip>
+            </ErrorBoundary>
+        );
+    };
+
+    const nightcordPlugins = nightcordVisibleData.map(makeCard);
+    const othersVisible = othersVisibleData.map(makeCard);
+    const requiredPlugins = requiredData.map(makeRequiredCard);
 
     return (
         <SettingsTab>
-            {!premiumOnly && <ReloadRequiredCard required={changes.hasChanges} enabledPlugins={enabledPlugins} openWarningModal={openWarningModal} resetCheckAndDo={resetCheckAndDo} />}
+            {!premiumOnly && <ReloadRequiredCard required={changes.hasChanges} enabledPlugins={enabledPlugins} openWarningModal={openWarningModal} resetCheckAndDo={resetCheckAndDo} applyDefaultConfigCheckAndDo={applyDefaultConfigCheckAndDo} />}
 
             {!premiumOnly && (
                 <div className={cl("stats-container")} style={{ display: "grid", gridTemplateColumns: "1fr" }}>
@@ -481,9 +621,9 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
                                 { label: "Show New", value: SearchStatus.NEW },
                                 hasUserPlugins && { label: "Show UserPlugins", value: SearchStatus.USER_PLUGINS },
                             ].filter(isTruthy)}
-                            serialize={String}
-                            select={status => onStatusChange(status)}
-                            isSelected={v => v === searchValue.status}
+                            serialize={v => String(v)}
+                            select={status => onStatusChange(Number(status) as SearchStatus)}
+                            isSelected={v => Number(v) === searchValue.status}
                             closeOnSelect={true}
                         />
                     </ErrorBoundary>
@@ -493,11 +633,11 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
             {premiumOnly ? (
                 <>
                     <HeadingTertiary className={Margins.top20}>Premium Plugins</HeadingTertiary>
-                    {nightcordPlugins.length || othersPlugins.length
+                    {nightcordData.length || othersData.length
                         ? (
                             <div className={cl("grid")}>
-                                {[...nightcordVisible, ...othersVisible].length
-                                    ? [...nightcordVisible, ...othersVisible]
+                                {[...nightcordPlugins, ...othersVisible].length
+                                    ? [...nightcordPlugins, ...othersVisible]
                                     : <Paragraph>No plugins meet the search criteria.</Paragraph>
                                 }
                             </div>
@@ -507,16 +647,16 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
                 </>
             ) : (
                 <>
-                    {nightcordPlugins.length > 0 && (
+                    {nightcordData.length > 0 && (
                         <>
                             <HeadingTertiary className={Margins.top20}>Nightcord Plugins</HeadingTertiary>
                             <div className={cl("grid")}>
-                                {nightcordVisible}
+                                {nightcordPlugins}
                             </div>
                         </>
                     )}
 
-                    {othersPlugins.length > 0 && (
+                    {othersData.length > 0 && (
                         <>
                             <Divider className={Margins.top20} />
                             <HeadingTertiary className={classes(Margins.top20, Margins.bottom8)}>Others Plugins</HeadingTertiary>
@@ -526,12 +666,18 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
                         </>
                     )}
 
-                    {nightcordPlugins.length === 0 && othersPlugins.length === 0 && (
+                    {nightcordData.length === 0 && othersData.length === 0 && (
                         <ExcludedPluginsList search={search} />
                     )}
 
-                    {visibleCount < allPlugins.length && (
-                        <div ref={sentinelRef} style={{ height: 32 }} />
+                    {/* Sentinel: only rendered when there are more items to load */}
+                    {hasMore && (
+                        <div
+                            ref={sentinelRef}
+                            style={{ height: 40, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-muted)", fontSize: 13 }}
+                        >
+                            Loading more plugins…
+                        </div>
                     )}
                 </>
             )}

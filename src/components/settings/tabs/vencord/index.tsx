@@ -121,8 +121,8 @@ function DevTeamSection() {
                 />
                 <QuickAction
                     Icon={PlanetIcon}
-                    text="NightCord Server"
-                    action={() => window.open("https://discord.gg/nightcord", "_blank")}
+                    text="Nightcord Channel"
+                    action={() => window.open("https://t.me/nightcordoff", "_blank")}
                 />
             </QuickActionCard>
 

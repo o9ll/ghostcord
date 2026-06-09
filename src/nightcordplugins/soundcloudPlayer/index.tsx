@@ -12,6 +12,7 @@ import { EquicordDevs } from "@utils/constants";
 import { ModalRoot, ModalSize,openModal } from "@utils/modal";
 import definePlugin, { IconComponent, PluginNative } from "@utils/types";
 import { MediaEngineStore,React, Select, useEffect, useRef, useState } from "@webpack/common";
+import { t } from "../autoTranslateNightcord";
 
 // ─── Native (IPC → main process) ─────────────────────────────────────────────
 
@@ -609,16 +610,16 @@ function SoundCloudModal({ onClose }: { onClose: () => void; }) {
                     onChange={e => setQuery(e.currentTarget.value)}
                     onKeyDown={e => e.key === "Enter" && doSearch(false)}
                     placeholder="Track, artist..." />
-                <button className="sc-search-btn" onClick={() => doSearch(false)} disabled={!p.clientId}>Search</button>
+                <button className="sc-search-btn" onClick={() => doSearch(false)} disabled={!p.clientId}>{t("Search")}</button>
             </div>
 
             {/* Tabs */}
             <div className="sc-tabs">
                 <button className={`sc-tab${tab === "search" ? " sc-tab-active" : ""}`} onClick={() => setTab("search")}>
-                    Results
+                    {t("Results")}
                 </button>
                 <button className={`sc-tab${tab === "favs" ? " sc-tab-active" : ""}`} onClick={() => setTab("favs")}>
-                    Favorites {p.favorites.length > 0 && `(${p.favorites.length})`}
+                    {t("Favorites")} {p.favorites.length > 0 && `(${p.favorites.length})`}
                 </button>
             </div>
 
@@ -628,7 +629,7 @@ function SoundCloudModal({ onClose }: { onClose: () => void; }) {
             <div className="sc-tracklist">
                 {trackList.length === 0 ? (
                     <div className="sc-empty">
-                        {tab === "search" ? "Start a search to see tracks" : "No favorites saved"}
+                        {tab === "search" ? t("Start a search to see tracks") : t("No favorites saved")}
                     </div>
                 ) : trackList.map((track, idx) => (
                     <div key={track.id}
@@ -646,7 +647,7 @@ function SoundCloudModal({ onClose }: { onClose: () => void; }) {
                         </button>
                         <button className={`sc-fav-btn${isFav(track) ? " sc-fav-active" : ""}`}
                             onClick={e => { e.stopPropagation(); toggleFavorite(track); }}
-                            title={isFav(track) ? "Remove from favorites" : "Add to favorites"}>
+                            title={isFav(track) ? t("Remove from favorites") : t("Add to favorites")}>
                             <IconHeart filled={isFav(track)} />
                         </button>
                     </div>

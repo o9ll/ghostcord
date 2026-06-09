@@ -8,6 +8,7 @@ import { ApplicationCommandInputType, sendBotMessage } from "@api/Commands";
 import { UserAreaButton, UserAreaRenderProps } from "@api/UserArea";
 import definePlugin from "@utils/types";
 import { ContextMenuApi, Menu, React, SelectedChannelStore, VoiceActions } from "@webpack/common";
+import { t } from "../autoTranslateNightcord";
 
 let isGhostActive = false;
 let configFakeMute = true;
@@ -37,7 +38,7 @@ function GhostContextMenu() {
     const [, forceUpdate] = React.useReducer((x: number) => x + 1, 0);
     return (
         <Menu.Menu navId="fake-voice-menu" aria-label="Fake Voice Configuration" onClose={ContextMenuApi.closeContextMenu}>
-            <Menu.MenuGroup label="Ghost Options">
+            <Menu.MenuGroup label={t("Ghost Options")}>
                 <Menu.MenuCheckboxItem
                     id="opt-both"
                     label="Fake Mute & Deafen"
@@ -83,7 +84,7 @@ function FakeDeafenUserButton({ iconForeground, hideTooltips, nameplate }: UserA
                 forceUpdate();
             }}
             onContextMenu={(e: React.MouseEvent) => ContextMenuApi.openContextMenu(e, () => <GhostContextMenu />)}
-            tooltipText={hideTooltips ? undefined : isGhostActive ? "Disable Fake Voice" : "Enable Fake Voice (Right: Config)"}
+            tooltipText={hideTooltips ? undefined : isGhostActive ? t("Disable Fake Voice") : t("Enable Fake Voice (Right: Config)")}
             icon={<FakeDeafenIcon className={iconForeground} />}
             role="switch"
             aria-checked={isGhostActive}
@@ -133,7 +134,7 @@ export default definePlugin({
                 configFakeMute = !configFakeMute;
                 isGhostActive = configFakeMute;
                 syncState();
-                sendBotMessage(ctx.channel.id, { content: `👻 **Fake Mute** is ${isGhostActive ? "enabled" : "disabled"}.` });
+                sendBotMessage(ctx.channel.id, { content: `👻 **Fake Mute** is ${isGhostActive ? t("enabled") : t("disabled")}.` });
             },
         },
         {
@@ -144,7 +145,7 @@ export default definePlugin({
                 configFakeDeafen = !configFakeDeafen;
                 isGhostActive = configFakeDeafen;
                 syncState();
-                sendBotMessage(ctx.channel.id, { content: `👻 **Fake Deafen** is ${isGhostActive ? "enabled" : "disabled"}.` });
+                sendBotMessage(ctx.channel.id, { content: `👻 **Fake Deafen** is ${isGhostActive ? t("enabled") : t("disabled")}.` });
             },
         },
         {
@@ -157,7 +158,7 @@ export default definePlugin({
                 configFakeDeafen = next;
                 isGhostActive = next;
                 syncState();
-                sendBotMessage(ctx.channel.id, { content: `👻 **Fake Deafen & Mute** are ${isGhostActive ? "enabled" : "disabled"}.` });
+                sendBotMessage(ctx.channel.id, { content: `👻 **Fake Deafen & Mute** are ${isGhostActive ? t("enabled") : t("disabled")}.` });
             },
         },
     ]

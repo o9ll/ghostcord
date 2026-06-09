@@ -62,7 +62,7 @@ export function Switch({ checked, onChange, disabled, id, hasIcon = false, inner
                     aria-hidden="true"
                 >
                     <rect
-                        fill="var(--switch-thumb-background-default)"
+                        fill="var(--switch-thumb-background-default, #ffffff)"
                         x={4}
                         y={4}
                         width={16}
@@ -74,13 +74,13 @@ export function Switch({ checked, onChange, disabled, id, hasIcon = false, inner
                             <g transform="translate(4 4)">
                                 {checked ? (
                                     <>
-                                        <path fill="var(--switch-thumb-icon-active)" d="M6.31649 11.88304L5.0437 10.61032L11.44792 4.20604L12.72072 5.47883L6.31649 11.88304Z" />
-                                        <path fill="var(--switch-thumb-icon-active)" d="M3.26914 8.87224L4.54194 7.59943L7.5588 10.61632L6.28601 11.88912L3.26914 8.87224Z" />
+                                        <path fill="var(--switch-thumb-icon-active, #23a55a)" d="M6.31649 11.88304L5.0437 10.61032L11.44792 4.20604L12.72072 5.47883L6.31649 11.88304Z" />
+                                        <path fill="var(--switch-thumb-icon-active, #23a55a)" d="M3.26914 8.87224L4.54194 7.59943L7.5588 10.61632L6.28601 11.88912L3.26914 8.87224Z" />
                                     </>
                                 ) : (
                                     <>
-                                        <path fill="var(--switch-thumb-icon-default)" d="M4.10585 5.3837L5.37864 4.11091L11.884 10.61632L10.6112 11.88912L4.10585 5.3837Z" />
-                                        <path fill="var(--switch-thumb-icon-default)" d="M10.61632 4.11091L11.88912 5.3837L5.3837 11.88912L4.11091 10.61632L10.61632 4.11091Z" />
+                                        <path fill="var(--switch-thumb-icon-default, #80848e)" d="M4.10585 5.3837L5.37864 4.11091L11.884 10.61632L10.6112 11.88912L4.10585 5.3837Z" />
+                                        <path fill="var(--switch-thumb-icon-default, #80848e)" d="M10.61632 4.11091L11.88912 5.3837L5.3837 11.88912L4.11091 10.61632L10.61632 4.11091Z" />
                                     </>
                                 )}
                             </g>

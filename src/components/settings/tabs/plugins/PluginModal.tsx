@@ -217,7 +217,7 @@ function resetSettings(plugin: Plugin, onRestartNeeded?: (pluginName: string) =>
     }
 
     Toasts.show({
-        message: `Settings de ${pluginName} réinitialisés.`,
+        message: `${pluginName} settings reset.`,
         id: Toasts.genId(),
         type: Toasts.Type.SUCCESS,
         options: {
@@ -231,8 +231,8 @@ export function openWarningModal(plugin?: Plugin | null, onRestartNeeded?: (plug
         <ConfirmModal
             {...props}
             className={cl("confirm")}
-            header={isPlugin ? "Reset" : "Désactiver les plugins"}
-            confirmText={isPlugin ? "Reset" : "All désactiver"}
+            header={isPlugin ? "Reset Settings" : "Disable Plugins"}
+            confirmText={isPlugin ? "Reset" : "Disable All"}
             cancelText="Cancel"
             onConfirm={() => {
                 if (isPlugin && plugin) {
@@ -245,13 +245,35 @@ export function openWarningModal(plugin?: Plugin | null, onRestartNeeded?: (plug
         >
             <Paragraph>
                 {isPlugin
-                    ? <>Reset tous les paramètres de <strong>{plugin?.name}</strong> ?</>
-                    : `Désactiver ${enabledPlugins} plugin(s) ?`
+                    ? <>Reset all settings for <strong>{plugin?.name}</strong>?</>
+                    : `Disable ${enabledPlugins} plugin(s)?`
                 }
             </Paragraph>
             <div className={classes(Margins.top16, cl("warning"))}>
                 <WarningIcon color="var(--text-feedback-critical)" />
-                <span>Cette action est irréversible.</span>
+                <span>This action is irreversible.</span>
+            </div>
+        </ConfirmModal>
+    ));
+}
+
+export function openResetDefaultsModal(reset: () => void) {
+    openModal(props => (
+        <ConfirmModal
+            {...props}
+            className={cl("confirm")}
+            header="Apply Default Config"
+            confirmText="Apply Defaults"
+            cancelText="Cancel"
+            onConfirm={reset}
+            onCancel={props.onClose}
+        >
+            <Paragraph>
+                This will reset all plugins to their default enabled/disabled state (how they are when Nightcord is first installed).
+            </Paragraph>
+            <div className={classes(Margins.top16, cl("warning"))}>
+                <WarningIcon color="var(--text-feedback-critical)" />
+                <span>All your current plugin toggles will be lost.</span>
             </div>
         </ConfirmModal>
     ));

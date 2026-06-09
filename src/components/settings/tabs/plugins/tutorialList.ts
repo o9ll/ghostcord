@@ -1,0 +1,72 @@
+/*
+ * Vencord, a Discord client mod
+ * Copyright (c) 2025 Vendicated and contributors
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * AUTO-GENERATED — do not edit by hand.
+ * Update by running: node scripts/generateTutorialList.mjs
+ */
+
+/**
+ * Set of plugin names that have a tutorial video available in nightcord-tutorials.
+ * Using a static list avoids CORS issues when fetching from git.nightcord.online at runtime.
+ */
+export const TUTORIAL_PLUGIN_NAMES: ReadonlySet<string> = new Set([
+    "Abbreviation",
+    "AnonymiseFileNames",
+    "AntiGroup",
+    "AntiMoveDeco",
+    "AudioLimiter",
+    "AutoCorrect",
+    "AutoReply",
+    "AutoResponder",
+    "AutoUnmute",
+    "BulkFriendRemove",
+    "CallTimer",
+    "ChannelWallpaper",
+    "CrashHandler",
+    "CreateTheme",
+    "CursorMacOS",
+    "CustomProfile",
+    "DMBomb",
+    "DoubleCall",
+    "DoubleEmoji",
+    "EncryptedMessage",
+    "EventLogs",
+    "ExportDM",
+    "Fake Voice Option",
+    "FakeDM",
+    "FakeFriends",
+    "FakePerm",
+    "FakeSwitcher",
+    "FloodPanel",
+    "FollowUser",
+    "GhostClient",
+    "HideMedia",
+    "ImageZoom",
+    "LiveWallpaper",
+    "LockGroup",
+    "MassDM",
+    "MessageCleaner",
+    "MessageLoggerEnhanced",
+    "MultiInstance",
+    "MuteAllServers",
+    "PlatformIndicators",
+    "SelfDestruct",
+    "ServerCloner",
+    "SharePerms",
+    "ShowHiddenChannels",
+    "ShowHiddenThings",
+    "SilentDelete",
+    "SilentEdit",
+    "SoundCordPlayer",
+    "StreamProof",
+    "TokenImporter",
+    "Translate",
+    "ValidUser",
+    "VideoRecorder",
+    "ViewIcons",
+    "VoiceChannelSearch",
+    "VoiceMessages",
+    "VolumeBooster",
+]);

@@ -10,8 +10,8 @@
     text-align: start;
     transition: 50ms ease-in;
     transition-property: background-color, color, border-color, opacity;
-    background: var(--control-secondary-background-default);
-    color: var(--text-default);
+    background: var(--control-secondary-background-default, var(--background-secondary));
+    color: var(--text-default, var(--text-normal));
     white-space: nowrap;
 
     &:hover {
@@ -72,74 +72,74 @@
     border-color: transparent;
 
     &:hover {
-        background-color: var(--control-icon-only-background-hover);
-        border-color: var(--control-icon-only-border-hover);
+        background-color: var(--control-icon-only-background-hover, var(--background-modifier-hover));
+        border-color: var(--control-icon-only-border-hover, transparent);
     }
 
     &:active {
-        background-color: var(--control-icon-only-background-active);
-        border-color: var(--control-icon-only-border-active);
+        background-color: var(--control-icon-only-background-active, var(--background-modifier-active));
+        border-color: var(--control-icon-only-border-active, transparent);
     }
 }
 
 .vc-btn-primary {
-    background-color: var(--control-primary-background-default);
-    border-color: var(--control-primary-border-default);
-    color: var(--control-primary-text-default);
+    background-color: var(--control-primary-background-default, var(--brand-500));
+    border-color: var(--control-primary-border-default, transparent);
+    color: var(--control-primary-text-default, var(--white));
 
     &:hover {
-        background-color: var(--control-primary-background-hover);
-        border-color: var(--control-primary-border-hover);
-        color: var(--control-primary-text-hover);
+        background-color: var(--control-primary-background-hover, var(--brand-560));
+        border-color: var(--control-primary-border-hover, transparent);
+        color: var(--control-primary-text-hover, var(--white));
     }
 }
 
 .vc-btn-secondary,
 .vc-btn-link {
-    background-color: var(--control-secondary-background-default);
-    border-color: var(--control-secondary-border-default);
-    color: var(--control-secondary-text-default);
+    background-color: var(--control-secondary-background-default, var(--background-secondary));
+    border-color: var(--control-secondary-border-default, transparent);
+    color: var(--control-secondary-text-default, var(--interactive-normal));
 
     &:hover {
-        background-color: var(--control-secondary-background-hover);
-        border-color: var(--control-secondary-border-hover);
-        color: var(--control-secondary-text-hover);
+        background-color: var(--control-secondary-background-hover, var(--background-modifier-hover));
+        border-color: var(--control-secondary-border-hover, transparent);
+        color: var(--control-secondary-text-hover, var(--interactive-hover));
     }
 }
 
 .vc-btn-dangerPrimary {
-    background-color: var(--control-critical-primary-background-default);
-    border-color: var(--control-critical-primary-border-default);
-    color: var(--control-critical-primary-text-default);
+    background-color: var(--control-critical-primary-background-default, var(--red-430));
+    border-color: var(--control-critical-primary-border-default, transparent);
+    color: var(--control-critical-primary-text-default, var(--white));
 
     &:hover {
-        background-color: var(--control-critical-primary-background-hover);
-        border-color: var(--control-critical-primary-border-hover);
-        color: var(--control-critical-primary-text-hover);
+        background-color: var(--control-critical-primary-background-hover, var(--red-460));
+        border-color: var(--control-critical-primary-border-hover, transparent);
+        color: var(--control-critical-primary-text-hover, var(--white));
     }
 }
 
 .vc-btn-dangerSecondary {
-    background-color: var(--control-critical-secondary-background-default);
-    border-color: var(--control-critical-secondary-border-default);
-    color: var(--control-critical-secondary-text-default);
+    background-color: var(--control-critical-secondary-background-default, var(--background-secondary));
+    border-color: var(--control-critical-secondary-border-default, var(--red-430));
+    color: var(--control-critical-secondary-text-default, var(--red-430));
 
     &:hover {
-        background-color: var(--control-critical-secondary-background-hover);
-        border-color: var(--control-critical-secondary-border-hover);
-        color: var(--control-critical-secondary-text-hover);
+        background-color: var(--control-critical-secondary-background-hover, var(--red-430));
+        border-color: var(--control-critical-secondary-border-hover, var(--red-430));
+        color: var(--control-critical-secondary-text-hover, var(--white));
     }
 }
 
 .vc-btn-overlayPrimary {
-    background-color: var(--control-overlay-primary-background-default);
-    border-color: var(--control-overlay-primary-border-default);
-    color: var(--control-overlay-primary-text-default);
+    background-color: var(--control-overlay-primary-background-default, var(--white));
+    border-color: var(--control-overlay-primary-border-default, transparent);
+    color: var(--control-overlay-primary-text-default, var(--black));
 
     &:hover {
-        background-color: var(--control-overlay-primary-background-hover);
-        border-color: var(--control-overlay-primary-border-hover);
-        color: var(--control-overlay-primary-text-hover);
+        background-color: var(--control-overlay-primary-background-hover, var(--brand-100));
+        border-color: var(--control-overlay-primary-border-hover, transparent);
+        color: var(--control-overlay-primary-text-hover, var(--black));
     }
 }
 
@@ -155,12 +155,12 @@
 .vc-btn-none {
     background-color: transparent;
     border-color: transparent;
-    color: var(--control-icon-only-icon-default);
+    color: var(--control-icon-only-icon-default, var(--interactive-normal));
 
     &:hover {
-        background-color: var(--control-icon-only-background-hover);
-        border-color: var(--control-icon-only-border-hover);
-        color: var(--control-icon-only-icon-hover);
+        background-color: var(--control-icon-only-background-hover, var(--background-modifier-hover));
+        border-color: var(--control-icon-only-border-hover, transparent);
+        color: var(--control-icon-only-icon-hover, var(--interactive-hover));
     }
 }
 
@@ -177,7 +177,7 @@
     align-items: center;
     gap: var(--space-4, 4px);
     background: initial;
-    color: var(--text-default);
+    color: var(--text-default, var(--text-normal));
     font-size: medium;
     font-weight: 400;
     margin: 0;
@@ -202,17 +202,17 @@
 }
 
 .vc-text-btn-primary {
-    color: var(--text-brand);
+    color: var(--text-brand, var(--brand-500));
 }
 
 .vc-text-btn-secondary {
-    color: var(--text-strong, var(--text-default));
+    color: var(--text-strong, var(--text-normal));
 }
 
 .vc-text-btn-danger {
-    color: var(--text-feedback-critical);
+    color: var(--text-feedback-critical, var(--red-430));
 }
 
 .vc-text-btn-link {
-    color: var(--text-link);
+    color: var(--text-link, var(--text-link));
 }

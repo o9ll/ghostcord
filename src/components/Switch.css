@@ -5,8 +5,8 @@
 }
 
 .vc-switch-indicator {
-    background: var(--switch-background-default);
-    border: 1px solid var(--switch-border-default);
+    background: var(--switch-background-default, var(--bg-mod-faint, #80848e));
+    border: 1px solid var(--switch-border-default, var(--bg-mod-faint, #80848e));
     border-radius: var(--radius-lg);
     box-sizing: border-box;
     cursor: pointer;
@@ -17,8 +17,8 @@
 }
 
 .vc-switch-checked .vc-switch-indicator {
-    background: var(--switch-background-selected-default);
-    border-color: var(--switch-border-selected-default);
+    background: var(--switch-background-selected-default, var(--control-brand-foreground, #23a55a));
+    border-color: var(--switch-border-selected-default, var(--control-brand-foreground, #23a55a));
 }
 
 .vc-switch-disabled {
@@ -35,13 +35,13 @@
 }
 
 .vc-switch-container:hover .vc-switch-indicator {
-    background: var(--switch-background-hover);
-    border-color: var(--switch-border-hover);
+    background: var(--switch-background-hover, var(--bg-mod-subtle, #71757e));
+    border-color: var(--switch-border-hover, var(--bg-mod-subtle, #71757e));
 }
 
 .vc-switch-checked:hover .vc-switch-indicator {
-    background: var(--switch-background-selected-hover);
-    border-color: var(--switch-border-selected-hover);
+    background: var(--switch-background-selected-hover, var(--control-brand-foreground, #1d8a4c));
+    border-color: var(--switch-border-selected-hover, var(--control-brand-foreground, #1d8a4c));
 }
 
 .vc-switch-thumb {
@@ -62,7 +62,7 @@
 }
 
 .vc-switch-checked .vc-switch-thumb rect {
-    fill: var(--switch-thumb-background-selected-default);
+    fill: var(--switch-thumb-background-selected-default, #ffffff);
 }
 
 .vc-switch-input {

@@ -6,11 +6,13 @@
 
 import { ChatBarButton } from "@api/ChatButtons";
 import { definePluginSettings } from "@api/Settings";
+import { Button } from "@components/Button";
+import { ModalCloseButton, ModalContent, ModalHeader, ModalRoot, ModalSize, openModal } from "@utils/modal";
 import definePlugin, { OptionType } from "@utils/types";
 import { findByPropsLazy } from "@webpack";
-import { ChannelStore, React,RestAPI, UserStore } from "@webpack/common";
+import { ChannelStore, React, RestAPI, Text, UserStore } from "@webpack/common";
 
-import { getGroqKey,groqChat } from "../nightcordAI/groqManager";
+import { getGroqKey, groqChat } from "../nightcordAI/groqManager";
 
 const MessageStore = findByPropsLazy("getMessages");
 
@@ -252,27 +254,67 @@ const AutoResponderButton = () => {
         return () => { _forceUpdate = () => { }; };
     }, []);
 
-    const toggle = async () => {
+    const toggle = () => {
         const newState = !settings.store.isActive;
 
         if (newState) {
-            const key = await getGroqKey();
-            if (!key) {
-                try {
-                    const { openConfirmationModal } = findByPropsLazy("openConfirmationModal");
-                    openConfirmationModal({
-                        header: "API Key Required",
-                        content: "AutoResponder requires a Groq API Key to function. Please configure it once in the NightcordAI settings.",
-                        confirmText: "Close",
-                        confirmColor: "brand"
-                    });
-                } catch { }
-                return;
-            }
+            openModal(props => (
+                <ModalRoot {...props} size={ModalSize.SMALL}>
+                    <ModalHeader separator={false}>
+                        <Text variant="heading-lg/semibold">Autoresponder Warning</Text>
+                        <ModalCloseButton onClick={props.onClose} />
+                    </ModalHeader>
+                    <ModalContent>
+                        <Text variant="text-md/normal" style={{ marginBottom: 16 }}>
+                            Are you sure you want to enable the Autoresponder plugin? An AI will automatically reply to your DMs when you are unavailable.
+                        </Text>
+                    </ModalContent>
+                    <div style={{ padding: "16px", display: "flex", justifyContent: "flex-end", gap: "8px" }}>
+                        <Button
+                            variant="link"
+                            onClick={props.onClose}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            variant="primary"
+                            onClick={async () => {
+                                props.onClose();
+                                const key = await getGroqKey();
+                                if (!key) {
+                                    openModal(props2 => (
+                                        <ModalRoot {...props2} size={ModalSize.SMALL}>
+                                            <ModalHeader separator={false}>
+                                                <Text variant="heading-lg/semibold">API Key Required</Text>
+                                                <ModalCloseButton onClick={props2.onClose} />
+                                            </ModalHeader>
+                                            <ModalContent>
+                                                <Text variant="text-md/normal" style={{ marginBottom: 16 }}>
+                                                    AutoResponder requires a Groq API Key to function. Please configure it once in the NightcordAI settings.
+                                                </Text>
+                                            </ModalContent>
+                                            <div style={{ padding: "16px", display: "flex", justifyContent: "flex-end", gap: "8px" }}>
+                                                <Button variant="primary" onClick={props2.onClose}>
+                                                    Close
+                                                </Button>
+                                            </div>
+                                        </ModalRoot>
+                                    ));
+                                    return;
+                                }
+                                settings.store.isActive = true;
+                                setTick(t => t + 1);
+                            }}
+                        >
+                            Enable
+                        </Button>
+                    </div>
+                </ModalRoot>
+            ));
+        } else {
+            settings.store.isActive = false;
+            setTick(t => t + 1);
         }
-
-        settings.store.isActive = newState;
-        setTick(t => t + 1);
     };
 
     return (

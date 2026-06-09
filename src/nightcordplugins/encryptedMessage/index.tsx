@@ -9,6 +9,7 @@ import { addContextMenuPatch, removeContextMenuPatch } from "@api/ContextMenu";
 import definePlugin from "@utils/types";
 import type { Message } from "@vencord/discord-types";
 import { Menu, Parser, React,Toasts, useEffect, useState } from "@webpack/common";
+import { t } from "../autoTranslateNightcord";
 
 const MARKER = "\u200B\u200C\u200D";
 
@@ -183,8 +184,8 @@ const EncryptButton: ChatBarButtonFactory = ({ type }) => {
     if (!["normal", "sidebar"].some(n => type.analyticsName === n)) return null;
 
     const tooltip = enabled
-        ? `Encryption active — Technique ${currentTechnique}`
-        : "Encryption disabled";
+        ? `${t("Encryption active")} — Technique ${currentTechnique}`
+        : t("Encryption disabled");
 
     return (
         <span
@@ -240,13 +241,13 @@ function DecryptionAccessory({ message }: { message: Message; }) {
             </button>
             {" | "}
             <button
-                onClick={() => { navigator.clipboard.writeText(decrypted); Toasts.show({ message: "Copied!", type: Toasts.Type.SUCCESS, id: Toasts.genId() }); }}
+                onClick={() => { navigator.clipboard.writeText(decrypted); Toasts.show({ message: t("Copied!"), type: Toasts.Type.SUCCESS, id: Toasts.genId() }); }}
                 style={{
                     background: "none", border: "none", color: "var(--text-link)",
                     cursor: "pointer", padding: 0, font: "inherit", fontStyle: "italic",
                 }}
             >
-                Copy
+                {t("Copy")}
             </button>
             )
         </span>
@@ -261,7 +262,7 @@ const messageContextPatch = (children: any, { message }: { message: any; }) => {
             <Menu.MenuGroup key="nc-encryption-group">
                 <Menu.MenuItem
                     id="nc-decrypt-message"
-                    label="🔓 Decrypt message"
+                    label={`🔓 ${t("Decrypt message")}`}
                     action={() => {
                         const found = autoDecrypt(message.content);
                         if (found !== null) {
