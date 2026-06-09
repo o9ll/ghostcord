@@ -1,7 +1,7 @@
 @echo off
 :: ─── Nightcord — Publier une nouvelle release sur Gitea ──────────────────────
 :: Usage : publish-release.bat 1.18.1 "Description des changements"
-:: Necessite : pnpm, node, dotnet SDK (ou .NET Framework 4.x)
+:: Necessite : pnpm, node
 ::             curl (inclus dans Windows 10+)
 ::
 :: Auth : token Gitea dans %USERPROFILE%\.gitea_token  (une seule ligne, aucun espace)
@@ -59,11 +59,9 @@ echo  ║    NIGHTCORD — Publication release v%VERSION%
 echo  ╚═══════════════════════════════════════════════════╝
 echo.
 
-:: ── 1. Mise à jour des versions dans les fichiers ─────────────────────────────
+:: ── 1. Mise à jour de la version ──────────────────────────────────────────────
 echo  [1/8] Mise a jour de la version vers %VERSION%...
-
 node -e "const fs = require('fs'); const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8')); pkg.version = '%VERSION%'; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 4) + '\n', 'utf8');"
-
 echo  [1/8] Version mise a jour.
 
 :: ── 2. Envoi du code source sur Gitea ─────────────────────────────────────────
@@ -84,14 +82,12 @@ if errorlevel 1 (
 )
 echo  [2/8] Code source synchronise avec Gitea.
 
-:: ── 3. Build JS (avec obfuscation automatique) ────────────────────────────────
+:: ── 3. Build JS ───────────────────────────────────────────────────────────────
 echo.
 echo  [3/8] Build + obfuscation en cours...
-
 taskkill /F /IM Discord.exe /T >nul 2>&1
 taskkill /F /IM node.exe    /T >nul 2>&1
 timeout /t 2 /nobreak >nul
-
 call pnpm build
 if errorlevel 1 (
     echo  [ERREUR] pnpm build a echoue.
@@ -100,73 +96,58 @@ if errorlevel 1 (
 )
 echo  [3/8] Build + obfuscation termines !
 
-:: ── 4. Preparer les assets supplementaires ────────────────────────────────────
+:: ── 4. Assets ─────────────────────────────────────────────────────────────────
 echo.
 echo  [4/8] Copie des assets (ffmpeg, node, modules...) vers %DIST_DIR%...
-
 node scripts\build\collect-assets.mjs
-
 echo  [4/8] Assets copies.
 
-:: ── 5. Compiler Nightcord-Installer.exe ──────────────────────────────────────
+:: ── 5. Nightcord-Installer.exe ────────────────────────────────────────────────
 echo.
 echo  [5/8] Compilation de Nightcord-Installer.exe...
-
 if not exist "%OUT_DIR%" mkdir "%OUT_DIR%"
-
 powershell -NoProfile -ExecutionPolicy Bypass -File "build-installer.ps1"
 if errorlevel 1 (
     echo  [ERREUR] Compilation de l'installeur echouee.
     pause
     exit /b 1
 )
-
 if not exist "%INSTALLER_EXE%" (
     echo  [ERREUR] Nightcord-Installer.exe introuvable apres compilation.
     pause
     exit /b 1
 )
-
 for %%F in ("%INSTALLER_EXE%") do echo  [5/8] Nightcord-Installer.exe cree (%%~zF octets)
 
-:: ── 6. Créer nightcord-dist.zip ──────────────────────────────────────────────
+:: ── 6. nightcord-dist.zip ─────────────────────────────────────────────────────
 echo.
 echo  [6/8] Creation de nightcord-dist.zip...
-
 if not exist "%DIST_DIR%\patcher.js" (
     echo  [ERREUR] dist\desktop\patcher.js introuvable.
     pause
     exit /b 1
 )
-
 if exist "%DIST_ZIP%" del /F /Q "%DIST_ZIP%"
-
 del /s /q "%DIST_DIR%\*.map" >nul 2>&1
 del /s /q "%DIST_DIR%\*.LEGAL.txt" >nul 2>&1
-
 node scripts\build\verify-dist.mjs
 if errorlevel 1 (
-    echo  [ERREUR] Verification du dist echouee - @babel manquant ou incomplet.
+    echo  [ERREUR] Verification du dist echouee.
     pause
     exit /b 1
 )
-
 powershell -NoProfile -Command "Add-Type -Assembly System.IO.Compression.FileSystem; $src = (Resolve-Path '%DIST_DIR%').Path; $dst = (Join-Path (Resolve-Path 'release\installer').Path 'nightcord-dist.zip'); [System.IO.Compression.ZipFile]::CreateFromDirectory($src, $dst, [System.IO.Compression.CompressionLevel]::Optimal, $false)"
-
 if not exist "%DIST_ZIP%" (
     echo  [ERREUR] Impossible de creer nightcord-dist.zip
     pause
     exit /b 1
 )
-
 for %%F in ("%DIST_ZIP%") do echo  [6/8] nightcord-dist.zip cree (%%~zF octets)
 
-:: ── 7. Mettre à jour version.json ─────────────────────────────────────────────
+:: ── 7. version.json ───────────────────────────────────────────────────────────
 echo.
 echo  [7/8] Mise a jour de version.json...
-
 for /f "usebackq" %%d in (`powershell -NoProfile -Command "Get-Date -Format 'yyyy-MM-dd'"`) do set ISO_DATE=%%d
-
 (
     echo {
     echo   "version": "%VERSION%",
@@ -177,14 +158,13 @@ for /f "usebackq" %%d in (`powershell -NoProfile -Command "Get-Date -Format 'yyy
     echo   "changelog": "%NOTES%"
     echo }
 ) > "%VERSION_JSON%"
-
 echo  [7/8] version.json mis a jour.
 
 :: ── 8. Publier sur Gitea Releases ─────────────────────────────────────────────
 echo.
 echo  [8/8] Creation de la release v%VERSION% sur Gitea...
 
-:: 8a. Creer la release via API Gitea
+:: 8a. Creer la release
 set "JSON_TMP=%OUT_DIR%\release_payload.json"
 (
     echo {
@@ -195,34 +175,29 @@ set "JSON_TMP=%OUT_DIR%\release_payload.json"
     echo   "prerelease": false
     echo }
 ) > "%JSON_TMP%"
-
 curl -s -X POST "%GITEA_API%/repos/%GITEA_REPO%/releases" ^
     -H "Authorization: token %GITEA_TOKEN%" ^
     -H "Content-Type: application/json" ^
     -d "@%JSON_TMP%" ^
     -o "%OUT_DIR%\release_response.json"
-
 del /F /Q "%JSON_TMP%" >nul 2>&1
-
 if errorlevel 1 (
     echo  [ERREUR] Echec de la creation de la release Gitea.
     pause
     exit /b 1
 )
 
-:: 8b. Extraire l'ID de la release
+:: 8b. Extraire l'ID
 for /f "usebackq tokens=*" %%i in (`powershell -NoProfile -Command "(Get-Content '%OUT_DIR%\release_response.json' | ConvertFrom-Json).id"`) do set RELEASE_ID=%%i
-
 if "%RELEASE_ID%"=="" (
     echo  [ERREUR] Impossible de recuperer l'ID de la release Gitea.
     type "%OUT_DIR%\release_response.json"
     pause
     exit /b 1
 )
-
 echo  Release Gitea creee (ID: %RELEASE_ID%)
 
-:: 8c. Upload des assets
+:: 8c. Upload — Nightcord-Installer.exe (via curl, < 100MB)
 echo  Upload de Nightcord-Installer.exe...
 curl -s -X POST "%GITEA_API%/repos/%GITEA_REPO%/releases/%RELEASE_ID%/assets?name=Nightcord-Installer.exe" ^
     -H "Authorization: token %GITEA_TOKEN%" ^
@@ -230,6 +205,7 @@ curl -s -X POST "%GITEA_API%/repos/%GITEA_REPO%/releases/%RELEASE_ID%/assets?nam
     --data-binary "@%INSTALLER_EXE%" >nul
 if errorlevel 1 ( echo  [ERREUR] Upload Nightcord-Installer.exe echoue. & pause & exit /b 1 )
 
+:: 8d. Upload — nightcord-dist.zip (via curl, < 100MB)
 echo  Upload de nightcord-dist.zip...
 curl -s -X POST "%GITEA_API%/repos/%GITEA_REPO%/releases/%RELEASE_ID%/assets?name=nightcord-dist.zip" ^
     -H "Authorization: token %GITEA_TOKEN%" ^
@@ -237,13 +213,17 @@ curl -s -X POST "%GITEA_API%/repos/%GITEA_REPO%/releases/%RELEASE_ID%/assets?nam
     --data-binary "@%DIST_ZIP%" >nul
 if errorlevel 1 ( echo  [ERREUR] Upload nightcord-dist.zip echoue. & pause & exit /b 1 )
 
+:: 8e. Upload — desktop.asar (via PowerShell, contourne limite Cloudflare 100MB)
 echo  Upload de desktop.asar...
-curl -s -X POST "%GITEA_API%/repos/%GITEA_REPO%/releases/%RELEASE_ID%/assets?name=desktop.asar" ^
-    -H "Authorization: token %GITEA_TOKEN%" ^
-    -H "Content-Type: application/octet-stream" ^
-    --data-binary "@%DESKTOP_ASAR%" >nul
+powershell -NoProfile -Command ^
+    "$token = '%GITEA_TOKEN%';" ^
+    "$bytes = [System.IO.File]::ReadAllBytes('dist\desktop.asar');" ^
+    "$uri = 'https://git.nightcord.online/api/v1/repos/nightcord/nightcord/releases/%RELEASE_ID%/assets?name=desktop.asar';" ^
+    "Invoke-RestMethod -Uri $uri -Method POST -Headers @{Authorization='token '+$token} -ContentType 'application/octet-stream' -Body $bytes | Out-Null;" ^
+    "Write-Host 'OK'"
 if errorlevel 1 ( echo  [ERREUR] Upload desktop.asar echoue. & pause & exit /b 1 )
 
+:: 8f. Upload — version.json (via curl, tiny)
 echo  Upload de version.json...
 curl -s -X POST "%GITEA_API%/repos/%GITEA_REPO%/releases/%RELEASE_ID%/assets?name=version.json" ^
     -H "Authorization: token %GITEA_TOKEN%" ^
