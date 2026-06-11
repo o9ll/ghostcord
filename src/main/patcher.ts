@@ -33,14 +33,15 @@ console.log("[Nightcord] Starting up...");
 // lors du boot) ce qui gèle le processus sur le splash screen ("Starting...").
 const Module = require("module");
 if (Module._resolveLookupPaths) {
+    const _origResolve = Module._resolveLookupPaths;
     const fastResolve = function (request: string, parent: any) {
-        if (!parent || !parent.paths) return Module.globalPaths;
+        if (!parent || !parent.paths) return _origResolve.call(Module, request, parent);
         for (let i = 0; i < Module.globalPaths.length; i++) {
             if (!parent.paths.includes(Module.globalPaths[i])) {
                 parent.paths.push(Module.globalPaths[i]);
             }
         }
-        return parent.paths;
+        return _origResolve.call(Module, request, parent);
     };
 
     // Protéger notre patch ultra-rapide pour éviter que Discord ne l'écrase
