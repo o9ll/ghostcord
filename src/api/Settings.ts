@@ -124,7 +124,7 @@ const DefaultSettings: Settings = {
     autoUpdateNotification: true,
     useQuickCss: true,
     themeLinks: [],
-    eagerPatches: false, // Eagerly patching no longer works due to module factories with the same id being able to have different sources now.
+    eagerPatches: false,
     enabledThemes: [],
     enabledThemeLinks: [],
     enableOnlineThemes: true,
@@ -168,6 +168,9 @@ const DefaultSettings: Settings = {
 const settings = !IS_REPORTER ? VencordNative.settings.get() : {} as Settings;
 mergeDefaults(settings, DefaultSettings);
 
+// Nightcord native defaults — defaultPlugins is always enabled, no external prefs file
+const NIGHTCORD_PREFS = { defaultPlugins: true, autoUpdate: true } as const;
+
 // Force enabledByDefault plugins to be enabled, even if they were previously saved as disabled.
 // This runs at load time so it works even for plugins already present in the settings file.
 if (!IS_REPORTER && settings.plugins && plugins) {
@@ -181,8 +184,7 @@ if (!IS_REPORTER && settings.plugins && plugins) {
             continue;
         }
 
-        const prefs = getCachedPrefs();
-        const shouldBeEnabled = Boolean(pluginDef?.required) || (Boolean(pluginDef?.enabledByDefault) && prefs.defaultPlugins);
+        const shouldBeEnabled = Boolean(pluginDef?.required) || Boolean(pluginDef?.enabledByDefault);
         if (shouldBeEnabled) {
             if (!settings.plugins[pluginKey]) {
                 settings.plugins[pluginKey] = { enabled: true };
@@ -191,13 +193,6 @@ if (!IS_REPORTER && settings.plugins && plugins) {
             }
         }
     }
-}
-
-let _cachedPrefs: any = null;
-function getCachedPrefs() {
-    if (_cachedPrefs !== null) return _cachedPrefs;
-    _cachedPrefs = typeof VencordNative.nightcord !== "undefined" ? VencordNative.nightcord.getInstallerPrefs() : { defaultPlugins: true };
-    return _cachedPrefs;
 }
 
 export const SettingsStore = new SettingsStoreClass(settings, {
@@ -217,18 +212,16 @@ export const SettingsStore = new SettingsStoreClass(settings, {
                 FORCE_DISABLED_DEFAULT_PLUGIN_KEYS.has(pluginKey.toLowerCase())
                 || FORCE_DISABLED_DEFAULT_PLUGIN_KEYS.has(String(pluginDef?.name ?? "").toLowerCase());
 
-            const prefs = getCachedPrefs();
-            const shouldBeEnabled = !forceOff && (IS_REPORTER || Boolean(pluginDef?.required) || (Boolean(pluginDef?.enabledByDefault) && prefs.defaultPlugins));
+            const shouldBeEnabled = !forceOff && (IS_REPORTER || Boolean(pluginDef?.required) || Boolean(pluginDef?.enabledByDefault));
 
             if (!target[key]) {
                 return target[key] = { enabled: shouldBeEnabled };
             }
 
-            // Si le plugin doit Ãªtre actif par dÃ©faut et qu'il est dÃ©sactivÃ©, on le force Ã  actif
+            // Force enabledByDefault plugins on, force disabled list off
             if (shouldBeEnabled && target[key].enabled === false) {
                 target[key].enabled = true;
             }
-            // Si le plugin doit Ãªtre dÃ©sactivÃ© de force, on le force Ã  inactif
             if (forceOff) {
                 target[key].enabled = false;
             }
@@ -290,7 +283,6 @@ export const Settings = SettingsStore.store;
  * @param paths An optional list of paths to whitelist for rerenders
  * @returns Settings
  */
-// TODO: Representing paths as essentially "string[].join('.')" wont allow dots in paths, change to "paths?: string[][]" later
 export function useSettings(paths?: UseSettings<Settings>[]) {
     const [, forceUpdate] = React.useReducer(() => ({}), {});
 
@@ -439,4 +431,3 @@ type ResolveUseSettings<T extends object> = {
     : Key
     : never;
 };
-

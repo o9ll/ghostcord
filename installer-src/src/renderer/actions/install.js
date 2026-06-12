@@ -248,7 +248,7 @@ async function applyDefaultPluginsSetting() {
         const settingsPath = path.join(settingsDir, "settings.json");
         await fs.mkdir(settingsDir, { recursive: true });
 
-        // ALWAYS enable default plugins by removing the 'plugins' key from settings.json
+        // Always enable default plugins by removing the 'plugins' key from settings.json
         // so that Nightcord natively loads its enabledByDefault values.
         let existing = null;
         try { existing = JSON.parse(await fs.readFile(settingsPath, "utf-8")); } catch { }
@@ -262,14 +262,6 @@ async function applyDefaultPluginsSetting() {
     } catch (err) {
         log(`⚠️ Could not apply plugin settings: ${err.message}`);
     }
-}
-
-async function shouldAutoRestart() {
-    try {
-        const prefsPath = path.join(process.env.APPDATA, "Nightcord", "settings", "installer-prefs.json");
-        const raw = JSON.parse(await fs.readFile(prefsPath, "utf-8"));
-        return raw.autoRestart !== false;
-    } catch { return true; }
 }
 
 async function copyAssetsToDiscord(resPath) {
@@ -385,12 +377,8 @@ async function injectShims(paths) {
             await applyDefaultPluginsSetting();
             await copyAssetsToDiscord(resPath);
 
-            if (await shouldAutoRestart()) {
-                log("4. Starting Discord...");
-                startDiscord(resPath);
-            } else {
-                log("4. Skipping Discord restart (disabled in options).");
-            }
+            log("4. Starting Discord...");
+            startDiscord(resPath);
 
             log("✅ Injection successful!");
             progress.set(progress.value + progressPerLoop);

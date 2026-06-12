@@ -10,8 +10,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"></noscript>
   <style>
-    /* Fonts loaded async via <link> above */
-
     :root {
       --bg:        #0b0b18;
       --surface:   #11112a;
@@ -178,19 +176,10 @@
       overflow-y: auto;
       padding-right: 4px;
     }
-    .discord-list::-webkit-scrollbar {
-      width: 6px;
-    }
-    .discord-list::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .discord-list::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 3px;
-    }
-    .discord-list::-webkit-scrollbar-thumb:hover {
-      background: var(--muted);
-    }
+    .discord-list::-webkit-scrollbar { width: 6px; }
+    .discord-list::-webkit-scrollbar-track { background: transparent; }
+    .discord-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    .discord-list::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 
     .discord-card {
       display: flex; align-items: center; justify-content: space-between;
@@ -219,13 +208,8 @@
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
       overflow: hidden;
     }
-    .card-icon img {
-      width: 36px; height: 36px;
-      object-fit: contain;
-      display: block;
-    }
-
-    .card-icon.manual  { background: rgba(107,106,153,0.2); border-radius: 8px; }
+    .card-icon img { width: 36px; height: 36px; object-fit: contain; display: block; }
+    .card-icon.manual { background: rgba(107,106,153,0.2); border-radius: 8px; }
 
     .card-info h3 { font-size: 13px; font-weight: 700; color: var(--text); }
 
@@ -303,30 +287,6 @@
     }
     .progress-overlay.visible { opacity: 1; pointer-events: all; }
 
-    .loading-dots {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      margin-left: 6px;
-      margin-right: 2px;
-      vertical-align: middle;
-    }
-    .loading-dots span {
-      width: 4px;
-      height: 4px;
-      background-color: var(--accent2);
-      border-radius: 50%;
-      display: inline-block;
-      animation: bounce 1.4s infinite ease-in-out both;
-    }
-    .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
-    .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
-
-    @keyframes bounce {
-      0%, 80%, 100% { transform: scale(0); }
-      40% { transform: scale(1.0); }
-    }
-
     .progress-container {
       width: 65%;
       background: rgba(17, 17, 42, 0.95);
@@ -348,7 +308,6 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 8px;
-      /* tabular-nums keeps digit widths stable â€” no layout shift */
       font-variant-numeric: tabular-nums;
       font-family: var(--font-mono);
       font-size: 10px;
@@ -377,7 +336,6 @@
     .discord-card:nth-child(3) { animation-delay: .10s; }
     .discord-card:nth-child(4) { animation-delay: .15s; }
 
-    /* Settings Titlebar and Modal Styles */
     .titlebar-right {
       display: flex;
       align-items: center;
@@ -442,9 +400,7 @@
       font-size: 16px;
       transition: color 0.15s;
     }
-    .settings-close-btn:hover {
-      color: var(--error);
-    }
+    .settings-close-btn:hover { color: var(--error); }
 
     .settings-desc {
       font-size: 11px;
@@ -480,68 +436,11 @@
       box-shadow: 0 4px 12px var(--glow);
       border-color: var(--accent);
     }
-    .btn-setting-link:active {
-      transform: translateY(0);
-    }
+    .btn-setting-link:active { transform: translateY(0); }
 
-    .btn-telegram:hover {
-      background: rgba(36, 161, 222, 0.15);
-      border-color: #24A1DE;
-    }
-    .btn-website:hover {
-      background: rgba(192, 132, 252, 0.15);
-      border-color: var(--accent2);
-    }
-    .btn-gitea:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: #ffffff;
-    }
-
-    .btn-check-update {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      background: rgba(74,222,128,0.08);
-      border: 1px solid rgba(74,222,128,0.25);
-      border-radius: 8px;
-      color: var(--success);
-      font-family: var(--font);
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: left;
-      width: 100%;
-    }
-    .btn-check-update:hover {
-      background: rgba(74,222,128,0.15);
-      border-color: var(--success);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(74,222,128,0.15);
-    }
-    .btn-check-update:active { transform: translateY(0); }
-    .btn-check-update:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-    .update-result {
-      margin-top: 10px;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      display: none;
-    }
-    .update-result.visible { display: block; }
-    .update-result.success {
-      background: rgba(74,222,128,0.1);
-      border: 1px solid rgba(74,222,128,0.3);
-      color: var(--success);
-    }
-    .update-result.error {
-      background: rgba(248,113,113,0.1);
-      border: 1px solid rgba(248,113,113,0.3);
-      color: var(--error);
-    }
+    .btn-telegram:hover { background: rgba(36, 161, 222, 0.15); border-color: #24A1DE; }
+    .btn-website:hover  { background: rgba(192, 132, 252, 0.15); border-color: var(--accent2); }
+    .btn-gitea:hover    { background: rgba(255, 255, 255, 0.05); border-color: #ffffff; }
 
     .settings-dev-footer {
       margin-top: 18px;
@@ -552,106 +451,6 @@
       opacity: 0.6;
       letter-spacing: 0.05em;
     }
-
-
-    /* ── Nightcord Options sub-modal ───────────────────────────────────── */
-    .nc-options-overlay {
-      position: fixed; top: 42px; left: 0; right: 0; bottom: 0;
-      background: rgba(11,11,24,0.92);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 200; backdrop-filter: blur(6px);
-      opacity: 0; pointer-events: none; transition: opacity .25s;
-    }
-    .nc-options-overlay.visible { opacity: 1; pointer-events: all; }
-
-    .nc-options-container {
-      width: 58%;
-      background: rgba(17,17,42,0.98);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 26px 28px 22px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-      animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .nc-options-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 18px;
-    }
-    .nc-options-header h2 {
-      font-size: 16px; font-weight: 700; color: var(--text); font-family: var(--font);
-      display: flex; align-items: center; gap: 10px;
-    }
-    .nc-options-header h2 svg { color: var(--accent); }
-    .nc-options-close {
-      background: transparent; border: none; color: var(--muted);
-      cursor: pointer; font-size: 16px; transition: color .15s;
-    }
-    .nc-options-close:hover { color: var(--error); }
-
-    .nc-toggle-row {
-      display: flex; align-items: flex-start; justify-content: space-between;
-      gap: 16px; padding: 14px 16px;
-      background: rgba(30,30,69,0.4);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-bottom: 10px;
-      transition: border-color .15s;
-    }
-    .nc-toggle-row:hover { border-color: rgba(123,108,255,0.4); }
-    .nc-toggle-row:last-child { margin-bottom: 0; }
-
-    .nc-toggle-info { flex: 1; }
-    .nc-toggle-label {
-      font-size: 13px; font-weight: 700; color: var(--text); font-family: var(--font);
-      margin-bottom: 4px;
-    }
-    .nc-toggle-desc {
-      font-size: 11px; color: var(--muted); font-family: var(--font); line-height: 1.5;
-    }
-
-    /* Toggle switch */
-    .nc-switch { position: relative; width: 42px; height: 24px; flex-shrink: 0; margin-top: 2px; }
-    .nc-switch input { opacity: 0; width: 0; height: 0; }
-    .nc-switch-track {
-      position: absolute; inset: 0; background: rgba(107,106,153,0.3);
-      border: 1px solid var(--border); border-radius: 24px;
-      cursor: pointer; transition: background .2s, border-color .2s;
-    }
-    .nc-switch-track::before {
-      content: ''; position: absolute;
-      width: 16px; height: 16px; left: 3px; top: 3px;
-      background: var(--muted); border-radius: 50%;
-      transition: transform .2s, background .2s;
-    }
-    .nc-switch input:checked + .nc-switch-track {
-      background: rgba(123,108,255,0.3);
-      border-color: var(--accent);
-    }
-    .nc-switch input:checked + .nc-switch-track::before {
-      transform: translateX(18px);
-      background: var(--accent);
-      box-shadow: 0 0 8px var(--glow);
-    }
-
-    .nc-options-save {
-      width: 100%; margin-top: 16px; padding: 11px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white; border: none; border-radius: 8px;
-      font-family: var(--font); font-size: 13px; font-weight: 700;
-      cursor: pointer; transition: opacity .15s, transform .15s;
-      box-shadow: 0 4px 16px rgba(123,108,255,0.35);
-    }
-    .nc-options-save:hover { opacity: 0.9; transform: translateY(-1px); }
-    .nc-options-save:active { transform: none; }
-
-    .nc-options-saved {
-      font-size: 11px; color: var(--success); font-family: var(--font-mono);
-      text-align: center; margin-top: 8px; opacity: 0;
-      transition: opacity .3s;
-    }
-    .nc-options-saved.show { opacity: 1; }
-    /* ──────────────────────────────────────────────────────────────────── */
 
     .btn-link-icon {
       width: 20px;
@@ -669,7 +468,7 @@
         <span class="titlebar-version" id="titlebar-version">...</span>
       </div>
       <div class="titlebar-right">
-        <button class="btn-settings" onclick="toggleSettingsModal()" title="Settings">
+        <button class="btn-settings" onclick="toggleSettingsModal()" title="Links">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="3"></circle>
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -685,7 +484,7 @@
     <div class="content">
       <div class="header">
         <h1>Nightcord</h1>
-        <p>// discord client mod â€” select your installation target</p>
+        <p>// discord client mod — select your installation target</p>
       </div>
 
       <div>
@@ -737,8 +536,8 @@
   <div class="settings-overlay" id="settings-overlay" onclick="closeSettingsModal(event)">
     <div class="settings-container" onclick="event.stopPropagation()">
       <div class="settings-header">
-        <h2>Nightcord Links & Settings</h2>
-        <button class="settings-close-btn" onclick="toggleSettingsModal()">âœ•</button>
+        <h2>Nightcord Links</h2>
+        <button class="settings-close-btn" onclick="toggleSettingsModal()">&#x2715;</button>
       </div>
       <div class="settings-content">
         <p class="settings-desc">Access official Nightcord links and community resources.</p>
@@ -757,20 +556,12 @@
             </svg>
             <span>Official Website</span>
           </button>
-          <button class="btn-setting-link" id="btn-nc-options" onclick="openNcOptions()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="btn-link-icon" style="color:var(--accent)">
-              <path fill-rule="evenodd" d="M10.56 1.1c-.46.05-.7.53-.64.98.18 1.16-.19 2.2-.98 2.53-.8.33-1.79-.15-2.49-1.1-.27-.36-.78-.52-1.14-.24-.77.59-1.45 1.27-2.04 2.04-.28.36-.12.87.24 1.14.96.7 1.43 1.7 1.1 2.49-.33.8-1.37 1.16-2.53.98-.45-.07-.93.18-.99.64a11.1 11.1 0 0 0 0 2.88c.06.46.54.7.99.64 1.16-.18 2.2.19 2.53.98.33.8-.14 1.79-1.1 2.49-.36.27-.52.78-.24 1.14.59.77 1.27 1.45 2.04 2.04.36.28.87.12 1.14-.24.7-.95 1.7-1.43 2.49-1.1.8.33 1.16 1.37.98 2.53-.07.45.18.93.64.99a11.1 11.1 0 0 0 2.88 0c.46-.06.7-.54.64-.99-.18-1.16.19-2.2.98-2.53.8-.33 1.79.14 2.49 1.1.27.36.78.52 1.14.24.77-.59 1.45-1.27 2.04-2.04.28-.36.12-.87-.24-1.14-.96-.7-1.43-1.7-1.1-2.49.33-.8 1.37-1.16 2.53-.98.45.07.93-.18.99-.64a11.1 11.1 0 0 0 0-2.88c-.06-.46-.54-.7-.99-.64-1.16.18-2.2-.19-2.53-.98-.33-.8.14-1.79 1.1-2.49.36-.27.52-.78.24-1.14a11.07 11.07 0 0 0-2.04-2.04c-.36-.28-.87-.12-1.14.24-.7.96-1.7 1.43-2.49 1.1-.8-.33-1.16-1.37-.98-2.53.07-.45-.18-.93-.64-.99a11.1 11.1 0 0 0-2.88 0ZM16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd"/>
-            </svg>
-            <span>Nightcord Options</span>
-          </button>
-          <button class="btn-setting-link btn-github" onclick="window.nightcord.openUrl('https://git.nightcord.st/nightcord/nightcord')">
+          <button class="btn-setting-link" onclick="window.nightcord.openUrl('https://git.nightcord.st/nightcord/nightcord')">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="btn-link-icon">
               <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.11.82-.26.82-.577v-2.17c-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.73.083-.73 1.205.084 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.775.42-1.305.763-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.467-2.38 1.235-3.22-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23.957-.266 1.98-.398 3-.403 1.02.005 2.043.137 3 .403 2.29-1.552 3.297-1.23 3.297-1.23.653 1.653.24 2.873.118 3.176.77.84 1.233 1.91 1.233 3.22 0 4.61-2.803 5.625-5.475 5.92.43.37.823 1.102.823 2.222v3.293c0 .32.218.694.825.577C20.565 21.797 24 17.298 24 12c0-6.63-5.37-12-12-12z"/>
             </svg>
             <span>Gitea Repository</span>
           </button>
-
-          <div class="update-result" id="update-result"></div>
         </div>
       </div>
       <div class="settings-dev-footer">dev by ahki__ (nightcord)</div>
@@ -793,7 +584,6 @@
       document.getElementById('status-text').textContent = text;
     }
 
-    // mbDownloaded / mbTotal can be passed optionally to show e.g. "47.3 / 347.0 MB"
     function setLoading(v, text = "Loading...", percent = 100, mbDownloaded = null, mbTotal = null) {
       document.getElementById('progress-overlay').classList.toggle('visible', v);
       if (v) {
@@ -854,18 +644,18 @@
       if (discords.length === 0) {
         list.innerHTML = `
           <div class="empty-state">
-            âš ï¸ No Discord installations found automatically.<br>
+            &#9888;&#65039; No Discord installations found automatically.<br>
             <span style="font-size:11px;margin-top:6px;display:block;">
               Use the <strong style="color:var(--accent)">+ Manual Path</strong> button to enter the path manually.
             </span>
           </div>`;
-        setStatus('error', 'No installations auto-detected â€” use manual path.');
+        setStatus('error', 'No installations auto-detected — use manual path.');
         return;
       }
 
       for (let i = 0; i < discords.length; i++) {
         const d = discords[i];
-        const icon = ICONS[d.name] || { emoji: 'âšª', cls: 'stable' };
+        const icon = ICONS[d.name] || { emoji: '&#9898;', cls: 'stable' };
         let injected = false;
         let hasThirdParty = false;
         try { injected = await window.nightcord.isInjected(d.path); } catch {}
@@ -880,13 +670,13 @@
 
     function renderCard(d, i, injected, iconCls, hasThirdParty = false) {
       const list = document.getElementById('discord-list');
-      const icon = ICONS[d.name] || { emoji: 'âš™ï¸', cls: iconCls };
+      const icon = ICONS[d.name] || { emoji: '&#9881;&#65039;', cls: iconCls };
 
       let statusBadge;
       if (injected) {
-        statusBadge = `<span class="badge badge-injected">âœ“ injected</span>`;
+        statusBadge = `<span class="badge badge-injected">&#10004; injected</span>`;
       } else if (hasThirdParty) {
-        statusBadge = `<span class="badge" style="background:rgba(251,191,36,0.15);color:var(--warn)">âš  mod detected</span>`;
+        statusBadge = `<span class="badge" style="background:rgba(251,191,36,0.15);color:var(--warn)">&#9888; mod detected</span>`;
       } else {
         statusBadge = `<span class="badge badge-clean">clean</span>`;
       }
@@ -898,7 +688,7 @@
       card.dataset.thirdParty = hasThirdParty ? '1' : '0';
       card.innerHTML = `
         <div class="card-left">
-          <div class="card-icon ${icon.cls || iconCls}">${icon.html || icon.emoji || 'âš™ï¸'}</div>
+          <div class="card-icon ${icon.cls || iconCls}">${icon.html || icon.emoji || '&#9881;&#65039;'}</div>
           <div class="card-info">
             <h3>${d.name}</h3>
             <div class="card-path">${d.path}</div>
@@ -921,26 +711,23 @@
       });
       document.getElementById('btn-inject').disabled = false;
       document.getElementById('btn-uninject').disabled = false;
-      // Warn if a third-party mod is detected
       const card = document.querySelectorAll('.discord-card')[index];
       const isThirdParty = card && card.dataset.thirdParty === '1';
       if (isThirdParty) {
-        setStatus('loading', `âš  ${selected.name}: Vencord/Equicord detected â€” clicking Inject will replace it with Nightcord.`);
+        setStatus('loading', `&#9888; ${selected.name}: Vencord/Equicord detected — clicking Inject will replace it with Nightcord.`);
         document.getElementById('btn-inject').textContent = 'Replace with Nightcord';
       } else {
-        setStatus('idle', `Selected: ${selected.name} â€” ${selected.path}`);
+        setStatus('idle', `Selected: ${selected.name} — ${selected.path}`);
         document.getElementById('btn-inject').textContent = 'Inject Nightcord';
       }
     }
 
     function toggleSettingsModal() {
-      const overlay = document.getElementById('settings-overlay');
-      overlay.classList.toggle('visible');
+      document.getElementById('settings-overlay').classList.toggle('visible');
     }
 
     function closeSettingsModal(event) {
-      const overlay = document.getElementById('settings-overlay');
-      overlay.classList.remove('visible');
+      document.getElementById('settings-overlay').classList.remove('visible');
     }
 
     async function handleInject() {
@@ -949,8 +736,6 @@
       setLoading(true, "Starting installation...", 2);
       setStatus('loading', `Injecting into ${selected.name}...`);
 
-      // Use startInject (non-blocking) + poll getInjectStatus
-      // This avoids the WebView2 COM proxy 30s timeout on large downloads
       const started = window.nightcord.startInject(selected.path);
       if (!started || !started.started) {
         setLoading(false);
@@ -958,7 +743,6 @@
         return;
       }
 
-      // Poll every 500ms for status
       await new Promise((resolve) => {
         const interval = setInterval(() => {
           const status = window.nightcord.getInjectStatus();
@@ -969,14 +753,13 @@
             clearInterval(interval);
             resolve({ success: false, error: status.error });
           }
-          // 'running' â†’ keep polling (progress bar updated by SetProgress from C#)
         }, 500);
       }).then(result => {
         if (result.success) {
           setLoading(true, "Finalizing installation...", 100);
           setTimeout(async () => {
             setLoading(false);
-            setStatus('success', `âœ“ Nightcord injected into ${selected.name}! Restart Discord.`);
+            setStatus('success', `&#10004; Nightcord injected into ${selected.name}! Restarting Discord...`);
             await loadDiscords();
             const idx = discords.findIndex(d => d.path === selected.path);
             if (idx !== -1) selectDiscord(idx);
@@ -994,14 +777,13 @@
       setLoading(true, "Preparing uninjection...", 5);
       setStatus('loading', `Uninjecting from ${selected.name}...`);
       
-      // Real C# uninjection call
       const result = await window.nightcord.uninject(selected.path);
       
       if (result.success) {
         setLoading(true, "Completed", 100);
         setTimeout(async () => {
           setLoading(false);
-          setStatus('success', `âœ“ Nightcord uninjected from ${selected.name}.`);
+          setStatus('success', `&#10004; Nightcord uninjected from ${selected.name}.`);
           await loadDiscords();
         }, 600);
       } else {
@@ -1010,7 +792,6 @@
       }
     }
 
-    // Fetch latest version from Gitea and show in titlebar badge
     async function loadLatestVersion() {
       try {
         const res = await fetch('https://git.nightcord.st/api/v1/repos/nightcord/nightcord/releases/latest', {
@@ -1025,92 +806,12 @@
           el.classList.add('loaded');
         }
       } catch (e) {
-        // silently fail â€” not critical
+        // silently fail — not critical
       }
     }
 
-    // Init
     loadDiscords();
     loadLatestVersion();
   </script>
-
-  <!-- Sous-modale Nightcord Options -->
-  <div class="nc-options-overlay" id="nc-options-overlay" onclick="closeNcOptions(event)">
-    <div class="nc-options-container" onclick="event.stopPropagation()">
-      <div class="nc-options-header">
-        <h2>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path fill-rule="evenodd" d="M10.56 1.1c-.46.05-.7.53-.64.98.18 1.16-.19 2.2-.98 2.53-.8.33-1.79-.15-2.49-1.1-.27-.36-.78-.52-1.14-.24-.77.59-1.45 1.27-2.04 2.04-.28.36-.12.87.24 1.14.96.7 1.43 1.7 1.1 2.49-.33.8-1.37 1.16-2.53.98-.45-.07-.93.18-.99.64a11.1 11.1 0 0 0 0 2.88c.06.46.54.7.99.64 1.16-.18 2.2.19 2.53.98.33.8-.14 1.79-1.1 2.49-.36.27-.52.78-.24 1.14.59.77 1.27 1.45 2.04 2.04.36.28.87.12 1.14-.24.7-.95 1.7-1.43 2.49-1.1.8.33 1.16 1.37.98 2.53-.07.45.18.93.64.99a11.1 11.1 0 0 0 2.88 0c.46-.06.7-.54.64-.99-.18-1.16.19-2.2.98-2.53.8-.33 1.79.14 2.49 1.1.27.36.78.52 1.14.24.77-.59 1.45-1.27 2.04-2.04.28-.36.12-.87-.24-1.14-.96-.7-1.43-1.7-1.1-2.49.33-.8 1.37-1.16 2.53-.98.45.07.93-.18.99-.64a11.1 11.1 0 0 0 0-2.88c-.06-.46-.54-.7-.99-.64-1.16.18-2.2-.19-2.53-.98-.33-.8.14-1.79 1.1-2.49.36-.27.52-.78.24-1.14a11.07 11.07 0 0 0-2.04-2.04c-.36-.28-.87-.12-1.14.24-.7.96-1.7 1.43-2.49 1.1-.8-.33-1.16-1.37-.98-2.53.07-.45-.18-.93-.64-.99a11.1 11.1 0 0 0-2.88 0ZM16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd"/>
-          </svg>
-          Nightcord Options
-        </h2>
-        <button class="nc-options-close" onclick="document.getElementById('nc-options-overlay').classList.remove('visible')">&#x2715;</button>
-      </div>
-
-      <div class="nc-toggle-row">
-        <div class="nc-toggle-info">
-          <div class="nc-toggle-label">Config par defaut</div>
-          <div class="nc-toggle-desc">
-            Actif : tous les plugins marques &ldquo;actif par defaut&rdquo; dans Nightcord seront actifs apres installation.<br>
-            Inactif : aucun plugin ne sera actif &mdash; installation minimaliste.
-          </div>
-        </div>
-        <label class="nc-switch">
-          <input type="checkbox" id="toggle-default-plugins" checked>
-          <span class="nc-switch-track"></span>
-        </label>
-      </div>
-
-      <div class="nc-toggle-row">
-        <div class="nc-toggle-info">
-          <div class="nc-toggle-label">Mise a jour automatique</div>
-          <div class="nc-toggle-desc">
-            Actif : Nightcord propose les mises a jour avec un compteur 10 s et les installe automatiquement.<br>
-            Inactif : les mises a jour sont proposees mais tu dois cliquer toi-meme pour les installer.
-          </div>
-        </div>
-        <label class="nc-switch">
-          <input type="checkbox" id="toggle-auto-update" checked>
-          <span class="nc-switch-track"></span>
-        </label>
-      </div>
-
-      <button class="nc-options-save" onclick="saveNcOptions()">Enregistrer</button>
-      <div class="nc-options-saved" id="nc-options-saved">&#x2713; Options enregistrees</div>
-    </div>
-  </div>
-
-  <script>
-    let _ncPrefs = { defaultPlugins: true, autoUpdate: true };
-
-    function loadNcPrefs() {
-      try {
-        const raw = window.nightcord.getInstallerSettings();
-        if (raw && typeof raw === 'object') _ncPrefs = Object.assign(_ncPrefs, raw);
-      } catch(e) { console.warn('loadNcPrefs error', e); }
-      document.getElementById('toggle-default-plugins').checked = !!_ncPrefs.defaultPlugins;
-      document.getElementById('toggle-auto-update').checked     = !!_ncPrefs.autoUpdate;
-    }
-
-    function openNcOptions() {
-      loadNcPrefs();
-      document.getElementById('nc-options-overlay').classList.add('visible');
-    }
-
-    function closeNcOptions(e) {
-      if (e.target === document.getElementById('nc-options-overlay'))
-        document.getElementById('nc-options-overlay').classList.remove('visible');
-    }
-
-    function saveNcOptions() {
-      _ncPrefs.defaultPlugins = document.getElementById('toggle-default-plugins').checked;
-      _ncPrefs.autoUpdate     = document.getElementById('toggle-auto-update').checked;
-      try { window.nightcord.setInstallerSettings(_ncPrefs); } catch(e) {}
-      const el = document.getElementById('nc-options-saved');
-      el.classList.add('show');
-      setTimeout(() => el.classList.remove('show'), 2200);
-    }
-  </script>
-
 </body>
 </html>

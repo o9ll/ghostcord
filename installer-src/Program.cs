@@ -126,8 +126,8 @@ namespace NightcordInstaller
                     minimizeApp: () => chrome.webview.hostObjects.backend.MinimizeApp(),
                     closeApp: () => chrome.webview.hostObjects.backend.CloseApp(),
                     openUrl: (url) => chrome.webview.hostObjects.backend.OpenUrl(url),
-                    getInstallerSettings: () => JSON.parse(chrome.webview.hostObjects.sync.backend.GetInstallerSettings()),
-                    setInstallerSettings: (json) => JSON.parse(chrome.webview.hostObjects.sync.backend.SetInstallerSettings(JSON.stringify(json)))
+                    getInstallerSettings: () => ({}),
+                    setInstallerSettings: () => ({})
                 };
 
                 // Add drag support to titlebar
@@ -209,43 +209,6 @@ namespace NightcordInstaller
             }
             catch { }
         }
-
-        // ── Installer settings : defaultPlugins + autoUpdate ──────────────────────
-        // Stockées dans %AppData%\Nightcord\settings\installer-prefs.json
-        private string GetInstallerPrefsPath()
-        {
-            var localApp = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            return System.IO.Path.Combine(localApp, "Nightcord", "settings", "installer-prefs.json");
-        }
-
-        public string GetInstallerSettings()
-        {
-            try
-            {
-                var path = GetInstallerPrefsPath();
-                if (System.IO.File.Exists(path))
-                    return System.IO.File.ReadAllText(path, System.Text.Encoding.UTF8);
-            }
-            catch { }
-            return "{\"defaultPlugins\":true,\"autoUpdate\":true}";
-        }
-
-        public string SetInstallerSettings(string json)
-        {
-            try
-            {
-                var path = GetInstallerPrefsPath();
-                System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path));
-                JsonDocument.Parse(json);
-                System.IO.File.WriteAllText(path, json, System.Text.Encoding.UTF8);
-                return "{\"ok\":true}";
-            }
-            catch (Exception ex)
-            {
-                return "{\"ok\":false,\"error\":" + JsonSerializer.Serialize(ex.Message) + "}";
-            }
-        }
-        // ──────────────────────────────────────────────────────────────────────────
 
         public void SetStatus(string type, string text)
         {
@@ -598,7 +561,6 @@ namespace NightcordInstaller
             SetProgress(94, "Creating app directory...");
             Directory.CreateDirectory(appDir);
             WriteLoader(appDir);
-            ApplyDefaultPluginsSetting();
             CopyAssetsToDiscord(resPath);
             SetProgress(99, "Starting Discord...");
             StartDiscord(resPath);
@@ -751,54 +713,6 @@ namespace NightcordInstaller
             SetProgress(95, "Restarting Discord...");
             StartDiscord(resPath);
             SetProgress(100, "Done!");
-        }
-
-        // Écrit un settings.json Vencord vide si defaultPlugins = false
-        private void ApplyDefaultPluginsSetting()
-        {
-            try
-            {
-                var prefs = GetInstallerSettings();
-                bool defaultPlugins = true;
-                try {
-                    using var doc = JsonDocument.Parse(prefs);
-                    if (doc.RootElement.TryGetProperty("defaultPlugins", out var prop))
-                        defaultPlugins = prop.GetBoolean();
-                } catch { }
-
-                if (!defaultPlugins)
-                {
-                    // Écrire un settings.json Vencord avec plugins vides
-                    var settingsDir = System.IO.Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                        "Nightcord", "settings");
-                    System.IO.Directory.CreateDirectory(settingsDir);
-                    var settingsPath = System.IO.Path.Combine(settingsDir, "settings.json");
-                    // Si un settings existe déjà, on vide juste la clé plugins
-                    if (System.IO.File.Exists(settingsPath))
-                    {
-                        try {
-                            var existing = System.IO.File.ReadAllText(settingsPath);
-                            using var doc = JsonDocument.Parse(existing);
-                            var dict = new Dictionary<string, object>();
-                            foreach (var prop in doc.RootElement.EnumerateObject())
-                                if (prop.Name != "plugins")
-                                    dict[prop.Name] = prop.Value.Clone();
-                            dict["plugins"] = new Dictionary<string, object>();
-                            System.IO.File.WriteAllText(settingsPath,
-                                JsonSerializer.Serialize(dict,
-                                    new JsonSerializerOptions { WriteIndented = true }));
-                        } catch { }
-                    }
-                    else
-                    {
-                        // Pas encore de settings → créer avec plugins vide
-                        System.IO.File.WriteAllText(settingsPath,
-                            "{\n  \"plugins\": {}\n}");
-                    }
-                }
-            }
-            catch { }
         }
 
         private void WriteLoader(string appDir)
