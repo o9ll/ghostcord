@@ -6,9 +6,11 @@
 
 import { ChatBarButton, ChatBarButtonFactory } from "@api/ChatButtons";
 import { definePluginSettings } from "@api/Settings";
+import { openPluginModal } from "@components/settings/tabs/plugins/PluginModal";
 import definePlugin, { OptionType } from "@utils/types";
 import { findByPropsLazy, findStoreLazy } from "@webpack";
 import { React } from "@webpack/common";
+import plugins from "~plugins";
 
 // ── Discord internals ──────────────────────────────────────────────────────────
 
@@ -200,7 +202,14 @@ const SelfDestructButton: ChatBarButtonFactory = ({ isMainChat }) => {
         : "SelfDestruct: OFF — click to enable";
 
     return (
-        <ChatBarButton tooltip={tooltip} onClick={toggle}>
+        <ChatBarButton
+            tooltip={tooltip}
+            onClick={toggle}
+            onContextMenu={e => {
+                e.preventDefault();
+                openPluginModal(plugins["SelfDestruct"] ?? plugins["selfDestruct"]);
+            }}
+        >
             <SelfDestructIcon active={active} />
         </ChatBarButton>
     );

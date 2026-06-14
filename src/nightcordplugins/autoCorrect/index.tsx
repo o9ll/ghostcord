@@ -6,9 +6,11 @@
 
 import { ChatBarButton, ChatBarButtonFactory } from "@api/ChatButtons";
 import { definePluginSettings } from "@api/Settings";
+import { openPluginModal } from "@components/settings/tabs/plugins/PluginModal";
 import { showApiKeyWarning } from "@utils/apiKeyWarning";
 import definePlugin, { OptionType } from "@utils/types";
 import { React } from "@webpack/common";
+import plugins from "~plugins";
 
 import { getGroqKey,groqChat } from "../nightcordAI/groqManager";
 
@@ -149,7 +151,14 @@ const AutoCorrectChatBarButton: ChatBarButtonFactory = ({ type }) => {
         : "AutoCorrect: disabled — click to enable";
 
     return (
-        <ChatBarButton tooltip={tooltip} onClick={toggle}>
+        <ChatBarButton
+            tooltip={tooltip}
+            onClick={toggle}
+            onContextMenu={e => {
+                e.preventDefault();
+                openPluginModal(plugins["AutoCorrect"] ?? plugins["autoCorrect"]);
+            }}
+        >
             <AutoCorrectIcon enabled={enabled} />
         </ChatBarButton>
     );

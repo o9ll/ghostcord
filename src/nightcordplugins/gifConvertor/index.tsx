@@ -131,6 +131,7 @@ interface PopoverProps {
 
 function GifConvertorPopover({ position, onClose }: PopoverProps) {
     const [stage, setStage] = React.useState<Stage>("idle");
+    const [progress, setProgress] = React.useState<number>(0);
     const [gifBlob, setGifBlob] = React.useState<Blob | null>(null);
     const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
     const [errorMsg, setErrorMsg] = React.useState<string>("");
@@ -149,7 +150,7 @@ function GifConvertorPopover({ position, onClose }: PopoverProps) {
             const items = e.clipboardData?.items;
             if (!items) return;
             for (const item of items) {
-                if (item.kind === "file" && item.type.startsWith("image/")) {
+                if (item.kind === "file" && (item.type.startsWith("image/") || item.type.startsWith("video/"))) {
                     const file = item.getAsFile();
                     if (file) processFile(file);
                     break;
@@ -161,20 +162,21 @@ function GifConvertorPopover({ position, onClose }: PopoverProps) {
     }, []);
 
     async function processFile(file: File) {
-        if (!file.type.startsWith("image/")) {
-            setErrorMsg("Only image files are supported (PNG, JPG, WebP, etc.).");
+        if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
+            setErrorMsg("Only image and video files are supported.");
             setStage("error");
             return;
         }
-        const baseName = file.name.replace(/\.[^.]+$/, "") || "image";
+        const baseName = file.name.replace(/\.[^.]+$/, "") || "media";
         setFilename(`${baseName}.gif`);
         setStage("converting");
+        setProgress(0);
         setGifBlob(null);
         if (previewUrl) URL.revokeObjectURL(previewUrl);
         setPreviewUrl(null);
 
         try {
-            const gif = await encodeGIF(file);
+            const gif = await encodeGIF(file, setProgress);
             const blob = new Blob([gif], { type: "image/gif" });
             const url = URL.createObjectURL(blob);
             setGifBlob(blob);
@@ -239,7 +241,7 @@ function GifConvertorPopover({ position, onClose }: PopoverProps) {
             <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/*"
+                accept="image/*,video/*"
                 style={{ display: "none" }}
                 onChange={onFileInput}
             />
@@ -256,17 +258,17 @@ function GifConvertorPopover({ position, onClose }: PopoverProps) {
                         role="button"
                         tabIndex={0}
                         onKeyDown={e => e.key === "Enter" && onClickZone()}
-                        aria-label="Drop image to convert to GIF"
+                        aria-label="Drop media to convert to GIF"
                     >
                         <span className="nc-gifconv-dropzone-icon">
                             <UploadImageIcon />
                         </span>
                         <span className="nc-gifconv-dropzone-label">
-                            {isDragOver ? "Release to convert!" : "Drop an image here"}
+                            {isDragOver ? "Release to convert!" : "Drop media here"}
                         </span>
                         <span className="nc-gifconv-dropzone-sub">
                             or click to browse · Ctrl+V to paste<br />
-                            PNG · JPG · WebP · BMP · SVG
+                            Images &amp; Videos (MP4, WebM…)
                         </span>
                     </div>
                     {stage === "error" && (
@@ -279,7 +281,9 @@ function GifConvertorPopover({ position, onClose }: PopoverProps) {
             {stage === "converting" && (
                 <div className="nc-gifconv-loading">
                     <div className="nc-gifconv-spinner" />
-                    <span className="nc-gifconv-loading-label">Converting to GIF…</span>
+                    <span className="nc-gifconv-loading-label">
+                        Converting to GIF… {progress > 0 && `(${Math.round(progress * 100)}%)`}
+                    </span>
                 </div>
             )}
 
@@ -368,7 +372,7 @@ const GifConvertorChatBarButton: ChatBarButtonFactory = ({ isMainChat }) => {
     return (
         <>
             <span ref={btnWrapRef} className="nc-gifconv-btn-wrap">
-                <ChatBarButton tooltip="Convert image to GIF" onClick={toggle}>
+                <ChatBarButton tooltip="Convert image or video to GIF" onClick={toggle}>
                     <GifIcon active={open} />
                 </ChatBarButton>
             </span>
@@ -381,7 +385,7 @@ const GifConvertorChatBarButton: ChatBarButtonFactory = ({ isMainChat }) => {
 
 export default definePlugin({
     name: "GifConvertor",
-    description: "Converts an image (PNG, JPG, WebP…) to GIF and sends it in the current channel.",
+    description: "Converts an image or video to GIF and sends it in the current channel.",
     authors: [{ name: "Nightcord", id: 0n }],
     dependencies: ["ChatInputButtonAPI"],
     enabledByDefault: true,

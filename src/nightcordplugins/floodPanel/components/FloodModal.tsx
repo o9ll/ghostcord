@@ -9,7 +9,7 @@ import { Divider } from "@components/Divider";
 import { HeadingPrimary, HeadingSecondary } from "@components/Heading";
 import { Margins } from "@utils/margins";
 import { ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalProps, ModalRoot } from "@utils/modal";
-import { RestAPI, SearchableSelect, useEffect, useMemo, useRef, useState } from "@webpack/common";
+import { RestAPI, SearchableSelect, TextArea, useEffect, useMemo, useRef, useState } from "@webpack/common";
 
 const DEFAULT_MESSAGES = [
     "t'as pute d'yemma",
@@ -61,6 +61,8 @@ function makeNonce(): string {
 export function FloodModal({ channel, rootProps, onRunningChange }: Props) {
     const [messages, setMessages] = useState<string[]>(DEFAULT_MESSAGES);
     const [fileName, setFileName] = useState<string | null>(null);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editValue, setEditValue] = useState("");
     const [delayMs, setDelayMs] = useState("500");
     const [shuffle, setShuffle] = useState(true);
     const [running, setRunning] = useState(false);
@@ -123,24 +125,7 @@ export function FloodModal({ channel, rootProps, onRunningChange }: Props) {
         if (runningRef.current) scheduleNext();
     }
 
-    function handleFileLoad() {
-        const input = document.createElement("input");
-        input.type = "file"; input.accept = ".txt";
-        input.onchange = () => {
-            const file = input.files?.[0]; if (!file) return;
-            const reader = new FileReader();
-            reader.onload = e => {
-                const lines = (e.target?.result as string)
-                    .split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
-                if (lines.length > 0) {
-                    setMessages(lines);
-                    setFileName(`${file.name} (${lines.length} phrases)`);
-                }
-            };
-            reader.readAsText(file);
-        };
-        input.click();
-    }
+
 
     return (
         <ModalRoot {...rootProps}>
@@ -153,17 +138,50 @@ export function FloodModal({ channel, rootProps, onRunningChange }: Props) {
 
                 {/* Messages source */}
                 <HeadingSecondary className={Margins.bottom8}>Messages source</HeadingSecondary>
-                <div className="vc-flood-file-info">
-                    {fileName ?? `Default (${messages.length} phrases)`}
-                </div>
-                <div className={`vc-flood-file-row ${Margins.bottom16}`}>
-                    <Button variant="secondary" size="small" onClick={handleFileLoad}>
-                        Load .txt
-                    </Button>
-                    <Button variant="secondary" size="small" onClick={() => { setMessages(DEFAULT_MESSAGES); setFileName(null); }}>
-                        Default
-                    </Button>
-                </div>
+                {isEditing ? (
+                    <div className={Margins.bottom16}>
+                        <TextArea 
+                            value={editValue} 
+                            onChange={(v: string) => setEditValue(v)}
+                            placeholder="Write your phrases here, one per line..."
+                            rows={8}
+                            autoFocus
+                            style={{ marginBottom: "12px" }}
+                        />
+                        <div className="vc-flood-file-row">
+                            <Button variant="primary" size="small" onClick={() => {
+                                const lines = editValue.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+                                if (lines.length > 0) {
+                                    setMessages(lines);
+                                    setFileName(`Custom (${lines.length} phrases)`);
+                                }
+                                setIsEditing(false);
+                            }}>
+                                Save
+                            </Button>
+                            <Button variant="secondary" size="small" onClick={() => setIsEditing(false)}>
+                                Cancel
+                            </Button>
+                        </div>
+                    </div>
+                ) : (
+                    <>
+                        <div className="vc-flood-file-info">
+                            {fileName ?? `Default (${messages.length} phrases)`}
+                        </div>
+                        <div className={`vc-flood-file-row ${Margins.bottom16}`}>
+                            <Button variant="secondary" size="small" onClick={() => {
+                                setEditValue(messages.join("\n"));
+                                setIsEditing(true);
+                            }}>
+                                Edit phrases
+                            </Button>
+                            <Button variant="secondary" size="small" onClick={() => { setMessages(DEFAULT_MESSAGES); setFileName(null); }}>
+                                Default
+                            </Button>
+                        </div>
+                    </>
+                )}
 
                 <Divider className={Margins.bottom16} />
 

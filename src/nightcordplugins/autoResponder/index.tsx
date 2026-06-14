@@ -7,10 +7,12 @@
 import { ChatBarButton } from "@api/ChatButtons";
 import { definePluginSettings } from "@api/Settings";
 import { Button } from "@components/Button";
+import { openPluginModal } from "@components/settings/tabs/plugins/PluginModal";
 import { ModalCloseButton, ModalContent, ModalHeader, ModalRoot, ModalSize, openModal } from "@utils/modal";
 import definePlugin, { OptionType } from "@utils/types";
 import { findByPropsLazy } from "@webpack";
 import { ChannelStore, React, RestAPI, Text, UserStore } from "@webpack/common";
+import plugins from "~plugins";
 
 import { getGroqKey, groqChat } from "../nightcordAI/groqManager";
 
@@ -321,6 +323,10 @@ const AutoResponderButton = () => {
         <ChatBarButton
             tooltip={`AutoResponder: ${isEnabled ? "ON" : "OFF"}`}
             onClick={toggle}
+            onContextMenu={e => {
+                e.preventDefault();
+                openPluginModal(plugins["AutoResponder"] ?? plugins["autoResponder"]);
+            }}
         >
             <KeyboardIcon enabled={isEnabled} style={{ color: isEnabled ? "var(--brand-experiment)" : "var(--interactive-normal)" }} />
         </ChatBarButton>

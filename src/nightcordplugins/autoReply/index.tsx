@@ -6,9 +6,11 @@
 
 import { ChatBarButton, ChatBarButtonFactory } from "@api/ChatButtons";
 import { definePluginSettings } from "@api/Settings";
+import { openPluginModal } from "@components/settings/tabs/plugins/PluginModal";
 import definePlugin, { OptionType } from "@utils/types";
 import { findStoreLazy } from "@webpack";
 import { React, RestAPI, useState } from "@webpack/common";
+import plugins from "~plugins";
 
 // ── Stores ─────────────────────────────────────────────────────────────────────
 
@@ -213,7 +215,14 @@ const AutoReplyButton: ChatBarButtonFactory = ({ isMainChat }) => {
         : "Auto Reply: Disabled — click to enable";
 
     return (
-        <ChatBarButton tooltip={tooltip} onClick={toggle}>
+        <ChatBarButton
+            tooltip={tooltip}
+            onClick={toggle}
+            onContextMenu={e => {
+                e.preventDefault();
+                openPluginModal(plugins["AutoReply"] ?? plugins["autoReply"]);
+            }}
+        >
             <AutoReplyIcon active={active} />
         </ChatBarButton>
     );

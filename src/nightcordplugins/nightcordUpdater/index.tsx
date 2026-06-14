@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Vencord, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -9,7 +9,7 @@ import { waitFor } from "@webpack";
 import { React, useEffect, useState } from "@webpack/common";
 import {domain} from "../../../DOMAIN.json"
 // Config
-const REMOTE_VERSION_URL = `https://git.${domain}/api/v1/repos/nightcord/nightcord/releases/latest`;
+const REMOTE_VERSION_URL = `https://gitea.${domain}/api/v1/repos/nightcord/nightcord/releases/latest`;
 
 // Version locale (injectee au build via define)
 declare const VERSION: string;

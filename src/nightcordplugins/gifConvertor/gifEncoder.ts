@@ -187,24 +187,59 @@ function lzwEncode(pixels: Uint8Array, minCode: number): Uint8Array {
 
 // ─── GIF stream builder ───────────────────────────────────────────────────────
 
-function buildGIF(w: number, h: number, palette: Color[], indices: Uint8Array): Uint8Array {
-    const lzw = lzwEncode(indices, 8);
+function buildGIF(w: number, h: number, frames: { palette: Color[], indices: Uint8Array, delayMs?: number }[]): Uint8Array {
     const buf: number[] = [];
     const u16 = (v: number) => [v & 0xFF, (v >> 8) & 0xFF];
 
     // Header
     buf.push(0x47, 0x49, 0x46, 0x38, 0x39, 0x61); // GIF89a
-    // Logical Screen Descriptor
-    buf.push(...u16(w), ...u16(h), 0b11110111, 0, 0); // GCT, 256 colours
-    // Global Color Table
-    for (let i = 0; i < 256; i++) {
-        const c = palette[i] ?? { r: 0, g: 0, b: 0 };
-        buf.push(c.r, c.g, c.b);
+
+    if (frames.length === 1) {
+        // Logical Screen Descriptor
+        buf.push(...u16(w), ...u16(h), 0b11110111, 0, 0); // GCT, 256 colours
+        // Global Color Table
+        for (let i = 0; i < 256; i++) {
+            const c = frames[0].palette[i] ?? { r: 0, g: 0, b: 0 };
+            buf.push(c.r, c.g, c.b);
+        }
+        // Image Descriptor
+        buf.push(0x2C, ...u16(0), ...u16(0), ...u16(w), ...u16(h), 0);
+        // LZW image data
+        const lzw = lzwEncode(frames[0].indices, 8);
+        buf.push(...lzw);
+    } else {
+        // Logical Screen Descriptor
+        buf.push(...u16(w), ...u16(h), 0b01110000, 0, 0); // No GCT
+
+        // Netscape Application Extension for looping
+        buf.push(0x21, 0xFF, 0x0B);
+        buf.push(..."NETSCAPE2.0".split("").map(c => c.charCodeAt(0)));
+        buf.push(0x03, 0x01, 0x00, 0x00, 0x00); // Loop infinitely
+
+        for (const frame of frames) {
+            // Graphic Control Extension
+            buf.push(0x21, 0xF9, 0x04);
+            buf.push(0x04); // Disposal Method = 1 (Do not dispose)
+            const delay = Math.round((frame.delayMs || 100) / 10);
+            buf.push(...u16(delay));
+            buf.push(0x00, 0x00);
+
+            // Image Descriptor
+            buf.push(0x2C, ...u16(0), ...u16(0), ...u16(w), ...u16(h));
+            buf.push(0b10000111); // LCT, 256 colors
+
+            // Local Color Table
+            for (let i = 0; i < 256; i++) {
+                const c = frame.palette[i] ?? { r: 0, g: 0, b: 0 };
+                buf.push(c.r, c.g, c.b);
+            }
+
+            // LZW image data
+            const lzw = lzwEncode(frame.indices, 8);
+            buf.push(...lzw);
+        }
     }
-    // Image Descriptor
-    buf.push(0x2C, ...u16(0), ...u16(0), ...u16(w), ...u16(h), 0);
-    // LZW image data
-    buf.push(...lzw);
+
     // Trailer
     buf.push(0x3B);
 
@@ -215,23 +250,74 @@ function buildGIF(w: number, h: number, palette: Color[], indices: Uint8Array): 
 
 /** Maximum dimension for the output GIF (preserves aspect ratio). */
 const MAX_DIM = 512;
+const VIDEO_MAX_DIM = 320;
+const MAX_DURATION = 15;
+const FPS = 10;
 
-export async function encodeGIF(source: File | Blob): Promise<Uint8Array> {
-    const bitmap = await createImageBitmap(source);
-    let { width: w, height: h } = bitmap;
+export async function encodeGIF(source: File | Blob, onProgress?: (pct: number) => void): Promise<Uint8Array> {
+    const isVideo = source.type.startsWith("video/");
 
-    // Resize if too large
-    if (w > MAX_DIM || h > MAX_DIM) {
-        const s = MAX_DIM / Math.max(w, h);
+    if (!isVideo) {
+        const bitmap = await createImageBitmap(source);
+        let { width: w, height: h } = bitmap;
+
+        // Resize if too large
+        if (w > MAX_DIM || h > MAX_DIM) {
+            const s = MAX_DIM / Math.max(w, h);
+            w = Math.round(w * s); h = Math.round(h * s);
+        }
+
+        const canvas = new OffscreenCanvas(w, h);
+        const ctx = canvas.getContext("2d") as OffscreenCanvasRenderingContext2D;
+        ctx.drawImage(bitmap, 0, 0, w, h);
+        bitmap.close();
+
+        const { data } = ctx.getImageData(0, 0, w, h);
+        const { palette, indices } = quantize(data, w * h);
+        onProgress?.(1);
+        return buildGIF(w, h, [{ palette, indices }]);
+    }
+
+    const video = document.createElement("video");
+    const url = URL.createObjectURL(source);
+    video.src = url;
+    video.muted = true;
+    video.crossOrigin = "anonymous";
+    
+    await new Promise((resolve, reject) => {
+        video.onloadeddata = resolve;
+        video.onerror = reject;
+    });
+
+    let { videoWidth: w, videoHeight: h } = video;
+    if (w > VIDEO_MAX_DIM || h > VIDEO_MAX_DIM) {
+        const s = VIDEO_MAX_DIM / Math.max(w, h);
         w = Math.round(w * s); h = Math.round(h * s);
     }
 
     const canvas = new OffscreenCanvas(w, h);
     const ctx = canvas.getContext("2d") as OffscreenCanvasRenderingContext2D;
-    ctx.drawImage(bitmap, 0, 0, w, h);
-    bitmap.close();
-
-    const { data } = ctx.getImageData(0, 0, w, h);
-    const { palette, indices } = quantize(data, w * h);
-    return buildGIF(w, h, palette, indices);
+    
+    const frames: { palette: Color[], indices: Uint8Array, delayMs: number }[] = [];
+    const rawDuration = isFinite(video.duration) && video.duration > 0 ? video.duration : MAX_DURATION;
+    const duration = Math.min(rawDuration, MAX_DURATION);
+    const delayMs = 1000 / FPS;
+    
+    for (let t = 0; t < duration; t += 1 / FPS) {
+        const seekPromise = new Promise(resolve => { video.onseeked = resolve; });
+        video.currentTime = t;
+        await seekPromise;
+        
+        ctx.drawImage(video, 0, 0, w, h);
+        const { data } = ctx.getImageData(0, 0, w, h);
+        const { palette, indices } = quantize(data, w * h);
+        frames.push({ palette, indices, delayMs });
+        
+        onProgress?.(t / duration);
+    }
+    
+    URL.revokeObjectURL(url);
+    onProgress?.(1);
+    
+    return buildGIF(w, h, frames);
 }

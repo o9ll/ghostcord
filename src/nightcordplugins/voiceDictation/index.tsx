@@ -1,8 +1,10 @@
-﻿import { ChatBarButton, ChatBarButtonFactory } from "@api/ChatButtons";
+import { ChatBarButton, ChatBarButtonFactory } from "@api/ChatButtons";
 import { definePluginSettings } from "@api/Settings";
+import { openPluginModal } from "@components/settings/tabs/plugins/PluginModal";
 import { showApiKeyWarning } from "@utils/apiKeyWarning";
-import definePlugin, { OptionType } from "@utils/types"; // Import conservé mais syntaxe d'export en bas sécurisée
+import definePlugin, { OptionType } from "@utils/types";
 import { ComponentDispatch, MediaEngineStore, React, showToast, Toasts, useEffect, useRef, useState } from "@webpack/common";
+import plugins from "~plugins";
 
 import { getGroqKey } from "../nightcordAI/groqManager";
 
@@ -189,7 +191,7 @@ const VoiceDictationButton: ChatBarButtonFactory = ({ isMainChat }) => {
                         try {
                             const buf = await (VencordNative as any).pluginHelpers?.VoiceMessages?.readRecording?.(filePath);
                             if (buf) {
-                                const blob = new Blob([buf], { type: "audio/ogg; codecs=opus" });
+                                const blob = new Blob([new Uint8Array(buf)], { type: "audio/ogg; codecs=opus" });
                                 console.log("[VoiceDictation] Native blob size:", blob.size);
                                 await processBlob(blob);
                             }
@@ -252,7 +254,7 @@ const VoiceDictationButton: ChatBarButtonFactory = ({ isMainChat }) => {
                 if (filePath) {
                     try {
                         const buf = await (VencordNative as any).pluginHelpers?.VoiceMessages?.readRecording?.(filePath);
-                        if (buf) await processBlob(new Blob([buf], { type: "audio/ogg; codecs=opus" }));
+                        if (buf) await processBlob(new Blob([new Uint8Array(buf)], { type: "audio/ogg; codecs=opus" }));
                     } catch { /* ignore */ }
                 }
             });
@@ -359,14 +361,20 @@ const VoiceDictationButton: ChatBarButtonFactory = ({ isMainChat }) => {
     const tooltip = errorMsg || (processing ? "Transcribing..." : recording ? "Stop dictation" : "Voice dictation");
 
     return (
-        <ChatBarButton tooltip={tooltip} onClick={toggle}>
+        <ChatBarButton
+            tooltip={tooltip}
+            onClick={toggle}
+            onContextMenu={e => {
+                e.preventDefault();
+                openPluginModal(plugins["VoiceDictation"] ?? plugins["voiceDictation"]);
+            }}
+        >
             <DictationIcon recording={recording} processing={processing} />
         </ChatBarButton>
     );
 };
 
-// Modification ici pour contourner le bug d'esbuild avec le mot-clé default direct
-const pluginObj = definePlugin({
+export default definePlugin({
     name: "VoiceDictation",
     enabledByDefault: true,
     description: "Real-time voice dictation via Groq Whisper (free). API key shared with NightcordAI.",
@@ -378,5 +386,3 @@ const pluginObj = definePlugin({
         render: VoiceDictationButton,
     },
 });
-
-export default pluginObj;
