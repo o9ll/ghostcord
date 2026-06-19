@@ -33,9 +33,12 @@ async function setApiVersion(version: ApiVersion) {
 }
 
 function toBase64(data: Uint8Array): string {
+    // Chunked spread avoids both O(n²) string concatenation and call-stack overflow
+    // for large payloads (e.g. settings with many plugins).
+    const CHUNK = 0x2000; // 8 KB per chunk
     let binary = "";
-    for (let i = 0; i < data.length; i++)
-        binary += String.fromCharCode(data[i]);
+    for (let i = 0; i < data.length; i += CHUNK)
+        binary += String.fromCharCode(...data.subarray(i, i + CHUNK));
     return btoa(binary);
 }
 

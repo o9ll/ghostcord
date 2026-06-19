@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Vencord, a Discord client mod
  * Copyright (c) 2025 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -12,6 +12,7 @@ import { wordsFromCamel, wordsToTitle } from "@utils/text";
 import { DefinedSettings, PluginOptionBase } from "@utils/types";
 import { PropsWithChildren } from "react";
 import React from "react";
+import { tPlugin } from "@api/pluginI18n";
 
 export const cl = classNameFactory("vc-plugins-setting-");
 
@@ -76,8 +77,8 @@ export function SettingsSection({ tag: Tag = "div", name, description, error, in
         <Tag className={cl("section")}>
             <div className={classes(cl("content"), inlineSetting && cl("inline"))}>
                 <div className={cl("label")}>
-                    {name && <BaseText className={cl("title")} size="md" weight="medium" style={{ color: "#fff" }}>{wordsToTitle(wordsFromCamel(name))}</BaseText>}
-                    {description && <BaseText className={cl("description")} size="sm" style={{ color: "#fff" }}>{renderDescription(description)}</BaseText>}
+                    {name && <BaseText className={cl("title")} size="md" weight="medium" style={{ color: "#fff" }}>{tPlugin(wordsToTitle(wordsFromCamel(name)))}</BaseText>}
+                    {description && <BaseText className={cl("description")} size="sm" style={{ color: "#fff" }}>{renderDescription(tPlugin(description))}</BaseText>}
                 </div>
                 {children}
             </div>

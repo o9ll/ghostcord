@@ -66,9 +66,31 @@ export async function authorizeCloud() {
         return;
     }
 
+    let clientId: string;
+    let redirectUri: string;
+    let scopes: string[];
+
+    const cloudUrl = getCloudUrl();
+    const isNightcord = cloudUrl.hostname.includes("nightcord");
+
     try {
-        const oauthConfiguration = await fetch(new URL("/v1/oauth/settings", getCloudUrl()));
-        var { clientId, redirectUri } = await oauthConfiguration.json();
+        if (isNightcord) {
+            // Nightcord API uses /api/oauth2/signing
+            const signingRes = await fetch(new URL("/api/oauth2/signing", cloudUrl));
+            const signingData = await signingRes.json();
+            // Extract clientId from the authorization URL
+            const authUrl = new URL(signingData.url);
+            clientId = authUrl.searchParams.get("client_id")!;
+            redirectUri = signingData.redirectUri;
+            scopes = signingData.scopes ?? ["identify", "guilds.join"];
+        } else {
+            // Vencord/Equicord API uses /v1/oauth/settings
+            const oauthConfiguration = await fetch(new URL("/v1/oauth/settings", cloudUrl));
+            const data = await oauthConfiguration.json();
+            clientId = data.clientId;
+            redirectUri = data.redirectUri;
+            scopes = ["identify"];
+        }
     } catch {
         showNotification({
             title: "Cloud Integration",
@@ -80,7 +102,7 @@ export async function authorizeCloud() {
 
     openModal((props: any) => <OAuth2AuthorizeModal
         {...props}
-        scopes={["identify"]}
+        scopes={scopes}
         responseType="code"
         redirectUri={redirectUri}
         permissions={0n}
@@ -97,21 +119,24 @@ export async function authorizeCloud() {
                     headers: { Accept: "application/json" }
                 });
                 const data = await res.json();
-                if (data.secret) {
+
+                // Nightcord returns { token }, Vencord/Equicord returns { secret }
+                const credential = data.token ?? data.secret;
+                if (credential) {
                     logger.info("Authorized with cloud");
-                    await setAuthorization(data.secret);
+                    await setAuthorization(credential);
                     showNotification({
                         title: "Cloud Integration",
                         body: "Cloud integrations enabled!"
                     });
                     Settings.cloud.authenticated = true;
                 } else {
-                    logger.error("OAuth callback returned no secret", data);
+                    logger.error("OAuth callback returned no credential", data);
                     showNotification({
                         title: "Cloud Integration",
                         body: data.error
                             ? `Setup failed: ${data.error}`
-                            : "Setup failed (no secret returned)."
+                            : "Setup failed (no credential returned)."
                     });
                     Settings.cloud.authenticated = false;
                 }
@@ -123,8 +148,7 @@ export async function authorizeCloud() {
                 });
                 Settings.cloud.authenticated = false;
             }
-        }
-        }
+        }}
     />);
 }
 

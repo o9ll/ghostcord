@@ -7,7 +7,7 @@
 import "./styles.css";
 
 import { isPluginEnabled } from "@api/PluginManager";
-import { definePluginSettings, migratePluginSettings } from "@api/Settings";
+import { definePluginSettings } from "@api/Settings";
 import { Divider } from "@components/Divider";
 import { Heading } from "@components/Heading";
 import { Devs, EquicordDevs } from "@utils/constants";
@@ -231,7 +231,6 @@ function load() {
     }
 }
 
-migratePluginSettings("CursorBuddy", "Oneko", "oneko");
 export default definePlugin({
     name: "CursorBuddy",
     description: "Adds a sprite that follows your cursor.",

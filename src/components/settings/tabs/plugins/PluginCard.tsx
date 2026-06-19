@@ -17,6 +17,8 @@ import { Button } from "@components/Button";
 import { React, showToast, Text, Toasts, UserStore } from "@webpack/common";
 import { Settings } from "Vencord";
 import {domain} from "../../../../../DOMAIN.json";
+import { t } from "@api/i18n";
+import { tPlugin } from "@api/pluginI18n";
 
 import { TUTORIAL_CACHE } from "./components/Common";
 import { openPluginModal } from "./PluginModal";
@@ -92,12 +94,12 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
             openModal(props => (
                 <ModalRoot {...props} size={ModalSize.SMALL}>
                     <ModalHeader separator={false}>
-                        <Text variant="heading-lg/semibold">Autoresponder Warning</Text>
+                        <Text variant="heading-lg/semibold">{t("Autoresponder Warning")}</Text>
                         <ModalCloseButton onClick={props.onClose} />
                     </ModalHeader>
                     <ModalContent>
                         <Text variant="text-md/normal" style={{ marginBottom: 16 }}>
-                            Are you sure you want to enable the Autoresponder plugin? An AI will automatically reply to your DMs when you are unavailable.
+                            {t("Are you sure you want to enable the Autoresponder plugin? An AI will automatically reply to your DMs when you are unavailable.")}
                         </Text>
                     </ModalContent>
                     <div style={{ padding: "16px", display: "flex", justifyContent: "flex-end", gap: "8px" }}>
@@ -105,7 +107,7 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
                             variant="link"
                             onClick={props.onClose}
                         >
-                            Cancel
+                            {t("Cancel")}
                         </Button>
                         <Button
                             variant="primary"
@@ -114,7 +116,7 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
                                 doToggleEnabled();
                             }}
                         >
-                            Enable
+                            {t("Enable")}
                         </Button>
                     </div>
                 </ModalRoot>
@@ -168,7 +170,7 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
                             <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="var(--text-muted)" />
                             </svg>
-                            <Text variant="text-md/medium">No video tutorial available for this plugin.</Text>
+                            <Text variant="text-md/medium">{t("No video tutorial available for this plugin.")}</Text>
                         </div>
                     </div>
                 </ModalContent>
@@ -200,7 +202,7 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
         </button>
     );
 
-    const tooltip = "Show Tutorial";
+    const tooltip = t("Show Tutorial");
     const isNightcord = !PluginMeta[plugin.name]?.userPlugin;
     const iconType = isNightcord ? "nightcord" : "other";
 
@@ -238,11 +240,11 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
 
     return (
         <AddonCard
-            name={plugin.name}
+            name={tPlugin(plugin.name)}
             iconType={iconType}
             sourceBadge={hasTutorial ? sourceBadge : undefined}
             tooltip={tooltip}
-            description={plugin.description}
+            description={tPlugin(plugin.description)}
             isNew={isNew}
             enabled={isEnabled()}
             setEnabled={plugin.required ? () => { } : toggleEnabled}

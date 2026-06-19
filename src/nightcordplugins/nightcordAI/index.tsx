@@ -18,10 +18,12 @@ import { showApiKeyWarning } from "@utils/apiKeyWarning";
 import { ModalCloseButton,ModalRoot, openModal } from "@utils/modal";
 import definePlugin, { OptionType } from "@utils/types";
 import { findByPropsLazy } from "@webpack";
-import { ChannelStore, FluxDispatcher, IconUtils, Menu,React, RelationshipStore, RestAPI, useEffect, useRef, UserStore, useState } from "@webpack/common";
+import { ChannelStore, FluxDispatcher, IconUtils, Menu,React, ReactDOM, RelationshipStore, RestAPI, useEffect, useRef, UserStore, useState } from "@webpack/common";
+import { t } from "@api/i18n";
 
 import { getGroqKey, groqChat,setGroqKey } from "./groqManager";
-import { t } from "../autoTranslateNightcord";
+import { t as tUI } from "@api/i18n";
+
 
 // ── Settings ───────────────────────────────────────────────────────────────────
 
@@ -326,7 +328,7 @@ function renderMarkdown(text: string): React.ReactNode {
                     <div key={key++} className="nai-code-wrap">
                         <button className="nai-copy-btn" onClick={() => {
                             navigator.clipboard.writeText(codeText);
-                        }}>Copy</button>
+                        }}>{tUI("Copy")}</button>
                         <pre className="nai-code-block"><code>{codeText}</code></pre>
                     </div>
                 );
@@ -761,7 +763,7 @@ function NightcordAINavButton({ selected }: { selected?: boolean; }) {
                 </svg>
             </div>
             <span className="nai-nav-label">{t("Nightcord AI")}</span>
-            <span className="nai-nav-pill">AI</span>
+            <span className="nai-nav-pill">{tUI("AI")}</span>
         </div>
     );
 }
@@ -778,15 +780,15 @@ export default definePlugin({
     settingsAboutComponent() {
         return (
             <Card>
-                <Heading tag="h5">How to get a Groq API key</Heading>
+                <Heading tag="h5">{t("How to get a Groq API key")}</Heading>
                 <Paragraph>
-                    Create a free account on <strong>console.groq.com</strong>, then go to <strong>API Keys</strong> and click <strong>Create API Key</strong>. Copy the key and paste it in the <strong>Api Key</strong> field above.
+                    {t("Create a free account on console.groq.com, then go to API Keys and click Create API Key. Copy the key and paste it in the Api Key field above.")}
                 </Paragraph>
                 <Paragraph style={{ marginTop: 6 }}>
-                    The Groq API is <strong>free</strong> and gives access to fast LLMs (Llama, Mixtral…).
+                    {t("The Groq API is free and gives access to fast LLMs (Llama, Mixtral…).")}
                 </Paragraph>
                 <LinkButton size="small" href="https://console.groq.com/keys" className={Margins.top8}>
-                    Create API Key
+                    {t("Create API Key")}
                 </LinkButton>
             </Card>
         );
@@ -867,8 +869,6 @@ export default definePlugin({
             container.id = "nai-nav-injected";
             navItem.parentElement.insertBefore(container, navItem);
 
-            const EC = (window as any).Vencord ?? (window as any).Equicord;
-            const ReactDOM = EC?.Webpack?.Common?.ReactDOM ?? (window as any).ReactDOM;
             const createRoot = ReactDOM?.createRoot;
 
             if (createRoot) {
@@ -882,8 +882,8 @@ export default definePlugin({
                             <path fill-rule="evenodd" d="M12 21c5.52 0 10-1.86 10-6 0-5.59-2.8-10.07-4.26-11.67a1 1 0 1 0-1.48 1.34 14.8 14.8 0 0 1 2.35 3.86A10.23 10.23 0 0 0 12 6C9.47 6 7.15 7.02 5.4 8.53a14.8 14.8 0 0 1 2.34-3.86 1 1 0 1 0-1.48-1.34A18.65 18.65 0 0 0 2 15c0 4.14 4.48 6 10 6Zm0-12c3.87 0 7 2 7 4.2S15.87 17 12 17s-7-1.6-7-3.8C5 11 8.13 9 12 9Z" clip-rule="evenodd"/>
                         </svg>
                     </div>
-                    <span class="nai-nav-label">Nightcord AI</span>
-                    <span class="nai-nav-pill">AI</span>
+                    <span class="nai-nav-label">${tUI("Nightcord AI")}</span>
+                    <span class="nai-nav-pill">${tUI("AI")}</span>
                 </div>`;
                 document.getElementById("nai-nav-btn-raw")?.addEventListener("click", () => {
                     openModal(p => <NightcordAIChat rootProps={p} />);

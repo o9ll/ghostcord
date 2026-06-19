@@ -82,6 +82,7 @@ export interface Settings {
     winNativeTitleBar: boolean;
     seeAllCustomProfile: boolean;
     syncOwnCustomProfile: boolean;
+    language: "en" | "fr" | "es" | "ru" | "zh";
     plugins: {
         [plugin: string]: {
             enabled: boolean;
@@ -140,6 +141,7 @@ const DefaultSettings: Settings = {
     winNativeTitleBar: false,
     seeAllCustomProfile: true,
     syncOwnCustomProfile: false,
+    language: "en",
     plugins: {},
 
     uiElements: {

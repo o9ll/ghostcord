@@ -10,7 +10,8 @@ import { isCompactModeEnabled, isStealthModeEnabled, toggleCompactMode, toggleSt
 import { openNotificationLogModal } from "@api/Notifications/notificationLog";
 import { plugins } from "@api/PluginManager";
 import { useSettings } from "@api/Settings";
-import { beginDiscordOAuth, checkOAuthToken, clearToken, getStoredToken, storeToken } from "../../../../api/OAuth2";
+import { t } from "@api/i18n";
+
 import { Button } from "@components/Button";
 import { Card } from "@components/Card";
 import { Divider } from "@components/Divider";
@@ -172,17 +173,17 @@ function StealthModeSection() {
 
     return (
         <>
-            <Heading className={Margins.top20}>Stealth Mode</Heading>
+            <Heading className={Margins.top20}>{t("Stealth Mode")}</Heading>
             <Paragraph className={Margins.bottom16}>
                 {enabled
                     ? "Stealth mode is enabled â€” all Nightcord visual elements are hidden. Shortcut: Ctrl+Shift+H"
-                    : "Hides all Nightcord visual elements (icons, buttons, context menus) without disabling plugins. Shortcut: Ctrl+Shift+H"}
+                    : t("Hides all Nightcord visual elements without disabling plugins. Shortcut: Ctrl+Shift+H")}
             </Paragraph>
             <Button
                 onClick={toggleStealthMode}
                 variant={enabled ? "secondary" : "primary"}
             >
-                {enabled ? "Disable Stealth Mode" : "Enable Stealth Mode"}
+                {enabled ? t("Disable Stealth Mode") : t("Enable Stealth Mode")}
             </Button>
         </>
     );
@@ -196,129 +197,12 @@ function StealthModeButton() {
             onClick={toggleStealthMode}
             variant={enabled ? "dangerPrimary" : "primary"}
         >
-            {enabled ? "✓ Stealth Mode Enabled — Click to disable" : "Enable Stealth Mode"}
+            {enabled ? t("✓ Stealth Mode Enabled — Click to disable") : t("Enable Stealth Mode")}
         </Button>
     );
 }
 
-function CustomProfileSyncToggle() {
-    const settings = useSettings();
-    const [token, setToken] = React.useState<string | null>(null);
-    const [checking, setChecking] = React.useState(true);
-    const [busy, setBusy] = React.useState(false);
 
-    // Check stored token on mount
-    React.useEffect(() => {
-        getStoredToken().then(async t => {
-            if (t) {
-                const check = await checkOAuthToken(t);
-                if (check?.valid) {
-                    setToken(t);
-                    settings.syncOwnCustomProfile = true;
-                    settings.seeAllCustomProfile = true;
-                } else {
-                    await clearToken();
-                    settings.syncOwnCustomProfile = false;
-                    settings.seeAllCustomProfile = false;
-                }
-            } else {
-                settings.syncOwnCustomProfile = false;
-                settings.seeAllCustomProfile = false;
-            }
-            setChecking(false);
-        });
-    }, []);
-
-    const isEnabled = !!token;
-
-    async function handleToggle(on: boolean) {
-        if (busy) return;
-        if (on) {
-            // Récupère clientId, redirectUri et scopes depuis le serveur Nightcord
-            setBusy(true);
-            let oauthData: { url: string; redirectUri: string; scopes: string[]; clientId?: string; } | null = null;
-            try {
-                oauthData = await beginDiscordOAuth();
-            } catch (e) {
-                console.error("[CustomProfileSync] Failed to fetch OAuth config:", e);
-                setBusy(false);
-                return;
-            }
-            setBusy(false);
-
-            // Extrait le clientId depuis l'URL retournée par le serveur
-            let clientId = oauthData.clientId;
-            if (!clientId) {
-                try {
-                    clientId = new URL(oauthData.url).searchParams.get("client_id") ?? undefined;
-                } catch { }
-            }
-            if (!clientId) return;
-
-            openModal(oauthProps => <OAuth2AuthorizeModal
-                {...oauthProps}
-                scopes={oauthData!.scopes}
-                responseType="code"
-                redirectUri={oauthData!.redirectUri}
-                permissions={0n}
-                clientId={clientId!}
-                cancelCompletesFlow={false}
-                callback={async ({ location }: any) => {
-                    if (!location) return;
-                    try {
-                        const res = await fetch(location, { headers: { Accept: "application/json" } });
-                        const { token: newToken } = await res.json();
-                        if (newToken) {
-                            await storeToken(newToken);
-                            setToken(newToken);
-                            settings.syncOwnCustomProfile = true;
-                            settings.seeAllCustomProfile = true;
-                        }
-                    } catch (e) {
-                        console.error("[CustomProfileSync] OAuth callback failed:", e);
-                    }
-                }}
-            />);
-        } else {
-            // Deactivate: clear everything
-            setBusy(true);
-            await clearToken();
-            setToken(null);
-            settings.syncOwnCustomProfile = false;
-            settings.seeAllCustomProfile = false;
-            setBusy(false);
-        }
-    }
-
-    if (checking) return null;
-
-    return (
-        <div style={{ marginBottom: 16 }}>
-            <FormSwitch
-                value={isEnabled}
-                onChange={handleToggle}
-                title="Nightcord Sync"
-                description={isEnabled
-                    ? "Your custom profile is synced. Other Nightcord users can see your profile, and you can see theirs."
-                    : "Enable to share your custom profile with other Nightcord users and see their profiles."}
-                disabled={busy}
-            />
-
-            {isEnabled && (
-                <div style={{ marginTop: 4 }}>
-                    <a role="button" onClick={async () => {
-                        await clearToken();
-                        setToken(null);
-                        settings.syncOwnCustomProfile = false;
-                        settings.seeAllCustomProfile = false;
-                    }} style={{ fontSize: 12, color: "var(--text-muted)", cursor: "pointer" }}>
-                        Disconnect account
-                    </a>
-                </div>
-            )}
-        </div>
-    );
-}
 
 function EquicordSettings() {
     const settings = useSettings();
@@ -340,22 +224,22 @@ function EquicordSettings() {
 
             {
                 key: "useQuickCss",
-                title: "Enable Custom CSS",
-                description: "Load custom CSS from the QuickCSS editor. This allows you to customize Discord's appearance with your own styles.",
+                title: t("Enable Custom CSS"),
+                description: t("Load custom CSS from the QuickCSS editor. This allows you to customize Discord's appearance with your own styles."),
                 restartRequired: true,
                 warning: { enabled: false },
             },
             !IS_WEB && {
                 key: "enableReactDevtools",
-                title: "Enable React Developer Tools",
-                description: "Enable the React Developer Tools extension for debugging Discord's React components. Useful for plugin development.",
+                title: t("Enable React Developer Tools"),
+                description: t("Enable the React Developer Tools extension for debugging Discord's React components. Useful for plugin development."),
                 restartRequired: true,
                 warning: { enabled: false },
             },
             (!IS_WEB && !IS_DISCORD_DESKTOP || !IS_WINDOWS) && {
                 key: "mainWindowFrameless",
-                title: "Disable the Main Window Frame",
-                description: "Remove the native window frame for a cleaner look. You can still move the window by dragging the title bar area.",
+                title: t("Disable the Main Window Frame"),
+                description: t("Remove the native window frame for a cleaner look. You can still move the window by dragging the title bar area."),
                 restartRequired: true,
                 warning: { enabled: false },
             },
@@ -363,15 +247,15 @@ function EquicordSettings() {
             (!IS_DISCORD_DESKTOP || !IS_WINDOWS
                 ? {
                     key: "frameless",
-                    title: "Disable All Window Frames",
-                    description: "Remove the native window frame for a cleaner look. You can still move the window by dragging the title bar area.",
+                    title: t("Disable All Window Frames"),
+                    description: t("Remove the native window frame for a cleaner look. You can still move the window by dragging the title bar area."),
                     restartRequired: true,
                     warning: { enabled: false },
                 }
                 : {
                     key: "winNativeTitleBar",
-                    title: "Use Windows' native title bar instead of Discord's custom one",
-                    description: "Replace Discord's custom title bar with the standard Windows title bar. This may improve compatibility with some window management tools.",
+                    title: t("Use Windows' native title bar instead of Discord's custom one"),
+                    description: t("Replace Discord's custom title bar with the standard Windows title bar. This may improve compatibility with some window management tools."),
                     restartRequired: true,
                     warning: { enabled: false },
                 }
@@ -379,28 +263,28 @@ function EquicordSettings() {
 
             !IS_WEB && {
                 key: "transparent",
-                title: "Enable Window Transparency",
-                description: "Make the Discord window transparent. A theme that supports transparency is required or this will do nothing.",
+                title: t("Enable Window Transparency"),
+                description: t("Make the Discord window transparent. A theme that supports transparency is required or this will do nothing."),
                 restartRequired: true,
                 warning: {
                     enabled: true,
                     message: IS_WINDOWS
-                        ? "This will stop the window from being resizable and prevents you from snapping the window to screen edges."
-                        : "This will stop the window from being resizable.",
+                        ? t("This will stop the window from being resizable and prevents you from snapping the window to screen edges.")
+                        : t("This will stop the window from being resizable."),
                 },
             },
             IS_DISCORD_DESKTOP && {
                 key: "disableMinSize",
-                title: "Disable Minimum Window Size",
-                description: "Allow the Discord window to be resized smaller than its default minimum size. Useful for tiling window managers or small screens.",
+                title: t("Disable Minimum Window Size"),
+                description: t("Allow the Discord window to be resized smaller than its default minimum size. Useful for tiling window managers or small screens."),
                 restartRequired: true,
                 warning: { enabled: false },
             },
             !IS_WEB &&
             IS_WINDOWS && {
                 key: "winCtrlQ",
-                title: "Register Ctrl+Q as shortcut to close Discord",
-                description: "Add Ctrl+Q as a keyboard shortcut to close Discord. This provides an alternative to Alt+F4 for quickly closing the application.",
+                title: t("Register Ctrl+Q as shortcut to close Discord"),
+                description: t("Add Ctrl+Q as a keyboard shortcut to close Discord. This provides an alternative to Alt+F4 for quickly closing the application."),
                 restartRequired: true,
                 warning: { enabled: false },
             },
@@ -413,31 +297,31 @@ function EquicordSettings() {
 
                 <Divider className={Margins.top20} />
 
-                <Heading className={Margins.top16}>Quick Actions</Heading>
+                <Heading className={Margins.top16}>{t("Quick Actions")}</Heading>
                 <Paragraph className={Margins.bottom16}>
-                    Common actions you might want to perform. These shortcuts give you quick access to frequently used features without navigating through menus.
+                    {t("Common actions you might want to perform. These shortcuts give you quick access to frequently used features without navigating through menus.")}
                 </Paragraph>
 
                 <DevTeamSection />
 
                 <Divider className={Margins.top20} />
 
-                <Heading className={Margins.top20}>Client Settings</Heading>
+                <Heading className={Margins.top20}>{t("Client Settings")}</Heading>
                 <Paragraph className={Margins.bottom16}>
-                    Configure how Nightcord behaves and integrates with Discord. These settings affect the Discord client's appearance and behavior.
+                    {t("Configure how Nightcord behaves and integrates with Discord. These settings affect the Discord client's appearance and behavior.")}
                 </Paragraph>
                 <Notice.Info className={Margins.bottom20} style={{ width: "100%" }}>
-                    You can customize where this settings section appears in Discord's settings menu by configuring the{" "}
+                    {t("You can customize where this settings section appears in Discord's settings menu by configuring the")} {" "}
                     <a
                         role="button"
                         onClick={() => openPluginModal(plugins.Settings)}
                         style={{ cursor: "pointer", color: "var(--text-link)" }}
                     >
-                        Settings Plugin
+                        {t("Settings Plugin")}
                     </a>.
                 </Notice.Info>
 
-                <CustomProfileSyncToggle />
+
 
                 {Switches.filter((s): s is Exclude<typeof s, false> => !!s).map(
                     s => (
@@ -538,17 +422,17 @@ function EquicordSettings() {
 
                 <Divider className={Margins.top20} />
 
-                <Heading className={Margins.top20}>Notifications</Heading>
+                <Heading className={Margins.top20}>{t("Notifications")}</Heading>
                 <Paragraph className={Margins.bottom16}>
-                    Configure how Nightcord handles notifications. You can customize when and how you receive alerts, or view a history of past notifications.
+                    {t("Configure how Nightcord handles notifications. You can customize when and how you receive alerts, or view a history of past notifications.")}
                 </Paragraph>
 
                 <Flex gap="16px">
                     <Button onClick={openNotificationSettingsModal}>
-                        Notification Settings
+                        {t("Notification Settings")}
                     </Button>
                     <Button variant="secondary" onClick={openNotificationLogModal}>
-                        View Notification Log
+                        {t("View Notification Log")}
                     </Button>
                 </Flex>
 
@@ -556,22 +440,22 @@ function EquicordSettings() {
 
             <Divider className={Margins.top20} />
 
-            <Heading className={Margins.top20}>Compact Mode</Heading>
+            <Heading className={Margins.top20}>{t("Compact Mode")}</Heading>
             <Paragraph className={Margins.bottom16}>
-                Replaces all Nightcord buttons with a single compact toggle icon. Click the icon in the header bar, channel toolbar, or chat bar to restore all buttons.
+                {t("Replaces all Nightcord buttons with a single compact toggle icon. Click the icon in the header bar, channel toolbar, or chat bar to restore all buttons.")}
             </Paragraph>
             <Button
                 onClick={toggleCompactMode}
                 variant={compactActive ? "dangerPrimary" : "primary"}
             >
-                {compactActive ? "✓ Compact Mode Enabled — Click to disable" : "Enable Compact Mode"}
+                {compactActive ? t("✓ Compact Mode Enabled — Click to disable") : t("Enable Compact Mode")}
             </Button>
 
             <Divider className={Margins.top20} />
 
-            <Heading className={Margins.top20}>Stealth Mode</Heading>
+            <Heading className={Margins.top20}>{t("Stealth Mode")}</Heading>
             <Paragraph className={Margins.bottom16}>
-                Hides all Nightcord visual elements without disabling plugins. Shortcut: Ctrl+Shift+H
+                {t("Hides all Nightcord visual elements without disabling plugins. Shortcut: Ctrl+Shift+H")}
             </Paragraph>
             <StealthModeButton />
 

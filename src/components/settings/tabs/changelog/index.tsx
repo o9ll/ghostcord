@@ -21,6 +21,7 @@ import { UpdateLogger } from "@utils/updater";
 import { Alerts, React, Toasts } from "@webpack/common";
 
 import gitHash from "~git-hash";
+import { t } from "@api/i18n";
 
 import {
     ChangelogEntry,
@@ -477,9 +478,9 @@ function ChangelogContent() {
 
     return (
         <>
-            <Heading className={Margins.top16}>Fetch Changes</Heading>
+            <Heading className={Margins.top16}>{t("Fetch Changes")}</Heading>
             <Paragraph className={Margins.bottom16}>
-                Check the repository for new commits, plugin updates, and code changes. This will compare your current version with the latest available and show you what's new.
+                {t("Check the repository for new commits, plugin updates, and code changes. This will compare your current version with the latest available and show you what's new.")}
             </Paragraph>
 
             <div className="vc-changelog-controls">
@@ -490,10 +491,10 @@ function ChangelogContent() {
                     variant={recentlyChecked ? "positive" : "primary"}
                 >
                     {isLoading
-                        ? "Loading..."
+                        ? t("Loading...")
                         : recentlyChecked
-                            ? "Repository Up to Date"
-                            : "Fetch from Repository"}
+                            ? t("Repository Up to Date")
+                            : t("Fetch from Repository")}
                 </Button>
 
                 {changelogHistory.length > 0 && (
@@ -504,24 +505,24 @@ function ChangelogContent() {
                             onClick={() => setShowHistory(!showHistory)}
                             style={{ marginLeft: "8px" }}
                         >
-                            {showHistory ? "Hide Logs" : "Show Logs"}
+                            {showHistory ? t("Hide Logs") : t("Show Logs")}
                         </Button>
                         <Button
                             size="small"
                             variant="dangerPrimary"
                             onClick={() => {
                                 Alerts.show({
-                                    title: "Clear All Logs",
-                                    body: "Are you sure you would like to clear all logs? This can't be undone.",
-                                    confirmText: "Clear All",
+                                    title: t("Clear All Logs"),
+                                    body: t("Are you sure you would like to clear all logs? This can't be undone."),
+                                    confirmText: t("Clear All"),
                                     confirmColor: "danger",
-                                    cancelText: "Cancel",
+                                    cancelText: t("Cancel"),
                                     onConfirm: async () => {
                                         await clearChangelogHistory();
                                         await loadChangelogHistory();
                                         setShowHistory(false);
                                         Toasts.show({
-                                            message: "All logs have been cleared",
+                                            message: t("All logs have been cleared"),
                                             id: Toasts.genId(),
                                             type: Toasts.Type.SUCCESS,
                                             options: {
@@ -533,7 +534,7 @@ function ChangelogContent() {
                             }}
                             style={{ marginLeft: "8px" }}
                         >
-                            Clear All Logs
+                            {t("Clear All Logs")}
                         </Button>
                     </>
                 )}
@@ -543,16 +544,16 @@ function ChangelogContent() {
                 <ErrorCard style={{ padding: "1em", marginTop: "1em" }}>
                     <Paragraph>{error}</Paragraph>
                     <Paragraph color="text-subtle" style={{ marginTop: "0.5em" }}>
-                        Make sure you have an internet connection and try again.
+                        {t("Make sure you have an internet connection and try again.")}
                     </Paragraph>
                 </ErrorCard>
             )}
 
             <Divider className={Margins.top20} />
 
-            <Heading className={Margins.top20}>Repository</Heading>
+            <Heading className={Margins.top20}>{t("Repository")}</Heading>
             <Paragraph className={Margins.bottom8}>
-                This is the GitHub repository where Nightcord fetches updates from.
+                {t("This is the GitHub repository where Nightcord fetches updates from.")}
             </Paragraph>
             <Paragraph color="text-subtle">
                 {repoPending ? (
@@ -571,9 +572,9 @@ function ChangelogContent() {
                 <>
                     <Divider className={Margins.top20} />
 
-                    <Heading className={Margins.top20}>Recent Changes</Heading>
+                    <Heading className={Margins.top20}>{t("Recent Changes")}</Heading>
                     <Paragraph className={Margins.bottom16}>
-                        These are the new commits and plugin updates since your last version. You can see what features were added, bugs were fixed, and which plugins received updates.
+                        {t("These are the new commits and plugin updates since your last version. You can see what features were added, bugs were fixed, and which plugins received updates.")}
                     </Paragraph>
 
                     {newPlugins.length > 0 && (
@@ -617,9 +618,9 @@ function ChangelogContent() {
             {!hasCurrentChanges && !isLoading && !error && (
                 <>
                     <Divider className={Margins.top20} />
-                    <Heading className={Margins.top20}>Recent Changes</Heading>
+                    <Heading className={Margins.top20}>{t("Recent Changes")}</Heading>
                     <Paragraph color="text-subtle">
-                        No commits available ahead of your current version. Click "Fetch from Repository" to check for new changes.
+                        {t("No commits available ahead of your current version. Click \"Fetch from Repository\" to check for new changes.")}
                     </Paragraph>
                 </>
             )}
@@ -629,10 +630,10 @@ function ChangelogContent() {
                     <Divider className={Margins.top20} />
 
                     <Heading className={Margins.top20}>
-                        Update Logs ({changelogHistory.length} {changelogHistory.length === 1 ? "log" : "logs"})
+                        {t("Update Logs")} ({changelogHistory.length} {changelogHistory.length === 1 ? t("log") : t("logs")})
                     </Heading>
                     <Paragraph className={Margins.bottom16}>
-                        A history of your previous update sessions with their commit history and plugin changes. Click on a log to expand it and see the details.
+                        {t("A history of your previous update sessions with their commit history and plugin changes. Click on a log to expand it and see the details.")}
                     </Paragraph>
 
                     <div className="vc-changelog-history-list">

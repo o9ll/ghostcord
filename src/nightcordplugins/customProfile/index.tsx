@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Vencord, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -1168,22 +1168,39 @@ function CustomProfileModal({ rootProps }: { rootProps: any; }) {
                     <a
                         role="button"
                         style={{ color: "var(--text-link)", cursor: "pointer", fontWeight: 500 }}
-                        onClick={() => {
-                            rootProps.onClose();
+                        onClick={async () => {
                             try {
-                                SettingsRouter.openUserSettings("equicord_main");
-                            } catch {
-                                try {
-                                    SettingsRouter.open("equicord_main");
-                                } catch {
-                                    try {
-                                        FluxDispatcher.dispatch({ type: "USER_SETTINGS_MODAL_OPEN", section: "equicord_main" });
-                                    } catch { }
-                                }
+                                const oauthData = await beginDiscordOAuth();
+                                const clientId = new URL(oauthData.url).searchParams.get("client_id") ?? "";
+                                openModal((p: any) => <OAuth2AuthorizeModal
+                                    {...p}
+                                    scopes={oauthData.scopes}
+                                    responseType="code"
+                                    redirectUri={oauthData.redirectUri}
+                                    permissions={0n}
+                                    clientId={clientId}
+                                    cancelCompletesFlow={false}
+                                    callback={async ({ location }: { location: string; }) => {
+                                        if (!location) return;
+                                        try {
+                                            const res = await fetch(location, { headers: { Accept: "application/json" } });
+                                            const json = await res.json();
+                                            if (json?.token) {
+                                                await storeToken(json.token);
+                                                Settings.syncOwnCustomProfile = true;
+                                                Settings.seeAllCustomProfile = true;
+                                            }
+                                        } catch (e) {
+                                            console.error("[CustomProfile] OAuth callback error:", e);
+                                        }
+                                    }}
+                                />);
+                            } catch (e) {
+                                console.error("[CustomProfile] OAuth initiation failed:", e);
                             }
                         }}
                     >
-                        Share your Custom Profile with everyone — click to manage in Nightcord Settings
+                        {t("Share your Custom Profile with everyone " + String.fromCharCode(8212) + " click to manage in Nightcord Settings")}
                     </a>
                 </div>
             </ModalContent>
@@ -1541,7 +1558,6 @@ export default definePlugin({
         const wantedFlags = data.badgeFlags != null ? data.badgeFlags : realUser.publicFlags;
         clone.publicFlags = wantedFlags;
         clone.flags = wantedFlags;
-
         if (data.nitro) {
             clone.premiumType = 2;
             const LEVEL_MONTHS = [1, 2, 3, 6, 12, 24, 36, 72];
@@ -1558,6 +1574,11 @@ export default definePlugin({
             } else {
                 clone.premiumGuildSince = null;
             }
+        } else {
+            // No fake nitro: hide real premiumType so Discord does not render a native Nitro badge
+            clone.premiumType = 0;
+            clone.premiumSince = null;
+            clone.premiumGuildSince = null;
         }
 
         clone.__cp_fake_other = true;

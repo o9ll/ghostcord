@@ -25,15 +25,9 @@ echo Construction de l'extension Firefox (cela peut prendre quelques instants)..
 call pnpm buildWeb
 
 echo.
-echo Copie de l'extension vers C:\Users\zzafi\Documents\GitHub\nightcord\firefox...
-if exist "C:\Users\zzafi\Documents\GitHub\nightcord\firefox" (
-    rmdir /s /q "C:\Users\zzafi\Documents\GitHub\nightcord\firefox"
-)
-mkdir "C:\Users\zzafi\Documents\GitHub\nightcord\firefox"
-xcopy /E /Y "dist\browser\firefox-unpacked\*" "C:\Users\zzafi\Documents\GitHub\nightcord\firefox\"
-
-echo.
 echo ========================================================
-echo TERMINÉ ! L'extension est prete dans le dossier firefox.
+echo TERMINE ! L'extension est prete dans :
+echo   dist\browser\firefox-unpacked  (extension non packagée)
+echo   dist\extension-firefox.zip     (zip pour publication)
 echo ========================================================
 pause

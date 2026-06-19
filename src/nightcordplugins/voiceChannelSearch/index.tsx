@@ -10,7 +10,7 @@ import { addHeaderBarButton, HeaderBarButton, removeHeaderBarButton } from "@api
 import { ModalCloseButton,ModalContent, ModalHeader, ModalRoot, openModal } from "@utils/modal";
 import definePlugin from "@utils/types";
 import { findByPropsLazy } from "@webpack";
-import { ChannelStore, Forms, GuildChannelStore, GuildStore, IconUtils, PermissionStore, React, UserStore, useEffect, useRef, VoiceStateStore, useState } from "@webpack/common";
+import { ChannelStore, Forms, GuildChannelStore, GuildStore, IconUtils, PermissionStore, React, UserStore, useEffect, useMemo, useRef, VoiceStateStore, useState } from "@webpack/common";
 
 import { t } from "../autoTranslateNightcord";
 
@@ -129,36 +129,27 @@ function SpinnerIcon() {
 
 function VoiceSearchModal({ rootProps, channels }: { rootProps: any; channels: VoiceChannel[] | null; }) {
     const [query, setQuery] = useState("");
-    const [filtered, setFiltered] = useState<VoiceChannel[] | null>(null);
+    const [debouncedQuery, setDebouncedQuery] = useState("");
     const [joiningId, setJoiningId] = useState<string | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
-    // Debounce timer stored in a ref to avoid re-renders
-    const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    // When channels arrive, initialize filtered directly (no useMemo)
+    // Debounce: wait 80ms after the user stops typing before updating the filter
     useEffect(() => {
-        if (channels !== null) setFiltered(channels);
-    }, [channels]);
+        const handle = setTimeout(() => setDebouncedQuery(query.trim().toLowerCase()), 80);
+        return () => clearTimeout(handle);
+    }, [query]);
+
+    // Recompute the filtered list reactively whenever channels or the debounced query change.
+    // Using useMemo here (instead of a manual setState inside a setTimeout) guarantees the
+    // list is always in sync with the latest query and channels, with no stale-closure risk.
+    const filtered = useMemo(() => {
+        if (!channels) return null;
+        if (!debouncedQuery) return channels;
+        return channels.filter(c => c.searchIndex?.includes(debouncedQuery));
+    }, [channels, debouncedQuery]);
 
     function handleQueryChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const val = e.target.value;
-        setQuery(val);
-
-        // Filter debounce: cancels the previous timer
-        if (debounceTimer.current) clearTimeout(debounceTimer.current);
-
-        if (!val.trim()) {
-            // Immediate reset without debounce
-            setFiltered(channels);
-            return;
-        }
-
-        debounceTimer.current = setTimeout(() => {
-            if (!channels) return;
-            const q = val.trim().toLowerCase();
-            // searchIndex is already in lowercase — fast includes()
-            setFiltered(channels.filter(c => c.searchIndex.includes(q)));
-        }, 80); // 80ms — almost imperceptible
+        setQuery(e.target.value);
     }
 
     async function join(ch: VoiceChannel) {
@@ -206,7 +197,7 @@ function VoiceSearchModal({ rootProps, channels }: { rootProps: any; channels: V
                                 onChange={handleQueryChange}
                             />
                             {query && (
-                                <button className="vcs-search-clear" onClick={() => { setQuery(""); setFiltered(channels); }}>
+                                <button className="vcs-search-clear" onClick={() => { setQuery(""); setDebouncedQuery(""); }}>
                                     <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" /></svg>
                                 </button>
                             )}

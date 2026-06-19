@@ -1,16 +1,19 @@
-﻿/*
+/*
  * Vencord, a Discord client mod
  * Copyright (c) 2025 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
 import { definePluginSettings } from "@api/Settings";
-import { BackupRestoreIcon, LogIcon, MagnifyingGlassIcon,MainSettingsIcon, PaintbrushIcon, PatchHelperIcon, PluginsIcon, UpdaterIcon } from "@components/Icons";
+import { BackupRestoreIcon, CloudIcon, LogIcon, MagnifyingGlassIcon,MainSettingsIcon, PaintbrushIcon, PatchHelperIcon, PluginsIcon, UpdaterIcon } from "@components/Icons";
+import { LangIcon } from "@components/LangIcon";
 import {
     BackupAndRestoreTab,
     ChangelogTab,
+    LanguageTab,
     PatchHelperTab,
     PluginsTab,
+    SyncTab,
     ThemesTab,
     UpdaterTab,
     VencordTab,
@@ -23,6 +26,7 @@ import { Devs } from "@utils/constants";
 import { isTruthy } from "@utils/guards";
 import definePlugin, { IconProps, OptionType } from "@utils/types";
 import { waitFor } from "@webpack";
+import { t } from "@api/i18n";
 import { React } from "@webpack/common";
 import type { ComponentType, PropsWithChildren, ReactNode } from "react";
 
@@ -184,7 +188,7 @@ export default definePlugin({
         const panel: SettingsLayoutNode = {
             key: key + "_panel",
             type: LayoutTypes.PANEL,
-            useTitle: () => panelTitle,
+            useTitle: () => t(panelTitle),
             buildLayout: () => [{
                 type: LayoutTypes.CATEGORY,
                 key: key + "_category",
@@ -192,7 +196,7 @@ export default definePlugin({
                     type: LayoutTypes.CUSTOM,
                     key: key + "_custom",
                     Component: Component,
-                    useSearchTerms: () => [title]
+                    useSearchTerms: () => [t(title)]
                 }]
             }]
         };
@@ -200,7 +204,7 @@ export default definePlugin({
         return ({
             key,
             type: LayoutTypes.SIDEBAR_ITEM,
-            useTitle: () => title,
+            useTitle: () => t(title),
             icon: () => <Icon width={20} height={20} />,
             buildLayout: () => [panel]
         });
@@ -267,6 +271,19 @@ export default definePlugin({
                 Component: BackupAndRestoreTab,
                 Icon: BackupRestoreIcon
             }),
+            buildEntry({
+                key: "nightcord_sync",
+                title: "Synchronization",
+                panelTitle: "Nightcord Sync",
+                Component: SyncTab,
+                Icon: CloudIcon
+            }),
+            buildEntry({
+                key: "nightcord_language",
+                title: "Language",
+                Component: LanguageTab,
+                Icon: LangIcon
+            }),
             IS_DEV && PatchHelperTab && buildEntry({
                 key: "equicord_patch_helper",
                 title: "Patch Helper",
@@ -287,7 +304,7 @@ export default definePlugin({
             type: LayoutTypes.SECTION,
             useTitle: () => {
                 try { if (localStorage.getItem("Nightcord_stealthMode") === "1") return ""; } catch { }
-                return "Nightcord Settings";
+                return t("Nightcord Settings");
             },
             buildLayout: () => {
                 try { if (localStorage.getItem("Nightcord_stealthMode") === "1") return [mainEntry]; } catch { }

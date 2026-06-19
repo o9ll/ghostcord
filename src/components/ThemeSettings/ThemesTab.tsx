@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Vencord, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
@@ -18,6 +18,7 @@
 
 import "./themesStyles.css";
 
+import { t } from "@api/i18n";
 import { isPluginEnabled } from "@api/PluginManager";
 import { Settings, useSettings } from "@api/Settings";
 import { Button } from "@components/Button";
@@ -657,14 +658,14 @@ function ThemesTab() {
         <SettingsTab>
             <CspErrorCard />
 
-            <Heading className={Margins.top16}>Theme Management</Heading>
+            <Heading className={Margins.top16}>{t("Theme Management")}</Heading>
             <Paragraph className={Margins.bottom16}>
-                Customize Discord's appearance with themes. Add local .css files or load themes directly from URLs. Themes with a cog wheel icon have customizable settings you can modify.
+                {t("Customize Discord's appearance with themes. Add local .css files or load themes directly from URLs. Themes with a cog wheel icon have customizable settings you can modify.")}
             </Paragraph>
 
-            <Heading>Quick Actions</Heading>
+            <Heading>{t("Quick Actions")}</Heading>
             <Paragraph className={Margins.bottom16}>
-                Shortcuts for managing your themes. Open your themes folder to add new themes, use QuickCSS for quick style tweaks, or reload themes after making changes.
+                {t("Shortcuts for managing your themes. Open your themes folder to add new themes, use QuickCSS for quick style tweaks, or reload themes after making changes.")}
             </Paragraph>
 
             <QuickActionCard>
@@ -672,7 +673,7 @@ function ThemesTab() {
                     <QuickAction
                         text={
                             <span style={{ position: "relative" }}>
-                                Upload Theme
+                                {t("Upload Theme")}
                                 <FileInput
                                     ref={fileInputRef}
                                     onChange={onFileUpload}
@@ -685,24 +686,24 @@ function ThemesTab() {
                     />
                 ) : (
                     <QuickAction
-                        text="Open Themes Folder"
+                        text={t("Open Themes Folder")}
                         action={() => VencordNative.themes.openFolder()}
                         Icon={FolderIcon}
                     />
                 )}
                 <QuickAction
-                    text="Load missing Themes"
+                    text={t("Load missing Themes")}
                     action={refreshLocalThemes}
                     Icon={RestartIcon}
                 />
                 <QuickAction
-                    text="Edit QuickCSS"
+                    text={t("Edit QuickCSS")}
                     action={() => VencordNative.quickCss.openEditor()}
                     Icon={PaintbrushIcon}
                 />
                 {Settings.plugins.ClientTheme?.enabled && (
                     <QuickAction
-                        text="Edit ClientTheme"
+                        text={t("Edit ClientTheme")}
                         action={() => openPluginModal(Plugins.ClientTheme)}
                         Icon={PencilIcon}
                     />
@@ -711,13 +712,13 @@ function ThemesTab() {
 
             <Divider className={Margins.top20} />
 
-            <Heading className={Margins.top20}>Online Themes</Heading>
+            <Heading className={Margins.top20}>{t("Online Themes")}</Heading>
             <Paragraph className={Margins.bottom16}>
-                Load themes directly from URLs instead of local files. Online themes auto-update when the source changes, so you always have the latest version without manual downloads.
+                {t("Load themes directly from URLs instead of local files. Online themes auto-update when the source changes, so you always have the latest version without manual downloads.")}
             </Paragraph>
             <FormSwitch
-                title="Enable Online Themes"
-                description="Toggle online theme loading. When disabled, all online themes will be turned off and you won't be able to add new ones."
+                title={t("Enable Online Themes")}
+                description={t("Toggle online theme loading. When disabled, all online themes will be turned off and you won't be able to add new ones.")}
                 value={settings.enableOnlineThemes ?? true}
                 onChange={value => {
                     settings.enableOnlineThemes = value;
@@ -728,7 +729,7 @@ function ThemesTab() {
             />
 
             <Notice.Info className={Margins.bottom16} style={{ width: "100%" }}>
-                Looking for themes? Check out <Link href="https://nightcord.st/themes">NightCord Themes</Link> or search on <Link href="https://github.com/search?q=discord+theme">GitHub</Link>. When downloading from BetterDiscord, click "Download" and place the .theme.css file into your themes folder.
+                {t("Looking for themes? Check out")} <Link href="https://nightcord.st/themes">{t("NightCord Themes")}</Link> {t("or search on")} <Link href="https://github.com/search?q=discord+theme">GitHub</Link>. {t("When downloading from BetterDiscord, click \"Download\" and place the .theme.css file into your themes folder.")}
             </Notice.Info>
 
             <div className={cl("link-row")}>
@@ -750,9 +751,9 @@ function ThemesTab() {
 
             <Divider className={Margins.top20} />
 
-            <Heading className={Margins.top20}>Installed Themes</Heading>
+            <Heading className={Margins.top20}>{t("Installed Themes")}</Heading>
             <Paragraph className={Margins.bottom8}>
-                Manage your themes here. Local themes load from your themes folder, online themes from URLs. Themes with a cog wheel icon have customizable settings.
+                {t("Manage your themes here. Local themes load from your themes folder, online themes from URLs. Themes with a cog wheel icon have customizable settings.")}
             </Paragraph>
             <Paragraph color="text-subtle" className={Margins.bottom16}>
                 {allThemes.length} theme{allThemes.length !== 1 ? "s" : ""} installed ({localCount} local, {onlineCount} online) Â· {enabledCount} enabled
@@ -775,12 +776,12 @@ function ThemesTab() {
             </div>
 
             {userThemes === null ? (
-                <Paragraph color="text-muted" className={Margins.top16}>Loading themes...</Paragraph>
+                <Paragraph color="text-muted" className={Margins.top16}>{t("Loading themes...")}</Paragraph>
             ) : filteredThemes.length === 0 ? (
                 <Paragraph color="text-muted" className={Margins.top16}>
                     {allThemes.length === 0
-                        ? "No themes installed yet. Add theme files to your themes folder or add an online theme above to get started."
-                        : "No themes match your search or filter criteria."
+                        ? t("No themes installed yet. Add theme files to your themes folder or add an online theme above to get started.")
+                        : t("No themes match your search or filter criteria.")
                     }
                 </Paragraph>
             ) : (

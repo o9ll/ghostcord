@@ -8,6 +8,8 @@ import ErrorBoundary from "@components/ErrorBoundary";
 import BadgeAPIPlugin from "@plugins/_api/badges";
 import { ComponentType, HTMLProps } from "react";
 
+import { getHiddenBadgeSources } from "./BadgeVisibility";
+
 export const enum BadgePosition {
     START,
     END
@@ -71,6 +73,10 @@ export function _getBadges(args: BadgeUserArgs) {
         if (isStealthModeEnabled()) return [];
     } catch { }
 
+    // ── Hidden badge sources (per-profile, synced via cloud) ──
+    const hiddenSources = getHiddenBadgeSources(args.userId);
+    const isHidden = (source: string) => hiddenSources.includes(source as any);
+
     const badges = [] as ProfileBadge[];
 
     const shieldBadge = (b: any) => ({
@@ -106,15 +112,15 @@ export function _getBadges(args: BadgeUserArgs) {
     const equicordDonorBadges = BadgeAPIPlugin.getEquicordDonorBadges(args.userId);
     const nightcordBadges = (BadgeAPIPlugin as any).getNightcordBadges?.(args.userId);
 
-    if (donorBadges) {
+    if (donorBadges && !isHidden("vencord")) {
         badges.unshift(...donorBadges.map(shieldBadge));
     }
 
-    if (equicordDonorBadges) {
+    if (equicordDonorBadges && !isHidden("equicord")) {
         badges.unshift(...equicordDonorBadges.map(shieldBadge));
     }
 
-    if (nightcordBadges) {
+    if (nightcordBadges && !isHidden("nightcord")) {
         badges.unshift(...nightcordBadges.map(shieldBadge));
     }
 

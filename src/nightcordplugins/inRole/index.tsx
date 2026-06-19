@@ -17,6 +17,7 @@ import { GuildMember } from "@vencord/discord-types";
 import { GuildMemberStore, GuildRoleStore, Menu, Parser } from "@webpack/common";
 
 import { showInRoleModal } from "./RoleMembersModal";
+import { t } from "@api/i18n";
 
 const DeveloperMode = getUserSettingLazy("appearance", "developerMode")!;
 
@@ -45,11 +46,11 @@ export default definePlugin({
     settingsAboutComponent: () => {
         return (
             <>
-                <Paragraph style={{ fontSize: "1.2rem", marginTop: "15px", fontWeight: "bold" }}>{Parser.parse(":warning:")} Limitations</Paragraph>
-                <Paragraph style={{ marginTop: "10px", fontWeight: "500" }} >If you don't have mod permissions on the server, and that server is large (over 100 members), the plugin may be limited in the following ways:</Paragraph>
-                <Paragraph>• Offline members won't be listed</Paragraph>
-                <Paragraph>• Up to 100 members will be listed by default. To get more, scroll down in the member list to load more members.</Paragraph>
-                <Paragraph>• However, friends will always be shown regardless of their status.</Paragraph>
+                <Paragraph style={{ fontSize: "1.2rem", marginTop: "15px", fontWeight: "bold" }}>{Parser.parse(":warning:")} {t("Limitations")}</Paragraph>
+                <Paragraph style={{ marginTop: "10px", fontWeight: "500" }} >{t("If you don't have mod permissions on the server, and that server is large (over 100 members), the plugin may be limited in the following ways:")}</Paragraph>
+                <Paragraph>{t("• Offline members won't be listed")}</Paragraph>
+                <Paragraph>{t("• Up to 100 members will be listed by default. To get more, scroll down in the member list to load more members.")}</Paragraph>
+                <Paragraph>{t("• However, friends will always be shown regardless of their status.")}</Paragraph>
             </>
         );
     },

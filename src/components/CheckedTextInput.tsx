@@ -20,7 +20,9 @@ import { React, TextInput } from "@webpack/common";
 
 interface TextInputProps {
     /**
-     * WARNING: Changing this between renders will have no effect!
+     * The current value. If this changes externally after mount (e.g. async
+     * settings load), the input will resync to it as long as the user isn't
+     * currently mid-typing an invalid value.
      */
     value: string;
     /**
@@ -44,6 +46,15 @@ interface TextInputProps {
 export function CheckedTextInput({ value: initialValue, onChange, validate, placeholder }: TextInputProps) {
     const [value, setValue] = React.useState(initialValue);
     const [error, setError] = React.useState<string>();
+
+    // Keep the input in sync if the underlying value changes from outside
+    // (e.g. settings finish loading/syncing after this component already mounted).
+    // We only re-sync while there's no pending validation error, so we don't
+    // fight the user while they're actively typing an invalid value.
+    React.useEffect(() => {
+        if (error === undefined) setValue(initialValue);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialValue]);
 
     function handleChange(v: string) {
         setValue(v);

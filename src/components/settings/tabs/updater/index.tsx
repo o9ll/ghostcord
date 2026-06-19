@@ -18,6 +18,7 @@ import { relaunch } from "@utils/native";
 import { changes, checkForUpdates, rebuild, update, UpdateLogger } from "@utils/updater";
 import { React, useState } from "@webpack/common";
 import { Toasts } from "@webpack/common";
+import { t } from "@api/i18n";
 import {domain} from "../../../../../DOMAIN.json";
 
 // Version locale depuis package.json (injectée au build)
@@ -43,7 +44,7 @@ function UpdaterTab() {
 
             if (!hasUpdate) {
                 Toasts.show({
-                    message: "Tu es déjà sur la dernière version !",
+                    message: t("You are already on the latest version!"),
                     id: Toasts.genId(),
                     type: Toasts.Type.SUCCESS,
                     options: { position: Toasts.Position.BOTTOM }
@@ -57,7 +58,7 @@ function UpdaterTab() {
                 detail = detail.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
                 if (detail.length > 300) detail = detail.substring(0, 300) + "…";
             }
-            setError(`Impossible de vérifier les mises à jour.${detail ? ` (${detail})` : " Vérifie ta connexion."}`);
+            setError(t("Check for Updates") + " — " + (detail ?? "Please check your connection."));
         } finally {
             setChecking(false);
         }
@@ -90,16 +91,16 @@ function UpdaterTab() {
 
     return (
         <SettingsTab>
-            <Heading className={Margins.top16}>Nightcord Updater</Heading>
+            <Heading className={Margins.top16}>{t("Nightcord Updater")}</Heading>
             <Paragraph className={Margins.bottom20}>
-                Check for new versions of Nightcord. Updates can be installed automatically.
+                {t("Check for new versions of Nightcord. Updates can be installed automatically.")}
             </Paragraph>
 
             {/* Version actuelle */}
             <Card style={{ padding: "12px 16px", marginBottom: 12 }}>
                 <Flex style={{ alignItems: "center", justifyContent: "space-between" }}>
                     <div>
-                        <Span size="sm" color="text-subtle">Current Version</Span>
+                        <Span size="sm" color="text-subtle">{t("Current Version")}</Span>
                         <div>
                             <Span size="md" weight="medium" color="text-strong">
                                 v{VERSION}
@@ -107,7 +108,7 @@ function UpdaterTab() {
                         </div>
                     </div>
                     <div>
-                        <Span size="sm" color="text-subtle">Website</Span>
+                        <Span size="sm" color="text-subtle">{t("Website")}</Span>
                         <div>
                             <Link href={`https://${domain}`} style={{ fontSize: 13 }}>
                                 {domain}
@@ -134,7 +135,7 @@ function UpdaterTab() {
                     </Card>
                 ) : (
                     <Card style={{ padding: "10px 16px", marginBottom: 12, borderLeft: "3px solid var(--status-positive)" }}>
-                        <Span size="sm" style={{ color: "var(--text-positive)" }}>You are running the latest version ✔</Span>
+                        <Span size="sm" style={{ color: "var(--text-positive)" }}>{t("You are running the latest version ✓")}</Span>
                     </Card>
                 )
             )}
@@ -146,7 +147,7 @@ function UpdaterTab() {
                     disabled={checking}
                     onClick={handleCheck}
                 >
-                    {checking ? "Checking..." : "Check for Updates"}
+                    {checking ? "Checking..." : t("Check for Updates")}
                 </Button>
 
                 {outdated && (
@@ -164,7 +165,7 @@ function UpdaterTab() {
             <Divider className={Margins.top20} />
 
             <Paragraph className={Margins.top16} style={{ fontSize: 12, opacity: 0.6 }}>
-                Clicking "Update Now" will automatically download the latest version and restart your client.
+                {t('Clicking "Update Now" will automatically download the latest version and restart your client.')}
             </Paragraph>
         </SettingsTab>
     );

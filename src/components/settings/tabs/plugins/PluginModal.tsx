@@ -21,6 +21,7 @@ import "./PluginModal.css";
 import { generateId } from "@api/Commands";
 import { hasAnyVisibleSettings } from "@api/PluginManager";
 import { useSettings } from "@api/Settings";
+import { tPlugin } from "@api/pluginI18n";
 import { BaseText } from "@components/BaseText";
 import { Button } from "@components/Button";
 import ErrorBoundary from "@components/ErrorBoundary";
@@ -40,6 +41,7 @@ import { Constructor } from "type-fest";
 import { PluginMeta } from "~plugins";
 
 import { OptionComponentMap } from "./components";
+import { t } from "@api/i18n";
 const cl = classNameFactory("vc-plugin-modal-");
 
 const AvatarStyles = findCssClassesLazy("moreUsers", "avatar", "clickableAvatar");
@@ -81,7 +83,7 @@ export default function PluginModal({ plugin, onRestartNeeded, onClose, transiti
     function renderSettings() {
         const { settings } = plugin;
         if (!hasSettings || !settings)
-            return <Paragraph>Aucun paramètre disponible pour ce plugin.</Paragraph>;
+            return <Paragraph>{t("No settings available for this plugin.")}</Paragraph>;
 
         const options = Object.entries(settings.def).map(([key, option]) => {
             if (option.type === OptionType.CUSTOM || option.hidden) return null;
@@ -124,8 +126,8 @@ export default function PluginModal({ plugin, onRestartNeeded, onClose, transiti
         <ModalRoot transitionState={transitionState} size={ModalSize.MEDIUM}>
             <ModalHeader separator={false} className={cl("header")}>
                 <div className={cl("header-content")}>
-                    <BaseText size="lg" weight="semibold" className={cl("title")}>{plugin.name}</BaseText>
-                    <BaseText size="sm" className={cl("description")}>{plugin.description}</BaseText>
+                    <BaseText size="lg" weight="semibold" className={cl("title")}>{tPlugin(plugin.name)}</BaseText>
+                    <BaseText size="sm" className={cl("description")}>{tPlugin(plugin.description)}</BaseText>
                     {!!plugin.settingsAboutComponent && (
                         <div className={Margins.top8}>
                             <ErrorBoundary message="An error occurred while rendering this plugin's custom Info Component">
@@ -141,7 +143,7 @@ export default function PluginModal({ plugin, onRestartNeeded, onClose, transiti
 
             <ModalContent className={"vc-settings-modal-content"}>
                 <section>
-                    <BaseText size="lg" weight="semibold" color="text-strong" className={classes(Margins.bottom8)}>Settings</BaseText>
+                    <BaseText size="lg" weight="semibold" color="text-strong" className={classes(Margins.bottom8)}>{t("Settings")}</BaseText>
                     {renderSettings()}
                 </section>
             </ModalContent>
@@ -149,7 +151,7 @@ export default function PluginModal({ plugin, onRestartNeeded, onClose, transiti
                 <Flex flexDirection="column" style={{ width: "100%" }}>
                     <Flex style={{ justifyContent: "space-between", alignItems: "center" }}>
                         {hasSettings ? (
-                            <Tooltip text="Reset les paramètres par défaut" shouldShow={!isObjectEmpty(pluginSettings)}>
+                            <Tooltip text={t("Reset to default settings")} shouldShow={!isObjectEmpty(pluginSettings)}>
                                 {({ onMouseEnter, onMouseLeave }) => (
                                     <Button
                                         className={cl("disable-warning")}
@@ -159,7 +161,7 @@ export default function PluginModal({ plugin, onRestartNeeded, onClose, transiti
                                         onMouseEnter={onMouseEnter}
                                         onMouseLeave={onMouseLeave}
                                     >
-                                        Reset
+                                        {t("Reset")}
                                     </Button>
                                 )}
                             </Tooltip>
@@ -231,9 +233,9 @@ export function openWarningModal(plugin?: Plugin | null, onRestartNeeded?: (plug
         <ConfirmModal
             {...props}
             className={cl("confirm")}
-            header={isPlugin ? "Reset Settings" : "Disable Plugins"}
-            confirmText={isPlugin ? "Reset" : "Disable All"}
-            cancelText="Cancel"
+            header={isPlugin ? t("Reset Settings") : t("Disable Plugins")}
+            confirmText={isPlugin ? t("Reset") : t("Disable All")}
+            cancelText={t("Cancel")}
             onConfirm={() => {
                 if (isPlugin && plugin) {
                     resetSettings(plugin, onRestartNeeded);
@@ -245,13 +247,13 @@ export function openWarningModal(plugin?: Plugin | null, onRestartNeeded?: (plug
         >
             <Paragraph>
                 {isPlugin
-                    ? <>Reset all settings for <strong>{plugin?.name}</strong>?</>
-                    : `Disable ${enabledPlugins} plugin(s)?`
+                    ? <>{t("Reset all settings for")} <strong>{plugin?.name}</strong>?</>
+                    : t("Disable {n} plugin(s)?").replace("{n}", String(enabledPlugins))
                 }
             </Paragraph>
             <div className={classes(Margins.top16, cl("warning"))}>
                 <WarningIcon color="var(--text-feedback-critical)" />
-                <span>This action is irreversible.</span>
+                <span>{t("This action is irreversible.")}</span>
             </div>
         </ConfirmModal>
     ));
@@ -262,18 +264,18 @@ export function openResetDefaultsModal(reset: () => void) {
         <ConfirmModal
             {...props}
             className={cl("confirm")}
-            header="Apply Default Config"
-            confirmText="Apply Defaults"
-            cancelText="Cancel"
+            header={t("Apply Default Config")}
+            confirmText={t("Apply Defaults")}
+            cancelText={t("Cancel")}
             onConfirm={reset}
             onCancel={props.onClose}
         >
             <Paragraph>
-                This will reset all plugins to their default enabled/disabled state (how they are when Nightcord is first installed).
+                {t("This will reset all plugins to their default enabled/disabled state (how they are when Nightcord is first installed).")} 
             </Paragraph>
             <div className={classes(Margins.top16, cl("warning"))}>
                 <WarningIcon color="var(--text-feedback-critical)" />
-                <span>All your current plugin toggles will be lost.</span>
+                <span>{t("All your current plugin toggles will be lost.")}</span>
             </div>
         </ConfirmModal>
     ));

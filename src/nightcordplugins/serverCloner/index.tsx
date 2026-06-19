@@ -8,6 +8,7 @@ import "./styles.css";
 
 import { addContextMenuPatch, NavContextMenuPatchCallback, removeContextMenuPatch } from "@api/ContextMenu";
 import { definePluginSettings } from "@api/Settings";
+import { t } from "@api/i18n";
 import { FormSwitch } from "@components/FormSwitch";
 import { ModalCloseButton, ModalContent, ModalHeader, ModalRoot, openModal } from "@utils/modal";
 import definePlugin, { OptionType } from "@utils/types";
@@ -511,15 +512,15 @@ function ServerClonerUI({ initialSourceId = "" }: { initialSourceId?: string }) 
     }
 
     const SWITCH_OPTS: Array<{ key: keyof CloneOptions; label: string; }> = [
-        { key: "guildSettings", label: "Server settings" },
-        { key: "icon", label: "Icon" },
-        { key: "roles", label: "Roles" },
-        { key: "clearRoles", label: "Delete existing roles" },
-        { key: "channels", label: "Channels" },
-        { key: "noDeleteChannels", label: "Do not delete existing channels" },
-        { key: "permissions", label: "Permissions" },
-        { key: "emojis", label: "Emojis" },
-        { key: "embeds", label: "Bot embeds" },
+        { key: "guildSettings", label: t("Server settings") },
+        { key: "icon", label: t("Icon") },
+        { key: "roles", label: t("Roles") },
+        { key: "clearRoles", label: t("Delete existing roles") },
+        { key: "channels", label: t("Channels") },
+        { key: "noDeleteChannels", label: t("Do not delete existing channels") },
+        { key: "permissions", label: t("Permissions") },
+        { key: "emojis", label: t("Emojis") },
+        { key: "embeds", label: t("Bot embeds") },
     ];
 
     return (
@@ -527,10 +528,10 @@ function ServerClonerUI({ initialSourceId = "" }: { initialSourceId?: string }) 
 
             {/* Source */}
             <F.FormSection>
-                <F.FormTitle>Source server</F.FormTitle>
+                <F.FormTitle>{t("Source server")}</F.FormTitle>
                 <Select
                     options={allGuilds}
-                    placeholder="Choose a server..."
+                    placeholder={t("Choose a server...")}
                     isSelected={v => v === sourceId}
                     select={v => setSourceId(v)}
                     serialize={v => v}
@@ -539,15 +540,15 @@ function ServerClonerUI({ initialSourceId = "" }: { initialSourceId?: string }) 
 
             {/* Target */}
             <F.FormSection>
-                <F.FormTitle>Target server (ADMIN required)</F.FormTitle>
+                <F.FormTitle>{t("Target server (ADMIN required)")}</F.FormTitle>
                 {adminGuilds.length === 0 ? (
                     <F.FormText style={{ color: "var(--text-danger)" }}>
-                        No server with ADMIN permission found.
+                        {t("No server with ADMIN permission found.")}
                     </F.FormText>
                 ) : (
                     <Select
                         options={adminGuilds}
-                        placeholder="Choose a server..."
+                        placeholder={t("Choose a server...")}
                         isSelected={v => v === targetId}
                         select={v => setTargetId(v)}
                         serialize={v => v}
@@ -559,7 +560,7 @@ function ServerClonerUI({ initialSourceId = "" }: { initialSourceId?: string }) 
 
             {/* Options */}
             <F.FormSection>
-                <F.FormTitle>Cloning options</F.FormTitle>
+                <F.FormTitle>{t("Cloning options")}</F.FormTitle>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 24px" }}>
                     {SWITCH_OPTS.map(o => (
                         <FormSwitch
@@ -585,7 +586,7 @@ function ServerClonerUI({ initialSourceId = "" }: { initialSourceId?: string }) 
                     onClick={startClone}
                     style={{ flex: 1 }}
                 >
-                    {_running ? "Cloning in progress..." : "Start cloning"}
+                    {_running ? t("Cloning in progress...") : t("Start cloning")}
                 </Button>
                 {_running && (
                     <Button
@@ -594,7 +595,7 @@ function ServerClonerUI({ initialSourceId = "" }: { initialSourceId?: string }) 
                         onClick={stopClone}
                         style={{ minWidth: 120 }}
                     >
-                        Stop
+                        {t("Stop")}
                     </Button>
                 )}
             </div>
@@ -622,7 +623,7 @@ function ServerClonerModal({ rootProps, guildId }: { rootProps: any; guildId: st
     return (
         <ModalRoot {...rootProps} size="large">
             <ModalHeader separator={false}>
-                <F.FormTitle tag="h4" style={{ margin: 0 }}>Server Cloner</F.FormTitle>
+                <F.FormTitle tag="h4" style={{ margin: 0 }}>{t("Server Cloner")}</F.FormTitle>
                 <ModalCloseButton onClick={rootProps.onClose} />
             </ModalHeader>
             <ModalContent style={{ paddingBottom: 24 }}>

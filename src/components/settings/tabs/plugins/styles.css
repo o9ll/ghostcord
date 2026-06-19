@@ -22,27 +22,43 @@
 
 
 .vc-plugins-filter-btn {
-    background: var(--background-modifier-selected);
-    color: var(--text-normal);
-    border: 1px solid transparent;
-    border-radius: 4px;
-    padding: 6px 16px;
-    font-size: 14px;
+    background: transparent;
+    color: var(--text-muted);
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    padding: 6px 4px;
+    font-size: 13px;
     font-weight: 500;
+    letter-spacing: 0.2px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    transition: all 0.2s ease;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.vc-plugins-filter-btn svg {
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
 }
 
 .vc-plugins-filter-btn:hover {
-    background: var(--background-modifier-hover);
+    background: transparent;
+    color: var(--text-normal);
+}
+
+.vc-plugins-filter-btn:hover svg {
+    opacity: 1;
 }
 
 .vc-plugins-filter-btn.vc-plugins-active {
     background: transparent;
-    border: 1px solid var(--brand-experiment, #5865F2);
+    border-bottom: 2px solid var(--brand-experiment, #5865F2);
     color: var(--brand-experiment, #5865F2);
+}
+
+.vc-plugins-filter-btn.vc-plugins-active svg {
+    opacity: 1;
 }
 
 .vc-plugins-grid {
@@ -140,7 +156,8 @@
 
 .vc-plugins-filter-buttons {
     display: flex;
-    gap: 8px;
+    align-items: center;
+    gap: 20px;
 }
 
 
