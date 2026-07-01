@@ -752,7 +752,12 @@ export default definePlugin({
         
         resetAutolock();
 
-        if (settings.store.lockOnStartup || data.locked) {
+        // Only auto-lock on startup if a passcode has actually been configured.
+        // Without this check, enabling the plugin for the very first time (before
+        // ever setting a passcode) would immediately lock Discord because
+        // lockOnStartup defaults to true — trapping the user behind a lock screen
+        // with no passcode they ever chose.
+        if (data.hash && (settings.store.lockOnStartup || data.locked)) {
             setTimeout(() => {
                 lock(document.body);
                 // If the first attempt failed (isLocked still false, meaning
