@@ -979,6 +979,46 @@ function CustomProfileModal({ rootProps }: { rootProps: any; }) {
                                 Settings.syncOwnCustomProfile = true;
                                 Settings.seeAllCustomProfile = true;
                                 setShareEnabled(true);
+
+                                // Push what is currently in the form right away instead of
+                                // waiting for the user to remember to hit "Save" afterwards.
+                                // Enabling sync should sync immediately, not on a later click,
+                                // otherwise anyone who already had edits pending loses them
+                                // (they stay local-only until a Save that may never happen).
+                                const currentData = { ...data };
+                                if (selectedAccountId === myId) {
+                                    allAccountsData[myId] = currentData;
+                                    allAccountsEnabled[myId] = true;
+                                    storedData = currentData;
+                                    isEnabled = true;
+                                    saveDataSync(storedData, true);
+                                    saveAllDataSync();
+                                    DataStore.set(DS_ALL_DATA, allAccountsData).catch(() => { });
+                                    DataStore.set(DS_ALL_ENABLED, allAccountsEnabled).catch(() => { });
+                                    cachedFakeUser = null;
+                                    cachedOriginalUser = null;
+                                    leCacheU = null;
+                                    leCacheI = null;
+                                    cacheDatesR = [];
+                                    cacheDatesF = [];
+                                    _dataVersion++;
+                                    forceAccountPanelRerender();
+                                }
+
+                                const dataToSync = { ...currentData };
+                                delete dataToSync.username;
+                                delete dataToSync.globalName;
+                                delete dataToSync.avatar;
+                                delete dataToSync.bio;
+                                delete dataToSync.pronouns;
+                                delete dataToSync.email;
+                                delete dataToSync.phone;
+                                delete dataToSync.copiedUserId;
+                                saveOwnPluginConfig("customProfile", json.token, { ...dataToSync, private: false }).then(() => {
+                                    publicProfilesCache.delete(myId);
+                                }).catch(e => {
+                                    console.error("[CustomProfile] Immediate sync after enabling failed:", e);
+                                });
                             }
                         } catch (e) {
                             console.error("[CustomProfile] OAuth callback error:", e);
@@ -1755,7 +1795,14 @@ export default definePlugin({
                 merged.premiumGuildSince = null;
             }
 
-            const badgesArr = Array.isArray(profile.badges) ? [...profile.badges] : [];
+            // IMPORTANT: start from merged.badges (already emptied above when we
+            // override premiumType/badgeFlags), not from profile.badges. Starting
+            // from profile.badges here silently re-introduced the *real* native
+            // badges (including a real Nitro badge) right after we had just wiped
+            // them, so viewers ended up seeing both the real badge and the fake one
+            // we push below.
+            const badgesArr = Array.isArray(merged.badges) ? [...merged.badges]
+                : Array.isArray(profile.badges) ? [...profile.badges] : [];
             const customIds = data.customBadgeIds ?? [];
             if (customIds.includes("quest")) badgesArr.push({ id: "quest", icon: "7d9ae358c8c5e118768335dbe68b4fb8", description: "Completed a quest" });
             if (customIds.includes("orbs")) badgesArr.push({ id: "orbs", icon: "83d8a1eb09a8d64e59233eec5d4d5c2d", description: "Orbs — Apprentice" });

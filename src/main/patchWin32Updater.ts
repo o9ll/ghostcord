@@ -31,6 +31,14 @@ function isNewer($new: string, old: string) {
     return false;
 }
 
+// The absolute path to OUR OWN bundle (this very file, once compiled to
+// dist/desktop/patcher.js). This is exactly what the injector's index.js
+// require()'d to get us running in the first place, regardless of how
+// Nightcord was installed (dev-inject asar, the PS1/Inno installer, or
+// Equilotl) — so it's the only value that's guaranteed to be correct.
+declare const __filename: string;
+const OUR_PATCHER_PATH = __filename;
+
 function patchLatest() {
     try {
         const currentAppPath = dirname(process.execPath);
@@ -44,21 +52,42 @@ function patchLatest() {
         if (latestVersion === currentVersion) return;
 
         const resources = join(discordPath, latestVersion, "resources");
-        const app = join(resources, "app.asar");
-        const _app = join(resources, "_app.asar");
+        const appAsar = join(resources, "app.asar");
+        const _appAsar = join(resources, "_app.asar");
 
-        if (!existsSync(app) || statSync(app).isDirectory()) return;
+        if (!existsSync(appAsar) || statSync(appAsar).isDirectory()) return;
 
         console.info("[Nightcord] Detected Host Update. Repatching...");
 
-        renameSync(app, _app);
-        mkdirSync(app);
-        writeFileSync(join(app, "package.json"), JSON.stringify({
+        renameSync(appAsar, _appAsar);
+        mkdirSync(appAsar);
+        writeFileSync(join(appAsar, "package.json"), JSON.stringify({
             name: "discord",
             main: "index.js"
         }));
-        // Relative path for portability (works on any machine)
-        writeFileSync(join(app, "index.js"), "// Nightcord repatch\n\"use strict\";\nconst path = require(\"path\");\nrequire(path.join(__dirname, \"..\", \"app\", \"dist\", \"desktop\", \"patcher.js\"));");
+
+        // Absolute path to our real patcher bundle (see OUR_PATCHER_PATH above),
+        // with a try/catch fallback to vanilla Discord if anything goes wrong —
+        // so a failed repatch can never crash the new Discord version or leave
+        // it stuck relaunching into a broken/duplicate state.
+        const indexJs = [
+            "// Nightcord repatch",
+            "\"use strict\";",
+            "const path = require(\"path\");",
+            "const fs = require(\"fs\");",
+            "try {",
+            `    require(${JSON.stringify(OUR_PATCHER_PATH)});`,
+            "} catch (e) {",
+            "    console.error(\"[Nightcord] Repatch injection failed, falling back to vanilla Discord:\", e);",
+            "    const originalAsar = path.join(__dirname, \"..\", \"_app.asar\");",
+            "    if (fs.existsSync(originalAsar)) {",
+            "        require(originalAsar);",
+            "    }",
+            "}",
+            ""
+        ].join("\n");
+
+        writeFileSync(join(appAsar, "index.js"), indexJs);
     } catch (err) {
         console.error("[Nightcord] Failed to repatch latest host update", err);
     }

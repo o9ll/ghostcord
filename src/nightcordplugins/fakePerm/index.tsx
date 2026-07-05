@@ -48,38 +48,30 @@ function notifyMemberListChange() {
     } catch { }
 }
 
-function isDateSeparatorEl(el: HTMLElement): boolean {
-    if (el.querySelector("article")) return false;
-    return !!el.querySelector("[class*='divider'], [class*='Divider'], [class*='separator'], [class*='Separator'], [class*='unreadPill']");
-}
 
 function hideMessageInDOM(messageId: string) {
+    // Only ever hide the single targeted message row (its <li>). We used to also
+    // scan every sibling afterwards to hide "orphaned" date separators, but
+    // Discord's message list is virtualized: DOM order does not reliably match
+    // chronological/visual order (nodes get recycled/repositioned as you scroll),
+    // so that sibling scan could end up hiding unrelated messages along with the
+    // target one. Better to occasionally leave a stray date header than to hide
+    // messages the user never asked to hide.
     let msgEl: HTMLElement | null =
-        document.querySelector(`[id$="-${messageId}"]`) ??
-        document.querySelector(`[data-list-item-id$="${messageId}"]`);
+        document.querySelector(`[data-list-item-id$="${messageId}"]`) ??
+        document.querySelector(`li[id$="-${messageId}"]`) ??
+        document.querySelector(`[id$="-${messageId}"]`);
     if (!msgEl) {
         for (const li of document.querySelectorAll("ol[data-list-id='chat-messages'] > li")) {
             if ((li as HTMLElement).id.includes(messageId)) { msgEl = li as HTMLElement; break; }
         }
     }
     if (!msgEl) return;
-    fpHide(msgEl);
-    setTimeout(() => {
-        const parent = msgEl!.parentElement;
-        if (!parent) return;
-        const items = Array.from(parent.children) as HTMLElement[];
-        for (let i = 0; i < items.length; i++) {
-            const item = items[i];
-            if (item.getAttribute("data-fp-hidden") === "true") continue;
-            if (!isDateSeparatorEl(item)) continue;
-            let hasVisible = false;
-            for (let j = i + 1; j < items.length; j++) {
-                if (isDateSeparatorEl(items[j])) break;
-                if (items[j].getAttribute("data-fp-hidden") !== "true") { hasVisible = true; break; }
-            }
-            if (!hasVisible) fpHide(item);
-        }
-    }, 20);
+    // Always hide the whole row, not a smaller nested element that might happen
+    // to share the same id suffix (e.g. an inner content/aria-label wrapper),
+    // otherwise part of the message could stay visible.
+    const row = (msgEl.closest("li") as HTMLElement | null) ?? msgEl;
+    fpHide(row);
 }
 
 function getGuild(guildId: string | null) {
