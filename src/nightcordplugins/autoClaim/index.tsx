@@ -8,17 +8,16 @@ import { definePluginSettings } from "@api/Settings";
 import { Logger } from "@utils/Logger";
 import definePlugin, { OptionType } from "@utils/types";
 import { findByPropsLazy } from "@webpack";
-import { ChannelStore, FluxDispatcher, RestAPI, UserStore, VoiceStateStore } from "@webpack/common";
+import { ChannelStore, RestAPI, UserStore } from "@webpack/common";
+
+// Must be at module level — findByPropsLazy returns a lazy proxy that resolves on first access
+const AuthStore = findByPropsLazy("getToken", "getSessionId");
 
 const logger = new Logger("AutoClaim");
-
-const VoiceActions = findByPropsLazy("setChannel", "toggleSelfMute");
-const AuthenticationStore = findByPropsLazy("getSessionId", "getToken");
 
 // ── Settings ────────────────────────────────────────────────────────────────
 
 const settings = definePluginSettings({
-    // ── Claim Ticket ──────────────────────────────────────────────────────
     enableClaimTicket: {
         type: OptionType.BOOLEAN,
         description: "Automatically click a button on bot messages inside a ticket category.",
@@ -46,191 +45,190 @@ const settings = definePluginSettings({
             { label: "5th button", value: 4 },
         ],
     },
+    safeMode: {
+        type: OptionType.BOOLEAN,
+        description: "Safe Mode: wait 3–4 seconds before claiming (less suspicious, recommended for shared servers).",
+        default: false,
+        restartNeeded: false,
+    },
     claimCooldown: {
         type: OptionType.NUMBER,
         description: "Cooldown between claims in seconds (0 = no cooldown).",
         default: 0,
     },
-
-    // ── Auto Move SV ──────────────────────────────────────────────────────
-    enableAutoMove: {
-        type: OptionType.BOOLEAN,
-        description: "Automatically move people from a source voice channel into your current channel.",
-        default: false,
-        restartNeeded: false,
-    },
-    sourceSVChannelId: {
-        type: OptionType.STRING,
-        description: "Source voice channel ID to pull users from.",
-        default: "",
-    },
 });
 
-// ── Claim Ticket ─────────────────────────────────────────────────────────────
+// ── State ─────────────────────────────────────────────────────────────────────
 
 let lastClaimTimestamp = 0;
 
-async function handleClaimTicket(message: any) {
+/**
+ * Channels known to be inside the ticket category.
+ * Pre-populated from CHANNEL_CREATE to avoid the race where
+ * the bot posts before ChannelStore has hydrated the new channel.
+ */
+const knownTicketChannels = new Set<string>();
+
+/**
+ * Message IDs we already processed so we never double-click
+ * when both MESSAGE_CREATE and MESSAGE_UPDATE fire for the same message.
+ */
+const processedMessages = new Set<string>();
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+function isTicketChannel(channelId: string): boolean {
+    if (knownTicketChannels.has(channelId)) return true;
+    const channel = ChannelStore.getChannel(channelId);
+    if (!channel) return false;
+    const categoryId = settings.store.claimCategoryId?.trim();
+    if (!categoryId) return false;
+    if (channel.parent_id === categoryId) {
+        knownTicketChannels.add(channelId);
+        return true;
+    }
+    return false;
+}
+
+function getFlatButtons(message: any): any[] {
+    const flat: any[] = [];
+    for (const row of (message.components ?? [])) {
+        for (const comp of (row.components ?? [])) {
+            if (comp.type === 2) flat.push(comp); // type 2 = BUTTON
+        }
+    }
+    return flat;
+}
+
+/** Discord-style snowflake nonce: (timestamp − discord_epoch) << 22 */
+function generateNonce(): string {
+    const DISCORD_EPOCH = 1420070400000n;
+    return String((BigInt(Date.now()) - DISCORD_EPOCH) << 22n);
+}
+
+function delay(ms: number) {
+    return new Promise<void>(r => setTimeout(r, ms));
+}
+
+// ── Core logic ────────────────────────────────────────────────────────────────
+
+async function handleMessage(message: any) {
+    if (!message || message.optimistic) return;
+
     const s = settings.store;
     if (!s.enableClaimTicket) return;
-    if (!s.claimCategoryId || !s.claimBotId) return;
 
-    // Check bot ID
-    if (message.author?.id !== s.claimBotId) return;
+    const categoryId = s.claimCategoryId?.trim();
+    const botId = s.claimBotId?.trim();
+    if (!categoryId || !botId) return;
 
-    // Check category
-    const channel = ChannelStore.getChannel(message.channel_id);
-    if (!channel) return;
-    if (channel.parent_id !== s.claimCategoryId) return;
+    // Only react to the configured bot
+    if (message.author?.id !== botId) return;
 
-    // Check cooldown
-    const now = Date.now();
-    const cooldownMs = (s.claimCooldown ?? 0) * 1000;
-    if (cooldownMs > 0 && now - lastClaimTimestamp < cooldownMs) {
-        logger.info(`[ClaimTicket] Cooldown active, skipping.`);
+    // Must have buttons already present
+    const flatButtons = getFlatButtons(message);
+    if (!flatButtons.length) return;
+
+    // Deduplicate: lock immediately before any await so concurrent events don't slip through
+    const msgKey = `${message.channel_id}:${message.id}`;
+    if (processedMessages.has(msgKey)) return;
+    processedMessages.add(msgKey);
+    if (processedMessages.size > 200) {
+        const [first] = processedMessages;
+        processedMessages.delete(first);
+    }
+
+    // Safe mode: random delay 3–4 s. Otherwise: minimal 50 ms for ChannelStore hydration.
+    const waitMs = s.safeMode
+        ? 3000 + Math.floor(Math.random() * 1000)
+        : 50;
+    await delay(waitMs);
+
+    if (!isTicketChannel(message.channel_id)) {
+        logger.info(`[AutoClaim] Channel ${message.channel_id} not in category ${categoryId} — skipping.`);
+        processedMessages.delete(msgKey);
         return;
     }
 
-    // Find buttons in message components
-    const components: any[] = message.components ?? [];
-    const flatButtons: any[] = [];
-    for (const row of components) {
-        for (const comp of row.components ?? []) {
-            if (comp.type === 2) flatButtons.push(comp); // type 2 = Button
-        }
+    // Cooldown
+    const now = Date.now();
+    const cooldownMs = (s.claimCooldown ?? 0) * 1000;
+    if (cooldownMs > 0 && now - lastClaimTimestamp < cooldownMs) {
+        logger.info("[AutoClaim] Cooldown active — skipping.");
+        return;
     }
 
     const buttonIndex = s.claimButtonIndex ?? 0;
     const button = flatButtons[buttonIndex];
     if (!button) {
-        logger.warn(`[ClaimTicket] No button found at index ${buttonIndex}. Message has ${flatButtons.length} button(s).`);
+        logger.warn(`[AutoClaim] No button at index ${buttonIndex}. Available: ${flatButtons.map((b: any) => b.label).join(", ")}`);
         return;
     }
 
-    // Click the button
+    const channel = ChannelStore.getChannel(message.channel_id);
+    const guildId = channel?.guild_id ?? message.guild_id ?? null;
+    const sessionId = AuthStore?.getSessionId?.() ?? "";
+
+    logger.info(`[AutoClaim] Clicking "${button.label ?? button.custom_id}" in #${message.channel_id} ${s.safeMode ? `(safe mode, waited ${waitMs}ms)` : "(instant)"}`);
+
     try {
-        const sessionId = AuthenticationStore.getSessionId?.() ?? "";
-        await RestAPI.post({
-            url: "/interactions",
-            body: {
-                type: 3,
-                application_id: message.application_id ?? message.author?.id,
-                channel_id: message.channel_id,
-                message_id: message.id,
-                message_flags: message.flags ?? 0,
-                session_id: sessionId,
-                data: {
-                    component_type: 2,
-                    custom_id: button.custom_id,
-                },
-                nonce: String(Date.now()),
-            }
-        });
+        const body: Record<string, any> = {
+            type: 3,                    // MESSAGE_COMPONENT
+            channel_id: message.channel_id,
+            message_id: message.id,
+            application_id: message.application_id ?? message.author?.id,
+            session_id: sessionId,
+            message_flags: message.flags ?? 0,
+            data: {
+                component_type: 2,      // BUTTON
+                custom_id: button.custom_id,
+            },
+            nonce: generateNonce(),
+        };
+
+        // guild_id is required for guild channels; omit only for DMs
+        if (guildId) body.guild_id = guildId;
+
+        await RestAPI.post({ url: "/interactions", body });
 
         lastClaimTimestamp = Date.now();
-        logger.info(`[ClaimTicket] Clicked button "${button.label}" (custom_id: ${button.custom_id}) in channel ${message.channel_id}`);
-    } catch (e) {
-        logger.error("[ClaimTicket] Failed to send interaction", e);
+        logger.info(`[AutoClaim] ✅ Claimed successfully.`);
+    } catch (e: any) {
+        logger.error("[AutoClaim] ❌ Failed:", e?.body ?? e?.message ?? e);
+        processedMessages.delete(msgKey); // allow retry on next update
     }
 }
 
-// ── Auto Move SV ─────────────────────────────────────────────────────────────
-
-function getMyVoiceState() {
-    const me = UserStore.getCurrentUser();
-    if (!me) return null;
-    return VoiceStateStore.getVoiceStateForUser(me.id) ?? null;
-}
-
-function getUsersInChannel(channelId: string): string[] {
-    try {
-        const states = VoiceStateStore.getVoiceStatesForChannel(channelId) as Record<string, any>;
-        return Object.keys(states ?? {});
-    } catch {
-        return [];
-    }
-}
-
-function pickRandom<T>(arr: T[]): T | null {
-    if (!arr.length) return null;
-    return arr[Math.floor(Math.random() * arr.length)];
-}
-
-async function tryMoveRandomFromSource() {
-    const s = settings.store;
-    if (!s.enableAutoMove || !s.sourceSVChannelId) return;
-
-    const myState = getMyVoiceState();
-    if (!myState?.channelId) return;
-
-    const myChannelId = myState.channelId;
-    const myGuildId = myState.guildId;
-
-    // Only move if I'm alone in my channel
-    const myChannelUsers = getUsersInChannel(myChannelId);
-    const me = UserStore.getCurrentUser();
-    if (!me) return;
-
-    const othersInMyChannel = myChannelUsers.filter(uid => uid !== me.id);
-    if (othersInMyChannel.length > 0) return; // Not alone → don't move
-
-    // Pick a random person from source channel
-    const sourceUsers = getUsersInChannel(s.sourceSVChannelId).filter(uid => uid !== me.id);
-    const targetUserId = pickRandom(sourceUsers);
-    if (!targetUserId) return;
-
-    try {
-        await VoiceActions.setChannel(myGuildId, targetUserId, myChannelId);
-        logger.info(`[AutoMove] Moved user ${targetUserId} from ${s.sourceSVChannelId} to ${myChannelId}`);
-    } catch (e) {
-        logger.error("[AutoMove] Failed to move user", e);
-    }
-}
-
-function handleVoiceStateUpdate({ voiceStates }: { voiceStates: any[]; }) {
-    const s = settings.store;
-    if (!s.enableAutoMove || !s.sourceSVChannelId) return;
-
-    const me = UserStore.getCurrentUser();
-    if (!me) return;
-
-    const myState = getMyVoiceState();
-    if (!myState?.channelId) return;
-
-    const myChannelId = myState.channelId;
-
-    for (const state of voiceStates) {
-        // Case 1: Someone joined the source channel → try to move them if I'm alone
-        if (state.channelId === s.sourceSVChannelId && state.userId !== me.id) {
-            tryMoveRandomFromSource();
-        }
-
-        // Case 2: Someone left MY channel → immediately try to move someone from source
-        if (state.userId !== me.id && !state.channelId) {
-            // Check if they were previously in my channel
-            tryMoveRandomFromSource();
-        }
-    }
-}
-
-// ── Plugin ───────────────────────────────────────────────────────────────────
+// ── Plugin ────────────────────────────────────────────────────────────────────
 
 export default definePlugin({
     name: "AutoClaim",
-    description: "Automatically claim tickets by clicking bot message buttons, and auto-move users from a source voice channel into yours.",
+    description: "Automatically claim tickets by clicking a button on the bot's first message in a ticket channel.",
     authors: [{ name: "Nightcord", id: 0n }],
     enabledByDefault: false,
     settings,
 
     flux: {
-        async MESSAGE_CREATE({ message }: { message: any; }) {
-            if (!message || message.optimistic) return;
-            await handleClaimTicket(message);
+        /** Pre-register the channel so we don't miss the first bot message. */
+        CHANNEL_CREATE({ channel }: { channel: any; }) {
+            const s = settings.store;
+            if (!s.enableClaimTicket) return;
+            const categoryId = s.claimCategoryId?.trim();
+            if (!categoryId) return;
+            if (channel?.parent_id === categoryId) {
+                logger.info(`[AutoClaim] 🎫 New ticket channel: #${channel.name} (${channel.id})`);
+                knownTicketChannels.add(channel.id);
+            }
         },
 
-        VOICE_STATE_UPDATES({ voiceStates }: { voiceStates: any[]; }) {
-            if (!voiceStates?.length) return;
-            handleVoiceStateUpdate({ voiceStates });
+        /** Primary: bot sends embed with buttons on creation. */
+        async MESSAGE_CREATE({ message }: { message: any; }) {
+            await handleMessage(message);
+        },
+
+        /** Fallback: some bots edit their message to add buttons after creation. */
+        async MESSAGE_UPDATE({ message }: { message: any; }) {
+            await handleMessage(message);
         },
     },
 });
