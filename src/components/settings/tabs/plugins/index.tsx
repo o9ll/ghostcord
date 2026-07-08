@@ -23,6 +23,7 @@ import { isPluginEnabled, startPlugin, stopPlugin } from "@api/PluginManager";
 import { Settings, useSettings } from "@api/Settings";
 import { Button } from "@components/Button";
 import { Card } from "@components/Card";
+import { Notice } from "@components/Notice";
 import { Divider } from "@components/Divider";
 import ErrorBoundary from "@components/ErrorBoundary";
 import { HeadingTertiary } from "@components/Heading";
@@ -64,7 +65,7 @@ function UserPluginsTabIcon() {
     return <img src="https://equicord.org/assets/icons/misc/userplugin.png" alt={t("User Plugins")} style={{ width: 18, height: 18, borderRadius: 4 }} />;
 }
 
-const categoryOptions = [
+const makeCategoryOptions = (othersCount?: number) => [
     { label: "Vencord & Equicord", value: SearchStatus.OTHERS },
     { label: "Nightcord", value: SearchStatus.NIGHTCORD },
     { label: t("User Plugins"), value: SearchStatus.USER_PLUGINS },
@@ -370,6 +371,18 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
 
         if (!search.length) return true;
 
+        const isIllegalcordPartner = (
+            plugin.name === "DynamicIslande" ||
+            plugin.name === "StereoInstaller" ||
+            plugin.name === "ClientDiagnostics" ||
+            plugin.name === "SecureBookmarks" ||
+            plugin.name === "StatusCycler"
+        );
+
+        if ((search.includes("illegalcord") || search.includes("illegal")) && isIllegalcordPartner) {
+            return true;
+        }
+
         return (
             plugin.name.toLowerCase().includes(search.replace(/\s+/g, "")) ||
             plugin.description.toLowerCase().includes(search) ||
@@ -397,7 +410,7 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
     const handleRestartNeeded = useCallback((name: string, key: string) => changes.handleChange(`${name}:${key}`), [changes]);
 
     // Only filter/categorize plugin DATA here — no JSX created yet
-    const { nightcordData, othersData, requiredData } = useMemo(() => {
+        const { nightcordData, othersData, requiredData } = useMemo(() => {
         const nightcordData: typeof sortedPlugins = [];
         const othersData: typeof sortedPlugins = [];
         const requiredData: typeof sortedPlugins = [];
@@ -614,11 +627,18 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
         return Object.values(Plugins).filter(p => PluginMeta[p.name]?.folderName?.startsWith("src/nightcordplugins/")).length;
     }, []);
 
+    const totalOtherPlugins = React.useMemo(() => {
+        const isNightcordPlugin = (p: string) => PluginMeta[p]?.folderName?.startsWith("src/nightcordplugins/");
+        const isCorePlugin = (p: string) => PluginMeta[p]?.folderName?.startsWith("src/plugins/_");
+        return Object.values(Plugins).filter(p => !isNightcordPlugin(p.name) && !isCorePlugin(p.name)).length;
+    }, []);
+
     // Category-aware stats for the "ENABLED PLUGINS" card: reflects whichever tab
     // (NIGHTCORD / OTHERS / all) is currently selected, instead of always being global.
     const categoryStats = useMemo(() => {
         const isApiPlugin = (plugin: string) => plugin.endsWith("API") || Plugins[plugin].required;
         const isNightcordPlugin = (p: string) => PluginMeta[p]?.folderName?.startsWith("src/nightcordplugins/");
+        const isUserPlugin = (p: string) => PluginMeta[p]?.userPlugin === true;
 
         let plugins = Object.keys(Plugins).filter(p => !isApiPlugin(p) && !Plugins[p].hidden);
 
@@ -626,6 +646,8 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
             plugins = plugins.filter(isNightcordPlugin);
         } else if (searchValue.status === SearchStatus.OTHERS) {
             plugins = plugins.filter(p => !isNightcordPlugin(p));
+        } else if (searchValue.status === SearchStatus.USER_PLUGINS) {
+            plugins = plugins.filter(isUserPlugin);
         }
 
         const total = plugins.length;
@@ -701,10 +723,14 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
                             title={searchValue.status === SearchStatus.USER_PLUGINS ? "Click to open folder" : ""}
                         >
                             <div className={cl("stat-title")}>
-                                {searchValue.status === SearchStatus.USER_PLUGINS ? t("USER PLUGINS") : t("NIGHTCORD PLUGINS")}
+                                {searchValue.status === SearchStatus.USER_PLUGINS ? t("USER PLUGINS") : 
+                                 searchValue.status === SearchStatus.OTHERS ? t("VENCORD & EQUICORD PLUGINS") : 
+                                 t("NIGHTCORD PLUGINS")}
                             </div>
                             <div className={cl("stat-value")}>
-                                {searchValue.status === SearchStatus.USER_PLUGINS ? totalUserPlugins : totalNightcordPlugins}
+                                {searchValue.status === SearchStatus.USER_PLUGINS ? totalUserPlugins : 
+                                 searchValue.status === SearchStatus.OTHERS ? totalOtherPlugins : 
+                                 totalNightcordPlugins}
                             </div>
                         </div>
                     </div>
@@ -716,8 +742,8 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
                     </ErrorBoundary>
                     <div className={cl("filter-buttons")} style={{ minWidth: 220 }}>
                         <SearchableSelect
-                            options={categoryOptions}
-                            value={categoryOptions.find(o => o.value === searchValue.status)?.value ?? SearchStatus.NIGHTCORD}
+                            options={makeCategoryOptions(totalOtherPlugins)}
+                            value={makeCategoryOptions(totalOtherPlugins).find(o => o.value === searchValue.status)?.value ?? SearchStatus.NIGHTCORD}
                             onChange={(v: any) => {
                                 if (v === "community") return;
                                 onStatusChange(v);
@@ -755,6 +781,8 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
                             {nightcordPlugins}
                         </div>
                     )}
+                    
+
 
                     {othersData.length > 0 && searchValue.status === SearchStatus.OTHERS && (
                         <div className={cl("grid")}>

@@ -226,7 +226,7 @@ async function downloadDist() {
 
 async function writeLoader(appDir) {
     const patcher = path.join(distDir, "patcher.js").replace(/\\/g, "/");
-    await fs.writeFile(path.join(appDir, "package.json"), JSON.stringify({ name: "nightcord", main: "index.js" }));
+    await fs.writeFile(path.join(appDir, "package.json"), JSON.stringify({ name: "discord", main: "index.js" }));
     const loaderCode = `// Nightcord Injector
 "use strict";
 const fs = require('fs');

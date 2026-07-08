@@ -6,9 +6,10 @@
     left: 0;
     height: 100%;
     width: 100%;
-    z-index: 2999;
+    z-index: 2147483647 !important;
     overflow: hidden;
     color: var(--main-color);
+    pointer-events: auto !important;
 }
 
 .PCL--layout-bg {
@@ -19,7 +20,8 @@
     width: 0;
     transform: translate(-50%, -50%) scale(0);
     background-color: rgba(0, 0, 0, .5);
-    backdrop-filter: blur(30px);
+    backdrop-filter: blur(30px) brightness(0.38) saturate(0.25);
+    -webkit-backdrop-filter: blur(30px) brightness(0.38) saturate(0.25);
     transition: 0.35s transform linear;
     border-radius: 50%;
 }
@@ -33,121 +35,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: stretch;
-    user-select: none;
     transition: .3s opacity;
-}
-
-.PCL--header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 22px;
-}
-
-.PCL--icon {
-    height: 64px;
-    width: 64px;
-}
-
-.PCL--title {
-    margin: 25px 0 25px;
-}
-
-.PCL--dots {
-    display: flex;
-    height: 8px;
-    width: 100%;
-    justify-content: center;
-}
-
-@keyframes PCL--limit {
-    0% { transform: translateX(10px); }
-    25% { transform: translateX(0px); }
-    50% { transform: translateX(-10px); }
-    100% { transform: translateX(0px); }
-}
-
-.PCL--dots.PCL--dots--limit {
-    animation-name: PCL--limit;
-    animation-duration: 250ms;
-}
-
-.PCL--dot {
-    position: relative;
-    height: 8px;
-    width: 0;
-    transition: .25s opacity, .25s transform, .25s width, .25s margin;
-    opacity: 0;
-    transform: scale(.5);
-}
-
-.PCL--dot::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 8px;
-    width: 8px;
-    border-radius: 50%;
-    background: var(--main-color);
-}
-
-.PCL--dot-active {
-    opacity: 1;
-    transform: scale(1);
-    width: 8px;
-    margin: 0 5px;
-}
-
-.PCL--buttons {
-    display: grid;
-    grid-template-columns: repeat(3, 60px);
-    grid-auto-rows: 60px;
-    gap: 30px;
-    padding: 40px 20px;
-    position: relative;
-}
-
-.PCL--divider {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: rgba(255, 255, 255, .1);
-}
-
-.PCL--btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 50%;
-    box-sizing: border-box;
-    background-clip: padding-box;
-    border: 1px solid transparent;
-    transition: 1s border-color, .3s background-color;
-}
-
-.PCL--btn:active, .PCL--btn-active {
-    transition: none;
-    border-color: rgba(255, 255, 255, .15);
-    background-color: rgba(255, 255, 255, .15);
-}
-
-.PCL--btn-number {
-    font-size: 32px;
-    font-weight: 500;
-    line-height: 36px;
-}
-
-.PCL--btn-dec {
-    height: 11px;
-    font-size: 10px;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, .3);
+    z-index: 2147483647 !important;
+    pointer-events: auto !important;
 }
 
 .PCL--animate {
@@ -162,23 +52,135 @@
     opacity: 1;
 }
 
+/* DiscordLock UI adaptation */
+
+#vcl-avatar {
+    width:               72px;
+    height:              72px;
+    border-radius:       50%;
+    background-size:     cover;
+    background-position: center;
+    background-color:    rgba(255,255,255,0.05);
+    border:              1.5px solid rgba(255,255,255,0.15);
+    margin-bottom:       18px;
+    box-shadow:          0 8px 32px rgba(0,0,0,0.45);
+}
+
+#vcl-username {
+    font-family:    'gg sans','Noto Sans',system-ui,sans-serif;
+    font-size:      18px;
+    font-weight:    600;
+    letter-spacing: -0.3px;
+    color:          rgba(255,255,255,0.92);
+    margin:         0 0 6px;
+}
+
+#vcl-sub {
+    font-family: 'gg sans','Noto Sans',system-ui,sans-serif;
+    font-size:   13px;
+    color:       rgba(255,255,255,0.32);
+    margin:      0 0 30px;
+}
+
+#vcl-input-wrap {
+    position:  relative;
+    width:     280px;
+}
+
+#vcl-input-wrap > svg.vcl-icon-lock {
+    position:       absolute;
+    left:           15px;
+    top:            50%;
+    transform:      translateY(-50%);
+    color:          rgba(255,255,255,0.22);
+    pointer-events: none;
+    transition:     color 0.2s;
+}
+
+#vcl-input-wrap:focus-within > svg.vcl-icon-lock {
+    color: rgba(255,255,255,0.48);
+}
+
+#vcl-input {
+    width:          100%;
+    padding:        13px 44px 13px 40px;
+    background:     rgba(255,255,255,0.07);
+    border:         1px solid rgba(255,255,255,0.1);
+    border-radius:  14px;
+    color:          rgba(255,255,255,0.9);
+    font-size:      14px;
+    font-family:    'gg sans','Noto Sans',system-ui,sans-serif;
+    letter-spacing: 1px;
+    outline:        none;
+    box-sizing:     border-box;
+    caret-color:    rgba(255,255,255,0.7);
+    transition:     border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    user-select:    auto;
+    pointer-events: auto;
+}
+
+#vcl-input::placeholder {
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0;
+}
+
+#vcl-input:focus {
+    background:   rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.26);
+    box-shadow:   0 0 0 3px rgba(255,255,255,0.05), 0 8px 28px rgba(0,0,0,0.3);
+}
+
+#vcl-input.vcl-err {
+    border-color: rgba(255,100,100,0.5);
+    box-shadow:   0 0 0 3px rgba(255,80,80,0.08);
+    animation:    vcl-shake 0.34s ease;
+}
+
+#vcl-submit {
+    position:      absolute;
+    right:         10px;
+    top:           50%;
+    transform:     translateY(-50%);
+    background:    none;
+    border:        none;
+    color:         rgba(255,255,255,0.25);
+    font-size:     12px;
+    cursor:        pointer;
+    padding:       6px 8px;
+    border-radius: 8px;
+    transition:    color 0.18s, background 0.18s;
+    line-height:   1;
+    display:       flex;
+    align-items:   center;
+    justify-content: center;
+}
+
+#vcl-submit:hover {
+    color: rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.07);
+}
+
 .PCL--delay {
     display: none;
-    position: absolute;
-    top: 55px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: max-content;
+    width:       280px;
+    margin-top:  10px;
+    font-family: 'gg sans','Noto Sans',system-ui,sans-serif;
+    font-size:   12.5px;
+    color:       rgba(255,120,120,0.9);
+    align-items: center;
+    justify-content: center;
+    gap:         6px;
+    text-align:  center;
     white-space: pre-wrap;
     line-height: 1.2;
-    text-align: center;
 }
 
 .PCL--delay--visible {
-    display: block;
+    display: flex;
 }
 
-.PCL--delay--visible ~ * {
-    opacity: 0;
-    pointer-events: none;
+@keyframes vcl-shake {
+    0%,100% { transform: translateX(0);   }
+    20%,60% { transform: translateX(-6px); }
+    40%,80% { transform: translateX(6px);  }
 }

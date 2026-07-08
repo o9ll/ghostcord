@@ -1,5 +1,5 @@
 /*
- * Vencord, a Discord client mod
+ * Nightcord, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -9,28 +9,29 @@ import { definePluginSettings } from "@api/Settings";
 import definePlugin, { OptionType } from "@utils/types";
 import { findByPropsLazy } from "@webpack";
 import { ChannelStore, Constants, RestAPI, UserStore } from "@webpack/common";
+import { tPlugin as t } from "@api/pluginI18n";
 
 const MessageActions = findByPropsLazy("deleteMessage", "startEditMessage");
 
 const settings = definePluginSettings({
     deleteOriginalMessage: {
         type: OptionType.BOOLEAN,
-        description: "Delete the original server-side message after silent edit. If disabled, the original message will reappear after client reload.",
+        description: t("Delete the original server-side message after silent edit. If disabled, the original message will reappear after client reload."),
         default: true
     },
     deleteDelay: {
         type: OptionType.NUMBER,
-        description: "Delay (in milliseconds) before deleting the original message if enabled.",
+        description: t("Delay (in milliseconds) before deleting the original message if enabled."),
         default: 500
     },
     suppressNotifications: {
         type: OptionType.BOOLEAN,
-        description: "Recommended for use in DMs to prevent pinging users.",
+        description: t("Recommended for use in DMs to prevent pinging users."),
         default: false
     },
     accentColor: {
         type: OptionType.STRING,
-        description: "Accent color for the Silent Edit icon (hex code).",
+        description: t("Accent color for the Silent Edit icon (hex code)."),
         default: "#ed4245"
     }
 });
@@ -117,7 +118,7 @@ export default definePlugin({
             };
 
             return {
-                label: "Silent Edit",
+                label: t("Silent Edit"),
                 icon: SilentEditIcon,
                 message: msg,
                 channel: ChannelStore.getChannel(msg.channel_id),

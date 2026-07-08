@@ -1,5 +1,5 @@
 /*
- * Vencord, a Discord client mod
+ * Nightcord, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -11,6 +11,7 @@ import { EquicordDevs } from "@utils/constants";
 import { ModalRoot, ModalSize, openModal } from "@utils/modal";
 import { definePluginSettings } from "@api/Settings";
 import definePlugin, { IconComponent, OptionType, PluginNative } from "@utils/types";
+import { tPlugin as t } from "@api/pluginI18n";
 import { ApplicationAssetUtils, React, ReactDOM, createRoot, useEffect, useRef, useState, FluxDispatcher } from "@webpack/common";
 
 const Native = VencordNative.pluginHelpers.YoutubeInDiscord as PluginNative<typeof import("./native")>;
@@ -307,23 +308,23 @@ function YoutubeHomeModal({ onClose, onPlayVideo }: {
     const [channels, setChannels] = useState<YtChannel[]>([]);
     const [channelInfo, setChannelInfo] = useState<any>(null);
     const [loading, setLoading] = useState(false);
-    const [status, setStatus] = useState("🔥 Trending");
+    const [status, setStatus] = useState(t("🔥 Trending"));
 
     async function doSearch(e?: React.FormEvent) {
         e?.preventDefault();
         const q = query.trim();
-        if (!q) { setVideos(DEFAULT_VIDEOS); setChannels([]); setChannelInfo(null); setStatus("🔥 Trending"); return; }
+        if (!q) { setVideos(DEFAULT_VIDEOS); setChannels([]); setChannelInfo(null); setStatus(t("🔥 Trending")); return; }
         setLoading(true);
-        setStatus("Searching...");
+        setStatus(t("Searching..."));
         try {
             const res: SearchResult = JSON.parse(await Native.searchYouTube(q));
             setVideos(res.videos ?? []);
             setChannels(res.channels ?? []);
             setChannelInfo(null);
-            if ((res.videos?.length ?? 0) === 0) setStatus("No videos found");
-            else setStatus(`${res.videos.length} results for "${q}"`);
+            if ((res.videos?.length ?? 0) === 0) setStatus(t("No videos found"));
+            else setStatus(`${res.videos.length} ${t("results for")} "${q}"`);
         } catch (err) {
-            setStatus("⚠️ Search failed");
+            setStatus(t("⚠️ Search failed"));
             console.error("YTD search error:", err);
         }
         setLoading(false);
@@ -331,16 +332,16 @@ function YoutubeHomeModal({ onClose, onPlayVideo }: {
 
     async function openChannel(ch: YtChannel) {
         setLoading(true);
-        setStatus(`Loading ${ch.title}...`);
+        setStatus(`${t("Loading")} ${ch.title}...`);
         setChannels([]);
         setChannelInfo(null);
         try {
             const res: SearchResult = JSON.parse(await Native.searchChannelVideos(ch.handle || ch.channelId));
             setVideos(res.videos ?? []);
             setChannelInfo(res.channelInfo || null);
-            setStatus(`Videos from ${ch.title}`);
+            setStatus(`${t("Videos from")} ${ch.title}`);
         } catch {
-            setStatus("⚠️ Failed to load channel");
+            setStatus(t("⚠️ Failed to load channel"));
         }
         setLoading(false);
     }
@@ -350,7 +351,7 @@ function YoutubeHomeModal({ onClose, onPlayVideo }: {
             <div className="ytd-header">
                 <span className="ytd-header-title">
                     <YoutubeIcon />
-                    YouTube In Discord
+                    {t("YouTube In Discord")}
                 </span>
                 <button className="ytd-close-btn" onClick={onClose}><IconX /></button>
             </div>
@@ -358,13 +359,13 @@ function YoutubeHomeModal({ onClose, onPlayVideo }: {
             <form className="ytd-search-row" onSubmit={doSearch}>
                 <input
                     className="ytd-search-input"
-                    placeholder="Search videos or channels..."
+                    placeholder={t("Search videos or channels...")}
                     value={query}
                     onChange={e => setQuery(e.target.value)}
                     autoFocus
                 />
                 <button type="submit" className="ytd-search-btn" disabled={loading}>
-                    {loading ? "..." : "Search"}
+                    {loading ? "..." : t("Search")}
                 </button>
             </form>
 
@@ -409,7 +410,7 @@ function YoutubeHomeModal({ onClose, onPlayVideo }: {
             )}
 
             <div className="ytd-grid">
-                {videos.length === 0 && !loading && <div className="ytd-empty">No results found</div>}
+                {videos.length === 0 && !loading && <div className="ytd-empty">{t("No results found")}</div>}
                 {videos.map(v => (
                     <VideoCard key={v.id} video={v} active={p.video?.id === v.id} onPlay={onPlayVideo} />
                 ))}
@@ -428,7 +429,7 @@ function YoutubeHomeModal({ onClose, onPlayVideo }: {
                             <div className="ytd-np-title" onClick={() => onPlayVideo(p.video!)}>{p.video.title}</div>
                             <div className="ytd-np-artist">{p.video.author}</div>
                         </div>
-                        <button className="ytd-ctrl-btn" title="Open fullscreen" onClick={e => { e.stopPropagation(); onPlayVideo(p.video!); }}>
+                        <button className="ytd-ctrl-btn" title={t("Open fullscreen")} onClick={e => { e.stopPropagation(); onPlayVideo(p.video!); }}>
                             <IconExpand />
                         </button>
                     </div>
@@ -538,111 +539,6 @@ function YoutubeModal({ onClose, startFullscreen }: { onClose: () => void; start
     );
 }
 
-// ─── Dynamic Island ───────────────────────────────────────────────────────────
-
-function DynamicIslandPlayer() {
-    const p = usePlayerState();
-    const videoContainerRef = useRef<HTMLDivElement>(null);
-    const [isHovered, setIsHovered] = useState(false);
-    const isHoveredRef = useRef(isHovered);
-    isHoveredRef.current = isHovered;
-
-    useEffect(() => {
-        if (p.isModalOpen && p.isFullscreen) return;
-
-        iframeMode = p.video ? "island" : "hidden";
-        
-        let timeout: ReturnType<typeof setTimeout>;
-        if (ytContainer && ytContainer.style.transition.includes("all")) {
-            timeout = setTimeout(() => {
-                if (ytContainer) ytContainer.style.transition = "opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1)";
-            }, 500);
-        } else if (ytContainer) {
-            ytContainer.style.transition = "opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1)";
-        }
-
-        let rafId: number;
-        const sync = () => {
-            if (videoContainerRef.current && p.video && !(playerState.isModalOpen && playerState.isFullscreen)) {
-                activeVideoRect = videoContainerRef.current.getBoundingClientRect();
-                const hidden = !playerState.isPlaying && !isHoveredRef.current;
-                if (ytContainer) ytContainer.style.opacity = hidden ? "0" : "1";
-                updateIframePosition();
-            } else if (!(playerState.isModalOpen && playerState.isFullscreen)) {
-                iframeMode = "hidden";
-                activeVideoRect = null;
-                if (ytContainer) ytContainer.style.opacity = "0";
-                updateIframePosition();
-            }
-            rafId = requestAnimationFrame(sync);
-        };
-        rafId = requestAnimationFrame(sync);
-        
-        return () => {
-            cancelAnimationFrame(rafId);
-            clearTimeout(timeout);
-        };
-    }, [p.video, p.isModalOpen, p.isFullscreen]);
-
-    if (!settings.store.showPopup || !p.video || (p.isModalOpen && p.isFullscreen)) return null;
-
-    const position = settings.store.position || "top";
-    const isHidden = !p.isPlaying && !isHovered;
-
-    return (
-        <div
-            className={`ytd-dynamic-island ytd-pos-${position} ${isHidden ? "ytd-island-hidden" : ""}`}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            onClick={() => {
-                if (p.isModalOpen) return;
-                openModal(props => (
-                    <ModalRoot {...props} size={ModalSize.DYNAMIC}>
-                        <YoutubeModal onClose={props.onClose} startFullscreen={true} />
-                    </ModalRoot>
-                ));
-            }}
-        >
-            <div className="ytd-island-main">
-                <img
-                    className={`ytd-island-artwork ${!p.isPlaying ? "ytd-paused" : ""}`}
-                    src={p.video.artworkUrl}
-                    alt=""
-                />
-                <div className="ytd-island-info">
-                    <div className="ytd-island-title">{p.video.title}</div>
-                    <div className="ytd-island-artist">{p.video.author}</div>
-                </div>
-                <div className={`ytd-island-wave ${!p.isPlaying ? "ytd-wave-paused" : ""}`}>
-                    <span /><span /><span /><span />
-                </div>
-            </div>
-
-            <div className="ytd-island-video-wrap">
-                <div ref={videoContainerRef} className="ytd-island-video-target" />
-            </div>
-
-            <div className="ytd-island-expanded" onClick={e => e.stopPropagation()}>
-                <div className="ytd-island-progress-row">
-                    <span className="ytd-island-time">{fmt(p.position)}</span>
-                    <input
-                        type="range" min={0} max={1000}
-                        value={(p.progress || 0) * 1000}
-                        className="ytd-island-slider"
-                        style={{ "--ytd-progress": `${(p.progress || 0) * 100}%` } as React.CSSProperties}
-                        onChange={e => seekTo(Number(e.currentTarget.value) / 1000)}
-                    />
-                    <span className="ytd-island-time">-{fmt(p.duration - p.position)}</span>
-                </div>
-                <div className="ytd-island-controls-row">
-                    <button className="ytd-island-btn ytd-island-btn-play" onClick={e => togglePlay(e)}>
-                        {p.isPlaying ? <IconPause size={18} /> : <IconPlay size={18} />}
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
-}
 
 // ─── Rich Presence ────────────────────────────────────────────────────────────
 
@@ -749,7 +645,7 @@ function YTHeaderBarButton() {
     return (
         <HeaderBarButton
             icon={YoutubeIconComponent}
-            tooltip="YouTube In Discord"
+            tooltip={t("YouTube In Discord")}
             onClick={() => openModal(props => (
                 <ModalRoot {...props} size={ModalSize.DYNAMIC}>
                     <YoutubeModal onClose={props.onClose} />
@@ -762,31 +658,15 @@ function YTHeaderBarButton() {
 // ─── Settings ─────────────────────────────────────────────────────────────────
 
 const settings = definePluginSettings({
-    position: {
-        type: OptionType.SELECT,
-        description: "Dynamic Island Position",
-        options: [
-            { label: "Top Center", value: "top" },
-            { label: "Bottom Right", value: "bottom" },
-        ],
-        default: "top",
-    },
-    showPopup: {
-        type: OptionType.BOOLEAN,
-        description: "Show Dynamic Island player",
-        default: true,
-    },
     richPresence: {
         type: OptionType.BOOLEAN,
-        description: "Show watching activity status",
+        description: t("Show watching activity status"),
         default: true,
     },
 });
 
 // ─── Plugin ───────────────────────────────────────────────────────────────────
 
-let islandContainer: HTMLDivElement | null = null;
-let islandRoot: any = null;
 let rpcUnsub: (() => void) | null = null;
 
 export default definePlugin({
@@ -816,19 +696,6 @@ export default definePlugin({
                 ));
             }).catch(console.error);
         });
-
-        islandContainer = document.createElement("div");
-        document.body.appendChild(islandContainer);
-
-        if (typeof createRoot === "function") {
-            islandRoot = createRoot(islandContainer);
-            islandRoot.render(<DynamicIslandPlayer />);
-        } else if (ReactDOM?.createRoot) {
-            islandRoot = ReactDOM.createRoot(islandContainer);
-            islandRoot.render(<DynamicIslandPlayer />);
-        } else if (ReactDOM?.render) {
-            ReactDOM.render(<DynamicIslandPlayer />, islandContainer);
-        }
     },
 
     stop() {
@@ -836,11 +703,5 @@ export default definePlugin({
         stopProgressLoop();
         if (rpcUnsub) { rpcUnsub(); rpcUnsub = null; }
         clearRichPresence();
-        if (islandContainer) {
-            if (islandRoot?.unmount) islandRoot.unmount();
-            else if (ReactDOM?.unmountComponentAtNode) ReactDOM.unmountComponentAtNode(islandContainer);
-            islandContainer.remove();
-            islandContainer = null;
-        }
     },
 });

@@ -10,6 +10,7 @@ import * as DataStore from "@api/DataStore";
 import { HeaderBarButton } from "@api/HeaderBar";
 import { definePluginSettings } from "@api/Settings";
 import definePlugin, { OptionType } from "@utils/types";
+import { tPlugin as t } from "@api/pluginI18n";
 import { findByPropsLazy } from "@webpack";
 import {
     createRoot,
@@ -22,7 +23,28 @@ import {
     useRef,
     useState,
     VoiceActions,
+    IconUtils,
+    UserStore
 } from "@webpack/common";
+
+function getUserAssets() {
+    const user = UserStore.getCurrentUser();
+    if (!user) return { avatarUrl: "", username: "User" };
+    const avatarUrl = IconUtils.getUserAvatarURL(user, false, 128);
+    return { avatarUrl, username: user.globalName || user.username || "User" };
+}
+
+function escapeHtml(text: string) {
+    return text.replace(/[&<>"']/g, char => {
+        switch (char) {
+            case "&": return "&amp;";
+            case "<": return "&lt;";
+            case ">": return "&gt;";
+            case "\"": return "&quot;";
+            default: return "&#39;";
+        }
+    });
+}
 
 const DS_KEY = "PasscodeLock_data";
 const MAX_CODE_LENGTH = 15;
@@ -44,7 +66,7 @@ const LOCK_ICON_PATH = "M19,10h-1V7.69c0-3.16-2.57-5.72-5.72-5.72H11.8C8.66,1.97
 function LockIcon(props: any) {
     const size = props.width ?? props.height ?? props.size ?? 20;
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height={size} width={size}>
+        <svg className={props.className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height={size} width={size}>
             <path fill={props.color ?? "currentColor"} d={LOCK_ICON_PATH} />
         </svg>
     );
@@ -95,42 +117,42 @@ interface PLData {
 const settings = definePluginSettings({
     codeType: {
         type: OptionType.SELECT,
-        description: "Type of code",
+        description: t("Type of code"),
         options: [
-            { label: "4-Digit Numeric Code", value: "4-digit", default: true },
-            { label: "6-Digit Numeric Code", value: "6-digit" },
-            { label: "Custom Numeric Code", value: "custom-numeric" },
+            { label: t("4-Digit Numeric Code"), value: "4-digit", default: true },
+            { label: t("6-Digit Numeric Code"), value: "6-digit" },
+            { label: t("Custom Numeric Code"), value: "custom-numeric" },
         ],
     },
     autolockSeconds: {
         type: OptionType.SELECT,
-        description: "Auto-lock after being away for",
+        description: t("Auto-lock after being away for"),
         options: [
-            { label: "Disabled", value: 0, default: true },
-            { label: "1 minute", value: 60 },
-            { label: "5 minutes", value: 300 },
-            { label: "1 hour", value: 3600 },
-            { label: "5 hours", value: 18000 },
+            { label: t("Disabled"), value: 0, default: true },
+            { label: t("1 minute"), value: 60 },
+            { label: t("5 minutes"), value: 300 },
+            { label: t("1 hour"), value: 3600 },
+            { label: t("5 hours"), value: 18000 },
         ],
     },
     lockOnStartup: {
         type: OptionType.BOOLEAN,
-        description: "Always lock on startup",
+        description: t("Always lock on startup"),
         default: true,
     },
     highlightButtons: {
         type: OptionType.BOOLEAN,
-        description: "Highlight number buttons when typing the passcode from the keyboard",
+        description: t("Highlight number buttons when typing the passcode from the keyboard"),
         default: false,
     },
     hideNotifications: {
         type: OptionType.BOOLEAN,
-        description: "Hide notification content while locked",
+        description: t("Hide notification content while locked"),
         default: true,
     },
     keybind: {
         type: OptionType.STRING,
-        description: "Keybind to lock Discord (e.g. control+l)",
+        description: t("Keybind to lock Discord (e.g. control+l)"),
         default: "control+l",
     },
 }).withPrivateSettings<PLData>();
@@ -235,7 +257,7 @@ interface LockerProps {
 
 function PasscodeLocker({ type, button, onDone }: LockerProps) {
     const rootRef = useRef<HTMLDivElement>(null);
-    const [code, setCode] = useState("");
+    const inputRef = useRef<HTMLInputElement>(null);
     const [confirmStage, setConfirmStage] = useState(false);
     const [newCode, setNewCode] = useState("");
     const [delay, setDelay] = useState(false);
@@ -312,7 +334,13 @@ function PasscodeLocker({ type, button, onDone }: LockerProps) {
     };
 
     const fail = () => {
-        setCode("");
+        if (inputRef.current) {
+            inputRef.current.value = "";
+            inputRef.current.classList.add("vcl-err");
+            setTimeout(() => {
+                if (inputRef.current) inputRef.current.classList.remove("vcl-err");
+            }, 2800);
+        }
         if (iconRef.current) {
             iconRef.current.src = type === "default" ? Gifs.LOCKED_SHAKE : type === "settings" ? Gifs.SETTINGS_ROTATE : Gifs.EDIT_ACTION;
         }
@@ -329,7 +357,7 @@ function PasscodeLocker({ type, button, onDone }: LockerProps) {
         if (data.delayUntil && Date.now() < data.delayUntil) {
             setDelay(true);
             setDelayLeft(Math.ceil((data.delayUntil - Date.now()) / 1000));
-            setCode("");
+            if (inputRef.current) inputRef.current.value = "";
         } else {
             setDelay(false);
         }
@@ -343,13 +371,13 @@ function PasscodeLocker({ type, button, onDone }: LockerProps) {
     // was a real, silent bug: the very last digit typed was never actually checked,
     // both when unlocking AND when the passcode was first set up in the editor
     // (so the stored hash itself could end up one character shorter than intended).
-    const accept = async (submittedCode: string = code) => {
+    const accept = async (submittedCode: string = inputRef.current?.value || "") => {
         try {
             if (submittedCode === "") return;
             if (type === "editor") {
                 if (!confirmStage) {
                     setNewCode(submittedCode);
-                    setCode("");
+                    if (inputRef.current) inputRef.current.value = "";
                     setConfirmStage(true);
                     if (iconRef.current) iconRef.current.src = Gifs.EDIT_ACTION;
                 } else if (submittedCode !== newCode) {
@@ -375,9 +403,11 @@ function PasscodeLocker({ type, button, onDone }: LockerProps) {
     };
 
     const append = (num: number) => {
-        if (code.length >= MAX_CODE_LENGTH) return;
-        const next = code + num.toString();
-        setCode(next);
+        if (!inputRef.current) return;
+        const current = inputRef.current.value;
+        if (current.length >= MAX_CODE_LENGTH) return;
+        const next = current + num.toString();
+        inputRef.current.value = next;
         setTimeout(() => {
             if (len !== -1 && len <= next.length) accept(next);
         });
@@ -406,6 +436,13 @@ function PasscodeLocker({ type, button, onDone }: LockerProps) {
                 console.error("[PasscodeLock] finishEntrance error", e);
             }
         };
+
+        const focusGuard = (e: FocusEvent) => {
+            if (!rootRef.current || rootRef.current.contains(e.target as Node)) return;
+            e.stopImmediatePropagation();
+            if (inputRef.current) inputRef.current.focus();
+        };
+        document.addEventListener("focusin", focusGuard, true);
 
         const entranceTimeout = setTimeout(() => {
             try {
@@ -458,6 +495,7 @@ function PasscodeLocker({ type, button, onDone }: LockerProps) {
             clearInterval(interval);
             clearTimeout(entranceTimeout);
             if (tick) clearInterval(tick);
+            document.removeEventListener("focusin", focusGuard, true);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -471,65 +509,60 @@ function PasscodeLocker({ type, button, onDone }: LockerProps) {
     // because each click used a freshly rendered `append` closure from that render.
     useEffect(() => {
         const onKeyDown = (e: KeyboardEvent) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (delay) return;
-            if (settings.store.highlightButtons) document.getElementById(`PCLBtn-${e.key}`)?.classList.add("PCL--btn-active");
-        };
-        const onKeyUp = (e: KeyboardEvent) => {
-            if (settings.store.highlightButtons) document.getElementById(`PCLBtn-${e.key}`)?.classList.remove("PCL--btn-active");
-            if (delay) return;
-            if (!isNaN(+e.key) && e.key !== " ") append(+e.key);
-            if (e.key === "Backspace") setCode(c => c.slice(0, -1));
             if (e.key === "Escape" && type !== "default") close(false);
-            if (e.key === "Enter" && len === -1) accept();
         };
-        document.addEventListener("keydown", onKeyDown, true);
-        window.addEventListener("keyup", onKeyUp);
-        return () => {
-            document.removeEventListener("keydown", onKeyDown, true);
-            window.removeEventListener("keyup", onKeyUp);
-        };
+        window.addEventListener("keydown", onKeyDown);
+        return () => window.removeEventListener("keydown", onKeyDown);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [delay, code, confirmStage, newCode, type, len]);
+    }, [type]);
 
-    const title = type === "editor" ? (confirmStage ? "Re-enter your passcode" : "Enter your new passcode") : "Enter your Discord passcode";
-
-    const numpad = ["", "ABC", "DEF", "GHI", "JKL", "MNO", "PQRS", "TUV", "WXYZ"].map((dec, i) => (
-        <PasscodeBtn key={i} number={i + 1} dec={dec} click={append} />
-    ));
-
-    const showCancel = type !== "default";
-    const showEnter = (type !== "default" || len === -1);
+    const title = type === "editor" ? (confirmStage ? t("Re-enter your passcode") : t("Enter your new passcode")) : t("Enter your Discord passcode");
+    const { avatarUrl, username } = getUserAssets();
 
     return (
         <div className="PCL--layout" ref={rootRef}>
             <div className="PCL--layout-bg" />
             <div className="PCL--controls">
-                <div className="PCL--header">
-                    <div className="PCL--icon PCL--animate" />
-                    <div className="PCL--title PCL--animate">{title}</div>
-                    <div className="PCL--dots PCL--animate">
-                        {Array.from({ length: MAX_CODE_LENGTH }).map((_, i) => (
-                            <div key={i} className={`PCL--dot ${i < code.length ? "PCL--dot-active" : ""}`} />
-                        ))}
-                    </div>
+                <div id="vcl-avatar" style={{ backgroundImage: `url('${escapeHtml(avatarUrl)}')` }} className="PCL--animate" />
+                <p id="vcl-username" className="PCL--animate">{escapeHtml(username)}</p>
+                <p id="vcl-sub" className="PCL--animate">{title}</p>
+
+                <div id="vcl-input-wrap" className="PCL--animate">
+                    <LockIcon className="vcl-icon-lock" size={14} />
+                    <input
+                        id="vcl-input"
+                        ref={inputRef}
+                        type="password"
+                        placeholder={t("Password")}
+                        autoComplete="off"
+                        spellCheck={false}
+                        autoFocus
+                        defaultValue=""
+                        onChange={(e) => {
+                            const val = e.target.value;
+                            if (len !== -1 && val.length >= len) {
+                                accept(val);
+                            }
+                        }}
+                        onKeyDown={(e) => {
+                            e.stopPropagation();
+                            if (e.key === "Enter") accept(e.currentTarget.value);
+                        }}
+                        onKeyUp={(e) => e.stopPropagation()}
+                        onKeyPress={(e) => e.stopPropagation()}
+                        className={delay ? "vcl-err" : ""}
+                        disabled={delay}
+                    />
+                    <button id="vcl-submit" onClick={() => accept()}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" height={16} width={16}>
+                            <path fill="currentColor" d="M21.05 28.55 16.15 23.65Q15.7 23.2 15.05 23.2Q14.4 23.2 13.9 23.7Q13.4 24.2 13.4 24.85Q13.4 25.5 13.9 25.95L20 32.05Q20.45 32.5 21.05 32.5Q21.65 32.5 22.1 32.05L34.1 20.05Q34.55 19.6 34.525 18.95Q34.5 18.3 34.05 17.85Q33.6 17.35 32.925 17.35Q32.25 17.35 31.75 17.85ZM24 44Q19.75 44 16.1 42.475Q12.45 40.95 9.75 38.25Q7.05 35.55 5.525 31.9Q4 28.25 4 24Q4 19.8 5.525 16.15Q7.05 12.5 9.75 9.8Q12.45 7.1 16.1 5.55Q19.75 4 24 4Q28.2 4 31.85 5.55Q35.5 7.1 38.2 9.8Q40.9 12.5 42.45 16.15Q44 19.8 44 24Q44 28.25 42.45 31.9Q40.9 35.55 38.2 38.25Q35.5 40.95 31.85 42.475Q28.2 44 24 44ZM24 41Q31.25 41 36.125 36.125Q41 31.25 41 24Q41 16.75 36.125 11.875Q31.25 7 24 7Q16.75 7 11.875 11.875Q7 16.75 7 24Q7 31.25 11.875 36.125Q16.75 41 24 41Z" />
+                        </svg>
+                    </button>
                 </div>
-                <div className="PCL--buttons">
-                    <div className="PCL--divider PCL--animate" />
-                    <div className={`PCL--delay ${delay ? "PCL--delay--visible" : ""}`}>
-                        {`Too many tries.\nPlease try again in ${delayLeft} ${delayLeft > 1 ? "seconds" : "second"}.`}
-                    </div>
-                    {numpad}
-                    {showCancel ? <PasscodeBtn code="Escape" click={() => close(false)}><CancelIcon /></PasscodeBtn> : <div />}
-                    <PasscodeBtn number={0} dec="+" click={append} />
-                    <PasscodeBtn code="Backspace" click={() => setCode(c => c.slice(0, -1))}><BackspaceIcon /></PasscodeBtn>
-                    {showEnter && len === -1 && (
-                        <>
-                            <div />
-                            <PasscodeBtn code="Enter" click={() => accept()}><EnterIcon /></PasscodeBtn>
-                        </>
-                    )}
+
+                <div className={`PCL--delay ${delay ? "PCL--delay--visible" : ""}`}>
+                    <svg style={{ marginRight: 6 }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height={16} width={16}><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                    {`${t("Too many tries.\nPlease try again in")} ${delayLeft} ${delayLeft > 1 ? t("seconds") : t("second")}.`}
                 </div>
             </div>
         </div>
@@ -683,6 +716,7 @@ export default definePlugin({
                 <HeaderBarButton
                     ref={ref as any}
                     icon={LockIcon}
+                    iconSize={20}
                     tooltip="Lock Discord"
                     onClick={() => {
                         // If a previous overlay somehow got stuck (root still set but

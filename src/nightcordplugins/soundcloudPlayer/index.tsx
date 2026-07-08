@@ -1,5 +1,5 @@
 /*
- * Vencord, a Discord client mod
+ * Nightcord, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -13,6 +13,8 @@ import { ModalRoot, ModalSize, openModal } from "@utils/modal";
 import { definePluginSettings } from "@api/Settings";
 import definePlugin, { IconComponent, OptionType, PluginNative } from "@utils/types";
 import { ApplicationAssetUtils, MediaEngineStore, React, ReactDOM, createRoot, Select, useEffect, useRef, useState, FluxDispatcher } from "@webpack/common";
+import { isPluginEnabled } from "@api/PluginManager";
+import { SafeDynamicIsland } from "@nightcordplugins/DynamicIslande";
 import { t } from "../autoTranslateNightcord";
 
 // ─── Native (IPC → main process) ─────────────────────────────────────────────
@@ -236,7 +238,7 @@ function fmtDuration(ms: number): string {
 
 type PlayerListener = () => void;
 
-const playerState = {
+export const playerState = {
     clientId: null as string | null,
     playing: null as ScTrack | null,
     isPlaying: false,
@@ -251,7 +253,21 @@ const playerState = {
     audio: null as HTMLAudioElement | null,
     listeners: new Set<PlayerListener>(),
 
-    notify() { this.listeners.forEach(l => l()); },
+    notify() { 
+        this.listeners.forEach(l => l()); 
+        try {
+            FluxDispatcher.dispatch({
+                type: "SOUNDCORD_STATE_UPDATE",
+                state: {
+                    playing: this.playing,
+                    isPlaying: this.isPlaying,
+                    favorites: this.favorites,
+                    favIndex: this.favIndex,
+                    volume: this.volume
+                }
+            });
+        } catch { }
+    },
     subscribe(l: PlayerListener) { this.listeners.add(l); },
     unsubscribe(l: PlayerListener) { this.listeners.delete(l); },
 };
@@ -367,7 +383,7 @@ async function playerPlayTrack(track: ScTrack, fromFavIdx = -1) {
         audio.addEventListener("timeupdate", () => {
             s.position = audio.currentTime;
             s.progress = audio.duration > 0 ? audio.currentTime / audio.duration : 0;
-            s.notify();
+            s.listeners.forEach(l => l());
         });
         audio.addEventListener("ended", () => {
             s.isPlaying = false; s.progress = 0; s.position = 0;
@@ -393,7 +409,7 @@ async function playerPlayTrack(track: ScTrack, fromFavIdx = -1) {
     }
 }
 
-function playerPlayFavAt(idx: number) {
+export function playerPlayFavAt(idx: number) {
     const favs = playerState.favorites;
     if (favs.length === 0) return;
     const i = ((idx % favs.length) + favs.length) % favs.length;
@@ -766,86 +782,6 @@ function cleanupThumbar() {
     } catch { }
 }
 
-// ─── Dynamic Island Player ────────────────────────────────────────────────────
-
-function DynamicIslandPlayer() {
-    const p = usePlayerState();
-    const [isHovered, setIsHovered] = useState(false);
-    
-    // Hide when nothing is loaded, or if the user disabled the popup in settings
-    if (!settings.store.showPopup || !p.playing) return null;
-
-    const isHidden = !p.isPlaying && !isHovered;
-
-    function togglePause(e: React.MouseEvent) {
-        e.stopPropagation();
-        if (!p.audio) return;
-        if (p.isPlaying) { p.audio.pause(); p.isPlaying = false; p.notify(); }
-        else { p.audio.play(); p.isPlaying = true; p.notify(); }
-    }
-
-    function navFav(dir: 1 | -1, e: React.MouseEvent) {
-        e.stopPropagation();
-        const base = p.favIndex >= 0 ? p.favIndex : (dir > 0 ? -1 : p.favorites.length);
-        playerPlayFavAt(((base + dir) % p.favorites.length + p.favorites.length) % p.favorites.length);
-    }
-
-    return (
-        <div 
-            className={`sc-dynamic-island sc-pos-${settings.store.position || 'top'} ${isHidden ? 'sc-island-hidden' : ''} ${isHovered ? 'sc-island-hover' : ''}`}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            onClick={() => {
-                 openModal(props => (
-                     <ModalRoot {...props} size={ModalSize.SMALL}>
-                         <SoundCloudModal onClose={props.onClose} />
-                     </ModalRoot>
-                 ));
-            }}
-        >
-            <div className="sc-island-main">
-                <img 
-                    className={`sc-island-artwork ${!p.isPlaying ? 'sc-paused' : ''}`} 
-                    src={p.playing.artworkUrl || ""} 
-                    alt="" 
-                />
-                
-                <div className="sc-island-info">
-                    <div className="sc-island-title">{p.playing.title}</div>
-                    <div className="sc-island-artist">{p.playing.artist}</div>
-                </div>
-
-                <div className={`sc-island-wave ${!p.isPlaying ? 'sc-wave-paused' : ''} ${isHovered ? 'sc-wave-hide' : ''}`}>
-                    <span/><span/><span/><span/>
-                </div>
-            </div>
-
-            <div className="sc-island-expanded" onClick={e => e.stopPropagation()}>
-                <div className="sc-island-progress-row">
-                    <span className="sc-island-time">{fmtDuration(p.position * 1000)}</span>
-                    <input type="range" min={0} max={1000} value={p.progress * 1000 || 0}
-                        className="sc-island-slider"
-                        style={{ '--sc-progress': `${(p.progress || 0) * 100}%` } as React.CSSProperties}
-                        onChange={e => {
-                            const frac = Number(e.currentTarget.value) / 1000;
-                            if (p.audio) p.audio.currentTime = frac * (p.audio.duration || 0);
-                            p.progress = frac; p.notify();
-                        }} />
-                    <span className="sc-island-time">-{fmtDuration((p.duration - p.position) * 1000)}</span>
-                </div>
-                
-                <div className="sc-island-controls-row">
-                    <button className="sc-island-btn" onClick={e => navFav(-1, e)}><IconPrev size={20} /></button>
-                    <button className="sc-island-btn sc-island-btn-play" onClick={togglePause}>
-                        {p.isPlaying ? <IconPause size={24} /> : <IconPlay size={24} />}
-                    </button>
-                    <button className="sc-island-btn" onClick={e => navFav(+1, e)}><IconNext size={20} /></button>
-                </div>
-            </div>
-        </div>
-    );
-}
-
 // ─── Bouton HeaderBar ─────────────────────────────────────────────────────────
 
 function SCHeaderBarButton() {
@@ -863,8 +799,6 @@ function SCHeaderBarButton() {
     );
 }
 
-let islandContainer: HTMLDivElement | null = null;
-let islandRoot: any = null;
 
 // ─── Rich Presence ───────────────────────────────────────────────────────────────────
 
@@ -968,26 +902,54 @@ function handleListeningTogetherEvent(e: any) {
     if (scId) playTrackById(scId);
 }
 
+function handleSoundCordCommand(e: any) {
+    if (e.type === "SOUNDCORD_REQUEST_STATE") {
+        playerState.notify();
+    } else if (e.type === "SOUNDCORD_COMMAND") {
+        const cmd = e.command;
+        if (cmd === "toggle") {
+            if (!playerState.audio) return;
+            if (playerState.isPlaying) { playerState.audio.pause(); playerState.isPlaying = false; }
+            else { playerState.audio.play(); playerState.isPlaying = true; }
+            playerState.notify();
+        } else if (cmd === "prev") {
+            const base = playerState.favIndex >= 0 ? playerState.favIndex : playerState.favorites.length;
+            playerPlayFavAt((base - 1 + playerState.favorites.length) % playerState.favorites.length);
+        } else if (cmd === "next") {
+            const base = playerState.favIndex >= 0 ? playerState.favIndex : -1;
+            playerPlayFavAt((base + 1) % playerState.favorites.length);
+        } else if (cmd === "volume") {
+            const vol = e.value;
+            if (vol !== undefined) {
+                playerState.volume = vol;
+                if (playerState.audio) playerState.audio.volume = vol / 100;
+                playerState.notify();
+            }
+        }
+    }
+}
+
 // ─── Plugin ───────────────────────────────────────────────────────────────────
 
-const settings = definePluginSettings({
-    position: {
-        type: OptionType.SELECT,
-        description: "Popup Position",
-        options: [
-            { label: "Top Center (Dynamic Island)", value: "top" },
-            { label: "Bottom Right", value: "bottom" },
-        ],
-        default: "top",
-    },
-    showPopup: {
-        type: OptionType.BOOLEAN,
-        description: "Show Dynamic Island player",
-        default: true,
-    },
+export const settings = definePluginSettings({
     richPresence: {
         type: OptionType.BOOLEAN,
         description: "Show listening activity status (like Spotify)",
+        default: true,
+    },
+    enableDynamicIsland: {
+        type: OptionType.BOOLEAN,
+        description: "Enable Dynamic Island for SoundCord",
+        default: true,
+    },
+    showSoundCordControls: {
+        type: OptionType.BOOLEAN,
+        description: "Show playback controls (Previous, Play/Pause, Next) in Dynamic Island",
+        default: true,
+    },
+    showSoundCordVolume: {
+        type: OptionType.BOOLEAN,
+        description: "Show volume slider in Dynamic Island",
         default: true,
     },
 });
@@ -1011,7 +973,17 @@ export default definePlugin({
 
     headerBarButton: {
         icon: SoundCloudIconComponent,
-        render: SCHeaderBarButton,
+        render: (props) => {
+            // DynamicIslande acts as the primary host. If it's disabled, we render our standalone version for SoundCord.
+            const isFullIslandEnabled = isPluginEnabled("DynamicIslande");
+            const enableIsland = settings.use(["enableDynamicIsland"]).enableDynamicIsland ?? true;
+            return (
+                <React.Fragment>
+                    <SCHeaderBarButton {...props} />
+                    {!isFullIslandEnabled && enableIsland && <SafeDynamicIsland onlySoundCord={true} />}
+                </React.Fragment>
+            );
+        },
     },
 
     search: searchTracks,
@@ -1031,18 +1003,8 @@ export default definePlugin({
         rpcListener = () => updateRichPresence();
         playerState.subscribe(rpcListener);
 
-        islandContainer = document.createElement("div");
-        document.body.appendChild(islandContainer);
-        
-        if (typeof createRoot === "function") {
-            islandRoot = createRoot(islandContainer);
-            islandRoot.render(<DynamicIslandPlayer />);
-        } else if (ReactDOM?.createRoot) {
-            islandRoot = ReactDOM.createRoot(islandContainer);
-            islandRoot.render(<DynamicIslandPlayer />);
-        } else if (ReactDOM?.render) {
-            ReactDOM.render(<DynamicIslandPlayer />, islandContainer);
-        }
+        FluxDispatcher.subscribe("SOUNDCORD_REQUEST_STATE", handleSoundCordCommand);
+        FluxDispatcher.subscribe("SOUNDCORD_COMMAND", handleSoundCordCommand);
     },
 
     stop() {
@@ -1056,17 +1018,8 @@ export default definePlugin({
             rpcListener = null;
         }
         clearRichPresence();
-        
-        if (islandContainer) {
-            if (islandRoot) {
-                islandRoot.unmount();
-                islandRoot = null;
-            } else if (ReactDOM?.unmountComponentAtNode) {
-                ReactDOM.unmountComponentAtNode(islandContainer);
-            }
-            islandContainer.remove();
-            islandContainer = null;
-        }
+        FluxDispatcher.unsubscribe("SOUNDCORD_REQUEST_STATE", handleSoundCordCommand);
+        FluxDispatcher.unsubscribe("SOUNDCORD_COMMAND", handleSoundCordCommand);
         playerInited = false;
     },
 });

@@ -29,6 +29,7 @@ import { useForceUpdater } from "@utils/react";
 import { findComponentByCodeLazy } from "@webpack";
 import { Alerts, React, SearchableSelect, Select, useState, OAuth2AuthorizeModal } from "@webpack/common";
 import { t } from "@api/i18n";
+import { ILLEGALCORD_ICON_DATA_URI } from "@api/illegalcord_base64";
 
 const ICON_STYLE: React.CSSProperties = { width: 20, height: 20, borderRadius: 4, verticalAlign: "middle" };
 const NIGHTCORD_ICON_STYLE: React.CSSProperties = { width: 20, height: 20, borderRadius: 4, verticalAlign: "middle" };
@@ -49,6 +50,10 @@ function VencordIcon() {
 
 function GlobalBadgesIcon() {
     return <img src="https://equicord.org/assets/icons/misc/userplugin.png" alt="GlobalBadges" style={ICON_STYLE} />;
+}
+
+function IllegalcordIcon() {
+    return <img src={ILLEGALCORD_ICON_DATA_URI} alt="Illegalcord" style={ICON_STYLE} />;
 }
 
 const RefreshIcon = findComponentByCodeLazy("M4 12a8 8 0 0 1 14.93-4H15");
@@ -81,6 +86,7 @@ const BADGE_OPTIONS: Array<{ label: string; value: BadgeSource }> = [
     { label: "Equicord Badges", value: "equicord" },
     { label: "Vencord Badges", value: "vencord" },
     { label: "GlobalBadges", value: "globalbadges" },
+    { label: "Illegalcord Badges", value: "illegalcord" },
 ];
 
 function renderPrefix(option: { value: BadgeSource }) {
@@ -89,6 +95,7 @@ function renderPrefix(option: { value: BadgeSource }) {
         case "equicord": return <EquicordIcon />;
         case "vencord": return <VencordIcon />;
         case "globalbadges": return <GlobalBadgesIcon />;
+        case "illegalcord": return <IllegalcordIcon />;
         default: return null;
     }
 }

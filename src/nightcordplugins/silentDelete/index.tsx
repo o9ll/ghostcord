@@ -1,5 +1,5 @@
 /*
- * Vencord, a Discord client mod
+ * Nightcord, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -10,36 +10,37 @@ import { addMessagePopoverButton as addButton, removeMessagePopoverButton as rem
 import { definePluginSettings } from "@api/Settings";
 import definePlugin, { OptionType } from "@utils/types";
 import { ChannelStore, Constants, Menu, RestAPI, UserStore } from "@webpack/common";
+import { tPlugin as t } from "@api/pluginI18n";
 
 const settings = definePluginSettings({
     replacementText: {
         type: OptionType.STRING,
-        description: "Text to replace the message with before deletion.",
+        description: t("Text to replace the message with before deletion."),
         default: "** **"
     },
     deleteDelay: {
         type: OptionType.NUMBER,
-        description: "Delay in milliseconds before deleting the replacement message (recommended: 100-500).",
+        description: t("Delay in milliseconds before deleting the replacement message (recommended: 100-500)."),
         default: 200
     },
     suppressNotifications: {
         type: OptionType.BOOLEAN,
-        description: "Suppress notifications when replacing the message (prevents pinging mentioned users).",
+        description: t("Suppress notifications when replacing the message (prevents pinging mentioned users)."),
         default: true
     },
     deleteOriginal: {
         type: OptionType.BOOLEAN,
-        description: "Delete the original message from server. If disabled, the original message will reappear on client restart.",
+        description: t("Delete the original message from server. If disabled, the original message will reappear on client restart."),
         default: true
     },
     purgeInterval: {
         type: OptionType.NUMBER,
-        description: "Delay in milliseconds between each message deletion during /silentpurge (recommended: 500-1000 to avoid rate limits).",
+        description: t("Delay in milliseconds between each message deletion during /silentpurge (recommended: 500-1000 to avoid rate limits)."),
         default: 500
     },
     accentColor: {
         type: OptionType.STRING,
-        description: "Accent color for the Silent Delete icon (hex code).",
+        description: t("Accent color for the Silent Delete icon (hex code)."),
         default: "#ed4245"
     }
 });
@@ -92,7 +93,7 @@ const messageContextMenuPatch: NavContextMenuPatchCallback = (children, { messag
     group.push(
         <Menu.MenuItem
             id="silent-delete-history"
-            label={<span style={{ color: getAccentColor() }}>Silent Delete History</span>}
+            label={<span style={{ color: getAccentColor() }}>{t("Silent Delete History")}</span>}
             action={() => silentDeleteMessage(message.channel_id, message.id, false)}
             icon={SilentDeleteIcon}
         />
@@ -117,11 +118,11 @@ export default definePlugin({
     commands: [
         {
             name: "silentpurge",
-            description: "Silently delete your recent messages in this channel",
+            description: t("Silently delete your recent messages in this channel"),
             inputType: ApplicationCommandInputType.BUILT_IN,
             options: [{
                 name: "count",
-                description: "Number of your messages to silently delete (1-100)",
+                description: t("Number of your messages to silently delete (1-100)"),
                 type: ApplicationCommandOptionType.INTEGER,
                 required: true
             }],
@@ -168,7 +169,7 @@ export default definePlugin({
                             if (i < userMessages.length - 1) await sleep(purgeInterval);
                         }
 
-                        sendBotMessage(channelId, { content: `Successfully silently deleted ${successCount} message(s).` });
+                        sendBotMessage(channelId, { content: t("Successfully silently deleted {count} message(s).").replace("{count}", successCount.toString()) });
                     } catch (error) {
                         console.error("[SilentDelete] Error during silent purge:", error);
                     }
@@ -182,7 +183,7 @@ export default definePlugin({
             if (msg.author.id !== UserStore.getCurrentUser().id || msg.deleted) return null;
 
             return {
-                label: "Silent Delete",
+                label: t("Silent Delete"),
                 icon: SilentDeleteIcon,
                 message: msg,
                 channel: ChannelStore.getChannel(msg.channel_id),

@@ -9,13 +9,14 @@ import "./styles.css";
 import { definePluginSettings } from "@api/Settings";
 import { insertTextIntoChatInputBox } from "@utils/discord";
 import definePlugin, { OptionType } from "@utils/types";
+import { tPlugin as t } from "@api/pluginI18n";
 
 const SNOWFLAKE_RE = /^\d{15,21}$/;
 
 const settings = definePluginSettings({
     trailingSpace: {
         type: OptionType.BOOLEAN,
-        description: "Add a space after the mention once inserted",
+        description: t("Add a space after the mention once inserted"),
         default: true,
     },
 });
@@ -53,7 +54,7 @@ function showPopover(id: string, range: Range) {
             <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
             <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
         </svg>
-        <span>Ping ${id}</span>
+        <span>${t("Ping")} ${id}</span>
     `;
 
     btn.addEventListener("mousedown", e => {
@@ -109,6 +110,7 @@ function onScrollOrResize() {
     }
 }
 
+// @ts-ignore
 function onDocMouseDown(e: MouseEvent) {
     if (popoverEl && !popoverEl.contains(e.target as Node)) {
         removePopover();

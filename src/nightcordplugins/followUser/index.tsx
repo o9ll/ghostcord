@@ -1,5 +1,5 @@
 /*
- * Vencord, a Discord client mod
+ * Nightcord, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -30,7 +30,7 @@ let lastActivity: number = 0;
 const listeners = new Set<() => void>();
 function notifyAll() { listeners.forEach(fn => fn()); }
 
-function useFollowId(): string | null {
+export function useFollowId(): string | null {
     const [, tick] = useState(0);
     useEffect(() => {
         const fn = () => tick(n => n + 1);
@@ -98,7 +98,6 @@ function onVoiceStateUpdates(data: any) {
             if (newCh) {
                 resetInactivityTimer(); // activite detectee, on repart pour 30min
                 joinChannel(newCh);
-                Toasts.show({ message: `Suivi ${followedName} → vocal`, type: Toasts.Type.MESSAGE, id: Toasts.genId() });
             }
         }
     }
@@ -112,7 +111,7 @@ function startFlux() {
 function stopFlux() { fluxUnsub?.(); fluxUnsub = null; }
 
 // ── Follow / Unfollow ─────────────────────────────────────────────────────────
-async function follow(userId: string) {
+export async function follow(userId: string) {
     const user = UserStore?.getUser?.(userId);
     const name = user?.globalName ?? user?.username ?? userId;
 
@@ -134,20 +133,15 @@ async function follow(userId: string) {
     // Rejoindre immediatement son vocal si il est deja dans un channel
     if (followedChannel) {
         joinChannel(followedChannel);
-        Toasts.show({ message: `Suivi ${name} ✓ — rejoint son vocal`, type: Toasts.Type.SUCCESS, id: Toasts.genId() });
-    } else {
-        Toasts.show({ message: `Suivi ${name} ✓ — en attente d'un vocal`, type: Toasts.Type.SUCCESS, id: Toasts.genId() });
     }
 }
 
-async function unfollow() {
-    const name = followedName;
+export async function unfollow() {
     followedId = null; followedName = ""; followedChannel = null;
     stopFlux();
     clearInactivityTimer();
     await persist();
     notifyAll();
-    if (name) Toasts.show({ message: `Arrete de suivre ${name}`, type: Toasts.Type.MESSAGE, id: Toasts.genId() });
 }
 
 function joinFollowed() {

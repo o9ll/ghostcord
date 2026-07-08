@@ -85,10 +85,10 @@ function inject(resourcesDir) {
     const appDirPath = join(resourcesDir, "app");
 
     // Vérifier si déjà injecté
-    if (existsSync(appDirPath) && existsSync(join(appDirPath, "package.json"))) {
+    if (existsSync(appDirPath) && existsSync(join(appDirPath, "index.js"))) {
         try {
-            const pkg = JSON.parse(readFileSync(join(appDirPath, "package.json"), "utf-8"));
-            if (pkg.name === "nightcord") {
+            const indexContent = readFileSync(join(appDirPath, "index.js"), "utf-8");
+            if (indexContent.includes("Nightcord Injector") || indexContent.includes("Nightcord")) {
                 console.log("\x1b[33m[Nightcord] Déjà injecté ! Utilisez 'pnpm uninject' d'abord pour réinjecter.\x1b[0m");
                 return false;
             }
@@ -125,7 +125,7 @@ function inject(resourcesDir) {
     mkdirSync(appDirPath, { recursive: true });
 
     writeFileSync(join(appDirPath, "package.json"), JSON.stringify({
-        name: "nightcord",
+        name: "discord",
         main: "index.js"
     }, null, 2));
 

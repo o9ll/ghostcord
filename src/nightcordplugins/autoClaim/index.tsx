@@ -9,6 +9,7 @@ import { Logger } from "@utils/Logger";
 import definePlugin, { OptionType } from "@utils/types";
 import { findByPropsLazy } from "@webpack";
 import { ChannelStore, RestAPI, UserStore } from "@webpack/common";
+import { tPlugin as t } from "@api/pluginI18n";
 
 // Must be at module level — findByPropsLazy returns a lazy proxy that resolves on first access
 const AuthStore = findByPropsLazy("getToken", "getSessionId");
@@ -20,40 +21,40 @@ const logger = new Logger("AutoClaim");
 const settings = definePluginSettings({
     enableClaimTicket: {
         type: OptionType.BOOLEAN,
-        description: "Automatically click a button on bot messages inside a ticket category.",
+        description: t("Automatically click a button on bot messages inside a ticket category."),
         default: false,
         restartNeeded: false,
     },
     claimCategoryId: {
         type: OptionType.STRING,
-        description: "Category ID where tickets are located (parent_id of the channels).",
+        description: t("Category ID where tickets are located (parent_id of the channels)."),
         default: "",
     },
     claimBotId: {
         type: OptionType.STRING,
-        description: "User ID of the bot that sends messages in tickets.",
+        description: t("User ID of the bot that sends messages in tickets."),
         default: "",
     },
     claimButtonIndex: {
         type: OptionType.SELECT,
-        description: "Which button to automatically click.",
+        description: t("Which button to automatically click."),
         options: [
-            { label: "1st button", value: 0, default: true },
-            { label: "2nd button", value: 1 },
-            { label: "3rd button", value: 2 },
-            { label: "4th button", value: 3 },
-            { label: "5th button", value: 4 },
+            { label: t("1st button"), value: 0, default: true },
+            { label: t("2nd button"), value: 1 },
+            { label: t("3rd button"), value: 2 },
+            { label: t("4th button"), value: 3 },
+            { label: t("5th button"), value: 4 },
         ],
     },
     safeMode: {
         type: OptionType.BOOLEAN,
-        description: "Safe Mode: wait 3–4 seconds before claiming (less suspicious, recommended for shared servers).",
+        description: t("Safe Mode: wait 3–4 seconds before claiming (less suspicious, recommended for shared servers)."),
         default: false,
         restartNeeded: false,
     },
     claimCooldown: {
         type: OptionType.NUMBER,
-        description: "Cooldown between claims in seconds (0 = no cooldown).",
+        description: t("Cooldown between claims in seconds (0 = no cooldown)."),
         default: 0,
     },
 });

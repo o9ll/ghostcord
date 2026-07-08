@@ -83,6 +83,10 @@ https://source.nightcord.st/nightcord/nightcord
 
 Nightcord wouldn't exist without [Equicord](https://github.com/Equicord/Equicord) and [Vencord](https://github.com/Vendicated/Vencord). A huge chunk of what makes this work comes directly from their projects. We're fully aware of that and genuinely appreciate everything they've built — we're just taking it in a different direction. Big thanks to everyone who's contributed to both.
 
+### Special Thanks
+A massive thank you to the owner of **Illegalcord**, with whom we are proudly partnered. They have been incredibly helpful in brainstorming, sharing ideas, and collaborating on plugins. Our smooth and constructive exchanges have been invaluable, and we want to highlight their exemplary, minimalist work that very few can match. 
+➡️ [Check out Illegalcord here](https://github.com/ImHisako/Illegalcord)
+
 ---
 
 ## Disclaimer

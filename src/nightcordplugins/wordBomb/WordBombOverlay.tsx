@@ -1,5 +1,6 @@
 import { React, useState, useEffect, useRef, ReactDOM, createRoot } from "@webpack/common";
 import { findByPropsLazy } from "@webpack";
+import { tPlugin as t } from "@api/pluginI18n";
 import { getGroqKey } from "../nightcordAI/groqManager";
 
 const ComponentDispatch = findByPropsLazy("dispatchToLastSubscribed");
@@ -63,7 +64,7 @@ export function WordBombOverlay() {
     const [alphabet, setAlphabet] = useState<string[]>("abcdefghijklmnopqrstuvwxyz".split(""));
     const [dictionary, setDictionary] = useState<string[]>(FALLBACK_WORDS);
     const [syllable, setSyllable] = useState("");
-    const [status, setStatus] = useState("Ready!");
+    const [status, setStatus] = useState(t("Ready!"));
     const [history, setHistory] = useState<{ alphabet: string[], word: string; }[]>([]);
     const [isTyping, setIsTyping] = useState(false);
     const isTypingRef = useRef(false);
@@ -85,7 +86,7 @@ export function WordBombOverlay() {
 
     // Load dictionary
     useEffect(() => {
-        setStatus("Loading dictionaries...");
+        setStatus(t("Loading dictionaries..."));
         Promise.all(DICT_URLS.map(url => fetch(url).then(async res => {
             if (!res.ok) return [];
             if (url.endsWith(".json")) return await res.json();
@@ -112,10 +113,10 @@ export function WordBombOverlay() {
                     setStatus(`Ready! (${finalSet.length} words)`);
                 } else {
                     setDictionary(FALLBACK_WORDS);
-                    setStatus("Dict. unavailable");
+                    setStatus(t("Dict. unavailable"));
                 }
             })
-            .catch(() => setStatus("Dict. error (fallback active)"));
+            .catch(() => setStatus(t("Dict. error (fallback active)")));
     }, []);
 
     // Theme logic
@@ -189,7 +190,7 @@ export function WordBombOverlay() {
             if (themeMatches.length > 0) matches = themeMatches;
         }
 
-        if (matches.length === 0) { setStatus("No words found"); return; }
+        if (matches.length === 0) { setStatus(t("No words found")); return; }
 
         const computeScore = (w: string, currentMissing: string[], index: number) => {
             let score = 0;
@@ -230,14 +231,14 @@ export function WordBombOverlay() {
     const sendWord = async (word: string) => {
         isTypingRef.current = true;
         setIsTyping(true);
-        setStatus(`Typing: ${word}...`);
+        setStatus(`${t("Typing:")} ${word}...`);
 
         // AI definition in Safe Mode
         if (safeMode) {
-            setDefinition("Generating AI definition...");
+            setDefinition(t("Generating AI definition..."));
             const groqKey = await getGroqKey().catch(() => "");
             if (!groqKey) {
-                setDefinition("Error: Groq API key missing in NightcordAI.");
+                setDefinition(t("Error: Groq API key missing in NightcordAI."));
             } else {
                 fetch("https://api.groq.com/openai/v1/chat/completions", {
                     method: "POST",
@@ -251,7 +252,7 @@ export function WordBombOverlay() {
                 })
                     .then(r => r.json())
                     .then(data => setDefinition(data.choices?.[0]?.message?.content?.trim() || "AI could not define this word."))
-                    .catch(() => setDefinition("Network error (Groq API)."));
+                    .catch(() => setDefinition(t("Network error (Groq API).")));
             }
         } else {
             setDefinition("");
@@ -274,10 +275,10 @@ export function WordBombOverlay() {
                 await new Promise(r => setTimeout(r, 50));
                 ComponentDispatch?.dispatchToLastSubscribed("SUBMIT", {});
             }
-            setStatus("Prêt !");
+            setStatus(t("Ready!"));
         } catch (e) {
             console.error("[WordBomb] Erreur saisie:", e);
-            setStatus("Erreur de saisie");
+            setStatus(t("Input error"));
         } finally {
             isTypingRef.current = false;
             setIsTyping(false);
@@ -310,7 +311,7 @@ export function WordBombOverlay() {
                                 ref={inputRef}
                                 type="text"
                                 className="nc-wb-input"
-                                placeholder="Syllable..."
+                                placeholder={t("Syllable...")}
                                 value={syllable}
                                 onChange={e => setSyllable(e.target.value)}
                                 onKeyDown={e => e.key === "Enter" && processSearch(syllable)}
@@ -329,42 +330,42 @@ export function WordBombOverlay() {
 
                         {safeMode && definition && (
                             <div style={{ fontSize: "11px", color: "#d1d5db", fontStyle: "italic", background: "#374151", padding: "8px", borderRadius: "8px", maxHeight: "80px", overflowY: "auto" }}>
-                                <strong style={{ color: "#60a5fa" }}>Definition:</strong> {definition}
+                                <strong style={{ color: "#60a5fa" }}>{t("Definition:")}</strong> {definition}
                             </div>
                         )}
                     </>
                 ) : (
                     <div>
                         <div style={{ marginBottom: "10px" }}>
-                            <label>Speed (LPS): {lps}</label>
+                            <label>{t("Speed (LPS):")} {lps}</label>
                             <input type="range" min="10" max="100" step="1" value={lps} onChange={e => { setLps(parseFloat(e.target.value)); setSetting("wb_lps", e.target.value); }} style={{ width: "100%" }} />
                         </div>
                         <div style={{ marginBottom: "10px" }}>
-                            <label>Error (%): {humanChance}%</label>
+                            <label>{t("Error (%):")} {humanChance}%</label>
                             <input type="range" min="0" max="100" step="1" value={humanChance} onChange={e => { setHumanChance(parseInt(e.target.value)); setSetting("wb_humanChance", e.target.value); }} style={{ width: "100%" }} />
                         </div>
                         <div style={{ marginBottom: "10px" }}>
-                            <label style={{ fontSize: "13px", color: "#f472b6", fontWeight: "bold" }}>Theme (Optional)</label>
-                            <input type="text" placeholder="e.g. sex, love..." value={theme} onChange={e => { setTheme(e.target.value.toLowerCase().trim()); setSetting("wb_theme", e.target.value.toLowerCase().trim()); }} style={{ width: "100%", padding: "6px", borderRadius: "6px", border: "none", background: "#374151", color: "white", marginTop: "5px" }} />
+                            <label style={{ fontSize: "13px", color: "#f472b6", fontWeight: "bold" }}>{t("Theme (Optional)")}</label>
+                            <input type="text" placeholder={t("e.g. sex, love...")} value={theme} onChange={e => { setTheme(e.target.value.toLowerCase().trim()); setSetting("wb_theme", e.target.value.toLowerCase().trim()); }} style={{ width: "100%", padding: "6px", borderRadius: "6px", border: "none", background: "#374151", color: "white", marginTop: "5px" }} />
                         </div>
                         <div style={{ marginBottom: "10px" }}>
-                            <label style={{ fontSize: "13px", color: "#fbbf24", fontWeight: "bold" }}>Play Style</label>
+                            <label style={{ fontSize: "13px", color: "#fbbf24", fontWeight: "bold" }}>{t("Play Style")}</label>
                             <select value={playMode} onChange={e => { setPlayMode(e.target.value); setSetting("wb_playMode", e.target.value); }} style={{ width: "100%", padding: "6px", borderRadius: "6px", border: "none", background: "#374151", color: "white", marginTop: "5px", outline: "none" }}>
-                                <option value="Normal">Normal</option>
-                                <option value="Pro">Pro Mod (Long &amp; Complex)</option>
-                                <option value="Noob">Noob Mod (Short &amp; Simple)</option>
+                                <option value="Normal">{t("Normal")}</option>
+                                <option value="Pro">{t("Pro Mod (Long & Complex)")}</option>
+                                <option value="Noob">{t("Noob Mod (Short & Simple)")}</option>
                             </select>
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "12px", borderTop: "1px solid #4b5563", paddingTop: "10px" }}>
-                            <label style={{ fontSize: "13px", color: "#ef4444", fontWeight: "bold" }}>🚫 No Spaces or Dashes</label>
+                            <label style={{ fontSize: "13px", color: "#ef4444", fontWeight: "bold" }}>{t("🚫 No Spaces or Dashes")}</label>
                             <input type="checkbox" checked={noSpace} onChange={e => { setNoSpace(e.target.checked); setSetting("wb_noSpace", String(e.target.checked)); }} style={{ transform: "scale(1.2)" }} />
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "12px", borderTop: "1px solid #4b5563", paddingTop: "10px" }}>
-                            <label style={{ fontSize: "13px", color: "#60a5fa", fontWeight: "bold" }}>📚 Safe Mode (Def.)</label>
+                            <label style={{ fontSize: "13px", color: "#60a5fa", fontWeight: "bold" }}>{t("📚 Safe Mode (Def.)")}</label>
                             <input type="checkbox" checked={safeMode} onChange={e => { setSafeMode(e.target.checked); setSetting("wb_safeMode", String(e.target.checked)); }} style={{ transform: "scale(1.2)" }} />
                         </div>
                         <div style={{ fontSize: "10px", opacity: 0.6, marginTop: "4px", marginBottom: "15px" }}>
-                            Displays the definition of the word the bot just typed to pretend you know it.
+                            {t("Displays the definition of the word the bot just typed to pretend you know it.")}
                         </div>
                         <button onClick={() => setIsSettingsOpen(false)} style={{ width: "100%", padding: "8px", background: "#4b5563", border: "none", borderRadius: "8px", color: "white", cursor: "pointer" }}>
                             BACK

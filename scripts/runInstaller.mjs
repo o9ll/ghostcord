@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Nightcord â€” Installer via EquilotlCli
  * TÃ©lÃ©charge EquilotlCli.exe depuis les releases Equicord et le lance
  * avec les variables d'environnement pointant vers les fichiers Nightcord.
@@ -96,7 +96,36 @@ function checkBuild() {
     }
 }
 
-// â”€â”€ Nettoyage des injections prÃ©cÃ©dentes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Suppression des mises à jour Discord incomplètes ─────────────────────────────
+// Quand Discord télécharge une mise à jour mais qu'elle est incomplète (pas d'app.asar),
+// l'installeur essaie d'y injecter et échoue. On supprime ces dossiers cassés.
+function cleanIncompleteDiscordUpdates() {
+    if (process.platform !== "win32") return;
+    const localAppData = process.env.LOCALAPPDATA || "";
+    for (const channel of ["Discord", "DiscordPTB", "DiscordCanary", "DiscordDevelopment"]) {
+        const base = join(localAppData, channel);
+        if (!existsSync(base)) continue;
+        let versions;
+        try { versions = readdirSync(base).filter(d => /^app-\d+\.\d+\.\d+$/.test(d)); }
+        catch { continue; }
+        for (const ver of versions) {
+            const resourcesDir = join(base, ver, "resources");
+            const appAsarPath  = join(resourcesDir, "app.asar");
+            const backupPath   = join(resourcesDir, "_app.asar");
+            // Dossier incomplet : resources existe mais ni app.asar ni _app.asar
+            if (existsSync(join(base, ver)) && !existsSync(appAsarPath) && !existsSync(backupPath)) {
+                try {
+                    rmSync(join(base, ver), { recursive: true, force: true });
+                    console.log(`[Nightcord] Supprimé le dossier de mise à jour Discord incomplet : ${join(base, ver)}`);
+                } catch (e) {
+                    console.warn(`[Nightcord] Impossible de supprimer ${join(base, ver)}: ${e.message}`);
+                }
+            }
+        }
+    }
+}
+
+// ── Nettoyage des injections précédentes ─────────────────────────────────────────
 function cleanOldNightcord(isUninstall) {
     console.log("[Nightcord] Cleaning previous installations...");
     const platform = process.platform;
@@ -227,6 +256,7 @@ const argStart = process.argv.indexOf("--");
 const args = argStart === -1 ? process.argv.slice(2) : process.argv.slice(argStart + 1);
 
 const isUninstall = args.includes("--uninstall");
+cleanIncompleteDiscordUpdates();
 cleanOldNightcord(isUninstall);
 if (!isUninstall) checkBuild();
 

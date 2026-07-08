@@ -11,7 +11,7 @@ import { Heart } from "@components/Heart";
 import { Paragraph } from "@components/Paragraph";
 import { DonateButton, TranslateButton } from "@components/settings";
 import { Margins } from "@utils/margins";
-import { closeModal, ModalContent, ModalFooter, ModalHeader, ModalRoot, openModal } from "@utils/modal";
+import { closeModal, ModalContent, ModalFooter, ModalHeader, ModalRoot, openModal, ModalCloseButton } from "@utils/modal";
 
 export function VencordDonorModal() {
     const modalKey = openModal(props => (
@@ -162,6 +162,48 @@ export function EquicordTranslatorModal() {
                         <TranslateButton />
                     </Flex>
                 </ModalFooter>
+            </ModalRoot>
+        </ErrorBoundary>
+    ));
+}
+
+export function GenericBadgeModal(badge: any, provider: string) {
+    const modalKey = openModal(props => (
+        <ErrorBoundary noop onError={() => closeModal(modalKey)}>
+            <ModalRoot {...props}>
+                <ModalHeader>
+                    <HeadingPrimary
+                        style={{
+                            width: "100%",
+                            textAlign: "center",
+                            margin: 0
+                        }}
+                    >
+                        <Flex justifyContent="center" alignItems="center" gap="0.5em">
+                            <Heart />
+                            {provider} Badge
+                        </Flex>
+                    </HeadingPrimary>
+                    <ModalCloseButton onClick={() => closeModal(modalKey)} />
+                </ModalHeader>
+                <ModalContent>
+                    <Flex style={{ margin: "20px 0", justifyContent: "center" }}>
+                        <img
+                            role="presentation"
+                            src={badge.iconSrc || badge.icon || badge.badge}
+                            alt=""
+                            style={{ margin: "auto", width: 64, height: 64, objectFit: "contain" }}
+                        />
+                    </Flex>
+                    <div style={{ padding: "1em", textAlign: "left" }}>
+                        <Paragraph>
+                            {badge.description || badge.tooltip || badge.placeholder || "No description provided."}
+                        </Paragraph>
+                        <Paragraph className={Margins.top20}>
+                            This badge is provided by {provider}.
+                        </Paragraph>
+                    </div>
+                </ModalContent>
             </ModalRoot>
         </ErrorBoundary>
     ));

@@ -1,4 +1,4 @@
-﻿
+
 
 import "./styles.css";
 import "./FIGMAUI/style.css";
@@ -209,6 +209,7 @@ function VoiceMessageModal({ modalProps }: { modalProps: any; }) {
 
         const audioContext = new AudioContext();
         const audioBuffer = await audioContext.decodeAudioData(await blob.arrayBuffer());
+        audioContext.close();
 
         return {
             waveform: generateWaveform(audioBuffer),

@@ -15082,5 +15082,4241 @@
     "es": "Evitar que Krisp se cargue",
     "ru": "Запретить загрузку Krisp",
     "zh": "防止 Krisp 加载"
+  },
+  "A single call was long enough to cause a visible stutter.": {
+    "fr": "Un seul appel était suffisamment long pour provoquer un bégaiement visible.",
+    "es": "Una sola llamada fue suficiente para provocar un tartamudeo visible.",
+    "ru": "Один звонок был достаточно длинным, чтобы вызвать заметное заикание.",
+    "zh": "一次通话的时间就足以导致明显的卡顿。"
+  },
+  "Activity": {
+    "fr": "Activité",
+    "es": "Actividad",
+    "ru": "Активность",
+    "zh": "活动"
+  },
+  "Add Context Menu": {
+    "fr": "Ajouter un menu contextuel",
+    "es": "Agregar menú contextual",
+    "ru": "Добавить контекстное меню",
+    "zh": "添加上下文菜单"
+  },
+  "Add a Surveillance toggle to user context menus.": {
+    "fr": "Ajoutez une bascule de surveillance aux menus contextuels de l'utilisateur.",
+    "es": "Agregue un interruptor de Vigilancia a los menús contextuales del usuario.",
+    "ru": "Добавьте переключатель «Наблюдение» в контекстные меню пользователя.",
+    "zh": "将监视切换添加到用户上下文菜单。"
+  },
+  "Add a space after the mention once inserted": {
+    "fr": "Ajouter un espace après la mention une fois insérée",
+    "es": "Añade un espacio después de la mención una vez insertada.",
+    "ru": "Добавьте пробел после вставленного упоминания.",
+    "zh": "插入后在提及后添加一个空格"
+  },
+  "Add up to 35% random variation to the Spotify lyrics update delay.": {
+    "fr": "Ajoutez jusqu'à 35 % de variation aléatoire au délai de mise à jour des paroles Spotify.",
+    "es": "Agregue hasta un 35% de variación aleatoria al retraso en la actualización de las letras de Spotify.",
+    "ru": "Добавьте до 35 % случайных изменений к задержке обновления текстов песен Spotify.",
+    "zh": "为 Spotify 歌词更新延迟添加高达 35% 的随机变化。"
+  },
+  "Adds a Dynamic Island for Spotify, SoundCord, calls, screen sharing, and notifications.": {
+    "fr": "Ajoute un Dynamic Island pour Spotify, SoundCord, les appels, le partage d'écran et les notifications.",
+    "es": "Agrega una isla dinámica para Spotify, SoundCord, llamadas, pantalla compartida y notificaciones.",
+    "ru": "Добавляет динамический остров для Spotify, SoundCord, звонков, совместного использования экрана и уведомлений.",
+    "zh": "添加了用于 Spotify、SoundCord、通话、屏幕共享和通知的动态岛。"
+  },
+  "Adds a local live event dashboard for selected users and servers.": {
+    "fr": "Ajoute un tableau de bord d'événements locaux en direct pour les utilisateurs et serveurs sélectionnés.",
+    "es": "Agrega un panel de eventos en vivo local para usuarios y servidores seleccionados.",
+    "ru": "Добавляет локальную панель мониторинга событий в реальном времени для выбранных пользователей и серверов.",
+    "zh": "为选定的用户和服务器添加本地实时事件仪表板。"
+  },
+  "Adds up still-active resources created by the plugin, such as intervals, pending timeouts, animation frames, and listeners.": {
+    "fr": "Additionne les ressources toujours actives créées par le plugin, telles que les intervalles, les délais d'attente en attente, les images d'animation et les auditeurs.",
+    "es": "Agrega recursos aún activos creados por el complemento, como intervalos, tiempos de espera pendientes, fotogramas de animación y oyentes.",
+    "ru": "Добавляет все еще активные ресурсы, созданные плагином, такие как интервалы, ожидающие тайм-ауты, кадры анимации и прослушиватели.",
+    "zh": "添加插件创建的仍然活动的资源，例如间隔、挂起的超时、动画帧和侦听器。"
+  },
+  "Allows you to quickly set any image as your profile picture or banner from the context menu.": {
+    "fr": "Vous permet de définir rapidement n’importe quelle image comme photo de profil ou bannière à partir du menu contextuel.",
+    "es": "Le permite configurar rápidamente cualquier imagen como su foto de perfil o banner desde el menú contextual.",
+    "ru": "Позволяет быстро установить любое изображение в качестве аватарки или баннера из контекстного меню.",
+    "zh": "允许您从上下文菜单快速将任何图像设置为您的个人资料图片或横幅。"
+  },
+  "Allows you to save and load profile backups, including global name, pfp, banner, status, nitro colors and bio.": {
+    "fr": "Vous permet d'enregistrer et de charger des sauvegardes de profil, y compris le nom global, le pfp, la bannière, le statut, les couleurs nitro et la bio.",
+    "es": "Le permite guardar y cargar copias de seguridad de perfiles, incluido el nombre global, pfp, banner, estado, colores nitro y biografía.",
+    "ru": "Позволяет сохранять и загружать резервные копии профиля, включая глобальное имя, PFP, баннер, статус, нитро-цвета и биографию.",
+    "zh": "允许您保存和加载配置文件备份，包括全局名称、pfp、横幅、状态、硝基颜色和简介。"
+  },
+  "Allows you to save users with profile backups and a reason, directly from context menus.": {
+    "fr": "Vous permet de sauvegarder les utilisateurs avec des sauvegardes de profil et un motif, directement depuis les menus contextuels.",
+    "es": "Le permite guardar usuarios con copias de seguridad del perfil y un motivo, directamente desde los menús contextuales.",
+    "ru": "Позволяет сохранять пользователей с резервными копиями профиля и причиной прямо из контекстного меню.",
+    "zh": "允许您直接从上下文菜单保存用户的配置文件备份和原因。"
+  },
+  "Always lock on startup": {
+    "fr": "Toujours verrouiller au démarrage",
+    "es": "Bloquear siempre al iniciar",
+    "ru": "Всегда блокировать при запуске",
+    "zh": "始终锁定启动"
+  },
+  "An internal score that combines CPU time, slow spikes, slow calls, async time, heap growth, and active resources. The higher it is, the more the plugin deserves attention.": {
+    "fr": "Un score interne qui combine le temps CPU, les pics de lenteur, les appels lents, le temps asynchrone, la croissance du tas et les ressources actives. Plus il est élevé, plus le plugin mérite qu’on s’y intéresse.",
+    "es": "Una puntuación interna que combina tiempo de CPU, picos lentos, llamadas lentas, tiempo asíncrono, crecimiento del montón y recursos activos. Cuanto más alto sea, más atención merece el complemento.",
+    "ru": "Внутренняя оценка, которая объединяет время ЦП, медленные пики, медленные вызовы, асинхронное время, рост кучи и активные ресурсы. Чем он выше, тем большего внимания заслуживает плагин.",
+    "zh": "综合了 CPU 时间、慢速峰值、慢速调用、异步时间、堆增长和活动资源的内部分数。它越高，该插件就越值得关注。"
+  },
+  "At least one call exceeded the configured slow call threshold.": {
+    "fr": "Au moins un appel a dépassé le seuil d'appel lent configuré.",
+    "es": "Al menos una llamada superó el umbral de llamada lenta configurado.",
+    "ru": "По крайней мере один вызов превысил настроенный порог медленного вызова.",
+    "zh": "至少有一个呼叫超出了配置的慢速呼叫阈值。"
+  },
+  "Auto-lock after being away for": {
+    "fr": "Verrouillage automatique après une absence",
+    "es": "Bloqueo automático después de estar ausente durante",
+    "ru": "Автоблокировка после отсутствия",
+    "zh": "离开一段时间后自动锁定"
+  },
+  "Autolock Seconds": {
+    "fr": "Secondes de verrouillage automatique",
+    "es": "Segundos de bloqueo automático",
+    "ru": "Автоблокировка секунд",
+    "zh": "自动锁定秒数"
+  },
+  "Automatically claim tickets by clicking a button on the bot's first message in a ticket channel.": {
+    "fr": "Réclamez automatiquement des tickets en cliquant sur un bouton dans le premier message du bot dans un canal de ticket.",
+    "es": "Reclame boletos automáticamente haciendo clic en un botón en el primer mensaje del bot en un canal de boletos.",
+    "ru": "Автоматически получайте билеты, нажав кнопку в первом сообщении бота в канале заявок.",
+    "zh": "通过单击工单通道中机器人第一条消息上的按钮，自动领取工单。"
+  },
+  "Automatically rotates through custom status phrases and emojis at a configurable interval.": {
+    "fr": "Tourne automatiquement entre les phrases d'état personnalisées et les emojis à un intervalle configurable.",
+    "es": "Gira automáticamente entre frases de estado personalizadas y emojis en un intervalo configurable.",
+    "ru": "Автоматически чередуется пользовательские статусные фразы и смайлы с настраиваемым интервалом.",
+    "zh": "以可配置的时间间隔自动轮换自定义状态短语和表情符号。"
+  },
+  "Callback time that counts as a slow call.": {
+    "fr": "Temps de rappel qui compte comme un appel lent.",
+    "es": "Tiempo de devolución de llamada que cuenta como una llamada lenta.",
+    "ru": "Время обратного вызова, которое считается медленным вызовом.",
+    "zh": "回调时间算作慢速调用。"
+  },
+  "Capture Message Content": {
+    "fr": "Capturer le contenu du message",
+    "es": "Capturar contenido del mensaje",
+    "ru": "Захват содержимого сообщения",
+    "zh": "捕获消息内容"
+  },
+  "Choose the Dynamic Island color.": {
+    "fr": "Choisissez la couleur Dynamic Island.",
+    "es": "Elija el color de la isla dinámica.",
+    "ru": "Выберите цвет динамического острова.",
+    "zh": "选择动态岛颜色。"
+  },
+  "Client plugin for arRPC to enable RPC on Discord Web (experimental)": {
+    "fr": "Plugin client pour arRPC pour activer RPC sur Discord Web (expérimental)",
+    "es": "Complemento de cliente para arRPC para habilitar RPC en Discord Web (experimental)",
+    "ru": "Клиентский плагин для arRPC для включения RPC в Discord Web (экспериментальный)",
+    "zh": "arRPC 客户端插件，用于在 Discord Web 上启用 RPC（实验性）"
+  },
+  "ClientDiagnostics": {
+    "fr": "Diagnostic client",
+    "es": "Diagnóstico del cliente",
+    "ru": "КлиентДиагностика",
+    "zh": "客户端诊断"
+  },
+  "Code Type": {
+    "fr": "Type de code",
+    "es": "Tipo de código",
+    "ru": "Тип кода",
+    "zh": "代码类型"
+  },
+  "Compares the plugin's observed heap growth with the JavaScript heap currently in use.": {
+    "fr": "Compare la croissance du tas observée du plugin avec le tas JavaScript actuellement utilisé.",
+    "es": "Compara el crecimiento del montón observado del complemento con el montón de JavaScript actualmente en uso.",
+    "ru": "Сравнивает наблюдаемый рост кучи плагина с кучей JavaScript, используемой в данный момент.",
+    "zh": "将插件观察到的堆增长与当前使用的 JavaScript 堆进行比较。"
+  },
+  "Component Props": {
+    "fr": "Accessoires de composants",
+    "es": "Accesorios de componentes",
+    "ru": "Реквизит компонента",
+    "zh": "组件道具"
+  },
+  "Controls the default sorting in the diagnostics table.": {
+    "fr": "Contrôle le tri par défaut dans la table de diagnostic.",
+    "es": "Controla la clasificación predeterminada en la tabla de diagnóstico.",
+    "ru": "Управляет сортировкой по умолчанию в таблице диагностики.",
+    "zh": "控制诊断表中的默认排序。"
+  },
+  "Counts event listeners registered while the plugin was running measured code.": {
+    "fr": "Compte les écouteurs d'événements enregistrés pendant que le plugin exécutait le code mesuré.",
+    "es": "Cuenta los oyentes de eventos registrados mientras el complemento ejecutaba el código medido.",
+    "ru": "Подсчитывает прослушиватели событий, зарегистрированные во время выполнения измеряемого кода подключаемым модулем.",
+    "zh": "计算插件运行测量代码时注册的事件侦听器的数量。"
+  },
+  "Counts how many calls passed the slow call threshold configured in the plugin settings.": {
+    "fr": "Compte le nombre d'appels qui ont dépassé le seuil d'appel lent configuré dans les paramètres du plugin.",
+    "es": "Cuenta cuántas llamadas superaron el umbral de llamadas lentas configurado en la configuración del complemento.",
+    "ru": "Подсчитывает, сколько вызовов превысило порог медленного вызова, настроенный в настройках плагина.",
+    "zh": "计算有多少调用通过了插件设置中配置的慢速调用阈值。"
+  },
+  "Custom Status": {
+    "fr": "Statut personnalisé",
+    "es": "Estado personalizado",
+    "ru": "Пользовательский статус",
+    "zh": "自定义状态"
+  },
+  "Custom status phrases, one per line.": {
+    "fr": "Phrases de statut personnalisées, une par ligne.",
+    "es": "Frases de estado personalizadas, una por línea.",
+    "ru": "Пользовательские статусные фразы, по одной в строке.",
+    "zh": "自定义状态短语，每行一个。"
+  },
+  "Discord server IDs to monitor from live visible events.": {
+    "fr": "ID de serveur Discord à surveiller à partir des événements visibles en direct.",
+    "es": "ID de servidor de Discord para monitorear desde eventos visibles en vivo.",
+    "ru": "Идентификаторы серверов Discord для мониторинга видимых событий в реальном времени.",
+    "zh": "通过实时可见事件监控的不一致服务器 ID。"
+  },
+  "Discord user IDs to monitor from live visible events.": {
+    "fr": "ID d'utilisateur Discord à surveiller à partir des événements visibles en direct.",
+    "es": "ID de usuario de Discord para monitorear desde eventos visibles en vivo.",
+    "ru": "Идентификаторы пользователей Discord для отслеживания видимых событий в реальном времени.",
+    "zh": "不一致的用户 ID 可以从实时可见事件中进行监控。"
+  },
+  "Double-click a user ID you just typed in the chat box to instantly turn it into a <@mention>.": {
+    "fr": "Double-cliquez sur un identifiant utilisateur que vous venez de saisir dans la zone de discussion pour le transformer instantanément en <@mention>.",
+    "es": "Haga doble clic en una ID de usuario que acaba de escribir en el cuadro de chat para convertirla instantáneamente en una <@mención>.",
+    "ru": "Дважды щелкните идентификатор пользователя, который вы только что ввели в окно чата, чтобы мгновенно превратить его в <@упоминание>.",
+    "zh": "双击您刚刚在聊天框中输入的用户 ID，立即将其变成 <@mention>。"
+  },
+  "DynamicIslande": {
+    "fr": "DynamiqueIslande",
+    "es": "Isla Dinámica",
+    "ru": "ДинамическийОстров",
+    "zh": "动态岛"
+  },
+  "Emojis": {
+    "fr": "Émojis",
+    "es": "emojis",
+    "ru": "смайлики",
+    "zh": "表情符号"
+  },
+  "Enable Dynamic Island": {
+    "fr": "Activer l'îlot dynamique",
+    "es": "Habilitar isla dinámica",
+    "ru": "Включить динамический остров",
+    "zh": "启用动态岛"
+  },
+  "Enable Dynamic Island for SoundCord": {
+    "fr": "Activer Dynamic Island pour SoundCord",
+    "es": "Habilitar isla dinámica para SoundCord",
+    "ru": "Включить динамический остров для SoundCord",
+    "zh": "为 SoundCord 启用动态岛"
+  },
+  "FastPFP": {
+    "fr": "FastPFP",
+    "es": "RápidoPFP",
+    "ru": "ФастПФП",
+    "zh": "快速PFP"
+  },
+  "FastPing": {
+    "fr": "Ping rapide",
+    "es": "ping rápido",
+    "ru": "ФастПинг",
+    "zh": "快速Ping"
+  },
+  "Frame-bound callbacks can directly affect client smoothness.": {
+    "fr": "Les rappels liés aux trames peuvent affecter directement la fluidité du client.",
+    "es": "Las devoluciones de llamadas vinculadas a marcos pueden afectar directamente la fluidez del cliente.",
+    "ru": "Обратные вызовы с привязкой к кадру могут напрямую влиять на плавность работы клиента.",
+    "zh": "帧绑定回调可以直接影响客户端的流畅度。"
+  },
+  "Give configured phrases priority over Spotify lyrics while music is playing.": {
+    "fr": "Donnez la priorité aux phrases configurées sur les paroles Spotify pendant la lecture de la musique.",
+    "es": "Da prioridad a las frases configuradas sobre las letras de Spotify mientras se reproduce música.",
+    "ru": "Дайте настроенным фразам приоритет над текстами песен Spotify во время воспроизведения музыки.",
+    "zh": "播放音乐时，配置的短语优先于 Spotify 歌词。"
+  },
+  "Hide Notifications": {
+    "fr": "Masquer les notifications",
+    "es": "Ocultar notificaciones",
+    "ru": "Скрыть уведомления",
+    "zh": "隐藏通知"
+  },
+  "Hide notification content while locked": {
+    "fr": "Masquer le contenu des notifications lorsque verrouillé",
+    "es": "Ocultar el contenido de las notificaciones mientras está bloqueado",
+    "ru": "Скрыть содержимое уведомлений, когда они заблокированы",
+    "zh": "锁定时隐藏通知内容"
+  },
+  "Highlight Buttons": {
+    "fr": "Boutons de surbrillance",
+    "es": "Botones resaltados",
+    "ru": "Кнопки выделения",
+    "zh": "突出显示按钮"
+  },
+  "Highlight number buttons when typing the passcode from the keyboard": {
+    "fr": "Mettez en surbrillance les boutons numériques lorsque vous tapez le code d'accès à partir du clavier",
+    "es": "Resalte los botones numéricos al escribir la contraseña desde el teclado",
+    "ru": "Выделение цифровых кнопок при вводе пароля с клавиатуры",
+    "zh": "从键盘输入密码时突出显示数字按钮"
+  },
+  "How often the diagnostics page refreshes.": {
+    "fr": "À quelle fréquence la page de diagnostics est actualisée.",
+    "es": "Con qué frecuencia se actualiza la página de diagnóstico.",
+    "ru": "Как часто обновляется страница диагностики.",
+    "zh": "诊断页面刷新的频率。"
+  },
+  "Humanize Spotify Lyrics Delay": {
+    "fr": "Humaniser le délai des paroles Spotify",
+    "es": "Humanizar el retraso de las letras de Spotify",
+    "ru": "Очеловечить Spotify Lyrics Задержка",
+    "zh": "Humanize Spotify 歌词延迟"
+  },
+  "Ignore bot accounts while logging user activity.": {
+    "fr": "Ignorez les comptes de robots lors de la journalisation de l'activité des utilisateurs.",
+    "es": "Ignore las cuentas de bot mientras registra la actividad del usuario.",
+    "ru": "Игнорируйте учетные записи ботов при регистрации активности пользователей.",
+    "zh": "记录用户活动时忽略机器人帐户。"
+  },
+  "Import File": {
+    "fr": "Importer un fichier",
+    "es": "Importar archivo",
+    "ru": "Импортировать файл",
+    "zh": "导入文件"
+  },
+  "Import phrases from a TXT file, one per line.": {
+    "fr": "Importez des phrases à partir d’un fichier TXT, une par ligne.",
+    "es": "Importa frases desde un archivo TXT, una por línea.",
+    "ru": "Импортируйте фразы из файла TXT, по одной в строке.",
+    "zh": "从 TXT 文件导入短语，每行一个。"
+  },
+  "In the monitor, this compares the plugin CPU time with the time elapsed since reset. It estimates the extra observed work.": {
+    "fr": "Sur le moniteur, cela compare le temps CPU du plugin avec le temps écoulé depuis la réinitialisation. Il estime le travail supplémentaire observé.",
+    "es": "En el monitor, esto compara el tiempo de CPU del complemento con el tiempo transcurrido desde el reinicio. Estima el trabajo extra observado.",
+    "ru": "В мониторе это сравнивает время процессора плагина со временем, прошедшим с момента сброса. Он оценивает дополнительную наблюдаемую работу.",
+    "zh": "在监视器中，这会将插件 CPU 时间与重置后经过的时间进行比较。它估计额外观察到的工作。"
+  },
+  "Include disabled plugins in the table.": {
+    "fr": "Incluez les plugins désactivés dans le tableau.",
+    "es": "Incluya complementos deshabilitados en la tabla.",
+    "ru": "Включите отключенные плагины в таблицу.",
+    "zh": "在表中包括禁用的插件。"
+  },
+  "Include internal API plugins in the table.": {
+    "fr": "Incluez les plugins API internes dans le tableau.",
+    "es": "Incluya complementos API internos en la tabla.",
+    "ru": "Включите в таблицу внутренние плагины API.",
+    "zh": "在表中包括内部 API 插件。"
+  },
+  "Include message previews in local logs.": {
+    "fr": "Incluez des aperçus des messages dans les journaux locaux.",
+    "es": "Incluya vistas previas de mensajes en registros locales.",
+    "ru": "Включите предварительный просмотр сообщений в локальные журналы.",
+    "zh": "在本地日志中包含消息预览。"
+  },
+  "Include your own account if its ID is in the target list.": {
+    "fr": "Incluez votre propre compte si son identifiant figure dans la liste des cibles.",
+    "es": "Incluya su propia cuenta si su ID está en la lista de objetivos.",
+    "ru": "Включите свою собственную учетную запись, если ее идентификатор есть в целевом списке.",
+    "zh": "如果您自己的帐户 ID 在目标列表中，请包括您自己的帐户。"
+  },
+  "Installer": {
+    "fr": "Installateur",
+    "es": "Instalador",
+    "ru": "Установщик",
+    "zh": "安装人员"
+  },
+  "Installs and reverts the Discord stereo voice module from selected method sources.": {
+    "fr": "Installe et rétablit le module vocal stéréo Discord à partir des sources de méthode sélectionnées.",
+    "es": "Instala y revierte el módulo de voz estéreo de Discord de fuentes de métodos seleccionadas.",
+    "ru": "Устанавливает и восстанавливает стереофонический голосовой модуль Discord из выбранных источников метода.",
+    "zh": "从选定的方法源安装并恢复 Discord 立体声语音模块。"
+  },
+  "Intervals keep running code while the plugin remains active.": {
+    "fr": "Les intervalles continuent d'exécuter du code pendant que le plugin reste actif.",
+    "es": "Los intervalos siguen ejecutando código mientras el complemento permanece activo.",
+    "ru": "Интервалы продолжают выполнять код, пока плагин остается активным.",
+    "zh": "当插件保持活动状态时，间隔会继续运行代码。"
+  },
+  "Island Color": {
+    "fr": "Couleur de l'île",
+    "es": "Color de la isla",
+    "ru": "Цвет острова",
+    "zh": "岛屿颜色"
+  },
+  "Keep Island Visible": {
+    "fr": "Gardez l'île visible",
+    "es": "Mantenga la isla visible",
+    "ru": "Держите остров видимым",
+    "zh": "保持岛屿可见"
+  },
+  "Keep the Dynamic Island visible when no activity is active.": {
+    "fr": "Gardez l'îlot dynamique visible lorsqu'aucune activité n'est active.",
+    "es": "Mantenga la isla dinámica visible cuando no haya actividad activa.",
+    "ru": "Держите динамический остров видимым, когда не происходит никаких действий.",
+    "zh": "当没有活动时，保持动态岛可见。"
+  },
+  "Keybind to lock Discord (e.g. control+l)": {
+    "fr": "Combinaison de touches pour verrouiller Discord (par exemple, contrôle+l)",
+    "es": "Combinación de teclas para bloquear Discord (por ejemplo, control+l)",
+    "ru": "Привязка клавиш для блокировки Discord (например, control+l)",
+    "zh": "按键绑定以锁定 Discord（例如 control+l）"
+  },
+  "Lag Notifications": {
+    "fr": "Notifications de décalage",
+    "es": "Notificaciones de retraso",
+    "ru": "Уведомления о задержке",
+    "zh": "滞后通知"
+  },
+  "Lock On Startup": {
+    "fr": "Verrouiller au démarrage",
+    "es": "Bloquear al iniciar",
+    "ru": "Блокировка при запуске",
+    "zh": "锁定启动"
+  },
+  "Log Activities": {
+    "fr": "Activités de journal",
+    "es": "Actividades de registro",
+    "ru": "Журнал действий",
+    "zh": "记录活动"
+  },
+  "Log Member Updates": {
+    "fr": "Consigner les mises à jour des membres",
+    "es": "Registrar actualizaciones de miembros",
+    "ru": "Регистрация обновлений участников",
+    "zh": "记录会员更新"
+  },
+  "Log Message Changes": {
+    "fr": "Consigner les modifications des messages",
+    "es": "Registrar cambios de mensajes",
+    "ru": "Регистрация изменений сообщений",
+    "zh": "日志消息更改"
+  },
+  "Log Messages": {
+    "fr": "Messages du journal",
+    "es": "Mensajes de registro",
+    "ru": "Журнал сообщений",
+    "zh": "日志消息"
+  },
+  "Log Reactions": {
+    "fr": "Consigner les réactions",
+    "es": "Registrar reacciones",
+    "ru": "Записывать реакции",
+    "zh": "记录反应"
+  },
+  "Log Status": {
+    "fr": "Statut du journal",
+    "es": "Estado de registro",
+    "ru": "Статус журнала",
+    "zh": "日志状态"
+  },
+  "Log Typing": {
+    "fr": "Saisie de journaux",
+    "es": "Escritura de registros",
+    "ru": "Ввод журнала",
+    "zh": "日志输入"
+  },
+  "Log Voice": {
+    "fr": "Journaliser la voix",
+    "es": "Registrar voz",
+    "ru": "Записать голос",
+    "zh": "记录语音"
+  },
+  "Log activity starts, stops, and updates.": {
+    "fr": "L’activité du journal démarre, s’arrête et se met à jour.",
+    "es": "La actividad de registro se inicia, se detiene y se actualiza.",
+    "ru": "Запись активности начинается, останавливается и обновляется.",
+    "zh": "日志活动开始、停止和更新。"
+  },
+  "Log edits and deletes for messages seen during this session.": {
+    "fr": "Consigner les modifications et les suppressions des messages vus au cours de cette session.",
+    "es": "Registra las ediciones y eliminaciones de los mensajes vistos durante esta sesión.",
+    "ru": "Записывать изменения и удаления сообщений, просмотренных во время этого сеанса.",
+    "zh": "记录在此会话期间看到的消息的编辑和删除。"
+  },
+  "Log live messages from monitored users.": {
+    "fr": "Enregistrez les messages en direct des utilisateurs surveillés.",
+    "es": "Registre mensajes en vivo de usuarios monitoreados.",
+    "ru": "Записывайте живые сообщения от отслеживаемых пользователей.",
+    "zh": "记录来自受监控用户的实时消息。"
+  },
+  "Log live reaction adds and removals.": {
+    "fr": "Enregistrez les ajouts et les suppressions de réactions en direct.",
+    "es": "Registre reacciones en vivo adiciones y eliminaciones.",
+    "ru": "Записывайте живые реакции на добавление и удаление.",
+    "zh": "记录实时反应添加和删除。"
+  },
+  "Log online, idle, dnd, and offline transitions.": {
+    "fr": "Enregistrez les transitions en ligne, inactive, DND et hors ligne.",
+    "es": "Registre transiciones en línea, inactivas, dnd y fuera de línea.",
+    "ru": "Регистрируйте переходы в режиме онлайн, в режиме ожидания, в режиме «Не беспокоить» и в автономном режиме.",
+    "zh": "记录在线、空闲、dnd 和离线转换。"
+  },
+  "Log server member update events.": {
+    "fr": "Enregistrez les événements de mise à jour des membres du serveur.",
+    "es": "Registrar eventos de actualización de miembros del servidor.",
+    "ru": "Записывать события обновления участников сервера.",
+    "zh": "记录服务器成员更新事件。"
+  },
+  "Log typing signals with a short cooldown.": {
+    "fr": "Enregistrez les signaux de frappe avec un court temps de recharge.",
+    "es": "Registra señales de escritura con un breve tiempo de reutilización.",
+    "ru": "Сигналы ввода журнала с коротким временем восстановления.",
+    "zh": "记录冷却时间短的输入信号。"
+  },
+  "Log voice joins, leaves, moves, and state changes.": {
+    "fr": "Enregistrez les jointures, les sorties, les déplacements et les changements d'état par la voix.",
+    "es": "Registre las uniones, salidas, movimientos y cambios de estado de la voz.",
+    "ru": "Записывать голосовые присоединения, уходы, перемещения и изменения состояний.",
+    "zh": "记录语音加入、离开、移动和状态更改。"
+  },
+  "Many listeners can increase work on frequent events.": {
+    "fr": "De nombreux auditeurs peuvent intensifier leur travail sur des événements fréquents.",
+    "es": "Muchos oyentes pueden aumentar el trabajo en eventos frecuentes.",
+    "ru": "Многие слушатели могут увеличить нагрузку на частые мероприятия.",
+    "zh": "许多听众可以增加对频繁事件的处理。"
+  },
+  "Many scheduled timeouts can create bursts of work later.": {
+    "fr": "De nombreux délais d'attente planifiés peuvent créer des rafales de travail ultérieures.",
+    "es": "Muchos tiempos de espera programados pueden generar ráfagas de trabajo más adelante.",
+    "ru": "Многие запланированные тайм-ауты могут привести к всплескам работы позже.",
+    "zh": "许多计划的超时可能会导致以后工作量激增。"
+  },
+  "Max Events": {
+    "fr": "Nombre maximum d'événements",
+    "es": "Eventos máximos",
+    "ru": "Макс. событий",
+    "zh": "最大事件数"
+  },
+  "Maximum number of local events to keep.": {
+    "fr": "Nombre maximum d'événements locaux à conserver.",
+    "es": "Número máximo de eventos locales a conservar.",
+    "ru": "Максимальное количество локальных событий, которые можно сохранить.",
+    "zh": "要保留的本地事件的最大数量。"
+  },
+  "Measure Chromium JS heap deltas when available.": {
+    "fr": "Mesurez les deltas du tas Chromium JS lorsqu’ils sont disponibles.",
+    "es": "Mida los deltas del montón de Chromium JS cuando estén disponibles.",
+    "ru": "Измерьте разницу кучи Chromium JS, если она доступна.",
+    "zh": "测量 Chromium JS 堆增量（如果可用）。"
+  },
+  "Measured callbacks spent a lot of time on the JavaScript thread.": {
+    "fr": "Les rappels mesurés passaient beaucoup de temps sur le fil JavaScript.",
+    "es": "Las devoluciones de llamadas medidas dedicaron mucho tiempo al hilo de JavaScript.",
+    "ru": "Измеренные обратные вызовы тратили много времени на поток JavaScript.",
+    "zh": "测量的回调在 JavaScript 线程上花费了大量时间。"
+  },
+  "Minimum seconds between Spotify lyric status updates. Set to 0 to disable the delay.": {
+    "fr": "Secondes minimales entre les mises à jour du statut des paroles Spotify. Réglez sur 0 pour désactiver le délai.",
+    "es": "Segundos mínimos entre actualizaciones de estado de letras de Spotify. Establezca en 0 para desactivar el retraso.",
+    "ru": "Минимальное количество секунд между обновлениями статуса песни Spotify. Установите значение 0, чтобы отключить задержку.",
+    "zh": "Spotify 歌词状态更新之间的最短秒数。设置为 0 可禁用延迟。"
+  },
+  "Morph Notifications": {
+    "fr": "Notifications de transformation",
+    "es": "Notificaciones de transformación",
+    "ru": "Уведомления о трансформации",
+    "zh": "变形通知"
+  },
+  "Notify Events": {
+    "fr": "Notifier les événements",
+    "es": "Notificar eventos",
+    "ru": "Уведомлять о событиях",
+    "zh": "通知事件"
+  },
+  "PasscodeLock": {
+    "fr": "Verrouillage par mot de passe",
+    "es": "Bloqueo con contraseña",
+    "ru": "Код доступаБлокировка",
+    "zh": "密码锁"
+  },
+  "Presets Manager": {
+    "fr": "Gestionnaire de préréglages",
+    "es": "Administrador de ajustes preestablecidos",
+    "ru": "Менеджер пресетов",
+    "zh": "预设管理器"
+  },
+  "Prioritize Phrases": {
+    "fr": "Prioriser les phrases",
+    "es": "Priorizar frases",
+    "ru": "Расставьте приоритеты в фразах",
+    "zh": "优先考虑短语"
+  },
+  "Profiles plugin callback time, heap deltas, and active resources to find laggy plugins.": {
+    "fr": "Profils du temps de rappel du plugin, des deltas de tas et des ressources actives pour trouver les plugins lents.",
+    "es": "Perfiles del tiempo de devolución de llamada del complemento, deltas del montón y recursos activos para encontrar complementos retrasados.",
+    "ru": "Профилирует время обратного вызова плагина, разницу в куче и активные ресурсы для поиска запаздывающих плагинов.",
+    "zh": "分析插件回调时间、堆增量和活动资源以查找滞后插件。"
+  },
+  "Protect Discord with a passcode.": {
+    "fr": "Protégez Discord avec un mot de passe.",
+    "es": "Protege Discord con una contraseña.",
+    "ru": "Защитите Discord с помощью пароля.",
+    "zh": "使用密码保护 Discord。"
+  },
+  "Refresh Ms": {
+    "fr": "Actualiser Mme",
+    "es": "Actualizar Sra.",
+    "ru": "Обновить г-жу",
+    "zh": "刷新女士"
+  },
+  "Rotation Interval": {
+    "fr": "Intervalle de rotation",
+    "es": "Intervalo de rotación",
+    "ru": "Интервал вращения",
+    "zh": "旋转间隔"
+  },
+  "Safe Mode: wait 3–4 seconds before claiming (less suspicious, recommended for shared servers).": {
+    "fr": "Mode sans échec : attendez 3 à 4 secondes avant de réclamer (moins suspect, recommandé pour les serveurs partagés).",
+    "es": "Modo seguro: espere de 3 a 4 segundos antes de reclamar (menos sospechoso, recomendado para servidores compartidos).",
+    "ru": "Безопасный режим: подождите 3–4 секунды, прежде чем подавать заявку (менее подозрительно, рекомендуется для общих серверов).",
+    "zh": "安全模式：在声明之前等待 3-4 秒（不太可疑，建议用于共享服务器）。"
+  },
+  "SaveProfile": {
+    "fr": "Enregistrer le profil",
+    "es": "Guardar perfil",
+    "ru": "Сохранить профиль",
+    "zh": "保存配置文件"
+  },
+  "SaveThem": {
+    "fr": "Enregistrez-les",
+    "es": "Sálvalos",
+    "ru": "Сохранить их",
+    "zh": "拯救他们"
+  },
+  "Saves encrypted message bookmarks from the message context menu.": {
+    "fr": "Enregistre les signets de message cryptés à partir du menu contextuel du message.",
+    "es": "Guarda marcadores de mensajes cifrados desde el menú contextual del mensaje.",
+    "ru": "Сохраняет закладки зашифрованных сообщений из контекстного меню сообщения.",
+    "zh": "从消息上下文菜单保存加密的消息书签。"
+  },
+  "Seconds between each custom status change.": {
+    "fr": "Secondes entre chaque changement de statut personnalisé.",
+    "es": "Segundos entre cada cambio de estado personalizado.",
+    "ru": "Секунды между каждым изменением пользовательского статуса.",
+    "zh": "每次自定义状态更改之间的秒数。"
+  },
+  "SecureBookmarks": {
+    "fr": "Signets sécurisés",
+    "es": "Marcadores seguros",
+    "ru": "Безопасные закладки",
+    "zh": "安全书签"
+  },
+  "Send a notification when a plugin may make Discord lag.": {
+    "fr": "Envoyez une notification lorsqu'un plugin peut provoquer un décalage sur Discord.",
+    "es": "Envíe una notificación cuando un complemento pueda provocar un retraso en Discord.",
+    "ru": "Отправьте уведомление, когда плагин может привести к зависанию Discord.",
+    "zh": "当插件可能导致 Discord 滞后时发送通知。"
+  },
+  "Send notifications for high signal surveillance events.": {
+    "fr": "Envoyez des notifications pour les événements de surveillance à signal élevé.",
+    "es": "Envíe notificaciones para eventos de vigilancia de señal alta.",
+    "ru": "Отправляйте уведомления о событиях наблюдения с высоким уровнем сигнала.",
+    "zh": "发送高信号监视事件通知。"
+  },
+  "Server Targets": {
+    "fr": "Cibles du serveur",
+    "es": "Destinos del servidor",
+    "ru": "Цели сервера",
+    "zh": "服务器目标"
+  },
+  "Show Api Plugins": {
+    "fr": "Afficher les plugins API",
+    "es": "Mostrar complementos de API",
+    "ru": "Показать плагины API",
+    "zh": "显示 API 插件"
+  },
+  "Show Call Controls": {
+    "fr": "Afficher les contrôles d'appel",
+    "es": "Mostrar controles de llamadas",
+    "ru": "Показать элементы управления вызовами",
+    "zh": "显示通话控制"
+  },
+  "Show Call Participants": {
+    "fr": "Afficher les participants à l'appel",
+    "es": "Mostrar participantes de la llamada",
+    "ru": "Показать участников звонка",
+    "zh": "显示通话参与者"
+  },
+  "Show Disabled": {
+    "fr": "Afficher désactivé",
+    "es": "Mostrar deshabilitado",
+    "ru": "Показать отключено",
+    "zh": "显示已禁用"
+  },
+  "Show Discord call controls in the Dynamic Island.": {
+    "fr": "Afficher les contrôles d’appel Discord dans l’îlot dynamique.",
+    "es": "Muestra los controles de llamadas de Discord en la isla dinámica.",
+    "ru": "Покажите элементы управления вызовами Discord на динамическом острове.",
+    "zh": "在动态岛中显示 Discord 通话控件。"
+  },
+  "Show Participant Buttons": {
+    "fr": "Afficher les boutons des participants",
+    "es": "Mostrar botones de participante",
+    "ru": "Показать кнопки участников",
+    "zh": "显示参与者按钮"
+  },
+  "Show Screen Share Island": {
+    "fr": "Afficher l'îlot de partage d'écran",
+    "es": "Mostrar isla para compartir pantalla",
+    "ru": "Показать остров общего доступа к экрану",
+    "zh": "显示屏幕共享岛"
+  },
+  "Show Sound Cord Controls": {
+    "fr": "Afficher les commandes du cordon audio",
+    "es": "Mostrar controles del cable de sonido",
+    "ru": "Показать элементы управления звуковым шнуром",
+    "zh": "显示声线控制"
+  },
+  "Show Sound Cord Island": {
+    "fr": "Afficher l'îlot du cordon sonore",
+    "es": "Mostrar isla del cordón de sonido",
+    "ru": "Показать остров звукового шнура",
+    "zh": "显示声带岛"
+  },
+  "Show Sound Cord Volume": {
+    "fr": "Afficher le volume du cordon audio",
+    "es": "Mostrar volumen del cable de sonido",
+    "ru": "Показать громкость звукового шнура",
+    "zh": "显示声线音量"
+  },
+  "Show SoundCord activity in the Dynamic Island.": {
+    "fr": "Afficher l’activité SoundCord dans Dynamic Island.",
+    "es": "Muestra la actividad de SoundCord en Dynamic Island.",
+    "ru": "Покажите активность SoundCord на Динамическом острове.",
+    "zh": "显示 Dynamic Island 中的 SoundCord 活动。"
+  },
+  "Show Spotify Island": {
+    "fr": "Afficher l'île Spotify",
+    "es": "Mostrar isla de Spotify",
+    "ru": "Показать остров Spotify",
+    "zh": "显示 Spotify 岛"
+  },
+  "Show Spotify Panel": {
+    "fr": "Afficher le panneau Spotify",
+    "es": "Mostrar panel de Spotify",
+    "ru": "Показать панель Spotify",
+    "zh": "显示 Spotify 面板"
+  },
+  "Show Spotify activity in the Dynamic Island.": {
+    "fr": "Afficher l'activité Spotify dans Dynamic Island.",
+    "es": "Muestra la actividad de Spotify en la Isla Dinámica.",
+    "ru": "Покажите активность Spotify на Динамическом острове.",
+    "zh": "显示动态岛中的 Spotify 活动。"
+  },
+  "Show Voice Island": {
+    "fr": "Afficher l'îlot vocal",
+    "es": "Mostrar isla de voz",
+    "ru": "Показать остров голоса",
+    "zh": "秀声岛"
+  },
+  "Show listening activity status (like Spotify)": {
+    "fr": "Afficher l'état de l'activité d'écoute (comme Spotify)",
+    "es": "Mostrar el estado de la actividad de escucha (como Spotify)",
+    "ru": "Показывать статус активности прослушивания (например, Spotify)",
+    "zh": "显示收听活动状态（如 Spotify）"
+  },
+  "Show main call controls (Mute, Deafen, Disconnect) in the call section.": {
+    "fr": "Afficher les commandes d'appel principales (Mute, Deafen, Disconnect) dans la section d'appel.",
+    "es": "Muestra los controles principales de llamadas (Silenciar, Ensordecer, Desconectar) en la sección de llamadas.",
+    "ru": "Отобразить основные элементы управления вызовом («Отключить звук», «Глухой», «Отключить») в разделе «Вызовы».",
+    "zh": "在通话部分显示主要通话控件（静音、耳聋、断开连接）。"
+  },
+  "Show playback controls (Previous, Play/Pause, Next) in Dynamic Island": {
+    "fr": "Afficher les commandes de lecture (Précédent, Lecture/Pause, Suivant) dans Dynamic Island",
+    "es": "Mostrar controles de reproducción (Anterior, Reproducir/Pausar, Siguiente) en Dynamic Island",
+    "ru": "Показать элементы управления воспроизведением («Предыдущий», «Воспроизведение/Пауза», «Следующий») в Dynamic Island",
+    "zh": "在动态岛中显示播放控件（上一个、播放/暂停、下一个）"
+  },
+  "Show quick action buttons (Mute, Follow, Friend, DM) next to participants.": {
+    "fr": "Afficher les boutons d'action rapide (Muet, Suivre, Ami, DM) à côté des participants.",
+    "es": "Muestra botones de acción rápida (Silenciar, Seguir, Amigo, DM) junto a los participantes.",
+    "ru": "Показывать кнопки быстрых действий («Отключить звук», «Подписаться», «Друг», «DM») рядом с участниками.",
+    "zh": "在参与者旁边显示快速操作按钮（静音、关注、加好友、私信）。"
+  },
+  "Show screen sharing status, timer, and quick stop controls in the Dynamic Island.": {
+    "fr": "Affichez l’état du partage d’écran, la minuterie et les commandes d’arrêt rapide dans Dynamic Island.",
+    "es": "Muestre el estado de uso compartido de pantalla, el temporizador y los controles de parada rápida en Dynamic Island.",
+    "ru": "Отображение статуса совместного использования экрана, таймера и элементов управления быстрой остановкой на динамическом острове.",
+    "zh": "在动态岛中显示屏幕共享状态、计时器和快速停止控件。"
+  },
+  "Show the Spotify player in the Discord user panel.": {
+    "fr": "Affichez le lecteur Spotify dans le panneau utilisateur Discord.",
+    "es": "Muestra el reproductor de Spotify en el panel de usuario de Discord.",
+    "ru": "Покажите проигрыватель Spotify на панели пользователя Discord.",
+    "zh": "在 Discord 用户面板中显示 Spotify 播放器。"
+  },
+  "Show the list of voice call participants.": {
+    "fr": "Afficher la liste des participants à l'appel vocal.",
+    "es": "Muestra la lista de participantes de la llamada de voz.",
+    "ru": "Показать список участников голосового вызова.",
+    "zh": "显示语音通话参与者列表。"
+  },
+  "Show volume slider in Dynamic Island": {
+    "fr": "Afficher le curseur de volume dans Dynamic Island",
+    "es": "Mostrar control deslizante de volumen en Dynamic Island",
+    "ru": "Показать ползунок громкости в Dynamic Island",
+    "zh": "在动态岛中显示音量滑块"
+  },
+  "Show watching activity status": {
+    "fr": "Afficher l'état de l'activité de visionnage",
+    "es": "Mostrar el estado de la actividad de observación",
+    "ru": "Показать статус активности просмотра",
+    "zh": "显示观看活动状态"
+  },
+  "Shows how much extra JavaScript memory was observed during plugin calls. It uses Chromium heap data, so it does not represent the full process RAM.": {
+    "fr": "Affiche la quantité de mémoire JavaScript supplémentaire observée lors des appels de plugin. Il utilise les données du tas Chromium et ne représente donc pas la RAM complète du processus.",
+    "es": "Muestra cuánta memoria JavaScript adicional se observó durante las llamadas al complemento. Utiliza datos del montón de Chromium, por lo que no representa la RAM del proceso completo.",
+    "ru": "Показывает, сколько дополнительной памяти JavaScript было обнаружено во время вызовов плагина. Он использует данные кучи Chromium, поэтому не представляет всю оперативную память процесса.",
+    "zh": "显示在插件调用期间观察到多少额外的 JavaScript 内存。它使用 Chromium 堆数据，因此并不代表完整的进程 RAM。"
+  },
+  "Shows how much of the measured heap growth belongs to the selected plugin.": {
+    "fr": "Affiche la part de la croissance du tas mesurée qui appartient au plugin sélectionné.",
+    "es": "Muestra qué parte del crecimiento del montón medido pertenece al complemento seleccionado.",
+    "ru": "Показывает, какая часть измеренного прироста кучи принадлежит выбранному плагину.",
+    "zh": "显示测量到的堆增长有多少属于所选插件。"
+  },
+  "Shows how much of the measured plugin CPU time belongs to the selected plugin.": {
+    "fr": "Affiche la part du temps CPU du plugin mesuré qui appartient au plugin sélectionné.",
+    "es": "Muestra qué parte del tiempo de CPU del complemento medido pertenece al complemento seleccionado.",
+    "ru": "Показывает, какая часть измеренного процессорного времени плагина принадлежит выбранному плагину.",
+    "zh": "显示测得的插件 CPU 时间中有多少属于所选插件。"
+  },
+  "Shows the plugin surface that consumed the most total time, such as start, flux, interval, command, or context menu.": {
+    "fr": "Affiche la surface du plugin qui a consommé le plus de temps total, comme le démarrage, le flux, l'intervalle, la commande ou le menu contextuel.",
+    "es": "Muestra la superficie del complemento que consumió la mayor cantidad de tiempo total, como inicio, flujo, intervalo, comando o menú contextual.",
+    "ru": "Показывает поверхность плагина, которая потребляла больше всего времени, например запуск, поток, интервал, команду или контекстное меню.",
+    "zh": "显示消耗总时间最多的插件界面，例如开始、通量、间隔、命令或上下文菜单。"
+  },
+  "Slow Call Threshold Ms": {
+    "fr": "Seuil d'appel lent Mme",
+    "es": "Umbral de llamada lenta Sra.",
+    "ru": "Порог медленного вызова Ms",
+    "zh": "慢速呼叫阈值 Ms"
+  },
+  "Some calls were slower than the configured threshold.": {
+    "fr": "Certains appels étaient plus lents que le seuil configuré.",
+    "es": "Algunas llamadas fueron más lentas que el umbral configurado.",
+    "ru": "Некоторые вызовы выполнялись медленнее настроенного порога.",
+    "zh": "某些调用速度慢于配置的阈值。"
+  },
+  "Sort By": {
+    "fr": "Trier par",
+    "es": "Ordenar por",
+    "ru": "Сортировать по",
+    "zh": "排序方式"
+  },
+  "SoundCord": {
+    "fr": "Cordon sonore",
+    "es": "Cable de sonido",
+    "ru": "Звуковой шнур",
+    "zh": "声线"
+  },
+  "Spicetify Installer": {
+    "fr": "Programme d'installation de Spicetify",
+    "es": "Instalador de Spicetify",
+    "ru": "Установщик Spicetify",
+    "zh": "Spicetify 安装程序"
+  },
+  "Spicetify modifies the Spotify desktop client and adds support for themes, extensions, and custom apps. Marketplace is installed automatically.": {
+    "fr": "Spicetify modifie le client de bureau Spotify et ajoute la prise en charge des thèmes, des extensions et des applications personnalisées. Marketplace est installé automatiquement.",
+    "es": "Spicetify modifica el cliente de escritorio de Spotify y agrega soporte para temas, extensiones y aplicaciones personalizadas. Marketplace se instala automáticamente.",
+    "ru": "Spicetify модифицирует настольный клиент Spotify и добавляет поддержку тем, расширений и пользовательских приложений. Маркетплейс устанавливается автоматически.",
+    "zh": "Spicetify 修改了 Spotify 桌面客户端并添加了对主题、扩展和自定义应用程序的支持。市场会自动安装。"
+  },
+  "Spotify Lyrics Update Delay": {
+    "fr": "Retard de mise à jour des paroles Spotify",
+    "es": "Retraso en la actualización de letras de Spotify",
+    "ru": "Задержка обновления текстов песен Spotify",
+    "zh": "Spotify 歌词更新延迟"
+  },
+  "StatusCycler": {
+    "fr": "StatutCycler",
+    "es": "EstadoCiclador",
+    "ru": "СтатусЦиклер",
+    "zh": "状态循环器"
+  },
+  "StereoInstaller": {
+    "fr": "StéréoInstaller",
+    "es": "instalador estéreo",
+    "ru": "Стереоустановщик",
+    "zh": "立体声安装程序"
+  },
+  "Surveillance": {
+    "fr": "Surveillance",
+    "es": "Vigilancia",
+    "ru": "Наблюдение",
+    "zh": "监视"
+  },
+  "Targets": {
+    "fr": "Cibles",
+    "es": "Objetivos",
+    "ru": "Цели",
+    "zh": "目标"
+  },
+  "Temporarily morph the Dynamic Island for direct messages and mentions.": {
+    "fr": "Transformez temporairement l'île dynamique pour les messages directs et les mentions.",
+    "es": "Transforma temporalmente la Isla Dinámica para mensajes directos y menciones.",
+    "ru": "Временно преобразуйте динамический остров для прямых сообщений и упоминаний.",
+    "zh": "暂时改变动态岛的直接消息和提及。"
+  },
+  "The heap delta is large enough to contribute to memory pressure.": {
+    "fr": "Le delta du tas est suffisamment grand pour contribuer à la pression sur la mémoire.",
+    "es": "El delta del montón es lo suficientemente grande como para contribuir a la presión de la memoria.",
+    "ru": "Дельта кучи достаточно велика, чтобы способствовать нехватке памяти.",
+    "zh": "堆增量足够大，足以造成内存压力。"
+  },
+  "The issue appears repeatedly, so it can matter during normal use.": {
+    "fr": "Le problème apparaît à plusieurs reprises et peut donc être important lors d'une utilisation normale.",
+    "es": "El problema aparece repetidamente, por lo que puede ser importante durante el uso normal.",
+    "ru": "Проблема возникает неоднократно, поэтому она может иметь значение при обычном использовании.",
+    "zh": "该问题会反复出现，因此在正常使用过程中可能会很重要。"
+  },
+  "The number of times a measured plugin function was called.": {
+    "fr": "Le nombre de fois qu’une fonction de plugin mesurée a été appelée.",
+    "es": "La cantidad de veces que se llamó a una función de complemento medida.",
+    "ru": "Сколько раз вызывалась измеряемая функция плагина.",
+    "zh": "调用测量的插件函数的次数。"
+  },
+  "The slowest single call observed for that plugin.": {
+    "fr": "L'appel le plus lent observé pour ce plugin.",
+    "es": "La llamada individual más lenta observada para ese complemento.",
+    "ru": "Самый медленный одиночный вызов, наблюдаемый для этого плагина.",
+    "zh": "观察到的该插件最慢的单次调用。"
+  },
+  "The total time measured plugin functions spent on the JavaScript thread since collection started or was reset.": {
+    "fr": "Le temps total mesuré par les fonctions du plugin passé sur le thread JavaScript depuis le démarrage ou la réinitialisation de la collecte.",
+    "es": "El tiempo total medido que las funciones del complemento han pasado en el hilo de JavaScript desde que se inició o se restableció la colección.",
+    "ru": "Общее время, потраченное функциями плагина в потоке JavaScript с момента запуска или сброса сбора данных.",
+    "zh": "自收集开始或重置以来，测量的插件函数在 JavaScript 线程上花费的总时间。"
+  },
+  "This plugin consumed enough callback time to be worth checking.": {
+    "fr": "Ce plugin a consommé suffisamment de temps de rappel pour valoir la peine d'être vérifié.",
+    "es": "Este complemento consumió suficiente tiempo de devolución de llamada como para que valga la pena comprobarlo.",
+    "ru": "Этот плагин потребовал достаточно времени обратного вызова, чтобы его стоило проверить.",
+    "zh": "这个插件消耗了足够的回调时间，值得检查。"
+  },
+  "This plugin has measured samples, but no single signal is very high.": {
+    "fr": "Ce plugin a mesuré des échantillons, mais aucun signal n'est très élevé.",
+    "es": "Este complemento ha medido muestras, pero ninguna señal es muy alta.",
+    "ru": "Этот плагин измерял образцы, но ни один из сигналов не был очень высоким.",
+    "zh": "该插件已测量样本，但没有单个信号很高。"
+  },
+  "This plugin is associated with many observed JavaScript allocations.": {
+    "fr": "Ce plugin est associé à de nombreuses allocations JavaScript observées.",
+    "es": "Este complemento está asociado con muchas asignaciones de JavaScript observadas.",
+    "ru": "Этот плагин связан со многими наблюдаемыми распределениями JavaScript.",
+    "zh": "该插件与许多观察到的 JavaScript 分配相关。"
+  },
+  "This plugin still has runtime listeners registered.": {
+    "fr": "Ce plugin a toujours des écouteurs d'exécution enregistrés.",
+    "es": "Este complemento todavía tiene oyentes de tiempo de ejecución registrados.",
+    "ru": "В этом плагине все еще зарегистрированы прослушиватели времени выполнения.",
+    "zh": "该插件仍然注册了运行时侦听器。"
+  },
+  "Track Memory": {
+    "fr": "Mémoire de suivi",
+    "es": "Memoria de seguimiento",
+    "ru": "Трек памяти",
+    "zh": "轨迹记忆"
+  },
+  "Trailing Space": {
+    "fr": "Espace de fin",
+    "es": "Espacio final",
+    "ru": "Замыкающее пространство",
+    "zh": "尾随空格"
+  },
+  "Type of code": {
+    "fr": "Type de code",
+    "es": "tipo de código",
+    "ru": "Тип кода",
+    "zh": "代码类型"
+  },
+  "Use Spotify Lyrics": {
+    "fr": "Utiliser les paroles de Spotify",
+    "es": "Usar letras de Spotify",
+    "ru": "Используйте тексты песен Spotify",
+    "zh": "使用 Spotify 歌词"
+  },
+  "Use synchronized Spotify lyrics as your custom status while Spotify is playing.": {
+    "fr": "Utilisez les paroles Spotify synchronisées comme statut personnalisé pendant la lecture de Spotify.",
+    "es": "Utilice letras sincronizadas de Spotify como estado personalizado mientras Spotify se reproduce.",
+    "ru": "Используйте синхронизированные тексты песен Spotify в качестве собственного статуса во время воспроизведения Spotify.",
+    "zh": "在 Spotify 播放时，使用同步的 Spotify 歌词作为您的自定义状态。"
+  },
+  "Watch YouTube in Discord. Search, Dynamic Island, Watching Together.": {
+    "fr": "Regardez YouTube dans Discord. Rechercher, Dynamic Island, Regarder ensemble.",
+    "es": "Mira YouTube en Discord. Buscar, Isla dinámica, Mirar juntos.",
+    "ru": "Смотрите YouTube в Discord. Поиск, Динамический остров, Смотрим вместе.",
+    "zh": "在 Discord 中观看 YouTube。搜索，动态岛，一起看。"
+  },
+  "WebRichPresence (arRPC)": {
+    "fr": "WebRichPresence (arRPC)",
+    "es": "WebRichPresence (arRPC)",
+    "ru": "WebRichPresence (arRPC)",
+    "zh": "WebRichPresence (arRPC)"
+  },
+  "Youtube in NightCord": {
+    "fr": "Youtube dans NightCord",
+    "es": "Youtube en NightCord",
+    "ru": "Youtube в NightCord",
+    "zh": "NightCord 中的 YouTube"
+  },
+  "${user.globalName || user.username} saved successfully!": {
+    "fr": "${user.globalName || user.username} enregistré avec succès !",
+    "es": "${usuario.globalName || usuario.nombredeusuario} ¡guardado exitosamente!",
+    "ru": "${user.globalName || user.username} успешно сохранено!",
+    "zh": "${user.globalName || user.username} 保存成功！"
+  },
+  "(edited)": {
+    "fr": "(édité)",
+    "es": "(editado)",
+    "ru": "(отредактировано)",
+    "zh": "（已编辑）"
+  },
+  "1 hour": {
+    "fr": "1 heure",
+    "es": "1 hora",
+    "ru": "1 час",
+    "zh": "1小时"
+  },
+  "1 minute": {
+    "fr": "1 minute",
+    "es": "1 minuto",
+    "ru": "1 минута",
+    "zh": "1分钟"
+  },
+  "1st button": {
+    "fr": "1er bouton",
+    "es": "1er botón",
+    "ru": "1-я кнопка",
+    "zh": "第一个按钮"
+  },
+  "2nd button": {
+    "fr": "2ème bouton",
+    "es": "2do botón",
+    "ru": "2-я кнопка",
+    "zh": "第二个按钮"
+  },
+  "3rd button": {
+    "fr": "3ème bouton",
+    "es": "3er botón",
+    "ru": "3-я кнопка",
+    "zh": "第三个按钮"
+  },
+  "4-Digit Numeric Code": {
+    "fr": "Code numérique à 4 chiffres",
+    "es": "Código numérico de 4 dígitos",
+    "ru": "4-значный цифровой код",
+    "zh": "4 位数字代码"
+  },
+  "4th button": {
+    "fr": "4ème bouton",
+    "es": "4to botón",
+    "ru": "4-я кнопка",
+    "zh": "第四个按钮"
+  },
+  "5 hours": {
+    "fr": "5 heures",
+    "es": "5 horas",
+    "ru": "5 часов",
+    "zh": "5小时"
+  },
+  "5 minutes": {
+    "fr": "5 minutes",
+    "es": "5 minutos",
+    "ru": "5 минут",
+    "zh": "5分钟"
+  },
+  "5th button": {
+    "fr": "5ème bouton",
+    "es": "5to botón",
+    "ru": "5-я кнопка",
+    "zh": "第 5 个按钮"
+  },
+  "6-Digit Numeric Code": {
+    "fr": "Code numérique à 6 chiffres",
+    "es": "Código numérico de 6 dígitos",
+    "ru": "6-значный цифровой код",
+    "zh": "6 位数字代码"
+  },
+  "A reason is required to save a user.": {
+    "fr": "Une raison est requise pour enregistrer un utilisateur.",
+    "es": "Se requiere una razón para salvar a un usuario.",
+    "ru": "Для сохранения пользователя необходима причина.",
+    "zh": "需要一个理由来拯救用户。"
+  },
+  "ACTIVE ACCOUNT": {
+    "fr": "COMPTE ACTIF",
+    "es": "CUENTA ACTIVA",
+    "ru": "АКТИВНЫЙ СЧЕТ",
+    "zh": "活跃账户"
+  },
+  "AMOLED": {
+    "fr": "AMOLED",
+    "es": "AMOLED",
+    "ru": "АМОЛЕД",
+    "zh": "主动式有机发光二极体"
+  },
+  "Account created": {
+    "fr": "Compte créé",
+    "es": "Cuenta creada",
+    "ru": "Аккаунт создан",
+    "zh": "帐户已创建"
+  },
+  "Account creation date": {
+    "fr": "Date de création du compte",
+    "es": "Fecha de creación de la cuenta",
+    "ru": "Дата создания аккаунта",
+    "zh": "帐户创建日期"
+  },
+  "Active Developer": {
+    "fr": "Développeur actif",
+    "es": "Desarrollador activo",
+    "ru": "Активный разработчик",
+    "zh": "活跃开发者"
+  },
+  "Active resources": {
+    "fr": "Ressources actives",
+    "es": "Recursos activos",
+    "ru": "Активные ресурсы",
+    "zh": "活跃资源"
+  },
+  "Add Friend": {
+    "fr": "Ajouter un ami",
+    "es": "Agregar amigo",
+    "ru": "Добавить друга",
+    "zh": "添加好友"
+  },
+  "Add To Banner": {
+    "fr": "Ajouter à la bannière",
+    "es": "Agregar al banner",
+    "ru": "Добавить в баннер",
+    "zh": "添加到横幅"
+  },
+  "Add To PFP": {
+    "fr": "Ajouter au PFP",
+    "es": "Añadir a PFP",
+    "ru": "Добавить в ПФП",
+    "zh": "添加到 PFP"
+  },
+  "Add emoji from Discord": {
+    "fr": "Ajouter des emoji depuis Discord",
+    "es": "Agregar emoji de Discord",
+    "ru": "Добавьте смайлы из Discord",
+    "zh": "添加来自 Discord 的表情符号"
+  },
+  "Add to Surveillance": {
+    "fr": "Ajouter à la surveillance",
+    "es": "Añadir a Vigilancia",
+    "ru": "Добавить в наблюдение",
+    "zh": "添加到监控"
+  },
+  "Add to favorites": {
+    "fr": "Ajouter aux favoris",
+    "es": "Añadir a favoritos",
+    "ru": "Добавить в избранное",
+    "zh": "添加到收藏夹"
+  },
+  "After:": {
+    "fr": "Après :",
+    "es": "Después:",
+    "ru": "После:",
+    "zh": "后："
+  },
+  "All": {
+    "fr": "Tout",
+    "es": "Todos",
+    "ru": "Все",
+    "zh": "全部"
+  },
+  "All Servers": {
+    "fr": "Tous les serveurs",
+    "es": "Todos los servidores",
+    "ru": "Все серверы",
+    "zh": "所有服务器"
+  },
+  "Annulé": {
+    "fr": "Annulé",
+    "es": "anular",
+    "ru": "Аннуле",
+    "zh": "环形"
+  },
+  "Are you sure you want to delete this profile configuration?": {
+    "fr": "Êtes-vous sûr de vouloir supprimer cette configuration de profil ?",
+    "es": "¿Está seguro de que desea eliminar esta configuración de perfil?",
+    "ru": "Вы уверены, что хотите удалить эту конфигурацию профиля?",
+    "zh": "您确定要删除此配置文件配置吗？"
+  },
+  "Are you sure you want to remove ${name} from your saved users list?": {
+    "fr": "Êtes-vous sûr de vouloir supprimer ${name} de votre liste d'utilisateurs enregistrés ?",
+    "es": "¿Estás seguro de que deseas eliminar ${name} de tu lista de usuarios guardados?",
+    "ru": "Вы уверены, что хотите удалить ${name} из списка сохраненных пользователей?",
+    "zh": "您确定要从已保存的用户列表中删除 ${name} 吗？"
+  },
+  "Argent (2 mois)": {
+    "fr": "Argent (2 mois)",
+    "es": "Plata (2 meses)",
+    "ru": "Арджент (2 месяца)",
+    "zh": "银 (2 莫伊)"
+  },
+  "Ask anything!": {
+    "fr": "Demandez n'importe quoi !",
+    "es": "¡Pregunta cualquier cosa!",
+    "ru": "Спросите что угодно!",
+    "zh": "有什么就问吧！"
+  },
+  "Async time": {
+    "fr": "Heure asynchrone",
+    "es": "tiempo asíncrono",
+    "ru": "Асинхронное время",
+    "zh": "异步时间"
+  },
+  "Attach a file": {
+    "fr": "Joindre un fichier",
+    "es": "Adjuntar un archivo",
+    "ru": "Прикрепить файл",
+    "zh": "附上文件"
+  },
+  "Aucun événement": {
+    "fr": "Aucun événement",
+    "es": "Aucun evento",
+    "ru": "Окунь",
+    "zh": "奥昆事件"
+  },
+  "Avatar decoration": {
+    "fr": "Décoration d'avatar",
+    "es": "decoración de avatar",
+    "ru": "Аватар украшение",
+    "zh": "头像装饰"
+  },
+  "Badges": {
+    "fr": "Insignes",
+    "es": "Insignias",
+    "ru": "Значки",
+    "zh": "徽章"
+  },
+  "Banned": {
+    "fr": "Interdit",
+    "es": "Prohibido",
+    "ru": "Запрещено",
+    "zh": "禁止"
+  },
+  "Banner": {
+    "fr": "Bannière",
+    "es": "pancarta",
+    "ru": "Баннер",
+    "zh": "横幅"
+  },
+  "Before:": {
+    "fr": "Avant :",
+    "es": "Antes:",
+    "ru": "До:",
+    "zh": "前："
+  },
+  "Bio": {
+    "fr": "Biographie",
+    "es": "Biografía",
+    "ru": "Био",
+    "zh": "简介"
+  },
+  "Blocked": {
+    "fr": "Bloqué",
+    "es": "Bloqueado",
+    "ru": "Заблокировано",
+    "zh": "被阻止"
+  },
+  "Boost Badge (Server Booster)": {
+    "fr": "Badge Boost (Booster de serveur)",
+    "es": "Insignia de impulso (potenciador del servidor)",
+    "ru": "Значок повышения (усилитель сервера)",
+    "zh": "增强徽章（服务器增强器）"
+  },
+  "Bot embeds": {
+    "fr": "Bot intégré",
+    "es": "Inserciones de bots",
+    "ru": "Бот встраивает",
+    "zh": "机器人嵌入"
+  },
+  "Bronze (1 mois)": {
+    "fr": "Bronze (1 mois)",
+    "es": "Bronce (1 mes)",
+    "ru": "Бронза (1 месяц)",
+    "zh": "青铜 (1 莫伊)"
+  },
+  "Bug Hunter Lvl 1": {
+    "fr": "Chasseur d'insectes niveau 1",
+    "es": "Cazador de insectos nivel 1",
+    "ru": "Охотник за ошибками 1-го уровня",
+    "zh": "虫子猎人 Lvl 1"
+  },
+  "Bug Hunter Lvl 2": {
+    "fr": "Chasseur d'insectes niveau 2",
+    "es": "Cazador de insectos nivel 2",
+    "ru": "Охотник за ошибками 2-го уровня",
+    "zh": "虫子猎人 2 级"
+  },
+  "CHOOSE A CONVERSATION": {
+    "fr": "CHOISISSEZ UNE CONVERSATION",
+    "es": "ELIGE UNA CONVERSACIÓN",
+    "ru": "ВЫБЕРИТЕ РАЗГОВОР",
+    "zh": "选择对话"
+  },
+  "CPU": {
+    "fr": "Processeur",
+    "es": "CPU",
+    "ru": "Процессор",
+    "zh": "中央处理器"
+  },
+  "CPU and RAM are not per-plugin values read directly from the operating system. The plugin estimates cost by observing JavaScript work, Chromium heap data, and resources created during plugin callbacks.": {
+    "fr": "Le CPU et la RAM ne sont pas des valeurs par plugin lues directement à partir du système d'exploitation. Le plugin estime le coût en observant le travail JavaScript, les données du tas Chromium et les ressources créées lors des rappels du plugin.",
+    "es": "CPU y RAM no son valores por complemento leídos directamente desde el sistema operativo. El complemento estima el costo observando el trabajo de JavaScript, los datos del montón de Chromium y los recursos creados durante las devoluciones de llamada del complemento.",
+    "ru": "ЦП и ОЗУ не являются значениями для каждого плагина, считываемыми непосредственно из операционной системы. Плагин оценивает стоимость, наблюдая за работой JavaScript, данными кучи Chromium и ресурсами, созданными во время обратных вызовов плагина.",
+    "zh": "CPU 和 RAM 不是直接从操作系统读取的每个插件值。该插件通过观察 JavaScript 工作、Chromium 堆数据以及插件回调期间创建的资源来估计成本。"
+  },
+  "CPU is measured as JavaScript callback time. Memory uses Chromium heap deltas when available.": {
+    "fr": "Le processeur est mesuré en temps de rappel JavaScript. La mémoire utilise les deltas du tas Chromium lorsqu'ils sont disponibles.",
+    "es": "La CPU se mide como tiempo de devolución de llamada de JavaScript. La memoria utiliza deltas del montón de Chromium cuando están disponibles.",
+    "ru": "Процессор измеряется как время обратного вызова JavaScript. Память использует дельты кучи Chromium, если они доступны.",
+    "zh": "CPU 以 JavaScript 回调时间来衡量。内存在可用时使用 Chromium 堆增量。"
+  },
+  "CPU share": {
+    "fr": "Partage du processeur",
+    "es": "compartir CPU",
+    "ru": "доля процессора",
+    "zh": "CPU占有率"
+  },
+  "CSV": {
+    "fr": "CSV",
+    "es": "CSV",
+    "ru": "CSV-файл",
+    "zh": "CSV"
+  },
+  "Call active": {
+    "fr": "Appel actif",
+    "es": "Llamada activa",
+    "ru": "Вызов активен",
+    "zh": "通话活跃"
+  },
+  "Call controls available": {
+    "fr": "Contrôles d'appel disponibles",
+    "es": "Controles de llamadas disponibles",
+    "ru": "Доступно управление вызовами",
+    "zh": "可用呼叫控制"
+  },
+  "Callback time": {
+    "fr": "Heure de rappel",
+    "es": "tiempo de devolución de llamada",
+    "ru": "Время обратного звонка",
+    "zh": "回拨时间"
+  },
+  "Calls": {
+    "fr": "Appels",
+    "es": "llamadas",
+    "ru": "Звонки",
+    "zh": "通话"
+  },
+  "Cancel": {
+    "fr": "Annuler",
+    "es": "Cancelar",
+    "ru": "Отмена",
+    "zh": "取消"
+  },
+  "Cancel Request": {
+    "fr": "Annuler la demande",
+    "es": "Cancelar solicitud",
+    "ru": "Отменить запрос",
+    "zh": "取消请求"
+  },
+  "Channel ID copied!": {
+    "fr": "ID de chaîne copié !",
+    "es": "ID del canal copiado!",
+    "ru": "Идентификатор канала скопирован!",
+    "zh": "频道 ID 已复制！"
+  },
+  "Channel or server...": {
+    "fr": "Chaîne ou serveur...",
+    "es": "Canal o servidor...",
+    "ru": "Канал или сервер...",
+    "zh": "频道或服务器..."
+  },
+  "Choose a Discord install folder first.": {
+    "fr": "Choisissez d’abord un dossier d’installation Discord.",
+    "es": "Primero elija una carpeta de instalación de Discord.",
+    "ru": "Сначала выберите папку установки Discord.",
+    "zh": "首先选择一个 Discord 安装文件夹。"
+  },
+  "Choose a file": {
+    "fr": "Choisissez un fichier",
+    "es": "Elige un archivo",
+    "ru": "Выберите файл",
+    "zh": "选择一个文件"
+  },
+  "Choose a method and patch Discord voice to enable stereo audio.": {
+    "fr": "Choisissez une méthode et corrigez la voix Discord pour activer l’audio stéréo.",
+    "es": "Elija un método y parchee la voz de Discord para habilitar el audio estéreo.",
+    "ru": "Выберите метод и исправьте Discord voice, чтобы включить стереозвук.",
+    "zh": "选择一种方法并修补 Discord 语音以启用立体声音频。"
+  },
+  "Choose a server...": {
+    "fr": "Choisissez un serveur...",
+    "es": "Elige un servidor...",
+    "ru": "Выберите сервер...",
+    "zh": "选择服务器..."
+  },
+  "Chromium did not expose heap data": {
+    "fr": "Chromium n'a pas exposé les données du tas",
+    "es": "Chromium no expuso datos del montón",
+    "ru": "Chromium не раскрывал данные кучи",
+    "zh": "Chromium 没有公开堆数据"
+  },
+  "Chromium heap sample": {
+    "fr": "Échantillon de tas de chrome",
+    "es": "Muestra de montón de cromo",
+    "ru": "Образец кучи хрома",
+    "zh": "铬堆样本"
+  },
+  "Chromium heap unavailable": {
+    "fr": "Tas de chrome indisponible",
+    "es": "Montón de cromo no disponible",
+    "ru": "Куча хрома недоступна",
+    "zh": "Chrom 堆不可用"
+  },
+  "Clear": {
+    "fr": "Effacer",
+    "es": "Borrar",
+    "ru": "Прозрачный",
+    "zh": "清除"
+  },
+  "Clear history": {
+    "fr": "Effacer l'historique",
+    "es": "Borrar historial",
+    "ru": "Очистить историю",
+    "zh": "清除历史记录"
+  },
+  "Clear logs": {
+    "fr": "Effacer les journaux",
+    "es": "Borrar registros",
+    "ru": "Очистить журналы",
+    "zh": "清除日志"
+  },
+  "Click to toggle participants list": {
+    "fr": "Cliquez pour basculer la liste des participants",
+    "es": "Haga clic para alternar la lista de participantes",
+    "ru": "Нажмите, чтобы переключить список участников",
+    "zh": "单击可切换参与者列表"
+  },
+  "Client": {
+    "fr": "Client",
+    "es": "Cliente",
+    "ru": "Клиент",
+    "zh": "客户"
+  },
+  "Client Diagnostics": {
+    "fr": "Diagnostic client",
+    "es": "Diagnóstico del cliente",
+    "ru": "Диагностика клиента",
+    "zh": "客户端诊断"
+  },
+  "Client Diagnostics helps find plugins that may cause lag, freezes, or extra memory usage. It measures time spent inside plugin functions, JavaScript memory growth, and resources that remain active.": {
+    "fr": "Client Diagnostics aide à trouver les plugins susceptibles de provoquer des retards, des blocages ou une utilisation supplémentaire de la mémoire. Il mesure le temps passé dans les fonctions du plugin, la croissance de la mémoire JavaScript et les ressources qui restent actives.",
+    "es": "Client Diagnostics ayuda a encontrar complementos que pueden provocar retrasos, congelaciones o uso adicional de memoria. Mide el tiempo dedicado a las funciones de los complementos, el crecimiento de la memoria de JavaScript y los recursos que permanecen activos.",
+    "ru": "Диагностика клиента помогает найти плагины, которые могут вызывать задержки, зависания или дополнительное использование памяти. Он измеряет время, затрачиваемое внутри функций плагина, прирост памяти JavaScript и ресурсы, которые остаются активными.",
+    "zh": "客户端诊断可帮助查找可能导致延迟、冻结或额外内存使用的插件。它测量插件函数内花费的时间、JavaScript 内存增长以及保持活动状态的资源。"
+  },
+  "Cloning in progress...": {
+    "fr": "Clonage en cours...",
+    "es": "Clonación en progreso...",
+    "ru": "Клонирование в процессе...",
+    "zh": "克隆正在进行中..."
+  },
+  "Cloning options": {
+    "fr": "Options de clonage",
+    "es": "Opciones de clonación",
+    "ru": "Варианты клонирования",
+    "zh": "克隆选项"
+  },
+  "Close instance": {
+    "fr": "Fermer l'instance",
+    "es": "Cerrar instancia",
+    "ru": "Закрыть экземпляр",
+    "zh": "关闭实例"
+  },
+  "Collected for": {
+    "fr": "Recueilli pour",
+    "es": "Recogido para",
+    "ru": "Собрано для",
+    "zh": "收集用于"
+  },
+  "Color 1": {
+    "fr": "Couleur 1",
+    "es": "Color 1",
+    "ru": "Цвет 1",
+    "zh": "颜色1"
+  },
+  "Color 2": {
+    "fr": "Couleur 2",
+    "es": "Color 2",
+    "ru": "Цвет 2",
+    "zh": "颜色2"
+  },
+  "Colors:": {
+    "fr": "Couleurs :",
+    "es": "Colores:",
+    "ru": "Цвета:",
+    "zh": "颜色："
+  },
+  "Completed a quest": {
+    "fr": "Vous avez terminé une quête",
+    "es": "Completaste una misión",
+    "ru": "Выполнен квест",
+    "zh": "完成了一个任务"
+  },
+  "Config: ": {
+    "fr": "Configuration :",
+    "es": "Configuración:",
+    "ru": "Конфигурация:",
+    "zh": "配置："
+  },
+  "Configuration Name (e.g. Work, Gaming, Halloween)...": {
+    "fr": "Nom de la configuration (par exemple, Travail, Jeux, Halloween)...",
+    "es": "Nombre de configuración (por ejemplo, Trabajo, Juegos, Halloween)...",
+    "ru": "Имя конфигурации (например, «Работа», «Игры», «Хэллоуин»)...",
+    "zh": "配置名称（例如工作、游戏、万圣节）..."
+  },
+  "Configure your API key first…": {
+    "fr": "Configurez d’abord votre clé API…",
+    "es": "Configure su clave API primero...",
+    "ru": "Сначала настройте свой ключ API…",
+    "zh": "首先配置您的 API 密钥..."
+  },
+  "Configure your API key in Nightcord Settings > Plugins > NightcordAI": {
+    "fr": "Configurez votre clé API dans Paramètres Nightcord > Plugins > NightcordAI",
+    "es": "Configure su clave API en Configuración de Nightcord > Complementos > NightcordAI",
+    "ru": "Настройте свой ключ API в настройках Nightcord > Плагины > NightcordAI.",
+    "zh": "在 Nightcord 设置 > 插件 > NightcordAI 中配置您的 API 密钥"
+  },
+  "Copied!": {
+    "fr": "Copié!",
+    "es": "¡Copiado!",
+    "ru": "Скопировано!",
+    "zh": "复制了！"
+  },
+  "Copy": {
+    "fr": "Copier",
+    "es": "Copiar",
+    "ru": "Копировать",
+    "zh": "复制"
+  },
+  "Copy Channel ID": {
+    "fr": "Copier l'ID de la chaîne",
+    "es": "Copiar ID de canal",
+    "ru": "Копировать идентификатор канала",
+    "zh": "复制频道 ID"
+  },
+  "Copy ID": {
+    "fr": "Copier l'identifiant",
+    "es": "Copiar identificación",
+    "ru": "Копировать идентификатор",
+    "zh": "复制身份证件"
+  },
+  "Copy User ID": {
+    "fr": "Copier l'ID utilisateur",
+    "es": "Copiar ID de usuario",
+    "ru": "Скопировать идентификатор пользователя",
+    "zh": "复制用户 ID"
+  },
+  "Copy Username": {
+    "fr": "Copier le nom d'utilisateur",
+    "es": "Copiar nombre de usuario",
+    "ru": "Копировать имя пользователя",
+    "zh": "复制用户名"
+  },
+  "Copy report": {
+    "fr": "Copier le rapport",
+    "es": "Copiar informe",
+    "ru": "Копировать отчет",
+    "zh": "复印报告"
+  },
+  "Copy this profile": {
+    "fr": "Copiez ce profil",
+    "es": "Copia este perfil",
+    "ru": "Скопировать этот профиль",
+    "zh": "复制此配置文件"
+  },
+  "Could not load profile configuration.": {
+    "fr": "Impossible de charger la configuration du profil.",
+    "es": "No se pudo cargar la configuración del perfil.",
+    "ru": "Не удалось загрузить конфигурацию профиля.",
+    "zh": "无法加载配置文件配置。"
+  },
+  "Could not open DM with this user.": {
+    "fr": "Impossible d'ouvrir DM avec cet utilisateur.",
+    "es": "No se pudo abrir DM con este usuario.",
+    "ru": "Не удалось открыть DM с этим пользователем.",
+    "zh": "无法使用该用户打开 DM。"
+  },
+  "Could not open the Spicetify installer.": {
+    "fr": "Impossible d'ouvrir le programme d'installation de Spicetify.",
+    "es": "No se pudo abrir el instalador de Spicetify.",
+    "ru": "Не удалось открыть установщик Spicetify.",
+    "zh": "无法打开 Spicetify 安装程序。"
+  },
+  "Could not read the selected file.": {
+    "fr": "Impossible de lire le fichier sélectionné.",
+    "es": "No se pudo leer el archivo seleccionado.",
+    "ru": "Не удалось прочитать выбранный файл.",
+    "zh": "无法读取所选文件。"
+  },
+  "Could not save profile configuration.": {
+    "fr": "Impossible d'enregistrer la configuration du profil.",
+    "es": "No se pudo guardar la configuración del perfil.",
+    "ru": "Не удалось сохранить конфигурацию профиля.",
+    "zh": "无法保存配置文件配置。"
+  },
+  "Create API Key": {
+    "fr": "Créer une clé API",
+    "es": "Crear clave API",
+    "ru": "Создать ключ API",
+    "zh": "创建 API 密钥"
+  },
+  "Create a free account on console.groq.com, then go to API Keys and click Create API Key. Copy the key and paste it in the Api Key field above.": {
+    "fr": "Créez un compte gratuit sur console.groq.com, puis accédez à Clés API et cliquez sur Créer une clé API. Copiez la clé et collez-la dans le champ Clé API ci-dessus.",
+    "es": "Cree una cuenta gratuita en console.groq.com, luego vaya a Claves API y haga clic en Crear clave API. Copie la clave y péguela en el campo Clave de API de arriba.",
+    "ru": "Создайте бесплатную учетную запись на console.groq.com, затем перейдите в раздел «Ключи API» и нажмите «Создать ключ API». Скопируйте ключ и вставьте его в поле «Ключ API» выше.",
+    "zh": "在 console.groq.com 上创建一个免费帐户，然后转到 API 密钥并单击创建 API 密钥。复制密钥并将其粘贴到上面的 Api 密钥字段中。"
+  },
+  "Custom Numeric Code": {
+    "fr": "Code numérique personnalisé",
+    "es": "Código numérico personalizado",
+    "ru": "Пользовательский цифровой код",
+    "zh": "自定义数字代码"
+  },
+  "Custom Profile": {
+    "fr": "Profil personnalisé",
+    "es": "Perfil personalizado",
+    "ru": "Пользовательский профиль",
+    "zh": "自定义配置文件"
+  },
+  "Custom status phrases for": {
+    "fr": "Phrases d'état personnalisées pour",
+    "es": "Frases de estado personalizadas para",
+    "ru": "Пользовательские статусные фразы для",
+    "zh": "自定义状态短语"
+  },
+  "Custom status phrases for this account, one per line.": {
+    "fr": "Phrases de statut personnalisées pour ce compte, une par ligne.",
+    "es": "Frases de estado personalizadas para esta cuenta, una por línea.",
+    "ru": "Пользовательские фразы статуса для этой учетной записи, по одной в строке.",
+    "zh": "该帐户的自定义状态短语，每行一个。"
+  },
+  "DM": {
+    "fr": "DM",
+    "es": "DM",
+    "ru": "ДМ",
+    "zh": "DM"
+  },
+  "Deaf": {
+    "fr": "Sourd",
+    "es": "sordo",
+    "ru": "Глухой",
+    "zh": "聋"
+  },
+  "Decrypt all": {
+    "fr": "Décrypter tout",
+    "es": "Descifrar todo",
+    "ru": "Расшифровать все",
+    "zh": "全部解密"
+  },
+  "Decrypt message": {
+    "fr": "Décrypter le message",
+    "es": "Descifrar mensaje",
+    "ru": "Расшифровать сообщение",
+    "zh": "解密消息"
+  },
+  "Delete": {
+    "fr": "Supprimer",
+    "es": "Eliminar",
+    "ru": "Удалить",
+    "zh": "删除"
+  },
+  "Delete Profile Configuration": {
+    "fr": "Supprimer la configuration du profil",
+    "es": "Eliminar configuración de perfil",
+    "ru": "Удалить конфигурацию профиля",
+    "zh": "删除配置文件配置"
+  },
+  "Delete existing roles": {
+    "fr": "Supprimer les rôles existants",
+    "es": "Eliminar roles existentes",
+    "ru": "Удалить существующие роли",
+    "zh": "删除现有角色"
+  },
+  "Deleted": {
+    "fr": "Supprimé",
+    "es": "Eliminado",
+    "ru": "Удалено",
+    "zh": "已删除"
+  },
+  "Deselect all": {
+    "fr": "Tout désélectionner",
+    "es": "Deseleccionar todo",
+    "ru": "Отменить выбор всех",
+    "zh": "取消全选"
+  },
+  "Details": {
+    "fr": "Détails",
+    "es": "Detalles",
+    "ru": "Подробности",
+    "zh": "细节"
+  },
+  "Diamant (12 mois)": {
+    "fr": "Diamant (12 mois)",
+    "es": "Diamante (12 meses)",
+    "ru": "Диамант (12 месяцев)",
+    "zh": "钻石 (12 莫伊)"
+  },
+  "Disable Fake Voice": {
+    "fr": "Désactiver la fausse voix",
+    "es": "Desactivar voz falsa",
+    "ru": "Отключить фальшивый голос",
+    "zh": "禁用假语音"
+  },
+  "Disabled": {
+    "fr": "Désactivé",
+    "es": "Discapacitado",
+    "ru": "Неполноценный",
+    "zh": "残疾人"
+  },
+  "Disconnect": {
+    "fr": "Déconnecter",
+    "es": "Desconectar",
+    "ru": "Отключить",
+    "zh": "断开"
+  },
+  "Discord call": {
+    "fr": "Appel Discorde",
+    "es": "Llamada de discordia",
+    "ru": "Дискорд вызов",
+    "zh": "不和谐通话"
+  },
+  "Discord call controls": {
+    "fr": "Contrôles des appels Discord",
+    "es": "Controles de llamadas de Discord",
+    "ru": "Управление вызовами в Discord",
+    "zh": "Discord 通话控制"
+  },
+  "Discord install detected.": {
+    "fr": "Installation Discord détectée.",
+    "es": "Se detectó instalación de Discord.",
+    "ru": "Обнаружена установка Discord.",
+    "zh": "检测到不和谐安装。"
+  },
+  "Discord install folder": {
+    "fr": "Dossier d'installation de Discord",
+    "es": "Carpeta de instalación de Discord",
+    "ru": "Папка установки Дискорда",
+    "zh": "不和谐安装文件夹"
+  },
+  "Discord install selected.": {
+    "fr": "Installation Discord sélectionnée.",
+    "es": "Instalación de Discord seleccionada.",
+    "ru": "Выбрана установка Discord.",
+    "zh": "已选择 Discord 安装。"
+  },
+  "Discord theme": {
+    "fr": "Thème Discorde",
+    "es": "Tema de discordia",
+    "ru": "Дискорд тема",
+    "zh": "不和谐主题"
+  },
+  "Discord was updated after": {
+    "fr": "Discord a été mis à jour après",
+    "es": "Discord se actualizó después",
+    "ru": "Дискорд обновился после",
+    "zh": "Discord 更新后"
+  },
+  "Discord will close now to finish StereoInstaller.": {
+    "fr": "Discord va se fermer maintenant pour terminer StereoInstaller.",
+    "es": "Discord se cerrará ahora para finalizar StereoInstaller.",
+    "ru": "Discord закроется, чтобы завершить работу StereoInstaller.",
+    "zh": "Discord 现在将关闭以完成 StereoInstaller。"
+  },
+  "Discord will close now. Check the StereoInstaller log if it does not reopen.": {
+    "fr": "Discord va se fermer maintenant. Vérifiez le journal StereoInstaller s’il ne se rouvre pas.",
+    "es": "Discord se cerrará ahora. Verifique el registro de StereoInstaller si no se vuelve a abrir.",
+    "ru": "Дискорд сейчас закроется. Проверьте журнал StereoInstaller, если он не открывается повторно.",
+    "zh": "Discord 现在将关闭。如果没有重新打开，请检查 StereoInstaller 日志。"
+  },
+  "Discord will close while the file is replaced. Use this only if you are fixing Voice Playground Method files or know you need that index.js.": {
+    "fr": "Discord se fermera pendant que le fichier sera remplacé. Utilisez-le uniquement si vous corrigez les fichiers de la méthode Voice Playground ou si vous savez que vous avez besoin de cet index.js.",
+    "es": "Discord se cerrará mientras se reemplaza el archivo. Úselo solo si está reparando archivos del método Voice Playground o si sabe que necesita ese index.js.",
+    "ru": "Discord закроется, пока файл будет заменен. Используйте это, только если вы исправляете файлы метода Voice Playground или знаете, что вам нужен index.js.",
+    "zh": "当文件被替换时，Discord 将关闭。仅当您正在修复 Voice Playground 方法文件或知道需要该 index.js 时才使用此选项。"
+  },
+  "Display name": {
+    "fr": "Nom d'affichage",
+    "es": "Nombre para mostrar",
+    "ru": "Отображаемое имя",
+    "zh": "显示名称"
+  },
+  "Do not delete existing channels": {
+    "fr": "Ne pas supprimer les chaînes existantes",
+    "es": "No eliminar canales existentes",
+    "ru": "Не удалять существующие каналы",
+    "zh": "不要删除现有频道"
+  },
+  "Dynamic Island": {
+    "fr": "Île dynamique",
+    "es": "Isla dinámica",
+    "ru": "Динамический остров",
+    "zh": "动态岛"
+  },
+  "Débanni": {
+    "fr": "Débanni",
+    "es": "Débanni",
+    "ru": "Дебанни",
+    "zh": "德班尼"
+  },
+  "Déco": {
+    "fr": "Déco",
+    "es": "decoración",
+    "ru": "Деко",
+    "zh": "德科"
+  },
+  "Déconnexion du account": {
+    "fr": "Déconnexion du compte",
+    "es": "Desconexión de cuenta",
+    "ru": "Отключение аккаунта",
+    "zh": "账户断开连接"
+  },
+  "EXPORT FORMAT": {
+    "fr": "FORMAT D'EXPORTATION",
+    "es": "FORMATO DE EXPORTACIÓN",
+    "ru": "ЭКСПОРТНЫЙ ФОРМАТ",
+    "zh": "导出格式"
+  },
+  "Each method has its own upstream source.": {
+    "fr": "Chaque méthode possède sa propre source en amont.",
+    "es": "Cada método tiene su propia fuente ascendente.",
+    "ru": "Каждый метод имеет свой собственный исходный код.",
+    "zh": "每个方法都有自己的上游来源。"
+  },
+  "Early Supporter": {
+    "fr": "Premier partisan",
+    "es": "Partidario temprano",
+    "ru": "Ранний сторонник",
+    "zh": "早期支持者"
+  },
+  "Edited": {
+    "fr": "Modifié",
+    "es": "Editado",
+    "ru": "Отредактировано",
+    "zh": "已编辑"
+  },
+  "Email address (local display)": {
+    "fr": "Adresse e-mail (affichage local)",
+    "es": "Dirección de correo electrónico (visualización local)",
+    "ru": "Адрес электронной почты (локальный дисплей)",
+    "zh": "电子邮件地址（本地显示）"
+  },
+  "Enable Fake Voice (Right: Config)": {
+    "fr": "Activer Fake Voice (à droite : config)",
+    "es": "Habilitar voz falsa (derecha: configuración)",
+    "ru": "Включить фальшивый голос (справа: конфигурация)",
+    "zh": "启用假语音（右：配置）"
+  },
+  "Enables banner and profile color": {
+    "fr": "Active la couleur de la bannière et du profil",
+    "es": "Habilita el color del banner y del perfil.",
+    "ru": "Включает цвет баннера и профиля.",
+    "zh": "启用横幅和配置文件颜色"
+  },
+  "Encryption active": {
+    "fr": "Cryptage actif",
+    "es": "Cifrado activo",
+    "ru": "Шифрование активно",
+    "zh": "加密激活"
+  },
+  "Encryption disabled": {
+    "fr": "Cryptage désactivé",
+    "es": "Cifrado deshabilitado",
+    "ru": "Шифрование отключено",
+    "zh": "加密已禁用"
+  },
+  "Enter a name above and click \\\"Save my profile\\\" to add your first backup!": {
+    "fr": "Entrez un nom ci-dessus et cliquez sur « Enregistrer mon profil » pour ajouter votre première sauvegarde !",
+    "es": "Ingrese un nombre arriba y haga clic en \\\"Guardar mi perfil\\\" para agregar su primera copia de seguridad.",
+    "ru": "Введите имя выше и нажмите «Сохранить мой профиль», чтобы добавить первую резервную копию!",
+    "zh": "在上面输入名称，然后单击“保存我的个人资料”以添加您的第一个备份！"
+  },
+  "Enter new name…": {
+    "fr": "Entrez un nouveau nom…",
+    "es": "Introduce un nuevo nombre...",
+    "ru": "Введите новое имя…",
+    "zh": "输入新名称..."
+  },
+  "Enter your Discord passcode": {
+    "fr": "Entrez votre mot de passe Discord",
+    "es": "Ingrese su contraseña de Discord",
+    "ru": "Введите свой пароль Discord",
+    "zh": "输入您的 Discord 密码"
+  },
+  "Enter your new passcode": {
+    "fr": "Entrez votre nouveau mot de passe",
+    "es": "Ingrese su nueva contraseña",
+    "ru": "Введите новый пароль",
+    "zh": "输入您的新密码"
+  },
+  "Error saving logs": {
+    "fr": "Erreur lors de l'enregistrement des journaux",
+    "es": "Error al guardar registros",
+    "ru": "Ошибка сохранения журналов",
+    "zh": "保存日志时出错"
+  },
+  "Error:": {
+    "fr": "Erreur :",
+    "es": "Error:",
+    "ru": "Ошибка:",
+    "zh": "错误："
+  },
+  "Evolving Nitro Badge": {
+    "fr": "Insigne Nitro évolutif",
+    "es": "Insignia Nitro en evolución",
+    "ru": "Развивающийся значок нитро",
+    "zh": "不断进化的硝基徽章"
+  },
+  "Ex : Triggerr#5954 — will appear as \"Old username: Triggerr#5954\" when hovering the badge.": {
+    "fr": "Ex : Triggerr#5954 — apparaîtra comme « Ancien nom d'utilisateur : Triggerr#5954 » au survol du badge.",
+    "es": "Ej: Triggerr#5954: aparecerá como \"Nombre de usuario anterior: Triggerr#5954\" al pasar el cursor sobre la insignia.",
+    "ru": "Пример: Triggerr#5954 — при наведении на значок будет отображаться как «Старое имя пользователя: Triggerr#5954».",
+    "zh": "例如：Triggerr#5954 — 将鼠标悬停在徽章上时将显示为“旧用户名：Triggerr#5954”。"
+  },
+  "Exclu": {
+    "fr": "Exclus",
+    "es": "excluido",
+    "ru": "Исключительно",
+    "zh": "排除"
+  },
+  "Exclu temporairement (Timeout)": {
+    "fr": "Exclu temporairement",
+    "es": "Excluido temporalmente (tiempo de espera)",
+    "ru": "Временное исключение (тайм-аут)",
+    "zh": "排除临时（超时）"
+  },
+  "Exclude friends...": {
+    "fr": "Exclure les amis...",
+    "es": "Excluir amigos...",
+    "ru": "Исключить друзей...",
+    "zh": "排除朋友..."
+  },
+  "Export": {
+    "fr": "Exporter",
+    "es": "Exportar",
+    "ru": "Экспорт",
+    "zh": "出口"
+  },
+  "Export DMs": {
+    "fr": "Exporter des DM",
+    "es": "Exportar mensajes directos",
+    "ru": "Экспорт личных сообщений",
+    "zh": "导出DM"
+  },
+  "Exported on": {
+    "fr": "Exporté le",
+    "es": "Exportado en",
+    "ru": "Экспортировано на",
+    "zh": "导出于"
+  },
+  "Exporting...": {
+    "fr": "Exportation...",
+    "es": "Exportando...",
+    "ru": "Экспорт...",
+    "zh": "出口..."
+  },
+  "Extra CPU": {
+    "fr": "Processeur supplémentaire",
+    "es": "CPU adicional",
+    "ru": "Дополнительный процессор",
+    "zh": "额外的CPU"
+  },
+  "Extra RAM": {
+    "fr": "RAM supplémentaire",
+    "es": "RAM adicional",
+    "ru": "Дополнительная оперативная память",
+    "zh": "额外内存"
+  },
+  "Failed to download image.": {
+    "fr": "Échec du téléchargement de l'image.",
+    "es": "No se pudo descargar la imagen.",
+    "ru": "Не удалось загрузить изображение.",
+    "zh": "下载图像失败。"
+  },
+  "Failed to save user.": {
+    "fr": "Échec de l'enregistrement de l'utilisateur.",
+    "es": "No se pudo guardar el usuario.",
+    "ru": "Не удалось сохранить пользователя.",
+    "zh": "无法保存用户。"
+  },
+  "Failed to update ${type}.": {
+    "fr": "Échec de la mise à jour de ${type}.",
+    "es": "No se pudo actualizar ${type}.",
+    "ru": "Не удалось обновить ${type}.",
+    "zh": "无法更新${type}。"
+  },
+  "Favorites": {
+    "fr": "Favoris",
+    "es": "Favoritos",
+    "ru": "Избранное",
+    "zh": "收藏夹"
+  },
+  "Fetching:": {
+    "fr": "Récupération :",
+    "es": "Obteniendo:",
+    "ru": "Получение:",
+    "zh": "正在获取："
+  },
+  "Filter...": {
+    "fr": "Filtrer...",
+    "es": "Filtrar...",
+    "ru": "Фильтр...",
+    "zh": "筛选..."
+  },
+  "First phrase\\nSecond phrase\\nThird phrase": {
+    "fr": "Première phrase\\nDeuxième phrase\\nTroisième phrase",
+    "es": "Primera frase\\nSegunda frase\\nTercera frase",
+    "ru": "Первая фраза\\nВторая фраза\\nТретья фраза",
+    "zh": "第一个短语\\n第二个短语\\n第三个短语"
+  },
+  "Follow": {
+    "fr": "Suivre",
+    "es": "Seguir",
+    "ru": "Следовать",
+    "zh": "跟随"
+  },
+  "Former Moderator": {
+    "fr": "Ancien modérateur",
+    "es": "Ex moderador",
+    "ru": "Бывший модератор",
+    "zh": "前主持人"
+  },
+  "Friend +": {
+    "fr": "Ami +",
+    "es": "Amigo +",
+    "ru": "Друг +",
+    "zh": "朋友+"
+  },
+  "Friend -": {
+    "fr": "Ami -",
+    "es": "Amigo -",
+    "ru": "Друг -",
+    "zh": "朋友-"
+  },
+  "Friend added": {
+    "fr": "Ami ajouté",
+    "es": "Amigo añadido",
+    "ru": "Друг добавлен",
+    "zh": "好友已添加"
+  },
+  "Friend removed": {
+    "fr": "Ami supprimé",
+    "es": "amigo eliminado",
+    "ru": "Друг удален",
+    "zh": "好友已删除"
+  },
+  "Friends deletion": {
+    "fr": "Suppression d'amis",
+    "es": "Eliminación de amigos",
+    "ru": "Удаление друзей",
+    "zh": "好友删除"
+  },
+  "Full structured": {
+    "fr": "Entièrement structuré",
+    "es": "Completamente estructurado",
+    "ru": "Полная структуризация",
+    "zh": "全结构化"
+  },
+  "Ghost Options": {
+    "fr": "Options fantômes",
+    "es": "Opciones fantasma",
+    "ru": "Варианты призраков",
+    "zh": "幽灵选项"
+  },
+  "Guide": {
+    "fr": "Guider",
+    "es": "Guía",
+    "ru": "Гид",
+    "zh": "指导"
+  },
+  "HTML": {
+    "fr": "HTML",
+    "es": "HTML",
+    "ru": "HTML",
+    "zh": "超文本标记语言"
+  },
+  "Headphones muted": {
+    "fr": "Casque coupé",
+    "es": "Auriculares silenciados",
+    "ru": "Наушники отключены",
+    "zh": "耳机静音"
+  },
+  "Headphones unmuted": {
+    "fr": "Casque activé",
+    "es": "Auriculares activados",
+    "ru": "Наушники включены",
+    "zh": "耳机未静音"
+  },
+  "Heap +": {
+    "fr": "Tas +",
+    "es": "Montón +",
+    "ru": "Куча +",
+    "zh": "堆+"
+  },
+  "Heap used": {
+    "fr": "Tas utilisé",
+    "es": "montón usado",
+    "ru": "Куча использована",
+    "zh": "使用的堆"
+  },
+  "Hide": {
+    "fr": "Masquer",
+    "es": "Ocultar",
+    "ru": "Скрывать",
+    "zh": "隐藏"
+  },
+  "Hide raw profile": {
+    "fr": "Masquer le profil brut",
+    "es": "Ocultar perfil sin formato",
+    "ru": "Скрыть необработанный профиль",
+    "zh": "隐藏原始个人资料"
+  },
+  "Hot surface": {
+    "fr": "Surface chaude",
+    "es": "superficie caliente",
+    "ru": "Горячая поверхность",
+    "zh": "热表面"
+  },
+  "How can I help you?": {
+    "fr": "Comment puis-je vous aider ?",
+    "es": "¿Cómo puedo ayudarte?",
+    "ru": "Могу я чем-нибудь помочь?",
+    "zh": "我怎么帮你？"
+  },
+  "How to get a Groq API key": {
+    "fr": "Comment obtenir une clé API Groq",
+    "es": "Cómo obtener una clave API de Groq",
+    "ru": "Как получить API-ключ Groq",
+    "zh": "如何获取 Groq API 密钥"
+  },
+  "HypeSquad Balance": {
+    "fr": "Équilibre HypeSquad",
+    "es": "Saldo de HypeSquad",
+    "ru": "Баланс HypeSquad",
+    "zh": "HypeSquad 平衡"
+  },
+  "HypeSquad Bravery": {
+    "fr": "Bravoure HypeSquad",
+    "es": "Valentía del HypeSquad",
+    "ru": "HypeSquad Храбрость",
+    "zh": "HypeSquad 勇敢"
+  },
+  "HypeSquad Brilliance": {
+    "fr": "Brillance HypeSquad",
+    "es": "Brillo de HypeSquad",
+    "ru": "HypeSquad Brilliance",
+    "zh": "HypeSquad 辉煌"
+  },
+  "HypeSquad Events": {
+    "fr": "Événements HypeSquad",
+    "es": "Eventos HypeSquad",
+    "ru": "События HypeSquad",
+    "zh": "HypeSquad 活动"
+  },
+  "Icon": {
+    "fr": "Icône",
+    "es": "Icono",
+    "ru": "Икона",
+    "zh": "图标"
+  },
+  "Idle": {
+    "fr": "Inactif",
+    "es": "inactivo",
+    "ru": "Праздный",
+    "zh": "闲置的"
+  },
+  "Image URL...": {
+    "fr": "URL de l'image...",
+    "es": "URL de la imagen...",
+    "ru": "URL-адрес изображения...",
+    "zh": "图片网址..."
+  },
+  "Images / Videos / Audio": {
+    "fr": "Images/Vidéos/Audio",
+    "es": "Imágenes / Vídeos / Audio",
+    "ru": "Изображения/Видео/Аудио",
+    "zh": "图片/视频/音频"
+  },
+  "Impact": {
+    "fr": "Impact",
+    "es": "Impacto",
+    "ru": "Влияние",
+    "zh": "影响"
+  },
+  "Impact analysis": {
+    "fr": "Analyse d'impact",
+    "es": "Análisis de impacto",
+    "ru": "Анализ воздействия",
+    "zh": "影响分析"
+  },
+  "Imported": {
+    "fr": "Importé",
+    "es": "Importado",
+    "ru": "Импортировано",
+    "zh": "进口"
+  },
+  "Install": {
+    "fr": "Installer",
+    "es": "Instalar",
+    "ru": "Установить",
+    "zh": "安装"
+  },
+  "Install Spicetify": {
+    "fr": "Installer Spicetify",
+    "es": "Instalar Spicetify",
+    "ru": "Установить Spicetify",
+    "zh": "安装 Spicetify"
+  },
+  "Install Spicetify?": {
+    "fr": "Installer Spicetify ?",
+    "es": "¿Instalar Spicetify?",
+    "ru": "Установить Spicetify?",
+    "zh": "安装 Spicetify 吗？"
+  },
+  "Installer logs": {
+    "fr": "Journaux de l'installateur",
+    "es": "Registros del instalador",
+    "ru": "Журналы установщика",
+    "zh": "安装程序日志"
+  },
+  "Installer method": {
+    "fr": "Méthode d'installation",
+    "es": "Método del instalador",
+    "ru": "Метод установки",
+    "zh": "安装方法"
+  },
+  "Instance opened ✓": {
+    "fr": "Instance ouverte ✓",
+    "es": "Instancia abierta ✓",
+    "ru": "Экземпляр открыт ✓",
+    "zh": "实例已打开 ✓"
+  },
+  "JSON": {
+    "fr": "JSON",
+    "es": "JSON",
+    "ru": "JSON",
+    "zh": "JSON"
+  },
+  "Join": {
+    "fr": "Rejoindre",
+    "es": "Unirse",
+    "ru": "Присоединиться",
+    "zh": "加入"
+  },
+  "Joined": {
+    "fr": "Rejoint",
+    "es": "Se unió",
+    "ru": "Присоединился",
+    "zh": "已加入"
+  },
+  "Joining...": {
+    "fr": "Rejoindre...",
+    "es": "Unirse...",
+    "ru": "Присоединяюсь...",
+    "zh": "加入..."
+  },
+  "Keep one method installed at a time. Revert to the saved backup before switching methods or after a Discord update if voice stops working.": {
+    "fr": "Gardez une méthode installée à la fois. Revenez à la sauvegarde enregistrée avant de changer de méthode ou après une mise à jour de Discord si la voix cesse de fonctionner.",
+    "es": "Mantenga un método instalado a la vez. Vuelva a la copia de seguridad guardada antes de cambiar de método o después de una actualización de Discord si la voz deja de funcionar.",
+    "ru": "Устанавливайте по одному методу за раз. Вернитесь к сохраненной резервной копии перед переключением методов или после обновления Discord, если голос перестает работать.",
+    "zh": "一次只安装一种方法。如果语音停止工作，请在切换方法之前或在 Discord 更新之后恢复到保存的备份。"
+  },
+  "Kick": {
+    "fr": "Coup de pied",
+    "es": "patada",
+    "ru": "Пинать",
+    "zh": "踢"
+  },
+  "Last heap delta": {
+    "fr": "Delta du dernier tas",
+    "es": "Delta del último montón",
+    "ru": "Последняя дельта кучи",
+    "zh": "最后一个堆增量"
+  },
+  "Left": {
+    "fr": "Gauche",
+    "es": "Izquierda",
+    "ru": "Левый",
+    "zh": "左边"
+  },
+  "Left click": {
+    "fr": "Clic gauche",
+    "es": "clic izquierdo",
+    "ru": "Щелкните левой кнопкой мыши",
+    "zh": "左键单击"
+  },
+  "Left/Kick": {
+    "fr": "Gauche/Coup de pied",
+    "es": "Izquierda/Patada",
+    "ru": "Левый/Удар",
+    "zh": "左/踢"
+  },
+  "Lets other Nightcord users see your Custom Profile, and lets you see theirs": {
+    "fr": "Permet aux autres utilisateurs de Nightcord de voir votre profil personnalisé et vous permet de voir le leur",
+    "es": "Permite que otros usuarios de Nightcord vean su perfil personalizado y usted vea el de ellos",
+    "ru": "Позволяет другим пользователям Nightcord видеть ваш собственный профиль, а вам — их профиль.",
+    "zh": "让其他 Nightcord 用户查看您的自定义个人资料，并让您查看他们的自定义个人资料"
+  },
+  "Light blue": {
+    "fr": "Bleu clair",
+    "es": "azul claro",
+    "ru": "Голубой",
+    "zh": "浅蓝色"
+  },
+  "Links / Embeds": {
+    "fr": "Liens / Intégrations",
+    "es": "Enlaces / Incrustados",
+    "ru": "Ссылки/Вставки",
+    "zh": "链接/嵌入"
+  },
+  "Listeners": {
+    "fr": "Auditeurs",
+    "es": "Oyentes",
+    "ru": "Слушатели",
+    "zh": "听众"
+  },
+  "Load": {
+    "fr": "Charger",
+    "es": "Cargar",
+    "ru": "Нагрузка",
+    "zh": "加载"
+  },
+  "Loading": {
+    "fr": "Chargement",
+    "es": "Cargando",
+    "ru": "Загрузка",
+    "zh": "加载中"
+  },
+  "Loading channels...": {
+    "fr": "Chargement des chaînes...",
+    "es": "Cargando canales...",
+    "ru": "Загрузка каналов...",
+    "zh": "正在加载频道..."
+  },
+  "Log file": {
+    "fr": "Fichier journal",
+    "es": "Archivo de registro",
+    "ru": "Файл журнала",
+    "zh": "日志档案"
+  },
+  "Logs cleared.": {
+    "fr": "Journaux effacés.",
+    "es": "Registros borrados.",
+    "ru": "Журналы очищены.",
+    "zh": "日志已清除。"
+  },
+  "Logs saved!": {
+    "fr": "Journaux enregistrés !",
+    "es": "¡Registros guardados!",
+    "ru": "Логи сохранены!",
+    "zh": "日志已保存！"
+  },
+  "MD": {
+    "fr": "MD",
+    "es": "médico",
+    "ru": "доктор медицинских наук",
+    "zh": "医学博士"
+  },
+  "Markdown": {
+    "fr": "Démarquage",
+    "es": "Rebaja",
+    "ru": "Уценка",
+    "zh": "降价"
+  },
+  "Max": {
+    "fr": "Max.",
+    "es": "máx.",
+    "ru": "Макс",
+    "zh": "最大限度"
+  },
+  "Max call": {
+    "fr": "Appel maximum",
+    "es": "llamada máxima",
+    "ru": "Макс звонок",
+    "zh": "最大通话次数"
+  },
+  "Measured": {
+    "fr": "Mesuré",
+    "es": "medido",
+    "ru": "Измеренный",
+    "zh": "测量的"
+  },
+  "Measured plugins": {
+    "fr": "Plugins mesurés",
+    "es": "Complementos medidos",
+    "ru": "Измеренные плагины",
+    "zh": "实测插件"
+  },
+  "Measured through": {
+    "fr": "Mesuré à travers",
+    "es": "Medido a través de",
+    "ru": "Измерено через",
+    "zh": "测量通过"
+  },
+  "Measurement limits": {
+    "fr": "Limites de mesure",
+    "es": "Límites de medición",
+    "ru": "Пределы измерения",
+    "zh": "测量限制"
+  },
+  "Message:": {
+    "fr": "Message :",
+    "es": "Mensaje:",
+    "ru": "Сообщение:",
+    "zh": "信息："
+  },
+  "Mic": {
+    "fr": "Micro",
+    "es": "micrófono",
+    "ru": "микрофон",
+    "zh": "麦克风"
+  },
+  "Mic muted": {
+    "fr": "Micro coupé",
+    "es": "Micrófono silenciado",
+    "ru": "Микрофон отключен",
+    "zh": "麦克风静音"
+  },
+  "Mic unmuted": {
+    "fr": "Micro activé",
+    "es": "Micrófono activado",
+    "ru": "Микрофон включен",
+    "zh": "麦克风取消静音"
+  },
+  "Monitor percentages": {
+    "fr": "Surveiller les pourcentages",
+    "es": "Monitorear porcentajes",
+    "ru": "Мониторинг процентов",
+    "zh": "监控百分比"
+  },
+  "Most expensive surfaces": {
+    "fr": "Surfaces les plus chères",
+    "es": "Superficies más caras",
+    "ru": "Самые дорогие поверхности",
+    "zh": "最昂贵的表面"
+  },
+  "Moved": {
+    "fr": "Déplacé",
+    "es": "movido",
+    "ru": "Взолнованный",
+    "zh": "搬家了"
+  },
+  "Multi-instance": {
+    "fr": "Multi-instance",
+    "es": "Instancia múltiple",
+    "ru": "Мультиэкземплярность",
+    "zh": "多实例"
+  },
+  "Muted by staff": {
+    "fr": "Mis en sourdine par le personnel",
+    "es": "Silenciado por el personal",
+    "ru": "Звук отключен персоналом",
+    "zh": "被工作人员静音"
+  },
+  "My description...": {
+    "fr": "Mon descriptif...",
+    "es": "Mi descripción...",
+    "ru": "Мое описание...",
+    "zh": "我的描述..."
+  },
+  "Navigation failed": {
+    "fr": "Échec de la navigation",
+    "es": "Error de navegación",
+    "ru": "Навигация не удалась",
+    "zh": "导航失败"
+  },
+  "New detached instance": {
+    "fr": "Nouvelle instance détachée",
+    "es": "Nueva instancia separada",
+    "ru": "Новый отдельный экземпляр",
+    "zh": "新的分离实例"
+  },
+  "New grouped instance": {
+    "fr": "Nouvelle instance groupée",
+    "es": "Nueva instancia agrupada",
+    "ru": "Новый сгруппированный экземпляр",
+    "zh": "新分组实例"
+  },
+  "Next track": {
+    "fr": "Piste suivante",
+    "es": "Siguiente pista",
+    "ru": "Следующий трек",
+    "zh": "下一曲目"
+  },
+  "Nightcord AI": {
+    "fr": "IA de cordon de nuit",
+    "es": "IA del cordón nocturno",
+    "ru": "Ночной шнур AI",
+    "zh": "夜线人工智能"
+  },
+  "Nitro (0 mois)": {
+    "fr": "Nitro (0 mois)",
+    "es": "Nitro (0 meses)",
+    "ru": "Нитро (0 месяцев)",
+    "zh": "硝基 (0 摩尔)"
+  },
+  "No DMs found": {
+    "fr": "Aucun DM trouvé",
+    "es": "No se encontraron DM",
+    "ru": "DM не найдено",
+    "zh": "未找到 DM"
+  },
+  "No bio saved.": {
+    "fr": "Aucune bio enregistrée.",
+    "es": "No se guardó ninguna biografía.",
+    "ru": "Биография не сохранена.",
+    "zh": "没有保存生物。"
+  },
+  "No channel found": {
+    "fr": "Aucune chaîne trouvée",
+    "es": "No se encontró ningún canal",
+    "ru": "Канал не найден",
+    "zh": "找不到频道"
+  },
+  "No favorites saved": {
+    "fr": "Aucun favori enregistré",
+    "es": "No hay favoritos guardados",
+    "ru": "Избранное не сохранено",
+    "zh": "没有保存收藏夹"
+  },
+  "No file selected.": {
+    "fr": "Aucun fichier sélectionné.",
+    "es": "Ningún archivo seleccionado.",
+    "ru": "Файл не выбран.",
+    "zh": "未选择文件。"
+  },
+  "No friends found": {
+    "fr": "Aucun ami trouvé",
+    "es": "No se encontraron amigos",
+    "ru": "Друзья не найдены",
+    "zh": "没有找到好友"
+  },
+  "No log entries yet.": {
+    "fr": "Aucune entrée de journal pour l'instant.",
+    "es": "Aún no hay entradas de registro.",
+    "ru": "Записей в журнале пока нет.",
+    "zh": "还没有日志条目。"
+  },
+  "No measured callbacks yet.": {
+    "fr": "Aucun rappel mesuré pour l’instant.",
+    "es": "Aún no hay devoluciones de llamadas medidas.",
+    "ru": "Измеренных обратных вызовов пока нет.",
+    "zh": "尚未测量回调。"
+  },
+  "No measured surface yet.": {
+    "fr": "Aucune surface mesurée pour l'instant.",
+    "es": "Aún no hay superficie medida.",
+    "ru": "Измеренной поверхности пока нет.",
+    "zh": "尚未测量表面。"
+  },
+  "No permission to join this channel": {
+    "fr": "Aucune autorisation pour rejoindre cette chaîne",
+    "es": "No hay permiso para unirse a este canal.",
+    "ru": "Нет разрешения присоединиться к этому каналу",
+    "zh": "没有权限加入该频道"
+  },
+  "No plugin matches that search.": {
+    "fr": "Aucun plugin ne correspond à cette recherche.",
+    "es": "Ningún complemento coincide con esa búsqueda.",
+    "ru": "Ни один плагин не соответствует этому запросу.",
+    "zh": "没有插件与该搜索匹配。"
+  },
+  "No plugin selected.": {
+    "fr": "Aucun plugin sélectionné.",
+    "es": "No se seleccionó ningún complemento.",
+    "ru": "Плагин не выбран.",
+    "zh": "没有选择插件。"
+  },
+  "No results for": {
+    "fr": "Aucun résultat pour",
+    "es": "No hay resultados para",
+    "ru": "Нет результатов для",
+    "zh": "没有结果"
+  },
+  "No results found": {
+    "fr": "Aucun résultat trouvé",
+    "es": "No se encontraron resultados",
+    "ru": "Результаты не найдены",
+    "zh": "没有找到结果"
+  },
+  "No risk signal for this plugin yet.": {
+    "fr": "Aucun signal de risque pour ce plugin pour l'instant.",
+    "es": "Aún no hay señales de riesgo para este complemento.",
+    "ru": "Сигнала риска для этого плагина пока нет.",
+    "zh": "该插件尚无风险信号。"
+  },
+  "No saved contacts yet": {
+    "fr": "Aucun contact enregistré pour l'instant",
+    "es": "Aún no hay contactos guardados",
+    "ru": "Пока нет сохраненных контактов",
+    "zh": "尚未保存联系人"
+  },
+  "No saved profiles yet": {
+    "fr": "Aucun profil enregistré pour l'instant",
+    "es": "Aún no hay perfiles guardados",
+    "ru": "Пока нет сохраненных профилей",
+    "zh": "尚未保存个人资料"
+  },
+  "No server with ADMIN permission found.": {
+    "fr": "Aucun serveur avec l'autorisation ADMIN trouvé.",
+    "es": "No se encontró ningún servidor con permiso ADMIN.",
+    "ru": "Сервер с разрешением ADMIN не найден.",
+    "zh": "未找到具有 ADMIN 权限的服务器。"
+  },
+  "No snippet is available. This happens when the cost comes from code already patched into Discord or from functions that cannot be inspected at runtime.": {
+    "fr": "Aucun extrait n'est disponible. Cela se produit lorsque le coût provient d'un code déjà corrigé dans Discord ou de fonctions qui ne peuvent pas être inspectées au moment de l'exécution.",
+    "es": "No hay ningún fragmento disponible. Esto sucede cuando el costo proviene de un código ya parcheado en Discord o de funciones que no se pueden inspeccionar en tiempo de ejecución.",
+    "ru": "Ни один фрагмент не доступен. Это происходит, когда стоимость исходит от кода, уже исправленного в Discord, или от функций, которые невозможно проверить во время выполнения.",
+    "zh": "没有可用的片段。当成本来自已修补到 Discord 中的代码或来自无法在运行时检查的函数时，就会发生这种情况。"
+  },
+  "No suspicious plugins yet.": {
+    "fr": "Aucun plugin suspect pour l'instant.",
+    "es": "Aún no hay complementos sospechosos.",
+    "ru": "Подозрительных плагинов пока нет.",
+    "zh": "还没有可疑的插件。"
+  },
+  "No videos found": {
+    "fr": "Aucune vidéo trouvée",
+    "es": "No se encontraron vídeos",
+    "ru": "Видео не найдено",
+    "zh": "没有找到视频"
+  },
+  "No voice channels": {
+    "fr": "Aucun canal vocal",
+    "es": "Sin canales de voz",
+    "ru": "Нет голосовых каналов",
+    "zh": "无语音频道"
+  },
+  "None": {
+    "fr": "Aucun",
+    "es": "Ninguno",
+    "ru": "Никто",
+    "zh": "没有任何"
+  },
+  "Of measured heap increase": {
+    "fr": "De l'augmentation mesurée du tas",
+    "es": "Del aumento medido del montón",
+    "ru": "Измеренного увеличения кучи",
+    "zh": "测量到的堆增加"
+  },
+  "Of measured plugin CPU": {
+    "fr": "Du CPU du plugin mesuré",
+    "es": "De CPU del complemento medido",
+    "ru": "Измеренного процессора плагина",
+    "zh": "测得的插件CPU"
+  },
+  "Old username": {
+    "fr": "Ancien nom d'utilisateur",
+    "es": "Antiguo nombre de usuario",
+    "ru": "Старое имя пользователя",
+    "zh": "旧用户名"
+  },
+  "Old username displayed in tooltip": {
+    "fr": "Ancien nom d'utilisateur affiché dans l'info-bulle",
+    "es": "Nombre de usuario antiguo mostrado en la información sobre herramientas",
+    "ru": "Старое имя пользователя отображается во всплывающей подсказке",
+    "zh": "工具提示中显示旧用户名"
+  },
+  "Online": {
+    "fr": "En ligne",
+    "es": "En línea",
+    "ru": "Онлайн",
+    "zh": "在线的"
+  },
+  "Opale (72 mois)": {
+    "fr": "Opale (72 mois)",
+    "es": "Ópalo (72 meses)",
+    "ru": "Опал (72 месяца)",
+    "zh": "蛋白石 (72 摩尔)"
+  },
+  "Open Profile": {
+    "fr": "Ouvrir le profil",
+    "es": "Abrir perfil",
+    "ru": "Открыть профиль",
+    "zh": "公开资料"
+  },
+  "Open StereoInstaller": {
+    "fr": "Ouvrez StereoInstaller",
+    "es": "Abrir StereoInstaller",
+    "ru": "Открыть стереоустановщик",
+    "zh": "打开立体声安装程序"
+  },
+  "Open Surveillance": {
+    "fr": "Surveillance ouverte",
+    "es": "Vigilancia abierta",
+    "ru": "Открытое наблюдение",
+    "zh": "开放式监控"
+  },
+  "Open fullscreen": {
+    "fr": "Ouvrir en plein écran",
+    "es": "Abrir pantalla completa",
+    "ru": "Открыть полноэкранный режим",
+    "zh": "全屏打开"
+  },
+  "Opening detached instance…": {
+    "fr": "Ouverture d'une instance détachée…",
+    "es": "Abriendo instancia separada...",
+    "ru": "Открытие отдельного экземпляра…",
+    "zh": "打开独立实例..."
+  },
+  "Opening grouped instance…": {
+    "fr": "Ouverture d'une instance groupée…",
+    "es": "Abriendo instancia agrupada...",
+    "ru": "Открытие сгруппированного экземпляра…",
+    "zh": "打开分组实例..."
+  },
+  "Opening the Spicetify installer.": {
+    "fr": "Ouverture du programme d'installation de Spicetify.",
+    "es": "Abriendo el instalador de Spicetify.",
+    "ru": "Открытие установщика Spicetify.",
+    "zh": "打开 Spicetify 安装程序。"
+  },
+  "Opening window…": {
+    "fr": "Ouverture de la fenêtre…",
+    "es": "Abriendo ventana…",
+    "ru": "Открывающееся окно…",
+    "zh": "打开窗户…"
+  },
+  "Or (3 mois)": {
+    "fr": "Ou (3 mois)",
+    "es": "O (3 meses)",
+    "ru": "Или (3 месяца)",
+    "zh": "或 (3 莫伊)"
+  },
+  "Orbs — Apprentice": {
+    "fr": "Orbes – Apprenti",
+    "es": "Orbes – Aprendiz",
+    "ru": "Сферы — Ученик",
+    "zh": "球体 — 学徒"
+  },
+  "Partenaire": {
+    "fr": "Partenaire",
+    "es": "partenario",
+    "ru": "Партнер",
+    "zh": "帕特奈尔"
+  },
+  "Password": {
+    "fr": "Mot de passe",
+    "es": "Contraseña",
+    "ru": "Пароль",
+    "zh": "密码"
+  },
+  "Patch Discord voice": {
+    "fr": "Voix de Patch Discord",
+    "es": "Parche de voz de Discord",
+    "ru": "Патч Discord озвучки",
+    "zh": "修补不和谐声音"
+  },
+  "Pause": {
+    "fr": "Pause",
+    "es": "Pausa",
+    "ru": "Пауза",
+    "zh": "暂停"
+  },
+  "Paused": {
+    "fr": "En pause",
+    "es": "En pausa",
+    "ru": "Приостановлено",
+    "zh": "已暂停"
+  },
+  "Permissions": {
+    "fr": "Autorisations",
+    "es": "Permisos",
+    "ru": "Разрешения",
+    "zh": "权限"
+  },
+  "Phone (local display)": {
+    "fr": "Téléphone (affichage local)",
+    "es": "Teléfono (pantalla local)",
+    "ru": "Телефон (локальный дисплей)",
+    "zh": "电话（本地显示）"
+  },
+  "Ping": {
+    "fr": "Ping",
+    "es": "hacer ping",
+    "ru": "Пинг",
+    "zh": "平"
+  },
+  "Pink": {
+    "fr": "Rose",
+    "es": "rosa",
+    "ru": "Розовый",
+    "zh": "粉色的"
+  },
+  "Plain text": {
+    "fr": "Texte brut",
+    "es": "Texto sin formato",
+    "ru": "Обычный текст",
+    "zh": "纯文本"
+  },
+  "Platine (6 mois)": {
+    "fr": "Platine (6 mois)",
+    "es": "Platino (6 meses)",
+    "ru": "Платина (6 месяцев)",
+    "zh": "铂 (6 摩尔)"
+  },
+  "Play": {
+    "fr": "Jouer",
+    "es": "Jugar",
+    "ru": "Играть",
+    "zh": "玩"
+  },
+  "Playing": {
+    "fr": "Jouer",
+    "es": "jugando",
+    "ru": "Играя",
+    "zh": "演奏"
+  },
+  "Please enter a name for the profile configuration.": {
+    "fr": "Veuillez saisir un nom pour la configuration du profil.",
+    "es": "Introduzca un nombre para la configuración del perfil.",
+    "ru": "Введите имя конфигурации профиля.",
+    "zh": "请输入配置文件配置的名称。"
+  },
+  "Plugin": {
+    "fr": "Plugin",
+    "es": "Complemento",
+    "ru": "Плагин",
+    "zh": "插件"
+  },
+  "Plugin monitor": {
+    "fr": "Moniteur de plugins",
+    "es": "Monitor de complemento",
+    "ru": "Плагин монитора",
+    "zh": "插件监控"
+  },
+  "Positive heap": {
+    "fr": "Tas positif",
+    "es": "montón positivo",
+    "ru": "Положительная куча",
+    "zh": "正堆"
+  },
+  "Previous track": {
+    "fr": "Piste précédente",
+    "es": "Pista anterior",
+    "ru": "Предыдущий трек",
+    "zh": "上一曲目"
+  },
+  "Primary Theme Color": {
+    "fr": "Couleur du thème principal",
+    "es": "Color del tema principal",
+    "ru": "Основной цвет темы",
+    "zh": "主要主题颜色"
+  },
+  "Private": {
+    "fr": "Privé",
+    "es": "Privado",
+    "ru": "Частный",
+    "zh": "私人的"
+  },
+  "Profile Effect": {
+    "fr": "Effet de profil",
+    "es": "Efecto de perfil",
+    "ru": "Эффект профиля",
+    "zh": "轮廓效果"
+  },
+  "Profile color (Nitro — gradient possible)": {
+    "fr": "Couleur du profil (Nitro — dégradé possible)",
+    "es": "Color del perfil (Nitro - gradiente posible)",
+    "ru": "Цвет профиля (Нитро — возможен градиент)",
+    "zh": "配置文件颜色（Nitro — 可以渐变）"
+  },
+  "Profile configuration deleted.": {
+    "fr": "Configuration du profil supprimée.",
+    "es": "Configuración del perfil eliminada.",
+    "ru": "Конфигурация профиля удалена.",
+    "zh": "配置文件配置已删除。"
+  },
+  "Profile configuration loaded! Click 'Save Changes' at the bottom.": {
+    "fr": "Configuration du profil chargée ! Cliquez sur « Enregistrer les modifications » en bas.",
+    "es": "¡Configuración de perfil cargada! Haga clic en \"Guardar cambios\" en la parte inferior.",
+    "ru": "Конфигурация профиля загружена! Нажмите «Сохранить изменения» внизу.",
+    "zh": "配置文件配置已加载！点击底部的“保存更改”。"
+  },
+  "Profile configuration renamed.": {
+    "fr": "Configuration du profil renommée.",
+    "es": "Se cambió el nombre de la configuración del perfil.",
+    "ru": "Конфигурация профиля переименована.",
+    "zh": "配置文件配置已重命名。"
+  },
+  "Profile configuration saved successfully!": {
+    "fr": "Configuration du profil enregistrée avec succès !",
+    "es": "¡La configuración del perfil se guardó correctamente!",
+    "ru": "Конфигурация профиля успешно сохранена!",
+    "zh": "配置文件配置保存成功！"
+  },
+  "Profile picture": {
+    "fr": "Photo de profil",
+    "es": "Foto de perfil",
+    "ru": "Изображение профиля",
+    "zh": "个人资料图片"
+  },
+  "Pronouns": {
+    "fr": "Pronoms",
+    "es": "Pronombres",
+    "ru": "Местоимения",
+    "zh": "代词"
+  },
+  "Quick switch": {
+    "fr": "Changement rapide",
+    "es": "Cambio rápido",
+    "ru": "Быстрый переключатель",
+    "zh": "快速开关"
+  },
+  "RAM share": {
+    "fr": "Partage de RAM",
+    "es": "compartir RAM",
+    "ru": "доля оперативной памяти",
+    "zh": "内存共享"
+  },
+  "Re-enter your passcode": {
+    "fr": "Entrez à nouveau votre mot de passe",
+    "es": "Vuelva a ingresar su contraseña",
+    "ru": "Повторно введите свой пароль",
+    "zh": "重新输入您的密码"
+  },
+  "Ready for your activities": {
+    "fr": "Prêt pour vos activités",
+    "es": "Listo para tus actividades",
+    "ru": "Готов к вашей деятельности",
+    "zh": "为您的活动做好准备"
+  },
+  "Refresh": {
+    "fr": "Actualiser",
+    "es": "Actualizar",
+    "ru": "Обновить",
+    "zh": "刷新"
+  },
+  "Related code": {
+    "fr": "Code associé",
+    "es": "Código relacionado",
+    "ru": "Связанный код",
+    "zh": "相关代码"
+  },
+  "Remove": {
+    "fr": "Supprimer",
+    "es": "Quitar",
+    "ru": "Удалять",
+    "zh": "消除"
+  },
+  "Remove Friend": {
+    "fr": "Supprimer un ami",
+    "es": "Eliminar amigo",
+    "ru": "Удалить друга",
+    "zh": "删除好友"
+  },
+  "Remove Saved User": {
+    "fr": "Supprimer l'utilisateur enregistré",
+    "es": "Eliminar usuario guardado",
+    "ru": "Удалить сохраненного пользователя",
+    "zh": "删除已保存的用户"
+  },
+  "Remove copy profile": {
+    "fr": "Supprimer le profil de copie",
+    "es": "Eliminar copia del perfil",
+    "ru": "Удалить копию профиля",
+    "zh": "删除复制配置文件"
+  },
+  "Remove friends": {
+    "fr": "Supprimer des amis",
+    "es": "Quitar amigos",
+    "ru": "Удалить друзей",
+    "zh": "删除好友"
+  },
+  "Remove from Surveillance": {
+    "fr": "Supprimer de la surveillance",
+    "es": "Quitar de vigilancia",
+    "ru": "Снять с наблюдения",
+    "zh": "解除监控"
+  },
+  "Remove from favorites": {
+    "fr": "Supprimer des favoris",
+    "es": "Quitar de favoritos",
+    "ru": "Удалить из избранного",
+    "zh": "从收藏夹中删除"
+  },
+  "Rename": {
+    "fr": "Renommer",
+    "es": "Cambiar nombre",
+    "ru": "Переименовать",
+    "zh": "重命名"
+  },
+  "Rename Profile Configuration": {
+    "fr": "Renommer la configuration du profil",
+    "es": "Cambiar el nombre de la configuración del perfil",
+    "ru": "Переименование конфигурации профиля",
+    "zh": "重命名配置文件配置"
+  },
+  "Replace Voice Playground index.js?": {
+    "fr": "Remplacer Voice Playground index.js ?",
+    "es": "¿Reemplazar Voice Playground index.js?",
+    "ru": "Заменить голосовую площадку index.js?",
+    "zh": "替换 Voice Playground index.js？"
+  },
+  "Replace index.js": {
+    "fr": "Remplacer index.js",
+    "es": "Reemplazar index.js",
+    "ru": "Заменить index.js",
+    "zh": "替换index.js"
+  },
+  "Request": {
+    "fr": "Demande",
+    "es": "Solicitar",
+    "ru": "Запрос",
+    "zh": "要求"
+  },
+  "Request cancelled": {
+    "fr": "Demande annulée",
+    "es": "Solicitud cancelada",
+    "ru": "Запрос отменен",
+    "zh": "请求已取消"
+  },
+  "Request received": {
+    "fr": "Demande reçue",
+    "es": "Solicitud recibida",
+    "ru": "Запрос получен",
+    "zh": "收到请求"
+  },
+  "Request sent": {
+    "fr": "Demande envoyée",
+    "es": "Solicitud enviada",
+    "ru": "Запрос отправлен",
+    "zh": "请求已发送"
+  },
+  "Reset": {
+    "fr": "Réinitialiser",
+    "es": "Reiniciar",
+    "ru": "Перезагрузить",
+    "zh": "重置"
+  },
+  "Resources": {
+    "fr": "Ressources",
+    "es": "Recursos",
+    "ru": "Ресурсы",
+    "zh": "资源"
+  },
+  "Results": {
+    "fr": "Résultats",
+    "es": "Resultados",
+    "ru": "Результаты",
+    "zh": "结果"
+  },
+  "Right click to copy ID": {
+    "fr": "Clic droit pour copier l'ID",
+    "es": "Haga clic derecho para copiar la identificación",
+    "ru": "Щелкните правой кнопкой мыши, чтобы скопировать идентификатор",
+    "zh": "右键复制ID"
+  },
+  "Right-click on any user in chat or member list, then click \\\"Save to SaveThem\\\".": {
+    "fr": "Faites un clic droit sur n'importe quel utilisateur dans le chat ou la liste des membres, puis cliquez sur « Enregistrer dans SaveThem ».",
+    "es": "Haga clic derecho en cualquier usuario en el chat o en la lista de miembros, luego haga clic en \\\"Guardar en SaveThem\\\".",
+    "ru": "Щелкните правой кнопкой мыши любого пользователя в чате или списке участников, затем нажмите «Сохранить в SaveThem».",
+    "zh": "右键单击聊天或成员列表中的任何用户，然后单击“保存到 SaveThem”。"
+  },
+  "Roles": {
+    "fr": "Rôles",
+    "es": "Roles",
+    "ru": "Роли",
+    "zh": "角色"
+  },
+  "Rotation interval must be at least 1 second.": {
+    "fr": "L'intervalle de rotation doit être d'au moins 1 seconde.",
+    "es": "El intervalo de rotación debe ser de al menos 1 segundo.",
+    "ru": "Интервал вращения должен составлять не менее 1 секунды.",
+    "zh": "旋转间隔必须至少为 1 秒。"
+  },
+  "Rubis (36 mois)": {
+    "fr": "Rubis (36 mois)",
+    "es": "Rubis (36 meses)",
+    "ru": "Рубис (36 месяцев)",
+    "zh": "红宝石 (36 mois)"
+  },
+  "Save": {
+    "fr": "Enregistrer",
+    "es": "Guardar",
+    "ru": "Сохранять",
+    "zh": "节省"
+  },
+  "Save ${user.globalName || user.username}": {
+    "fr": "Enregistrer ${user.globalName || utilisateur.nom d'utilisateur}",
+    "es": "Guardar ${user.globalName || usuario.nombre de usuario}",
+    "ru": "Сохранить ${user.globalName || пользователь.имя_пользователя}",
+    "zh": "保存 ${user.globalName ||用户.用户名}"
+  },
+  "Save as .txt": {
+    "fr": "Enregistrer au format .txt",
+    "es": "Guardar como .txt",
+    "ru": "Сохранить как .txt",
+    "zh": "另存为.txt"
+  },
+  "Save my profile": {
+    "fr": "Sauvegarder mon profil",
+    "es": "guardar mi perfil",
+    "ru": "Сохранить мой профиль",
+    "zh": "保存我的个人资料"
+  },
+  "Save to SaveThem": {
+    "fr": "Enregistrer pour les enregistrer",
+    "es": "Guardar para guardarlos",
+    "ru": "Сохранить, чтобы спасти их",
+    "zh": "保存以保存他们"
+  },
+  "SaveThem - Saved Contacts": {
+    "fr": "SaveThem - Contacts enregistrés",
+    "es": "SaveThem - Contactos guardados",
+    "ru": "SaveThem – Сохраненные контакты",
+    "zh": "SaveThem - 保存的联系人"
+  },
+  "Saved Note / Reason": {
+    "fr": "Note/Raison enregistrée",
+    "es": "Nota guardada/motivo",
+    "ru": "Сохраненная заметка/причина",
+    "zh": "保存的注释/原因"
+  },
+  "Saving current profile...": {
+    "fr": "Enregistrement du profil actuel...",
+    "es": "Guardando perfil actual...",
+    "ru": "Сохранение текущего профиля...",
+    "zh": "正在保存当前配置文件..."
+  },
+  "Saving...": {
+    "fr": "Sauvegarde...",
+    "es": "Guardando...",
+    "ru": "Сохранение...",
+    "zh": "保存..."
+  },
+  "Screen sharing": {
+    "fr": "Partage d'écran",
+    "es": "Compartir pantalla",
+    "ru": "Совместное использование экрана",
+    "zh": "屏幕共享"
+  },
+  "Screen sharing controls": {
+    "fr": "Contrôles de partage d'écran",
+    "es": "Controles para compartir pantalla",
+    "ru": "Элементы управления демонстрацией экрана",
+    "zh": "屏幕共享控件"
+  },
+  "Search": {
+    "fr": "Rechercher",
+    "es": "Buscar",
+    "ru": "Поиск",
+    "zh": "搜索"
+  },
+  "Search a plugin and compare its measured CPU and RAM contribution.": {
+    "fr": "Recherchez un plugin et comparez sa contribution mesurée au CPU et à la RAM.",
+    "es": "Busque un complemento y compare su contribución medida de CPU y RAM.",
+    "ru": "Найдите плагин и сравните измеренный вклад ЦП и ОЗУ.",
+    "zh": "搜索插件并比较其测得的 CPU 和 RAM 贡献。"
+  },
+  "Search accounts...": {
+    "fr": "Rechercher des comptes...",
+    "es": "Buscar cuentas...",
+    "ru": "Поиск аккаунтов...",
+    "zh": "搜索帐户..."
+  },
+  "Search for a friend or a DM...": {
+    "fr": "Recherchez un ami ou un DM...",
+    "es": "Busca un amigo o un DM...",
+    "ru": "Найдите друга или DM...",
+    "zh": "寻找朋友或 DM..."
+  },
+  "Search for a friend...": {
+    "fr": "Rechercher un ami...",
+    "es": "Busca un amigo...",
+    "ru": "Ищи друга...",
+    "zh": "寻找朋友..."
+  },
+  "Search for a plugin name, then pick one from the results.": {
+    "fr": "Recherchez un nom de plugin, puis choisissez-en un dans les résultats.",
+    "es": "Busque el nombre de un complemento y luego elija uno de los resultados.",
+    "ru": "Найдите имя плагина, а затем выберите его из результатов.",
+    "zh": "搜索插件名称，然后从结果中选择一个。"
+  },
+  "Search for a plugin...": {
+    "fr": "Rechercher un plugin...",
+    "es": "Buscar un complemento...",
+    "ru": "Найдите плагин...",
+    "zh": "搜索插件..."
+  },
+  "Search videos or channels...": {
+    "fr": "Rechercher des vidéos ou des chaînes...",
+    "es": "Buscar vídeos o canales...",
+    "ru": "Поиск видео или каналов...",
+    "zh": "搜索视频或频道..."
+  },
+  "Search voice channel": {
+    "fr": "Rechercher un canal vocal",
+    "es": "Buscar canal de voz",
+    "ru": "Поиск голосового канала",
+    "zh": "搜索语音频道"
+  },
+  "Searching...": {
+    "fr": "Recherche...",
+    "es": "Buscando...",
+    "ru": "Идет поиск...",
+    "zh": "正在寻找..."
+  },
+  "Secondary Theme Color": {
+    "fr": "Couleur du thème secondaire",
+    "es": "Color del tema secundario",
+    "ru": "Дополнительный цвет темы",
+    "zh": "次要主题颜色"
+  },
+  "Select TXT file": {
+    "fr": "Sélectionnez le fichier TXT",
+    "es": "Seleccionar archivo TXT",
+    "ru": "Выберите TXT-файл",
+    "zh": "选择TXT文件"
+  },
+  "Select all": {
+    "fr": "Tout sélectionner",
+    "es": "Seleccionar todo",
+    "ru": "Выбрать все",
+    "zh": "选择全部"
+  },
+  "Send DM": {
+    "fr": "Envoyer un DM",
+    "es": "Enviar DM",
+    "ru": "Отправить личное сообщение",
+    "zh": "发送私信"
+  },
+  "Send a message… (Enter = send, Ctrl+V = paste image)": {
+    "fr": "Envoyer un message… (Entrée = envoyer, Ctrl+V = coller l'image)",
+    "es": "Enviar un mensaje… (Intro = enviar, Ctrl+V = pegar imagen)",
+    "ru": "Отправить сообщение… (Enter = отправить, Ctrl+V = вставить изображение)",
+    "zh": "发送消息...（Enter = 发送，Ctrl+V = 粘贴图像）"
+  },
+  "Sent a message.": {
+    "fr": "J'ai envoyé un message.",
+    "es": "Envió un mensaje.",
+    "ru": "Отправил сообщение.",
+    "zh": "发了一条消息。"
+  },
+  "Sent an attachment.": {
+    "fr": "Envoyé une pièce jointe.",
+    "es": "Envió un archivo adjunto.",
+    "ru": "Отправил вложение.",
+    "zh": "发了一个附件。"
+  },
+  "Server Cloner": {
+    "fr": "Cloneur de serveur",
+    "es": "Clonador de servidor",
+    "ru": "Серверный клонер",
+    "zh": "服务器克隆"
+  },
+  "Server settings": {
+    "fr": "Paramètres du serveur",
+    "es": "Configuración del servidor",
+    "ru": "Настройки сервера",
+    "zh": "服务器设置"
+  },
+  "Share my Custom Profile": {
+    "fr": "Partager mon profil personnalisé",
+    "es": "Compartir mi perfil personalizado",
+    "ru": "Поделиться моим личным профилем",
+    "zh": "分享我的自定义个人资料"
+  },
+  "Shift+Enter for new line · Local history (100 messages)": {
+    "fr": "Maj+Entrée pour une nouvelle ligne · Historique local (100 messages)",
+    "es": "Shift+Enter para nueva línea · Historial local (100 mensajes)",
+    "ru": "Shift+Enter для новой строки · Локальная история (100 сообщений)",
+    "zh": "Shift+Enter 换行·本地历史记录（100 条消息）"
+  },
+  "Signals": {
+    "fr": "Signaux",
+    "es": "Señales",
+    "ru": "Сигналы",
+    "zh": "信号"
+  },
+  "Silent Delete": {
+    "fr": "Suppression silencieuse",
+    "es": "Eliminación silenciosa",
+    "ru": "Тихое удаление",
+    "zh": "静默删除"
+  },
+  "Silent Delete History": {
+    "fr": "Historique de suppression silencieuse",
+    "es": "Historial de eliminación silenciosa",
+    "ru": "Тихое удаление истории",
+    "zh": "静默删除历史记录"
+  },
+  "Simulate Nitro": {
+    "fr": "Simuler Nitro",
+    "es": "Simular Nitro",
+    "ru": "Имитировать нитро",
+    "zh": "模拟硝基"
+  },
+  "Simulated": {
+    "fr": "Simulé",
+    "es": "simulado",
+    "ru": "Имитация",
+    "zh": "模拟"
+  },
+  "Slow": {
+    "fr": "Lent",
+    "es": "Lento",
+    "ru": "Медленный",
+    "zh": "慢的"
+  },
+  "Source code": {
+    "fr": "Code source",
+    "es": "código fuente",
+    "ru": "Исходный код",
+    "zh": "源代码"
+  },
+  "Source server": {
+    "fr": "Serveur source",
+    "es": "Servidor de origen",
+    "ru": "Исходный сервер",
+    "zh": "源服务器"
+  },
+  "Special Badges": {
+    "fr": "Insignes spéciaux",
+    "es": "Insignias especiales",
+    "ru": "Специальные значки",
+    "zh": "特殊徽章"
+  },
+  "Spicetify installer opened in a terminal.": {
+    "fr": "Le programme d'installation de Spicetify s'est ouvert dans un terminal.",
+    "es": "El instalador de Spicetify se abrió en una terminal.",
+    "ru": "Установщик Spicetify открыт в терминале.",
+    "zh": "Spicetify 安装程序在终端中打开。"
+  },
+  "Spotify controls": {
+    "fr": "Contrôles Spotify",
+    "es": "Controles de Spotify",
+    "ru": "Элементы управления Spotify",
+    "zh": "Spotify 控件"
+  },
+  "Spotify lyrics update delay cannot be negative.": {
+    "fr": "Le délai de mise à jour des paroles Spotify ne peut pas être négatif.",
+    "es": "El retraso en la actualización de las letras de Spotify no puede ser negativo.",
+    "ru": "Задержка обновления текстов песен Spotify не может быть отрицательной.",
+    "zh": "Spotify 歌词更新延迟不能为负数。"
+  },
+  "Spreadsheet": {
+    "fr": "Feuille de calcul",
+    "es": "Hoja de cálculo",
+    "ru": "электронная таблица",
+    "zh": "电子表格"
+  },
+  "Staff Discord": {
+    "fr": "Discorde entre le personnel",
+    "es": "Discordia del personal",
+    "ru": "Разногласия среди персонала",
+    "zh": "员工不和"
+  },
+  "Start a search to see tracks": {
+    "fr": "Lancez une recherche pour voir les pistes",
+    "es": "Iniciar una búsqueda para ver pistas",
+    "ru": "Начните поиск, чтобы увидеть треки",
+    "zh": "开始搜索以查看曲目"
+  },
+  "Start cloning": {
+    "fr": "Commencer le clonage",
+    "es": "Empezar a clonar",
+    "ru": "Начать клонирование",
+    "zh": "开始克隆"
+  },
+  "Status emojis for": {
+    "fr": "Emojis de statut pour",
+    "es": "Emojis de estado para",
+    "ru": "Статусные смайлы для",
+    "zh": "状态表情符号"
+  },
+  "Status emojis for this account, one per line. Unicode, custom and animated Discord emojis are supported.": {
+    "fr": "Emojis de statut pour ce compte, un par ligne. Les émojis Discord Unicode, personnalisés et animés sont pris en charge.",
+    "es": "Emojis de estado para esta cuenta, uno por línea. Se admiten emojis de Discord Unicode, personalizados y animados.",
+    "ru": "Статусные смайлы для этой учетной записи, по одному в каждой строке. Поддерживаются Юникод, пользовательские и анимированные смайлы Discord.",
+    "zh": "此帐户的状态表情符号，每行一个。支持 Unicode、自定义和动画 Discord 表情符号。"
+  },
+  "Stereo is installed": {
+    "fr": "La stéréo est installée",
+    "es": "El estéreo está instalado.",
+    "ru": "Стерео установлено",
+    "zh": "音响已安装"
+  },
+  "Stereo is not installed": {
+    "fr": "La stéréo n'est pas installée",
+    "es": "El estéreo no está instalado",
+    "ru": "Стерео не установлено",
+    "zh": "音响未安装"
+  },
+  "Stereo must be installed again": {
+    "fr": "La stéréo doit être réinstallée",
+    "es": "El estéreo debe instalarse nuevamente.",
+    "ru": "Стерео необходимо установить заново",
+    "zh": "必须重新安装立体声"
+  },
+  "StereoInstaller activity will appear here.": {
+    "fr": "L’activité StereoInstaller apparaîtra ici.",
+    "es": "La actividad de StereoInstaller aparecerá aquí.",
+    "ru": "Здесь появится активность StereoInstaller.",
+    "zh": "StereoInstaller 活动将出现在此处。"
+  },
+  "StereoInstaller logs cleared.": {
+    "fr": "Journaux StereoInstaller effacés.",
+    "es": "Se borraron los registros de StereoInstaller.",
+    "ru": "Журналы StereoInstaller очищены.",
+    "zh": "StereoInstaller 日志已清除。"
+  },
+  "StereoInstaller warning": {
+    "fr": "Avertissement de StereoInstaller",
+    "es": "Advertencia de StereoInstaller",
+    "ru": "Предупреждение стереоустановщика",
+    "zh": "立体声安装程序警告"
+  },
+  "Stop": {
+    "fr": "Arrêter",
+    "es": "Detener",
+    "ru": "Останавливаться",
+    "zh": "停止"
+  },
+  "Stop sharing": {
+    "fr": "Arrêter de partager",
+    "es": "dejar de compartir",
+    "ru": "Прекратить делиться",
+    "zh": "停止分享"
+  },
+  "Stream started": {
+    "fr": "Flux démarré",
+    "es": "Transmisión iniciada",
+    "ru": "Трансляция началась",
+    "zh": "直播开始"
+  },
+  "Stream stopped": {
+    "fr": "Flux arrêté",
+    "es": "Transmisión detenida",
+    "ru": "Трансляция остановлена",
+    "zh": "串流已停止"
+  },
+  "Successfully silently deleted {count} message(s).": {
+    "fr": "{count} messages ont été supprimés silencieusement et avec succès.",
+    "es": "{count} mensajes se eliminaron de forma silenciosa y exitosa.",
+    "ru": "Сообщения успешно удалены без уведомления ({count}).",
+    "zh": "已成功静默删除 {count} 条消息。"
+  },
+  "Successfully updated your ${type}!": {
+    "fr": "Votre ${type} a été mis à jour avec succès !",
+    "es": "¡Actualizó exitosamente su ${type}!",
+    "ru": "Ваш ${type} успешно обновлен!",
+    "zh": "已成功更新您的${type}！"
+  },
+  "Switch only": {
+    "fr": "Changer uniquement",
+    "es": "Cambiar solo",
+    "ru": "Только переключатель",
+    "zh": "仅开关"
+  },
+  "TXT": {
+    "fr": "SMS",
+    "es": "texto",
+    "ru": "ТЕКСТ",
+    "zh": "TXT"
+  },
+  "Target server (ADMIN required)": {
+    "fr": "Serveur cible (ADMIN requis)",
+    "es": "Servidor de destino (se requiere ADMIN)",
+    "ru": "Целевой сервер (требуется ADMIN)",
+    "zh": "目标服务器（需要管理员）"
+  },
+  "The Groq API is free and gives access to fast LLMs (Llama, Mixtral…).": {
+    "fr": "L'API Groq est gratuite et donne accès à des LLM rapides (Llama, Mixtral…).",
+    "es": "La API de Groq es gratuita y da acceso a LLM rápidos (Llama, Mixtral…).",
+    "ru": "Groq API бесплатен и предоставляет доступ к быстрым LLM (Llama, Mixtral…).",
+    "zh": "Groq API 是免费的，可以访问快速的法学硕士（Llama、Mixtral...）。"
+  },
+  "The Spicetify installer is only available in the desktop client.": {
+    "fr": "Le programme d'installation de Spicetify est uniquement disponible dans le client de bureau.",
+    "es": "El instalador de Spicetify solo está disponible en el cliente de escritorio.",
+    "ru": "Установщик Spicetify доступен только в настольном клиенте.",
+    "zh": "Spicetify 安装程序仅在桌面客户端中可用。"
+  },
+  "The file does not contain any valid phrases.": {
+    "fr": "Le fichier ne contient aucune expression valide.",
+    "es": "El archivo no contiene ninguna frase válida.",
+    "ru": "Файл не содержит допустимых фраз.",
+    "zh": "该文件不包含任何有效短语。"
+  },
+  "The numbers are samples collected while you use Illegalcord. If a plugin is not used during collection, it may look light even if it does more work in other situations.": {
+    "fr": "Les numéros sont des échantillons collectés pendant que vous utilisez Illegalcord. Si un plugin n’est pas utilisé lors de la collecte, il peut paraître léger même s’il fait plus de travail dans d’autres situations.",
+    "es": "Los números son muestras recopiladas mientras usa Illegalcord. Si un complemento no se utiliza durante la recopilación, puede parecer liviano incluso si funciona más en otras situaciones.",
+    "ru": "Цифры представляют собой образцы, собранные во время использования Illegalcord. Если плагин не используется во время сбора данных, он может выглядеть легкомысленным, даже если в других ситуациях он выполняет больше работы.",
+    "zh": "这些数字是您使用 Illegalcord 时收集的样本。如果一个插件在收集过程中没有被使用，即使它在其他情况下做了更多的工作，它也可能看起来很轻。"
+  },
+  "The selected file will be installed as discord_voice.node.": {
+    "fr": "Le fichier sélectionné sera installé sous le nom discord_voice.node.",
+    "es": "El archivo seleccionado se instalará como discord_voice.node.",
+    "ru": "Выбранный файл будет установлен как discord_voice.node.",
+    "zh": "所选文件将安装为discord_voice.node。"
+  },
+  "This downloads and runs the official Spicetify installer from GitHub in a terminal. Spicetify Marketplace will be selected automatically.": {
+    "fr": "Cela télécharge et exécute le programme d'installation officiel de Spicetify depuis GitHub dans un terminal. Spicetify Marketplace sera sélectionné automatiquement.",
+    "es": "Esto descarga y ejecuta el instalador oficial de Spicetify desde GitHub en una terminal. Spicetify Marketplace se seleccionará automáticamente.",
+    "ru": "Это загружает и запускает официальный установщик Spicetify с GitHub в терминале. Spicetify Marketplace будет выбран автоматически.",
+    "zh": "这将从 GitHub 下载并在终端中运行官方 Spicetify 安装程序。 Spicetify 市场将被自动选择。"
+  },
+  "This page explains what Client Diagnostics measures and how to read the numbers without knowing the code.": {
+    "fr": "Cette page explique ce que Client Diagnostics mesure et comment lire les chiffres sans connaître le code.",
+    "es": "Esta página explica qué mide Client Diagnostics y cómo leer los números sin conocer el código.",
+    "ru": "На этой странице объясняется, что измеряет клиентская диагностика и как читать цифры, не зная кода.",
+    "zh": "本页介绍了客户端诊断的测量内容以及如何在不知道代码的情况下读取数字。"
+  },
+  "This page interprets the metrics and flags plugins that may make Illegalcord lag.": {
+    "fr": "Cette page interprète les métriques et signale les plugins qui peuvent entraîner un retard d'Illegalcord.",
+    "es": "Esta página interpreta los complementos de métricas y indicadores que pueden provocar un retraso en Illegalcord.",
+    "ru": "На этой странице интерпретируются метрики и помечаются плагины, которые могут вызывать зависания Illegalcord.",
+    "zh": "此页面解释了可能导致 Illegalcord 滞后的指标和标记插件。"
+  },
+  "This plugin replaces local Discord voice files to enable higher audio quality. It keeps a backup so you can restore the original files when needed.": {
+    "fr": "Ce plugin remplace les fichiers vocaux Discord locaux pour permettre une meilleure qualité audio. Il conserve une sauvegarde afin que vous puissiez restaurer les fichiers d'origine en cas de besoin.",
+    "es": "Este complemento reemplaza los archivos de voz locales de Discord para permitir una mayor calidad de audio. Mantiene una copia de seguridad para que puedas restaurar los archivos originales cuando sea necesario.",
+    "ru": "Этот плагин заменяет локальные голосовые файлы Discord, обеспечивая более высокое качество звука. Он сохраняет резервную копию, поэтому при необходимости вы можете восстановить исходные файлы.",
+    "zh": "该插件替换本地 Discord 语音文件以实现更高的音频质量。它保留备份，以便您可以在需要时恢复原始文件。"
+  },
+  "This requires Discord authorization. Once enabled, everyone using Nightcord will be able to see your Custom Profile, and you will be able to see theirs.": {
+    "fr": "Cela nécessite une autorisation Discord. Une fois activé, toutes les personnes utilisant Nightcord pourront voir votre profil personnalisé et vous pourrez voir le leur.",
+    "es": "Esto requiere autorización de Discord. Una vez habilitado, todos los que usen Nightcord podrán ver su perfil personalizado y usted podrá ver el de ellos.",
+    "ru": "Для этого требуется авторизация Discord. После включения каждый, кто использует Nightcord, сможет видеть ваш пользовательский профиль, а вы сможете видеть их профиль.",
+    "zh": "这需要 Discord 授权。启用后，使用 Nightcord 的每个人都将能够看到您的自定义配置文件，您也将能够看到他们的自定义配置文件。"
+  },
+  "This will copy index.js from StereoMethods/Discord-Voice into": {
+    "fr": "Cela copiera index.js de StereoMethods/Discord-Voice dans",
+    "es": "Esto copiará index.js de StereoMethods/Discord-Voice a",
+    "ru": "Это скопирует index.js из StereoMethods/Discord-Voice в",
+    "zh": "这会将 index.js 从 StereoMethods/Discord-Voice 复制到"
+  },
+  "This will download the Discord Audio Collective Method files for your platform, save a backup, and replace the local Discord voice module to enable higher audio quality.": {
+    "fr": "Cela téléchargera les fichiers de la méthode collective Discord Audio pour votre plate-forme, enregistrera une sauvegarde et remplacera le module vocal Discord local pour permettre une qualité audio supérieure.",
+    "es": "Esto descargará los archivos del método colectivo de audio de Discord para su plataforma, guardará una copia de seguridad y reemplazará el módulo de voz de Discord local para permitir una mayor calidad de audio.",
+    "ru": "При этом будут загружены файлы коллективного метода Discord Audio для вашей платформы, сохранена резервная копия и заменен локальный голосовой модуль Discord, чтобы обеспечить более высокое качество звука.",
+    "zh": "这将为您的平台下载 Discord 音频集体方法文件，保存备份，并替换本地 Discord 语音模块以实现更高的音频质量。"
+  },
+  "This will use the local": {
+    "fr": "Cela utilisera le local",
+    "es": "Esto utilizará el local",
+    "ru": "Это будет использовать локальный",
+    "zh": "这将使用本地"
+  },
+  "Timers, frames, and listeners": {
+    "fr": "Minuteries, frames et auditeurs",
+    "es": "Temporizadores, fotogramas y oyentes.",
+    "ru": "Таймеры, кадры и слушатели",
+    "zh": "计时器、帧和侦听器"
+  },
+  "Token not found": {
+    "fr": "Jeton introuvable",
+    "es": "Ficha no encontrada",
+    "ru": "Токен не найден",
+    "zh": "未找到令牌"
+  },
+  "Too many tries.\\nPlease try again in": {
+    "fr": "Trop d'essais.\\nVeuillez réessayer dans",
+    "es": "Demasiados intentos.\\nVuelve a intentarlo en",
+    "ru": "Слишком много попыток.\\nПожалуйста, попробуйте еще раз",
+    "zh": "尝试次数过多。\\n请重试"
+  },
+  "Total CPU": {
+    "fr": "Processeur total",
+    "es": "CPU total",
+    "ru": "Общий процессор",
+    "zh": "总CPU数"
+  },
+  "Total:": {
+    "fr": "Total :",
+    "es": "Totales:",
+    "ru": "Общий:",
+    "zh": "全部的："
+  },
+  "Transparent": {
+    "fr": "Transparente",
+    "es": "Transparente",
+    "ru": "Прозрачный",
+    "zh": "透明的"
+  },
+  "Try another plugin name or clear the search field.": {
+    "fr": "Essayez un autre nom de plugin ou effacez le champ de recherche.",
+    "es": "Pruebe con otro nombre de complemento o borre el campo de búsqueda.",
+    "ru": "Попробуйте другое имя плагина или очистите поле поиска.",
+    "zh": "尝试其他插件名称或清除搜索字段。"
+  },
+  "Unblocked": {
+    "fr": "Débloqué",
+    "es": "Desbloqueado",
+    "ru": "Разблокировано",
+    "zh": "畅通"
+  },
+  "Undeafen": {
+    "fr": "Insourdissant",
+    "es": "no sordo",
+    "ru": "Неглухой",
+    "zh": "不聋"
+  },
+  "Unfollow": {
+    "fr": "Ne plus suivre",
+    "es": "Dejar de seguir",
+    "ru": "Отписаться",
+    "zh": "取消关注"
+  },
+  "Unmute": {
+    "fr": "Activer le son",
+    "es": "Dejar de silenciar",
+    "ru": "Включить звук",
+    "zh": "取消静音"
+  },
+  "Unmuted by staff": {
+    "fr": "Non mis en sourdine par le personnel",
+    "es": "Silenciado por el personal",
+    "ru": "Включен персоналом",
+    "zh": "被工作人员取消静音"
+  },
+  "Use Discord Audio Collective Method?": {
+    "fr": "Utiliser la méthode collective Discord Audio ?",
+    "es": "¿Usar el método colectivo de Discord Audio?",
+    "ru": "Использовать коллективный метод Discord Audio?",
+    "zh": "使用 Discord 音频集体方法？"
+  },
+  "Use Revert to restore the saved backup before switching methods or after a Discord update if voice stops working.": {
+    "fr": "Utilisez Revert pour restaurer la sauvegarde enregistrée avant de changer de méthode ou après une mise à jour de Discord si la voix cesse de fonctionner.",
+    "es": "Utilice Revertir para restaurar la copia de seguridad guardada antes de cambiar de método o después de una actualización de Discord si la voz deja de funcionar.",
+    "ru": "Используйте «Восстановить», чтобы восстановить сохраненную резервную копию перед переключением методов или после обновления Discord, если голос перестает работать.",
+    "zh": "如果语音停止工作，请在切换方法之前或在 Discord 更新之后使用“恢复”恢复保存的备份。"
+  },
+  "Use Voice Playground Method?": {
+    "fr": "Utiliser la méthode Voice Playground ?",
+    "es": "¿Usar el método Voice Playground?",
+    "ru": "Использовать метод голосовой площадки?",
+    "zh": "使用语音游乐场方法？"
+  },
+  "Use only one method at a time.": {
+    "fr": "Utilisez une seule méthode à la fois.",
+    "es": "Utilice sólo un método a la vez.",
+    "ru": "Используйте только один метод за раз.",
+    "zh": "一次仅使用一种方法。"
+  },
+  "Use the client for a few minutes, then come back here to see collected samples.": {
+    "fr": "Utilisez le client pendant quelques minutes, puis revenez ici pour voir les échantillons collectés.",
+    "es": "Utilice el cliente durante unos minutos y luego vuelva aquí para ver las muestras recopiladas.",
+    "ru": "Используйте клиент в течение нескольких минут, а затем вернитесь сюда, чтобы просмотреть собранные образцы.",
+    "zh": "使用客户端几分钟，然后返回此处查看收集的样本。"
+  },
+  "User ID copied to clipboard!": {
+    "fr": "ID utilisateur copié dans le presse-papier !",
+    "es": "¡ID de usuario copiada al portapapeles!",
+    "ru": "Идентификатор пользователя скопирован в буфер обмена!",
+    "zh": "用户 ID 已复制到剪贴板！"
+  },
+  "User ID copied!": {
+    "fr": "ID utilisateur copié!",
+    "es": "¡ID de usuario copiada!",
+    "ru": "Идентификатор пользователя скопирован!",
+    "zh": "用户ID已复制！"
+  },
+  "User removed from list.": {
+    "fr": "Utilisateur supprimé de la liste.",
+    "es": "Usuario eliminado de la lista.",
+    "ru": "Пользователь удален из списка.",
+    "zh": "用户已从列表中删除。"
+  },
+  "Username copied!": {
+    "fr": "Nom d'utilisateur copié !",
+    "es": "¡Nombre de usuario copiado!",
+    "ru": "Имя пользователя скопировано!",
+    "zh": "用户名已复制！"
+  },
+  "Verified Developer": {
+    "fr": "Développeur vérifié",
+    "es": "Desarrollador verificado",
+    "ru": "Проверенный разработчик",
+    "zh": "经过验证的开发者"
+  },
+  "Videos from": {
+    "fr": "Vidéos de",
+    "es": "Vídeos de",
+    "ru": "Видео из",
+    "zh": "视频来自"
+  },
+  "View": {
+    "fr": "Voir",
+    "es": "Ver",
+    "ru": "Вид",
+    "zh": "看法"
+  },
+  "View raw profile": {
+    "fr": "Voir le profil brut",
+    "es": "Ver perfil sin editar",
+    "ru": "Посмотреть необработанный профиль",
+    "zh": "查看原始资料"
+  },
+  "Visually customize your Discord profile (username, PFP, banner, badges, bio...) — persistent, only visible to you.": {
+    "fr": "Personnalisez visuellement votre profil Discord (nom d'utilisateur, PFP, bannière, badges, bio...) — persistant, visible uniquement par vous.",
+    "es": "Personaliza visualmente tu perfil de Discord (nombre de usuario, PFP, banner, insignias, biografía...): persistente, solo visible para ti.",
+    "ru": "Визуально настройте свой профиль Discord (имя пользователя, PFP, баннер, значки, биографию...) — постоянный, видимый только вам.",
+    "zh": "直观地自定义您的 Discord 个人资料（用户名、PFP、横幅、徽章、个人简介...） — 持久且仅对您可见。"
+  },
+  "Voice +": {
+    "fr": "Voix +",
+    "es": "Voz +",
+    "ru": "Голос +",
+    "zh": "语音+"
+  },
+  "Voice -": {
+    "fr": "Voix -",
+    "es": "Voz -",
+    "ru": "Голос -",
+    "zh": "嗓音 -"
+  },
+  "Voice Playground Method is Windows-only.": {
+    "fr": "La méthode Voice Playground est réservée à Windows.",
+    "es": "El método Voice Playground es solo para Windows.",
+    "ru": "Метод голосовой площадки доступен только для Windows.",
+    "zh": "Voice Playground 方法仅适用于 Windows。"
+  },
+  "Voice Playground Method is only available on Windows.": {
+    "fr": "La méthode Voice Playground est uniquement disponible sous Windows.",
+    "es": "El método Voice Playground solo está disponible en Windows.",
+    "ru": "Метод голосовой игровой площадки доступен только в Windows.",
+    "zh": "Voice Playground 方法仅适用于 Windows。"
+  },
+  "Voice Playground Method is only available on Windows. Linux support is handled by Discord Audio Collective Method.": {
+    "fr": "La méthode Voice Playground est uniquement disponible sous Windows. La prise en charge de Linux est gérée par Discord Audio Collective Method.",
+    "es": "El método Voice Playground solo está disponible en Windows. La compatibilidad con Linux está a cargo del método Discord Audio Collective.",
+    "ru": "Метод голосовой игровой площадки доступен только в Windows. Поддержка Linux осуществляется коллективным методом Discord Audio.",
+    "zh": "Voice Playground 方法仅适用于 Windows。 Linux 支持由 Discord Audio Collective Method 处理。"
+  },
+  "Voice Playground Method replaces the local voice module to enable higher audio quality. Use only one method on the same Discord install.": {
+    "fr": "La méthode Voice Playground remplace le module vocal local pour permettre une qualité audio supérieure. Utilisez une seule méthode sur la même installation Discord.",
+    "es": "El método Voice Playground reemplaza el módulo de voz local para permitir una mayor calidad de audio. Utilice solo un método en la misma instalación de Discord.",
+    "ru": "Метод голосовой площадки заменяет локальный голосовой модуль, обеспечивая более высокое качество звука. Используйте только один метод при одной установке Discord.",
+    "zh": "Voice Playground Method取代本地语音模块，实现更高的音质。在同一个 Discord 安装中仅使用一种方法。"
+  },
+  "Voice Playground Method uses bundled Windows payloads from StereoMethods/Discord-Voice for higher audio quality. Do not install both methods on the same client. If Discord voice files stop working, use the bundled index.js repair and check the tutorial.": {
+    "fr": "La méthode Voice Playground utilise les charges utiles Windows groupées de StereoMethods/Discord-Voice pour une qualité audio supérieure. N'installez pas les deux méthodes sur le même client. Si les fichiers vocaux Discord cessent de fonctionner, utilisez la réparation index.js fournie et consultez le didacticiel.",
+    "es": "Voice Playground Method utiliza cargas útiles de Windows incluidas de StereoMethods/Discord-Voice para una mayor calidad de audio. No instale ambos métodos en el mismo cliente. Si los archivos de voz de Discord dejan de funcionar, utilice la reparación index.js incluida y consulte el tutorial.",
+    "ru": "Метод Voice Playground использует встроенные полезные нагрузки Windows от StereoMethods/Discord-Voice для более высокого качества звука. Не устанавливайте оба метода на одном клиенте. Если голосовые файлы Discord перестают работать, воспользуйтесь включенным в комплект средством восстановления index.js и ознакомьтесь с руководством.",
+    "zh": "Voice Playground Method 使用来自 StereoMethods/Discord-Voice 的捆绑 Windows 有效负载来获得更高的音频质量。不要在同一客户端上安装这两种方法。如果 Discord 语音文件停止工作，请使用捆绑的 index.js 修复并查看教程。"
+  },
+  "Voice Playground quality": {
+    "fr": "Qualité du Voice Playground",
+    "es": "Calidad de juegos de voz",
+    "ru": "Качество голосовой площадки",
+    "zh": "语音游乐场质量"
+  },
+  "Voice module": {
+    "fr": "Module vocal",
+    "es": "módulo de voz",
+    "ru": "Голосовой модуль",
+    "zh": "语音模块"
+  },
+  "WARNING — This user has CustomProfile enabled. Their profile has been modified.": {
+    "fr": "AVERTISSEMENT — Cet utilisateur a activé CustomProfile. Leur profil a été modifié.",
+    "es": "ADVERTENCIA: este usuario tiene habilitado CustomProfile. Su perfil ha sido modificado.",
+    "ru": "ВНИМАНИЕ. У этого пользователя включен CustomProfile. Их профиль был изменен.",
+    "zh": "警告 — 该用户启用了 CustomProfile。他们的个人资料已被修改。"
+  },
+  "Web page with images/videos": {
+    "fr": "Page Web avec images/vidéos",
+    "es": "Página web con imágenes/vídeos.",
+    "ru": "Веб-страница с изображениями/видео",
+    "zh": "带有图像/视频的网页"
+  },
+  "What it is for": {
+    "fr": "A quoi ça sert",
+    "es": "para que es",
+    "ru": "Для чего это нужно",
+    "zh": "它的用途是什么"
+  },
+  "What the columns mean": {
+    "fr": "Que signifient les colonnes",
+    "es": "¿Qué significan las columnas?",
+    "ru": "Что означают столбцы",
+    "zh": "各列的含义"
+  },
+  "White": {
+    "fr": "Blanc",
+    "es": "blanco",
+    "ru": "Белый",
+    "zh": "白色的"
+  },
+  "Why are you saving this user? (Add a note or reason)": {
+    "fr": "Pourquoi enregistrez-vous cet utilisateur ? (Ajouter une note ou une raison)",
+    "es": "¿Por qué estás salvando a este usuario? (Agrega una nota o motivo)",
+    "ru": "Почему вы сохраняете этого пользователя? (Добавить примечание или причину)",
+    "zh": "为什么要保存该用户？ （添加注释或原因）"
+  },
+  "Why it matters": {
+    "fr": "Pourquoi c'est important",
+    "es": "Por qué es importante",
+    "ru": "Почему это важно",
+    "zh": "为什么这很重要"
+  },
+  "Window opened ✓": {
+    "fr": "Fenêtre ouverte ✓",
+    "es": "Ventana abierta ✓",
+    "ru": "Окно открыто ✓",
+    "zh": "窗户已打开 ✓"
+  },
+  "Working...": {
+    "fr": "Travailler...",
+    "es": "Trabajando...",
+    "ru": "Работающий...",
+    "zh": "在职的..."
+  },
+  "You are sharing your screen": {
+    "fr": "Vous partagez votre écran",
+    "es": "Estás compartiendo tu pantalla.",
+    "ru": "Вы делитесь своим экраном",
+    "zh": "您正在共享您的屏幕"
+  },
+  "YouTube In Discord": {
+    "fr": "YouTube en discorde",
+    "es": "YouTube en discordia",
+    "ru": "YouTube в раздоре",
+    "zh": "YouTube 不和谐"
+  },
+  "[pinned]": {
+    "fr": "[épinglé]",
+    "es": "[fijado]",
+    "ru": "[закреплено]",
+    "zh": "[固定]"
+  },
+  "allocated": {
+    "fr": "attribué",
+    "es": "asignado",
+    "ru": "выделено",
+    "zh": "已分配"
+  },
+  "async calls": {
+    "fr": "appels asynchrones",
+    "es": "llamadas asíncronas",
+    "ru": "асинхронные вызовы",
+    "zh": "异步调用"
+  },
+  "callbacks.": {
+    "fr": "rappels.",
+    "es": "devoluciones de llamada.",
+    "ru": "обратные вызовы.",
+    "zh": "回调。"
+  },
+  "conversations exported": {
+    "fr": "conversations exportées",
+    "es": "conversaciones exportadas",
+    "ru": "разговоры экспортированы",
+    "zh": "导出的对话"
+  },
+  "disabled": {
+    "fr": "désactivé",
+    "es": "discapacitado",
+    "ru": "неполноценный",
+    "zh": "残疾人"
+  },
+  "e.g. Nice designer, Met in voice chat...": {
+    "fr": "par ex. Créateur sympa, rencontré en chat vocal...",
+    "es": "por ej. Buen diseñador, lo conocí en el chat de voz...",
+    "ru": "например Хороший дизайнер, Познакомились в голосовом чате...",
+    "zh": "例如不错的设计师，语音聊天认识的……"
+  },
+  "enabled": {
+    "fr": "activé",
+    "es": "habilitado",
+    "ru": "включено",
+    "zh": "已启用"
+  },
+  "file from StereoMethods/Discord-Voice, rename it to discord_voice.node, and copy it into": {
+    "fr": "fichier de StereoMethods/Discord-Voice, renommez-le en discord_voice.node et copiez-le dans",
+    "es": "archivo de StereoMethods/Discord-Voice, cámbiele el nombre a discord_voice.node y cópielo en",
+    "ru": "файл из StereoMethods/Discord-Voice, переименуйте его в discord_voice.node и скопируйте в",
+    "zh": "文件来自 StereoMethods/Discord-Voice，将其重命名为discord_voice.node，并将其复制到"
+  },
+  "friend": {
+    "fr": "ami",
+    "es": "amigo",
+    "ru": "друг",
+    "zh": "朋友"
+  },
+  "friends": {
+    "fr": "amis",
+    "es": "amigos",
+    "ru": "друзья",
+    "zh": "朋友们"
+  },
+  "from": {
+    "fr": "de",
+    "es": "de",
+    "ru": "от",
+    "zh": "从"
+  },
+  "generating file...": {
+    "fr": "générer un fichier...",
+    "es": "generando archivo...",
+    "ru": "создание файла...",
+    "zh": "生成文件..."
+  },
+  "he/him": {
+    "fr": "il/lui",
+    "es": "él/él",
+    "ru": "он/его",
+    "zh": "他/他"
+  },
+  "intervals": {
+    "fr": "intervalles",
+    "es": "intervalos",
+    "ru": "интервалы",
+    "zh": "间隔"
+  },
+  "is active for": {
+    "fr": "est actif pour",
+    "es": "está activo para",
+    "ru": "активен для",
+    "zh": "活跃于"
+  },
+  "last patch": {
+    "fr": "dernier patch",
+    "es": "último parche",
+    "ru": "последний патч",
+    "zh": "最后一个补丁"
+  },
+  "listeners": {
+    "fr": "auditeurs",
+    "es": "oyentes",
+    "ru": "слушатели",
+    "zh": "听众"
+  },
+  "log entries.": {
+    "fr": "entrées de journal.",
+    "es": "entradas de registro.",
+    "ru": "записи журнала.",
+    "zh": "日志条目。"
+  },
+  "messages": {
+    "fr": "messages",
+    "es": "mensajes",
+    "ru": "сообщения",
+    "zh": "消息"
+  },
+  "more channels — use search": {
+    "fr": "plus de chaînes — utilisez la recherche",
+    "es": "más canales: usa la búsqueda",
+    "ru": "больше каналов — воспользуйтесь поиском",
+    "zh": "更多渠道——使用搜索"
+  },
+  "not in cache": {
+    "fr": "pas en cache",
+    "es": "no en caché",
+    "ru": "нет в кеше",
+    "zh": "不在缓存中"
+  },
+  "observed heap +": {
+    "fr": "tas observé +",
+    "es": "montón observado +",
+    "ru": "наблюдаемая куча +",
+    "zh": "观察到的堆 +"
+  },
+  "one per line.": {
+    "fr": "un par ligne.",
+    "es": "uno por línea.",
+    "ru": "по одному на строку.",
+    "zh": "每行一个。"
+  },
+  "one per line. Unicode, custom and animated Discord emojis are supported.": {
+    "fr": "un par ligne. Les émojis Discord Unicode, personnalisés et animés sont pris en charge.",
+    "es": "uno por línea. Se admiten emojis de Discord Unicode, personalizados y animados.",
+    "ru": "по одному на строку. Поддерживаются Юникод, пользовательские и анимированные смайлы Discord.",
+    "zh": "每行一个。支持 Unicode、自定义和动画 Discord 表情符号。"
+  },
+  "options menu": {
+    "fr": "menu d'options",
+    "es": "menú de opciones",
+    "ru": "меню опций",
+    "zh": "选项菜单"
+  },
+  "or": {
+    "fr": "ou",
+    "es": "o",
+    "ru": "или",
+    "zh": "或者"
+  },
+  "participant": {
+    "fr": "participant",
+    "es": "participante",
+    "ru": "участник",
+    "zh": "参与者"
+  },
+  "participants": {
+    "fr": "participants",
+    "es": "participantes",
+    "ru": "участники",
+    "zh": "参与者"
+  },
+  "phrase": {
+    "fr": "expression",
+    "es": "frase",
+    "ru": "фраза",
+    "zh": "短语"
+  },
+  "phrases": {
+    "fr": "phrases",
+    "es": "frases",
+    "ru": "фразы",
+    "zh": "短语"
+  },
+  "results for": {
+    "fr": "résultats pour",
+    "es": "resultados para",
+    "ru": "результаты для",
+    "zh": "结果为"
+  },
+  "right click": {
+    "fr": "clic droit",
+    "es": "clic derecho",
+    "ru": "щелкните правой кнопкой мыши",
+    "zh": "右键单击"
+  },
+  "second": {
+    "fr": "deuxième",
+    "es": "segundo",
+    "ru": "второй",
+    "zh": "第二"
+  },
+  "seconds": {
+    "fr": "secondes",
+    "es": "segundos",
+    "ru": "секунды",
+    "zh": "秒"
+  },
+  "selected": {
+    "fr": "sélectionné",
+    "es": "seleccionado",
+    "ru": "выбрано",
+    "zh": "已选择"
+  },
+  "since reset": {
+    "fr": "depuis la réinitialisation",
+    "es": "desde reinicio",
+    "ru": "с момента сброса",
+    "zh": "自重置以来"
+  },
+  "slow calls": {
+    "fr": "appels lents",
+    "es": "llamadas lentas",
+    "ru": "медленные звонки",
+    "zh": "缓慢的通话"
+  },
+  "unknown": {
+    "fr": "inconnu",
+    "es": "desconocido",
+    "ru": "неизвестный",
+    "zh": "未知"
+  },
+  "viewer": {
+    "fr": "spectateur",
+    "es": "espectador",
+    "ru": "зритель",
+    "zh": "观众"
+  },
+  "viewers": {
+    "fr": "téléspectateurs",
+    "es": "espectadores",
+    "ru": "зрители",
+    "zh": "观众"
+  },
+  "visible": {
+    "fr": "visible",
+    "es": "visible",
+    "ru": "видимый",
+    "zh": "可见的"
+  },
+  "was installed. Patch Discord voice again.": {
+    "fr": "a été installé. Patchez à nouveau la voix Discord.",
+    "es": "fue instalado. Parchea la voz de Discord nuevamente.",
+    "ru": "был установлен. Снова обновите голос Discord.",
+    "zh": "已安装。再次修补不和谐声音。"
+  },
+  "{t(\"Open Custom Profile": {
+    "fr": "{t(\"Ouvrir un profil personnalisé",
+    "es": "{t(\"Abrir perfil personalizado",
+    "ru": "{t(\"Открыть пользовательский профиль",
+    "zh": "{t(\"打开自定义配置文件"
+  },
+  "Émeraude (24 mois)": {
+    "fr": "Émeraude (24 mois)",
+    "es": "Émeraude (24 meses)",
+    "ru": "Эмерод (24 месяца)",
+    "zh": "翡翠 (24 mois)"
+  },
+  "⚠ API key missing": {
+    "fr": "⚠ Clé API manquante",
+    "es": "⚠ Falta la clave API",
+    "ru": "⚠ Ключ API отсутствует",
+    "zh": "⚠ API 密钥丢失"
+  },
+  "⚠️ Failed to load channel": {
+    "fr": "⚠️ Échec du chargement de la chaîne",
+    "es": "⚠️ No se pudo cargar el canal",
+    "ru": "⚠️ Не удалось загрузить канал.",
+    "zh": "⚠️ 频道加载失败"
+  },
+  "⚠️ Search failed": {
+    "fr": "⚠️ La recherche a échoué",
+    "es": "⚠️ La búsqueda falló",
+    "ru": "⚠️ Поиск не удался",
+    "zh": "⚠️搜索失败"
+  },
+  "🔑 Groq Key (free)": {
+    "fr": "🔑 Clé Groq (gratuite)",
+    "es": "🔑 Clave Groq (gratis)",
+    "ru": "🔑 Ключ Грока (бесплатно)",
+    "zh": "🔑 Groq 键（免费）"
+  },
+  "🔥 Trending": {
+    "fr": "🔥 Tendance",
+    "es": "🔥 Tendencia",
+    "ru": "🔥 В тренде",
+    "zh": "🔥 流行趋势"
+  },
+  "Open Custom Profile": {
+    "fr": "Ouvrir un profil personnalisé",
+    "es": "Abrir perfil personalizado",
+    "ru": "Открыть пользовательский профиль",
+    "zh": "打开自定义配置文件"
+  },
+  "\"Silently\" deletes a message. Bypass message loggers by replacing the message with a placeholder.": {
+    "fr": "\"Silencieusement\" supprime un message. Contournez les enregistreurs de messages en remplaçant le message par un espace réservé.",
+    "es": "\"Silenciosamente\" elimina un mensaje. Omita los registradores de mensajes reemplazando el mensaje con un marcador de posición.",
+    "ru": "«Тихо» удаляет сообщение. Обход средств регистрации сообщений путем замены сообщения заполнителем.",
+    "zh": "“悄悄地”删除一条消息。通过用占位符替换消息来绕过消息记录器。"
+  },
+  "\"Silently\" edit a message without showing the edit tag and bypass Vencord's message logger.": {
+    "fr": "Modifiez « en silence » un message sans afficher la balise d'édition et contournez l'enregistreur de messages de Vencord.",
+    "es": "Edite \"silenciosamente\" un mensaje sin mostrar la etiqueta de edición y omita el registrador de mensajes de Vencord.",
+    "ru": "«Тихо» редактируйте сообщение, не показывая тег редактирования, и обходите регистратор сообщений Vencord.",
+    "zh": "“静默”编辑消息而不显示编辑标签并绕过 Vencord 的消息记录器。"
+  },
+  "Bypass the permission lockout prevention (\"Pretty sure you don't want to do this\")": {
+    "fr": "Contourner la prévention du verrouillage des autorisations (\"Je suis presque sûr que vous ne voulez pas faire ça\")",
+    "es": "Omita la prevención de bloqueo de permisos (\"Estoy bastante seguro de que no quiere hacer esto\")",
+    "ru": "Обход блокировки блокировки разрешений («Совершенно уверен, что вы не хотите этого делать»)",
+    "zh": "绕过权限锁定预防（“很确定你不想这样做”）"
+  },
+  "Disable functionality for these IDs. Accepts a comma separated list of DM IDs, channel IDs, and guild IDs. Only used if \"Default Hidden\" is enabled.": {
+    "fr": "Désactivez la fonctionnalité pour ces identifiants. Accepte une liste d'identifiants DM, d'identifiants de canal et d'identifiants de guilde séparés par des virgules. Utilisé uniquement si « Masqué par défaut » est activé.",
+    "es": "Deshabilite la funcionalidad para estos ID. Acepta una lista separada por comas de ID de DM, ID de canal e ID de gremio. Sólo se utiliza si está habilitado \"Oculto predeterminado\".",
+    "ru": "Отключите функциональность для этих идентификаторов. Принимает разделенный запятыми список идентификаторов DM, идентификаторов каналов и идентификаторов гильдий. Используется только в том случае, если включен параметр «Скрытый по умолчанию».",
+    "zh": "禁用这些 ID 的功能。接受以逗号分隔的 DM ID、频道 ID 和行会 ID 列表。仅在启用“默认隐藏”时使用。"
+  },
+  "Désactiver les points \"X est en train d'écrire...\"": {
+    "fr": "Désactiver les points \"X est en train d'écrire...\"",
+    "es": "Desactivar los puntos \"X est en train d'écrire...\"",
+    "ru": "Отключить точки «X est en train d'écrire...»",
+    "zh": "取消激活点“X est en train d'écrire...”"
+  },
+  "Enable functionality for these IDs. Accepts a comma separated list of DM IDs, channel IDs, and guild IDs. Only used if \"Default Hidden\" is disabled.": {
+    "fr": "Activez la fonctionnalité pour ces identifiants. Accepte une liste d'identifiants DM, d'identifiants de canal et d'identifiants de guilde séparés par des virgules. Utilisé uniquement si « Masqué par défaut » est désactivé.",
+    "es": "Habilite la funcionalidad para estos ID. Acepta una lista separada por comas de ID de DM, ID de canal e ID de gremio. Sólo se utiliza si \"Oculto predeterminado\" está deshabilitado.",
+    "ru": "Включите функциональность для этих идентификаторов. Принимает разделенный запятыми список идентификаторов DM, идентификаторов каналов и идентификаторов гильдий. Используется только в том случае, если параметр «Скрытый по умолчанию» отключен.",
+    "zh": "启用这些 ID 的功能。接受以逗号分隔的 DM ID、频道 ID 和行会 ID 列表。仅在禁用“默认隐藏”时使用。"
+  },
+  "Enter a name above and click \"Save my profile\" to add your first backup!": {
+    "fr": "Entrez un nom ci-dessus et cliquez sur « Enregistrer mon profil » pour ajouter votre première sauvegarde !",
+    "es": "Ingrese un nombre arriba y haga clic en \"Guardar mi perfil\" para agregar su primera copia de seguridad.",
+    "ru": "Введите имя выше и нажмите «Сохранить мой профиль», чтобы добавить первую резервную копию!",
+    "zh": "在上面输入名称，然后单击“保存我的个人资料”以添加您的第一个备份！"
+  },
+  "For the non-primary names, if the role has a gradient and the color below is set to \"Role+-#\", use the primary color instead of the whole gradient, and if it has a nitro effect, ignore it entirely.": {
+    "fr": "Pour les noms non principaux, si le rôle a un dégradé et que la couleur ci-dessous est définie sur \"Rôle+-#\", utilisez la couleur primaire au lieu de l'ensemble du dégradé, et s'il a un effet nitro, ignorez-le complètement.",
+    "es": "Para los nombres no principales, si el rol tiene un degradado y el color siguiente está establecido en \"Rol+-#\", use el color primario en lugar de todo el degradado, y si tiene un efecto nitro, ignórelo por completo.",
+    "ru": "Для неосновных имен, если роль имеет градиент и для цвета ниже установлено значение «Роль+-#», используйте основной цвет вместо всего градиента, а если он имеет нитроэффект, полностью игнорируйте его.",
+    "zh": "对于非主色名称，如果角色有渐变并且下面的颜色设置为“角色+-#”，则使用主色而不是整个渐变，如果有硝基效果，则完全忽略它。"
+  },
+  "For the non-primary names, if the role has a gradient or nitro effect, animate it. This is disabled by \"Ignore Gradients\" and reduced motion.": {
+    "fr": "Pour les noms non principaux, si le rôle a un effet dégradé ou nitro, animez-le. Ceci est désactivé par « Ignorer les dégradés » et la réduction du mouvement.",
+    "es": "Para los nombres no principales, si el rol tiene un efecto degradado o nitro, anímelo. Esto está desactivado por \"Ignorar gradientes\" y movimiento reducido.",
+    "ru": "Для неосновных имен, если роль имеет градиент или нитроэффект, анимируйте ее. Это отключено с помощью параметра «Игнорировать градиенты» и уменьшения движения.",
+    "zh": "对于非主要名称，如果角色具有渐变或硝基效果，请为其设置动画。这可以通过“忽略渐变”和减少运动来禁用。"
+  },
+  "Hide the \"X is typing...\" dots on screen (visual only)": {
+    "fr": "Masquer les points « X est en train de taper... » à l'écran (visuel uniquement)",
+    "es": "Ocultar los puntos \"X está escribiendo...\" en la pantalla (solo visual)",
+    "ru": "Скрыть точки «X печатает...» на экране (только визуально)",
+    "zh": "隐藏屏幕上的“X 正在输入...”点（仅限视觉）"
+  },
+  "Hide the default \"@\" symbol before the name in mentions and replies. Only applied if either feature is enabled.": {
+    "fr": "Masquez le symbole « @ » par défaut avant le nom dans les mentions et les réponses. Appliqué uniquement si l’une ou l’autre des fonctionnalités est activée.",
+    "es": "Oculta el símbolo \"@\" predeterminado antes del nombre en menciones y respuestas. Solo se aplica si alguna de las funciones está habilitada.",
+    "ru": "Скрывайте символ «@» по умолчанию перед именем в упоминаниях и ответах. Применяется только в том случае, если какая-либо функция включена.",
+    "zh": "隐藏提及和回复中姓名前的默认“@”符号。仅当任一功能启用时才适用。"
+  },
+  "If enabled, the plugin will hide your typing from others in any DMs/channels/guilds not listed in \"Disabled Locations\" below. If disabled, the plugin will show your typing to others for any DMs/channels/guilds not listed in \"Enabled Locations\" below.": {
+    "fr": "S'il est activé, le plugin masquera votre saisie aux autres dans tous les DM/canaux/guildes non répertoriés dans « Emplacements désactivés » ci-dessous. S'il est désactivé, le plugin montrera votre saisie aux autres pour tous les DM/canaux/guildes non répertoriés dans « Emplacements activés » ci-dessous.",
+    "es": "Si está habilitado, el complemento ocultará su escritura a otras personas en cualquier DM/canal/gremio que no aparezca en \"Ubicaciones deshabilitadas\" a continuación. Si está deshabilitado, el complemento mostrará su escritura a otras personas para cualquier DM/canal/gremio que no aparezca en \"Ubicaciones habilitadas\" a continuación.",
+    "ru": "Если этот параметр включен, плагин скроет ваш ввод текста от других в любых личных сообщениях/каналах/гильдиях, не перечисленных в разделе «Отключенные места» ниже. Если этот параметр отключен, плагин будет показывать ваш ввод другим пользователям для любых личных сообщений/каналов/гильдий, не перечисленных в разделе «Включенные местоположения» ниже.",
+    "zh": "如果启用，该插件将向下面“禁用位置”中未列出的任何 DM/频道/行会中的其他人隐藏您的输入内容。如果禁用，该插件将向其他人显示您在下面“启用位置”中未列出的任何 DM/频道/公会的输入内容。"
+  },
+  "Right-click on any user in chat or member list, then click \"Save to SaveThem\".": {
+    "fr": "Faites un clic droit sur n'importe quel utilisateur dans le chat ou la liste des membres, puis cliquez sur \"Enregistrer dans SaveThem\".",
+    "es": "Haga clic derecho en cualquier usuario en el chat o en la lista de miembros, luego haga clic en \"Guardar en SaveThem\".",
+    "ru": "Щелкните правой кнопкой мыши любого пользователя в чате или списке участников, затем нажмите «Сохранить в SaveThem».",
+    "zh": "右键单击聊天或成员列表中的任何用户，然后单击“保存到 SaveThem”。"
+  },
+  "Silent Edit": {
+    "fr": "Modification silencieuse",
+    "es": "Edición silenciosa",
+    "ru": "Тихий Править",
+    "zh": "无声编辑"
+  },
+  "The color to use for a friend's nickname if it's not the first displayed. Accepts any valid CSS input. Use \"Role\" to follow the user's top role colors, nitro effect colors, or IRCColors color if enabled. Use \"Role+-#\" to adjust the brightness by that percentage (ex: \"Role+15\")": {
+    "fr": "La couleur à utiliser pour le pseudo d'un ami si ce n'est pas le premier affiché. Accepte toute entrée CSS valide. Utilisez \"Rôle\" pour suivre les couleurs du rôle principal de l'utilisateur, les couleurs de l'effet nitro ou la couleur IRCColors si activé. Utilisez \"Role+-#\" pour régler la luminosité selon ce pourcentage (ex : \"Role+15\")",
+    "es": "El color que se usará para el apodo de un amigo si no es el primero que se muestra. Acepta cualquier entrada CSS válida. Utilice \"Rol\" para seguir los colores de rol principal del usuario, los colores de efecto nitro o el color IRCColors si está habilitado. Utilice \"Rol+-#\" para ajustar el brillo en ese porcentaje (por ejemplo: \"Rol+15\")",
+    "ru": "Цвет псевдонима друга, если он отображается не первым. Принимает любые допустимые входные данные CSS. Используйте «Роль», чтобы следовать цветам основной роли пользователя, цветам нитроэффекта или цвету IRCColors, если он включен. Используйте «Роль+-#», чтобы отрегулировать яркость на этот процент (например: «Роль+15»).",
+    "zh": "如果朋友的昵称不是第一次显示，则使用该颜色。接受任何有效的 CSS 输入。使用“角色”来遵循用户的顶级角色颜色、硝基效果颜色或 IRCColors 颜色（如果启用）。使用“Role+-#”按该百分比调整亮度（例如：“Role+15”）"
+  },
+  "The color to use for the custom name you assigned a user if it's not the first displayed. Accepts any valid CSS input. Use \"Role\" to follow the user's top role colors, nitro effect colors, or IRCColors color if enabled. Use \"Role+-#\" to adjust the brightness by that percentage (ex: \"Role+15\")": {
+    "fr": "La couleur à utiliser pour le nom personnalisé que vous avez attribué à un utilisateur si ce n'est pas le premier affiché. Accepte toute entrée CSS valide. Utilisez \"Rôle\" pour suivre les couleurs du rôle principal de l'utilisateur, les couleurs de l'effet nitro ou la couleur IRCColors si activé. Utilisez \"Role+-#\" pour régler la luminosité selon ce pourcentage (ex : \"Role+15\")",
+    "es": "El color que se utilizará para el nombre personalizado que le asignó a un usuario si no es el primero que se muestra. Acepta cualquier entrada CSS válida. Utilice \"Rol\" para seguir los colores de rol principal del usuario, los colores de efecto nitro o el color IRCColors si está habilitado. Utilice \"Rol+-#\" para ajustar el brillo en ese porcentaje (por ejemplo: \"Rol+15\")",
+    "ru": "Цвет, используемый для пользовательского имени, которое вы назначили пользователю, если оно отображается не первым. Принимает любые допустимые входные данные CSS. Используйте «Роль», чтобы следовать цветам основной роли пользователя, цветам нитроэффекта или цвету IRCColors, если он включен. Используйте «Роль+-#», чтобы отрегулировать яркость на этот процент (например: «Роль+15»).",
+    "zh": "您为用户分配的自定义名称所使用的颜色（如果不是第一次显示的话）。接受任何有效的 CSS 输入。使用“角色”来遵循用户的顶级角色颜色、硝基效果颜色或 IRCColors 颜色（如果启用）。使用“Role+-#”按该百分比调整亮度（例如：“Role+15”）"
+  },
+  "The color to use for the display name if it's not the first displayed. Accepts any valid CSS input. Use \"Role\" to follow the user's top role colors, nitro effect colors, or IRCColors color if enabled. Use \"Role+-#\" to adjust the brightness by that percentage (ex: \"Role+15\")": {
+    "fr": "La couleur à utiliser pour le nom d'affichage si ce n'est pas le premier affiché. Accepte toute entrée CSS valide. Utilisez \"Rôle\" pour suivre les couleurs du rôle principal de l'utilisateur, les couleurs de l'effet nitro ou la couleur IRCColors si activé. Utilisez \"Role+-#\" pour régler la luminosité selon ce pourcentage (ex : \"Role+15\")",
+    "es": "El color que se utilizará para el nombre para mostrar si no es el primero que se muestra. Acepta cualquier entrada CSS válida. Utilice \"Rol\" para seguir los colores de rol principal del usuario, los colores de efecto nitro o el color IRCColors si está habilitado. Utilice \"Rol+-#\" para ajustar el brillo en ese porcentaje (por ejemplo: \"Rol+15\")",
+    "ru": "Цвет отображаемого имени, если оно отображается не первым. Принимает любые допустимые входные данные CSS. Используйте «Роль», чтобы следовать цветам основной роли пользователя, цветам нитроэффекта или цвету IRCColors, если он включен. Используйте «Роль+-#», чтобы отрегулировать яркость на этот процент (например: «Роль+15»).",
+    "zh": "如果不是第一次显示，则用于显示名称的颜色。接受任何有效的 CSS 输入。使用“角色”来遵循用户的顶级角色颜色、硝基效果颜色或 IRCColors 颜色（如果启用）。使用“Role+-#”按该百分比调整亮度（例如：“Role+15”）"
+  },
+  "The color to use for the nickname if it's not the first displayed. Accepts any valid CSS input. Use \"Role\" to follow the user's top role colors, nitro effect colors, or IRCColors color if enabled. Use \"Role+-#\" to adjust the brightness by that percentage (ex: \"Role+15\")": {
+    "fr": "La couleur à utiliser pour le pseudo si ce n'est pas le premier affiché. Accepte toute entrée CSS valide. Utilisez \"Rôle\" pour suivre les couleurs du rôle principal de l'utilisateur, les couleurs de l'effet nitro ou la couleur IRCColors si activé. Utilisez \"Role+-#\" pour régler la luminosité selon ce pourcentage (ex : \"Role+15\")",
+    "es": "El color que se utilizará para el apodo si no es el primero que se muestra. Acepta cualquier entrada CSS válida. Utilice \"Rol\" para seguir los colores de rol principal del usuario, los colores de efecto nitro o el color IRCColors si está habilitado. Utilice \"Rol+-#\" para ajustar el brillo en ese porcentaje (por ejemplo: \"Rol+15\")",
+    "ru": "Цвет псевдонима, если он отображается не первым. Принимает любые допустимые входные данные CSS. Используйте «Роль», чтобы следовать цветам основной роли пользователя, цветам нитроэффекта или цвету IRCColors, если он включен. Используйте «Роль+-#», чтобы отрегулировать яркость на этот процент (например: «Роль+15»).",
+    "zh": "如果昵称不是第一次显示，则用于昵称的颜色。接受任何有效的 CSS 输入。使用“角色”来遵循用户的顶级角色颜色、硝基效果颜色或 IRCColors 颜色（如果启用）。使用“Role+-#”按该百分比调整亮度（例如：“Role+15”）"
+  },
+  "The color to use for the username if it's not the first displayed. Accepts any valid CSS input. Use \"Role\" to follow the user's top role colors, nitro effect colors, or IRCColors color if enabled. Use \"Role+-#\" to adjust the brightness by that percentage (ex: \"Role+15\")": {
+    "fr": "La couleur à utiliser pour le nom d'utilisateur si ce n'est pas le premier affiché. Accepte toute entrée CSS valide. Utilisez \"Rôle\" pour suivre les couleurs du rôle principal de l'utilisateur, les couleurs de l'effet nitro ou la couleur IRCColors si activé. Utilisez \"Role+-#\" pour régler la luminosité selon ce pourcentage (ex : \"Role+15\")",
+    "es": "El color que se utilizará para el nombre de usuario si no es el primero que se muestra. Acepta cualquier entrada CSS válida. Utilice \"Rol\" para seguir los colores de rol principal del usuario, los colores de efecto nitro o el color IRCColors si está habilitado. Utilice \"Rol+-#\" para ajustar el brillo en ese porcentaje (por ejemplo: \"Rol+15\")",
+    "ru": "Цвет имени пользователя, если оно отображается не первым. Принимает любые допустимые входные данные CSS. Используйте «Роль», чтобы следовать цветам основной роли пользователя, цветам нитроэффекта или цвету IRCColors, если он включен. Используйте «Роль+-#», чтобы отрегулировать яркость на этот процент (например: «Роль+15»).",
+    "zh": "如果用户名不是第一次显示，则用于用户名的颜色。接受任何有效的 CSS 输入。使用“角色”来遵循用户的顶级角色颜色、硝基效果颜色或 IRCColors 颜色（如果启用）。使用“Role+-#”按该百分比调整亮度（例如：“Role+15”）"
   }
 }

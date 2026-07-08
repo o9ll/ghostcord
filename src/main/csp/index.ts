@@ -1,4 +1,4 @@
-﻿import { NativeSettings } from "@main/settings";
+import { NativeSettings } from "@main/settings";
 import { session } from "electron";
 
 type PolicyMap = Record<string, string[]>;

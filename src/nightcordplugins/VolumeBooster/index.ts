@@ -1,5 +1,5 @@
 /*
- * Vencord, a modification for Discord's desktop app
+ * Nightcord, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -138,6 +138,15 @@ export default definePlugin({
             const gain = data.gainNode = data.audioContext.createGain();
             data.streamSourceNode.connect(gain);
             gain.connect(data.audioContext.destination);
+
+            const cleanup = () => {
+                try { data.streamSourceNode?.disconnect(); } catch {}
+                try { data.gainNode?.disconnect(); } catch {}
+                delete data.streamSourceNode;
+                delete data.gainNode;
+                data.stream.removeEventListener("inactive", cleanup);
+            };
+            data.stream.addEventListener("inactive", cleanup);
         }
 
         // @ts-expect-error

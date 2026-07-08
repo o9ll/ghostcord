@@ -28,10 +28,16 @@ function extractFromFile(content) {
     // Match: name: "Something",
     const nameMatch = content.match(/^\s*name:\s*["'`]([^"'`]+)["'`]/m);
     
-    // Match: description: "Something" or 'Something' or `Something`
-    // Properly matches content even if it contains other quotes
-    const descMatches = [...content.matchAll(/^\s*description:\s*(["'`])([\s\S]*?)\1/gm)];
-    const descriptions = descMatches.map(m => m[2]).filter(d =>
+    // Match description value as string literal (handles escaped quotes)
+    const rawDescriptions = [];
+    const descRegex = /^\s*description:\s*(?:"((?:[^"\\]|\\.)*)"|'((?:[^'\\]|\\.)*)'|`((?:[^`\\]|\\.)*)`)/gm;
+    let descMatch;
+    while ((descMatch = descRegex.exec(content)) !== null) {
+        const val = descMatch[1] ?? descMatch[2] ?? descMatch[3] ?? "";
+        const cleanVal = val.replace(/\\"/g, '"').replace(/\\'/g, "'").replace(/\\\\/g, '\\');
+        rawDescriptions.push(cleanVal);
+    }
+    const descriptions = rawDescriptions.filter(d =>
         d.length > 5 &&
         !d.includes("${") &&
         !d.startsWith("http")
@@ -50,8 +56,18 @@ function extractFromFile(content) {
         settingKeys.push(wordsToTitle(wordsFromCamel(key)));
     }
 
+    // Extract tPlugin/t translation keys (handles escaped quotes)
+    const translationKeys = [];
+    const tRegex = /(?:\btPlugin|\bt)\(\s*(?:"((?:[^"\\]|\\.)*)"|'((?:[^'\\]|\\.)*)'|`((?:[^`\\]|\\.)*)`)\s*\)/g;
+    let tMatch;
+    while ((tMatch = tRegex.exec(content)) !== null) {
+        const val = tMatch[1] ?? tMatch[2] ?? tMatch[3] ?? "";
+        const cleanVal = val.replace(/\\"/g, '"').replace(/\\'/g, "'").replace(/\\\\/g, '\\');
+        translationKeys.push(cleanVal);
+    }
+
     const name = nameMatch?.[1] ?? null;
-    return { name, descriptions, settingKeys };
+    return { name, descriptions, settingKeys, translationKeys };
 }
 
 for (const dir of PLUGIN_DIRS) {
@@ -69,9 +85,9 @@ for (const dir of PLUGIN_DIRS) {
 
             try {
                 const content = readFileSync(filePath, "utf-8");
-                const { name, descriptions, settingKeys } = extractFromFile(content);
+                const { name, descriptions, settingKeys, translationKeys } = extractFromFile(content);
                 if (name) {
-                    pluginEntries.push({ name, descriptions, settingKeys, file: filePath.replace(ROOT, "") });
+                    pluginEntries.push({ name, descriptions, settingKeys, translationKeys, file: filePath.replace(ROOT, "") });
                 }
             } catch (e) {}
             break;
@@ -88,9 +104,9 @@ for (const dir of PLUGIN_DIRS) {
             const filePath = join(dir, entry.name);
             try {
                 const content = readFileSync(filePath, "utf-8");
-                const { name, descriptions, settingKeys } = extractFromFile(content);
+                const { name, descriptions, settingKeys, translationKeys } = extractFromFile(content);
                 if (name) {
-                    pluginEntries.push({ name, descriptions, settingKeys, file: filePath.replace(ROOT, "") });
+                    pluginEntries.push({ name, descriptions, settingKeys, translationKeys, file: filePath.replace(ROOT, "") });
                 }
             } catch (e) {}
         }
@@ -114,6 +130,11 @@ for (const p of unique) {
     }
     for (const s of p.settingKeys) {
         allStrings.add(s);
+    }
+    if (p.translationKeys) {
+        for (const t of p.translationKeys) {
+            allStrings.add(t);
+        }
     }
 }
 

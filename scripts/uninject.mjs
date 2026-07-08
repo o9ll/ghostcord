@@ -66,11 +66,13 @@ function uninject(resourcesDir) {
     // Vérifier que le dossier app/ a bien été créé par Nightcord
     if (existsSync(appDirPath)) {
         try {
-            const pkg = JSON.parse(readFileSync(join(appDirPath, "package.json"), "utf-8"));
-            if (pkg.name !== "nightcord") {
-                console.warn(`\x1b[33m[Nightcord] Le dossier app/ existe mais n'a pas été créé par Nightcord (name: "${pkg.name}").\x1b[0m`);
-                console.warn("\x1b[33m            Abandon pour éviter de casser un autre mod.\x1b[0m");
-                return false;
+            if (existsSync(join(appDirPath, "index.js"))) {
+                const indexContent = readFileSync(join(appDirPath, "index.js"), "utf-8");
+                if (!indexContent.includes("Nightcord Injector") && !indexContent.includes("Nightcord")) {
+                    console.warn(`\x1b[33m[Nightcord] Le dossier app/ existe mais n'a pas l'air d'avoir été créé par Nightcord.\x1b[0m`);
+                    console.warn("\x1b[33m            Abandon pour éviter de casser un autre mod.\x1b[0m");
+                    return false;
+                }
             }
         } catch { }
 

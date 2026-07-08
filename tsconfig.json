@@ -60,6 +60,9 @@
             "@nightcordplugins/*": [
                 "./nightcordplugins/*"
             ],
+            "@illegalcordplugins/*": [
+                "./illegalcordplugins/*"
+            ],
             "main/*": [
                 "./nightcord/main/*"
             ],

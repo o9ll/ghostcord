@@ -32,6 +32,9 @@ const translations: Record<string, Partial<Record<Language, string>>> = {
 
     // ── Tab titles ──────────────────────────────────────────────────────────
     "Nightcord Settings": { fr: "Paramètres Nightcord", es: "Ajustes de Nightcord", ru: "Настройки Nightcord", zh: "Nightcord 设置", ar: "إعدادات Nightcord" },
+    "Client diagnostics": { fr: "Diagnostics client", es: "Diagnósticos del cliente", ru: "Диагностика клиента", zh: "客户端诊断", ar: "تشخيصات العميل" },
+    "Surveillance": { fr: "Surveillance", es: "Vigilancia", ru: "Слежка", zh: "监视", ar: "المراقبة" },
+
     "Sync": { fr: "Synchronisation", es: "Sincronización", ru: "Синхронизация", zh: "同步", ar: "مزامنة" },
     "Language": { fr: "Langue", es: "Idioma", ru: "Язык", zh: "语言", ar: "اللغة" },
     "Backup & Restore": { fr: "Sauvegarde et restauration", es: "Copia de seguridad y restauración", ru: "Резервное копирование и восстановление", zh: "备份与恢复", ar: "النسخ الاحتياطي والاستعادة" },
@@ -146,6 +149,9 @@ const translations: Record<string, Partial<Record<Language, string>>> = {
 
     // ── Sync tab extra ────────────────────────────────────────────────────────
     "Cancel": { fr: "Annuler", es: "Cancelar", ru: "Отмена", zh: "取消", ar: "إلغاء" },
+    "Welcome to Nightcord!": { fr: "Bienvenue sur Nightcord !", es: "¡Bienvenido a Nightcord!", ru: "Добро пожаловать в Nightcord!", zh: "欢迎使用 Nightcord！", ar: "مرحباً بك في Nightcord!" },
+    "Thank you for installing Nightcord. Would you like to join our official Telegram channel to stay updated?": { fr: "Merci d'avoir installé Nightcord. Souhaitez-vous rejoindre notre canal Telegram officiel pour rester informé des nouveautés ?", es: "Gracias por instalar Nightcord. ¿Te gustaría unirte a nuestro canal oficial de Telegram para mantenerte informado?", ru: "Спасибо за установку Nightcord. Хотите присоединиться к нашему официальному каналу в Telegram, чтобы быть в курсе новостей?", zh: "感谢您安装 Nightcord。您想加入我们的官方 Telegram 频道以获取最新动态吗？", ar: "شكراً لتثبيتك Nightcord. هل ترغب في الانضمام إلى قناتنا الرسمية على Telegram لتبقى على اطلاع بآخر المستجدات؟" },
+    "Open link": { fr: "Ouvrir le lien", es: "Abrir enlace", ru: "Открыть ссылку", zh: "打开链接", ar: "فتح الرابط" },
     "Choose which cloud backend to use for storing your settings.": { fr: "Choisissez le backend cloud pour stocker vos paramètres.", es: "Elige qué backend en la nube usar.", ru: "Выберите облачный сервер для хранения настроек.", zh: "选择用于存储设置的云端服务器。", ar: "اختر الخادم السحابي المراد استخدامه لتخزين إعداداتك." },
     "When enabled, your settings can be synced to and from the cloud. Use the actions below to manually sync.": { fr: "Lorsqu'activé, vos paramètres peuvent être synchronisés vers et depuis le cloud.", es: "Cuando está habilitado, tus ajustes se pueden sincronizar con la nube.", ru: "Когда включено, ваши настройки синхронизируются с облаком.", zh: "启用后，您的设置可与云端进行同步。", ar: "عند التفعيل، يمكن مزامنة إعداداتك مع السحابة وإليها. استخدم الإجراءات أدناه للمزامنة يدوياً." },
     "Connect to the cloud backend for settings synchronization. This will request authorization if you haven't set up cloud integration yet.": { fr: "Connectez-vous au backend cloud pour synchroniser vos paramètres. Cela demandera une autorisation si vous n'avez pas encore configuré l'intégration cloud.", es: "Conéctate al backend en la nube para sincronización de ajustes.", ru: "Подключитесь к облачному серверу для синхронизации настроек.", zh: "连接到云端服务器进行设置同步。", ar: "الاتصال بالخادم السحابي لمزامنة الإعدادات. سيطلب التفويض إذا لم تقم بإعداد التكامل السحابي بعد." },
@@ -455,7 +461,7 @@ const translations: Record<string, Partial<Record<Language, string>>> = {
     ")~text~(": { fr: ")~texte~(", es: ")~texto~(", ru: ")~текст~(", zh: ")~文字~(" },
     "It's permanent, if that wasn't obvious.": { fr: "C'est permanent, si ce n'était pas évident.", es: "Es permanente, si eso no fuera obvio.", ru: "Это навсегда, если это не было очевидно.", zh: "如果这不是很明显的话，它是永久性的。" },
     "API Key Required": { fr: "Clé API requise", es: "Clave API requerida", ru: "Требуется ключ API", zh: "需要 API 密钥" },
-    "NightcordAI": { fr: "Cordon de nuitAI", es: "Cordón nocturnoAI", ru: "Ночной шнурAI", zh: "夜线人工智能" },
+    "NightcordAI": { fr: "NightcordAI", es: "NightcordAI", ru: "NightcordAI", zh: "NightcordAI" },
     "View Role Members": { fr: "Afficher les membres du rôle", es: "Ver miembros de rol", ru: "Просмотр участников роли", zh: "查看角色成员" },
     "GoFile Settings": { fr: "Paramètres GoFile", es: "Configuración de GoFile", ru: "Настройки GoFile", zh: "转到文件设置" },
     "Catbox Settings": { fr: "Paramètres de la boîte à chat", es: "Configuración de la caja de gatos", ru: "Настройки Catbox", zh: "猫箱设置" },
@@ -521,7 +527,7 @@ const translations: Record<string, Partial<Record<Language, string>>> = {
     "TokenImporter": { fr: "Importateur de jetons", es: "Importador de tokens", ru: "Импортер токенов", zh: "令牌导入器" },
     "Copy": { fr: "Copie", es: "Copiar", ru: "Копировать", zh: "复制" },
     "AI": { fr: "IA", es: "AI", ru: "ИИ", zh: "人工智能" },
-    "Nightcord AI": { fr: "IA de cordon de nuit", es: "IA del cordón nocturno", ru: "Ночной шнур AI", zh: "夜线人工智能" },
+    "Nightcord AI": { fr: "Nightcord AI", es: "Nightcord AI", ru: "Nightcord AI", zh: "Nightcord AI" },
     "Current": { fr: "Actuel", es: "Actual", ru: "Текущий", zh: "当前的" },
     "1st": { fr: "1er", es: "1er", ru: "1-й", zh: "第一名" },
     "Usernames": { fr: "Noms d'utilisateur", es: "Nombres de usuario", ru: "Имена пользователей", zh: "用户名" },

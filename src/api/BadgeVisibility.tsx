@@ -7,7 +7,7 @@
 import { getPublicPluginConfig, saveOwnPluginConfig } from "./PluginSync";
 import { beginDiscordOAuth, getStoredToken, storeToken } from "./OAuth2";
 
-export type BadgeSource = "vencord" | "equicord" | "nightcord" | "globalbadges";
+export type BadgeSource = "vencord" | "equicord" | "nightcord" | "globalbadges" | "illegalcord";
 
 const PLUGIN_KEY = "badge-visibility";
 

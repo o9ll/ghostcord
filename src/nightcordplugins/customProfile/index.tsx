@@ -1,5 +1,5 @@
 /*
- * Vencord, a Discord client mod
+ * Nightcord, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -18,7 +18,7 @@ import { getPublicPluginConfig, saveOwnPluginConfig } from "../../api/PluginSync
 import { getStoredToken, storeToken, beginDiscordOAuth, API_BASE } from "../../api/OAuth2";
 import virtualMerge from "virtual-merge";
 
-import { t } from "../autoTranslateNightcord";
+import { tPlugin as t } from "@api/pluginI18n";
 
 const DS_KEY = "customProfile_data";
 const DS_ENABLED = "customProfile_enabled";
@@ -1399,7 +1399,7 @@ function CPDMNotice({ userId }: { userId: string; }) {
             <span style={{ fontSize: 18, flexShrink: 0 }}>⚠️</span>
             <div style={{ flex: 1 }}>
                 <span style={{ color: "var(--text-warning, #faa61a)", fontWeight: 600, fontSize: 13 }}>
-                    WARNING — This user has CustomProfile enabled. Their profile has been modified.
+                    {t("WARNING — This user has CustomProfile enabled. Their profile has been modified.")}
                 </span>
                 <br />
                 <span
@@ -1407,17 +1407,17 @@ function CPDMNotice({ userId }: { userId: string; }) {
                     style={{ color: "var(--text-link)", fontSize: 12, cursor: "pointer", marginTop: 2, display: "inline-block" }}
                     onClick={() => setShowRaw(r => !r)}
                 >
-                    {showRaw ? "Hide raw profile" : "View raw profile"}
+                    {showRaw ? t("Hide raw profile") : t("View raw profile")}
                 </span>
                 {showRaw && (() => {
                     const data = cached!.data!;
                     const fields: [string, string][] = [];
-                    if (data.username) fields.push(["Username", data.username]);
-                    if (data.globalName) fields.push(["Display name", data.globalName]);
-                    if (data.bio) fields.push(["Bio", data.bio]);
-                    if (data.pronouns) fields.push(["Pronouns", data.pronouns]);
-                    if (data.createdAt) fields.push(["Account created", data.createdAt]);
-                    if (data.nitro) fields.push(["Nitro", "Simulated"]);
+                    if (data.username) fields.push([t("Username"), data.username]);
+                    if (data.globalName) fields.push([t("Display name"), data.globalName]);
+                    if (data.bio) fields.push([t("Bio"), data.bio]);
+                    if (data.pronouns) fields.push([t("Pronouns"), data.pronouns]);
+                    if (data.createdAt) fields.push([t("Account created"), data.createdAt]);
+                    if (data.nitro) fields.push(["Nitro", t("Simulated")]);
                     return (
                         <div style={{ marginTop: 6, fontSize: 12, color: "var(--text-muted)", display: "flex", flexDirection: "column", gap: 2 }}>
                             {fields.map(([k, v]) => (

@@ -7,14 +7,19 @@
 import ErrorBoundary from "@components/ErrorBoundary";
 import { Logger } from "@utils/Logger";
 import { classes } from "@utils/misc";
-import { findComponentByCodeLazy, findCssClassesLazy } from "@webpack";
+import { find, filters, findComponentByCodeLazy, findCssClassesLazy } from "@webpack";
 import { Clickable, Tooltip, useEffect, useState, Popout, useRef } from "@webpack/common";
 import type { ComponentType, JSX, MouseEventHandler, ReactNode } from "react";
 import { openNightcordModal } from "@nightcordplugins/compactMode/NightcordModal";
 
 const logger = new Logger("HeaderBarAPI");
 
-const HeaderBarClasses = findCssClassesLazy("clickable", "withHighlight");
+const HeaderBarClasses = new Proxy({}, {
+    get: (_, prop: string) => {
+        const mod = find(filters.byProps("clickable", "withHighlight"));
+        return mod ? mod[prop] : prop;
+    }
+}) as any;
 const HeaderBarIcon = findComponentByCodeLazy(".HEADER_BAR_BADGE_TOP:", '"aria-haspopup":') as ComponentType<ChannelToolbarButtonProps>;
 
 export interface HeaderBarButtonProps {
@@ -67,6 +72,10 @@ export function HeaderBarButton(props: HeaderBarButtonProps & { ref?: React.RefO
     } = props;
 
     const label = ariaLabel ?? (typeof tooltip === "string" ? tooltip : undefined);
+
+    if (!Tooltip || !Clickable || !Icon) {
+        logger.error(`HeaderBarButton missing component for tooltip=${tooltip}: Tooltip=${!!Tooltip}, Clickable=${!!Clickable}, Icon=${!!Icon}`);
+    }
 
     return (
         <Tooltip text={tooltip ?? ""} position={position} shouldShow={tooltip != null}>

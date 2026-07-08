@@ -35,12 +35,13 @@ import { debounce } from "@shared/debounce";
 import { IS_WINDOWS } from "@utils/constants";
 import { createAndAppendStyle } from "@utils/css";
 import { StartAt } from "@utils/types";
-import { SettingsRouter } from "@webpack/common";
+import { SettingsRouter, Alerts } from "@webpack/common";
 
 import { get as dsGet } from "./api/DataStore";
 import { popNotice, showNotice } from "./api/Notices";
 import { showNotification } from "./api/Notifications";
 import { initPluginManager, PMLogger, startAllPlugins } from "./api/PluginManager";
+import { t } from "./api/i18n";
 import { PlainSettings, Settings, SettingsStore } from "./api/Settings";
 import { getCloudSettings, putCloudSettings, shouldCloudSync } from "./api/SettingsSync/cloudSync";
 import { localStorage } from "./utils/localStorage";
@@ -135,15 +136,18 @@ function showGreenUpdateBanner() {
         position: "fixed",
         top: "0", left: "0", right: "0",
         zIndex: "999999",
-        background: "linear-gradient(90deg, #1e5c2a 0%, #3ba55c 100%)",
-        color: "#fff",
+        background: "rgba(30, 31, 34, 0.95)",
+        backdropFilter: "blur(10px)",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
+        borderTop: "2px solid #5865F2",
+        color: "#dbdee1",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "9px 16px",
+        padding: "8px 16px",
         fontSize: "13px",
-        fontFamily: "var(--font-primary, sans-serif)",
-        boxShadow: "0 2px 16px rgba(0,0,0,0.5)",
+        fontFamily: "var(--font-primary, 'gg sans', sans-serif)",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
         gap: "12px",
     });
 
@@ -151,18 +155,19 @@ function showGreenUpdateBanner() {
     Object.assign(leftContent.style, {
         display: "flex",
         alignItems: "center",
-        gap: "10px",
+        gap: "12px",
         flex: "1",
         minWidth: "0",
     });
 
     const titleSpan = document.createElement("span");
-    titleSpan.style.fontWeight = "700";
+    titleSpan.style.fontWeight = "600";
+    titleSpan.style.color = "#ffffff";
     titleSpan.style.flexShrink = "0";
-    titleSpan.textContent = "🔔 Nightcord Update Available!";
+    titleSpan.textContent = "Nightcord Update Available";
 
     const statusSpan = document.createElement("span");
-    statusSpan.style.opacity = "0.85";
+    statusSpan.style.opacity = "0.7";
     statusSpan.style.fontSize = "12px";
     statusSpan.style.overflow = "hidden";
     statusSpan.style.textOverflow = "ellipsis";
@@ -173,33 +178,35 @@ function showGreenUpdateBanner() {
     let countdownTimer: ReturnType<typeof setInterval> | null = null;
 
     function setStatus(text: string) { statusSpan.textContent = text; }
-    setStatus(`Installation automatique dans ${countdown}s… (ou clique pour installer maintenant)`);
+    setStatus(`Auto-installing in ${countdown}s... (or click to install now)`);
 
     async function doInstall() {
         if (installing) return;
         installing = true;
         if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
         updateBtn.style.cursor = "not-allowed";
-        updateBtn.textContent = "⏳ Installation…";
-        setStatus("⬇ Téléchargement en cours…");
+        updateBtn.style.opacity = "0.7";
+        updateBtn.textContent = "Installing...";
+        setStatus("Downloading update...");
 
         try {
             const downloaded = await update();
-            if (!downloaded) throw new Error("Téléchargement échoué");
-            setStatus("✓ Téléchargé ! Extraction en cours…");
+            if (!downloaded) throw new Error("Download failed");
+            setStatus("Downloaded! Extracting...");
             await rebuild();
-            setStatus("✅ Mise à jour réussie ! Redémarrage dans 3s…");
+            setStatus("Update successful! Restarting in 3s...");
             setTimeout(() => relaunch(), 3_000);
         } catch (e) {
             UpdateLogger.error("Auto-install failed", e);
-            setStatus("❌ Erreur d'installation. Vérifie ta connexion. La mise à jour sera appliquée à la prochaine fermeture.");
+            setStatus("Install failed. Check console. Update will apply on restart.");
             installing = false;
             updateBtn.style.cursor = "pointer";
-            updateBtn.textContent = "⬇ Réessayer";
+            updateBtn.style.opacity = "1";
+            updateBtn.textContent = "Retry";
         }
     }
 
-    // Compte à rebours — auto-install après 10s
+    // Auto-install after 10s
     countdownTimer = setInterval(() => {
         countdown--;
         if (countdown <= 0) {
@@ -207,7 +214,7 @@ function showGreenUpdateBanner() {
             countdownTimer = null;
             doInstall();
         } else {
-            setStatus(`Installation automatique dans ${countdown}s… (ou clique pour installer maintenant)`);
+            setStatus(`Auto-installing in ${countdown}s... (or click to install now)`);
         }
     }, 1_000);
 
@@ -217,40 +224,47 @@ function showGreenUpdateBanner() {
     const rightContent = document.createElement("div");
     Object.assign(rightContent.style, {
         display: "flex",
-        gap: "8px",
+        gap: "12px",
         flexShrink: "0",
+        alignItems: "center"
     });
 
     const updateBtn = document.createElement("button");
     Object.assign(updateBtn.style, {
-        background: "rgba(255,255,255,0.2)",
-        border: "1px solid rgba(255,255,255,0.35)",
-        borderRadius: "6px",
-        color: "#fff",
-        padding: "4px 14px",
+        background: "#5865F2",
+        border: "none",
+        borderRadius: "4px",
+        color: "#ffffff",
+        padding: "4px 16px",
         cursor: "pointer",
-        fontSize: "12px",
-        fontWeight: "700",
+        fontSize: "13px",
+        fontWeight: "500",
         fontFamily: "inherit",
+        transition: "background 0.2s"
     });
-    updateBtn.textContent = "⬇ Installer maintenant";
+    updateBtn.onmouseenter = () => { if (!installing) updateBtn.style.background = "#4752C4"; };
+    updateBtn.onmouseleave = () => { if (!installing) updateBtn.style.background = "#5865F2"; };
+    updateBtn.textContent = "Install Now";
     updateBtn.addEventListener("click", doInstall);
 
     const closeBtn = document.createElement("button");
     Object.assign(closeBtn.style, {
         background: "transparent",
         border: "none",
-        color: "rgba(255,255,255,0.6)",
+        color: "#b5bac1",
         cursor: "pointer",
-        fontSize: "18px",
+        fontSize: "16px",
         padding: "0 4px",
         fontFamily: "inherit",
         lineHeight: "1",
+        transition: "color 0.2s"
     });
+    closeBtn.onmouseenter = () => closeBtn.style.color = "#dbdee1";
+    closeBtn.onmouseleave = () => closeBtn.style.color = "#b5bac1";
     closeBtn.textContent = "✕";
-    closeBtn.title = "Ignorer (la mise à jour sera installée à la fermeture de Discord)";
+    closeBtn.title = "Dismiss (will auto-install when Discord closes)";
     closeBtn.addEventListener("click", () => {
-        if (installing) return; // ne pas fermer si installation en cours
+        if (installing) return; // do not close if installing
         if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
         banner.remove();
         UpdateLogger.info("Update banner dismissed — will auto-apply on Discord quit.");
@@ -264,6 +278,10 @@ function showGreenUpdateBanner() {
 
     document.body.appendChild(banner);
 }
+
+// Allow triggering from console for testing
+// @ts-ignore
+window.showNightcordUpdateBanner = showGreenUpdateBanner;
 
 async function runUpdateCheck() {
     if (IS_UPDATER_DISABLED) return;
@@ -326,11 +344,19 @@ async function init() {
     if (!hasOpened) {
         localStorage.setItem("nightcord_telegram_opened", "true");
         setTimeout(() => {
-            if (window.nightcord && typeof window.nightcord.openUrl === "function") {
-                window.nightcord.openUrl("https://t.me/nightcordoff");
-            } else {
-                VencordNative.native.openExternal("https://t.me/nightcordoff");
-            }
+            Alerts.show({
+                title: t("Welcome to Nightcord!"),
+                body: t("Thank you for installing Nightcord. Would you like to join our official Telegram channel to stay updated?"),
+                confirmText: t("Open link"),
+                cancelText: t("Cancel"),
+                onConfirm: () => {
+                    if (window.nightcord && typeof window.nightcord.openUrl === "function") {
+                        window.nightcord.openUrl("https://t.me/nightcordoff");
+                    } else {
+                        VencordNative.native.openExternal("https://t.me/nightcordoff");
+                    }
+                }
+            });
         }, 3000);
     }
 
@@ -361,8 +387,23 @@ init();
 document.addEventListener("DOMContentLoaded", () => {
     startAllPlugins(StartAt.DOMContentLoaded);
 
+    // Reposition Discord's titlebar to the left by default (90px)
+    // When stealth mode or compact mode is enabled, it falls back to Discord's default center position.
+    createAndAppendStyle("nightcord-titlebar-position", coreStyleRootNode).textContent = `
+        body:not(.nightcord-stealth):not(.nightcord-compact) [class*="title_c38"] {
+            position: absolute !important;
+            left: 90px !important;
+            right: auto !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            text-align: left !important;
+            margin: 0 !important;
+        }
+    `;
+
     // FIXME
     if (IS_DISCORD_DESKTOP && Settings.winNativeTitleBar && IS_WINDOWS) {
         createAndAppendStyle("vencord-native-titlebar-style", coreStyleRootNode).textContent = "[class*=titleBar]{display: none!important}";
     }
 }, { once: true });
+
