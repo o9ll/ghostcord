@@ -297,10 +297,10 @@ export default definePlugin({
             if (!userBadges || !Array.isArray(userBadges)) return [];
 
             return userBadges
-                .filter(badge => badge && badge.icon)
+                .filter(badge => badge && badge.badge)
                 .map(badge => ({
-                    iconSrc: badge.icon,
-                    description: badge.placeholder ?? "Ghostcord Badge",
+                    iconSrc: badge.badge,
+                    description: badge.tooltip ?? "Ghostcord Badge",
                     position: BadgePosition.START,
                     props: {
                         style: {

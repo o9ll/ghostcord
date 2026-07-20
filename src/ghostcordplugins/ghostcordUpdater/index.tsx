@@ -226,7 +226,7 @@ function unmountBanner() {
 
 export default definePlugin({
     name: "GhostcordUpdater",
-    enabledByDefault: true,
+    enabledByDefault: false,
     description: "Shows a banner when a new Ghostcord version is available. Click Update to install.",
     authors: [{ name: "Ghostcord", id: 0n }],
 
