@@ -24,7 +24,7 @@ const settings = definePluginSettings({
     allowMentions: {
         type: OptionType.BOOLEAN,
         description: "Receive audio pings for @mentions",
-        default: false,
+        default: true,
     },
     allowEveryone: {
         type: OptionType.BOOLEAN,
@@ -41,7 +41,7 @@ const settings = definePluginSettings({
         type: OptionType.BOOLEAN,
         description: "Play the message notification sound even when its disabled",
         restartNeeded: true,
-        default: false
+        default: true
     }
 });
 
@@ -51,6 +51,7 @@ export default definePlugin({
     tags: ["Notifications", "Customisation"],
     authors: [Devs.ProffDea],
     isModified: true,
+    enabledByDefault: true,
     settings,
     patches: [
         {

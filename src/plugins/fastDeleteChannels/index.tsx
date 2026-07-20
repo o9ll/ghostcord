@@ -51,18 +51,18 @@ const settings = definePluginSettings({
     keyBind: {
         description: "The key to toggle trash when pressed.",
         type: OptionType.STRING,
-        default: "KeyZ",
+        default: "Delete",
         isValid: (value: string) => validKeycodes.includes(value),
     },
     reqCtrl: {
         description: "Require control to be held.",
         type: OptionType.BOOLEAN,
-        default: true,
+        default: false,
     },
     reqShift: {
         description: "Require shift to be held.",
         type: OptionType.BOOLEAN,
-        default: true,
+        default: false,
     },
     reqAlt: {
         description: "Require alt to be held.",
@@ -76,6 +76,7 @@ export default definePlugin({
     description: "Adds a trash icon to delete channels",
     tags: ["Servers", "Utility"],
     authors: [Devs.thororen],
+    enabledByDefault: true,
     settings,
     patches: [
         // TY TypingIndicator

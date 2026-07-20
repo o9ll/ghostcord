@@ -5,7 +5,6 @@
  */
 
 import { DataStore } from "@api/index";
-import {domain} from "../../../../../DOMAIN.json";
 
 import gitHash from "~git-hash";
 import plugins from "~plugins";
@@ -36,9 +35,9 @@ const LAST_SEEN_HASH_KEY = "EquicordChangelog_LastSeenHash";
 const KNOWN_PLUGINS_KEY = "EquicordChangelog_KnownPlugins";
 const KNOWN_SETTINGS_KEY = "EquicordChangelog_KnownSettings";
 const LAST_REPO_CHECK_KEY = "EquicordChangelog_LastRepoCheck";
-const GITEA_API_BASE = `https://source.${domain}/api/v1/repos`;
-const NIGHTCORD_RELEASES_REPO = "nightcord/nightcord";
-const NIGHTCORD_REPO_URL = `https://source.${domain}/${NIGHTCORD_RELEASES_REPO}`;
+const GITHUB_COMPARE_ENDPOINT = `https://api.github.com/repos`;
+const GHOSTCORD_RELEASES_REPO = "o9ll/ghostcord";
+const GHOSTCORD_REPO_URL = `https://github.com/${GHOSTCORD_RELEASES_REPO}`;
 
 type KnownPluginSettingsMap = Map<string, Set<string>>;
 
@@ -64,7 +63,7 @@ async function fetchCommitsBetween(
     if (!repoSlug || typeof fetch !== "function") return [];
     try {
         const res = await fetch(
-            `${GITEA_API_BASE}/${repoSlug}/compare/${fromHash}...${toHash}`,
+            `${GITHUB_COMPARE_ENDPOINT}/${repoSlug}/compare/${fromHash}...${toHash}`,
             {
                 headers: {
                     Accept: "application/json",
@@ -392,13 +391,13 @@ export async function getNewSettings(): Promise<Map<string, string[]>> {
     return newSettings;
 }
 
-export { NIGHTCORD_REPO_URL };
+export { GHOSTCORD_REPO_URL };
 
 export async function getCommitsSinceLastSeen(
     repoUrl: string,
 ): Promise<ChangelogEntry[]> {
-    // Toujours utiliser le repo Nightcord, ignorer le repoUrl d'Equicord
-    return fetchCommitsBetween(NIGHTCORD_RELEASES_REPO, "HEAD~10", "HEAD").catch(() => []);
+    // Always use the Ghostcord repo, ignore Equicord's repoUrl
+    return fetchCommitsBetween(GHOSTCORD_RELEASES_REPO, "HEAD~10", "HEAD").catch(() => []);
 }
 
 export async function updateKnownSettings(): Promise<void> {

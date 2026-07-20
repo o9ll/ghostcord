@@ -178,13 +178,13 @@ const settings = definePluginSettings({
     ignorePlaying: {
         type: OptionType.BOOLEAN,
         description: "Ignore all playing activities (These are usually game and RPC activities)",
-        default: false,
+        default: true,
         onChange: recalculateActivities
     },
     ignoreStreaming: {
         type: OptionType.BOOLEAN,
         description: "Ignore all streaming activities",
-        default: false,
+        default: true,
         onChange: recalculateActivities
     },
     ignoreListening: {
@@ -196,13 +196,13 @@ const settings = definePluginSettings({
     ignoreWatching: {
         type: OptionType.BOOLEAN,
         description: "Ignore all watching activities",
-        default: false,
+        default: true,
         onChange: recalculateActivities
     },
     ignoreCompeting: {
         type: OptionType.BOOLEAN,
         description: "Ignore all competing activities (These are normally special game activities)",
-        default: false,
+        default: true,
         onChange: recalculateActivities
     },
     ignoredActivities: {
@@ -235,6 +235,7 @@ export default definePlugin({
     description: "Ignore activities from showing up on your status ONLY. You can configure which ones are specifically ignored from the Registered Games and Activities tabs, or use the general settings below",
     tags: ["Activity", "Privacy", "Customisation"],
     dependencies: ["UserSettingsAPI"],
+    enabledByDefault: true,
 
     settings,
 

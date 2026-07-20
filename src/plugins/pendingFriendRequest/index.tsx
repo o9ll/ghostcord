@@ -38,6 +38,7 @@ export default definePlugin({
     name: "CancelFriendRequest",
     description: "Adds a way to cancel outgoing friend requests from profiles.",
     authors: [EquicordDevs.omaw],
+    enabledByDefault: true,
 
     contextMenus: {
         "user-profile-overflow-menu": userContextPatch

@@ -33,14 +33,14 @@ import { Avatar, OAuth2AuthorizeModal, React, Select, UserStore } from "@webpack
 
 import { MELLOWTEL_ONBOARDING_VERSION } from "@components/MellowtelConsentModal";
 
-import { ContributeModal } from "../../../../nightcord/renderer/components/ContributeModal";
+import { ContributeModal } from "../../../../ghostcord/renderer/components/ContributeModal";
 import { openNotificationSettingsModal } from "./NotificationSettings";
 
 const cl = classNameFactory("vc-vencord-tab-");
 
 const DEV_TEAM_IDS = [
-    { id: "1512419601244356680", role: "Owner" },
-    { id: "171356978310938624", role: "Co-Owner" }
+    { id: "1020801845490356245", role: "Owner" },
+    { id: "1020801845490356245", role: "Co-Owner" }
 ];
 
 function useDiscordUser(userId: string) {
@@ -99,18 +99,18 @@ function DevTeamSection() {
             <QuickActionCard>
                 <QuickAction
                     Icon={GithubIcon}
-                    text="Source Code"
-                    action={() => VencordNative.native.openExternal("https://source.nightcord.st/nightcord/nightcord")}
+                    text="Source"
+                    action={() => VencordNative.native.openExternal("https://github.com/o9ll/ghostcord")}
                 />
                 <QuickAction
                     Icon={PaintbrushIcon}
-                    text="Edit QuickCSS"
+                    text="CSS"
                     action={() => VencordNative.quickCss.openEditor()}
                 />
                 {!IS_WEB && (
                     <QuickAction
                         Icon={RestartIcon}
-                        text="Relaunch Discord"
+                        text="Restart"
                         action={relaunch}
                     />
                 )}
@@ -121,13 +121,13 @@ function DevTeamSection() {
                 />
                 <QuickAction
                     Icon={OwnerCrownIcon}
-                    text="DEV Team"
+                    text="Dev"
                     action={() => setShowDevs(!showDevs)}
                 />
                 <QuickAction
-                    Icon={PlanetIcon}
-                    text="Nightcord Channel"
-                    action={() => VencordNative.native.openExternal("https://t.me/nightcordoff")}
+                    Icon={GithubIcon}
+                    text="o9"
+                    action={() => VencordNative.native.openExternal("https://github.com/o9ll")}
                 />
             </QuickActionCard>
 
@@ -157,8 +157,8 @@ function useCompactActive() {
     const [active, setActive] = React.useState(isCompactModeEnabled);
     React.useEffect(() => {
         const handler = () => setActive(isCompactModeEnabled());
-        window.addEventListener("nightcord-compact-change", handler);
-        return () => window.removeEventListener("nightcord-compact-change", handler);
+        window.addEventListener("ghostcord-compact-change", handler);
+        return () => window.removeEventListener("ghostcord-compact-change", handler);
     }, []);
     return active;
 }
@@ -167,8 +167,8 @@ function useStealthActive() {
     const [active, setActive] = React.useState(isStealthModeEnabled);
     React.useEffect(() => {
         const handler = () => setActive(isStealthModeEnabled());
-        window.addEventListener("nightcord-stealth-change", handler);
-        return () => window.removeEventListener("nightcord-stealth-change", handler);
+        window.addEventListener("ghostcord-stealth-change", handler);
+        return () => window.removeEventListener("ghostcord-stealth-change", handler);
     }, []);
     return active;
 }
@@ -181,8 +181,8 @@ function StealthModeSection() {
             <Heading className={Margins.top20}>{t("Stealth Mode")}</Heading>
             <Paragraph className={Margins.bottom16}>
                 {enabled
-                    ? "Stealth mode is enabled â€” all Nightcord visual elements are hidden. Shortcut: Ctrl+Shift+H"
-                    : t("Hides all Nightcord visual elements without disabling plugins. Shortcut: Ctrl+Shift+H")}
+                    ? "Stealth mode is enabled - all Ghostcord visual elements are hidden. Shortcut: Ctrl+Shift+H"
+                    : t("Hides all Ghostcord visual elements without disabling plugins. Shortcut: Ctrl+Shift+H")}
             </Paragraph>
             <Button
                 onClick={toggleStealthMode}
@@ -222,7 +222,7 @@ function MellowtelSupportSwitch() {
                 VencordNative.mellowtel.setConsent(accepted, version);
                 setConsentState({ consent: accepted ? "accepted" : "declined", version });
             }}
-            title={t("Share bandwidth to support Nightcord (Mellowtel)")}
+            title={t("Share bandwidth to support Ghostcord (Mellowtel)")}
             description={
                 consent
                     ? undefined
@@ -344,7 +344,7 @@ function EquicordSettings() {
 
                 <Heading className={Margins.top20}>{t("Client Settings")}</Heading>
                 <Paragraph className={Margins.bottom16}>
-                    {t("Configure how Nightcord behaves and integrates with Discord. These settings affect the Discord client's appearance and behavior.")}
+                    {t("Configure how Ghostcord behaves and integrates with Discord. These settings affect the Discord client's appearance and behavior.")}
                 </Paragraph>
                 <Notice.Info className={Margins.bottom20} style={{ width: "100%" }}>
                     {t("You can customize where this settings section appears in Discord's settings menu by configuring the")} {" "}
@@ -467,7 +467,7 @@ function EquicordSettings() {
 
                 <Heading className={Margins.top20}>{t("Notifications")}</Heading>
                 <Paragraph className={Margins.bottom16}>
-                    {t("Configure how Nightcord handles notifications. You can customize when and how you receive alerts, or view a history of past notifications.")}
+                    {t("Configure how Ghostcord handles notifications. You can customize when and how you receive alerts, or view a history of past notifications.")}
                 </Paragraph>
 
                 <Flex gap="16px">
@@ -485,7 +485,7 @@ function EquicordSettings() {
 
             <Heading className={Margins.top20}>{t("Compact Mode")}</Heading>
             <Paragraph className={Margins.bottom16}>
-                {t("Replaces all Nightcord buttons with a single compact toggle icon. Click the icon in the header bar, channel toolbar, or chat bar to restore all buttons.")}
+                {t("Replaces all Ghostcord buttons with a single compact toggle icon. Click the icon in the header bar, channel toolbar, or chat bar to restore all buttons.")}
             </Paragraph>
             <Button
                 onClick={toggleCompactMode}
@@ -498,7 +498,7 @@ function EquicordSettings() {
 
             <Heading className={Margins.top20}>{t("Stealth Mode")}</Heading>
             <Paragraph className={Margins.bottom16}>
-                {t("Hides all Nightcord visual elements without disabling plugins. Shortcut: Ctrl+Shift+H")}
+                {t("Hides all Ghostcord visual elements without disabling plugins. Shortcut: Ctrl+Shift+H")}
             </Paragraph>
             <StealthModeButton />
 
@@ -506,7 +506,7 @@ function EquicordSettings() {
     );
 }
 
-export default wrapTab(EquicordSettings, "Nightcord Settings");
+export default wrapTab(EquicordSettings, "Ghostcord Settings");
 
 
 

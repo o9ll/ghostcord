@@ -39,12 +39,12 @@ const settings = definePluginSettings({
     },
     showInActive: {
         type: OptionType.BOOLEAN,
-        default: false,
+        default: true,
         description: "Show notifications even for currently active channel"
     },
     ignoreMuted: {
         type: OptionType.BOOLEAN,
-        default: true,
+        default: false,
         description: "Skip notifications from muted servers, channels, or users"
     }
 });
@@ -94,6 +94,7 @@ export default definePlugin({
     description: "Customizable notifications with improved mention formatting",
     tags: ["Chat", "Friends", "Notifications", "Servers"],
     authors: [EquicordDevs.smuki],
+    enabledByDefault: true,
     settings,
 
     flux: {

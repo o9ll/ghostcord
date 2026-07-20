@@ -36,6 +36,7 @@ export default definePlugin({
     dependencies: ["ChatInputButtonAPI"],
     tags: ["Chat", "Emotes"],
     authors: [Devs.MaiKokain],
+    enabledByDefault: true,
     settings,
     chatBarButton: {
         icon: kanadeSvg,

@@ -202,7 +202,7 @@ function UserCSSThemeCard({ theme, enabled, onChange, onDelete, onSettingsReset 
                 <Flex flexDirection="row" gap="0.4em" style={{ alignItems: "center" }}>
                     {!!theme.homepageURL && <Link href={theme.homepageURL}>Homepage</Link>}
                     {!!(theme.homepageURL && theme.supportURL) && (
-                        <span style={{ color: "var(--text-muted)" }}>â€¢</span>
+                        <span style={{ color: "var(--text-muted)" }}>•</span>
                     )}
                     {!!theme.supportURL && <Link href={theme.supportURL}>Support</Link>}
                 </Flex>
@@ -338,7 +338,7 @@ function OtherThemeCard({ theme, enabled, onChange, onDelete, showDeleteButton, 
                     )}
                     {!!theme.website && <Link href={theme.website}>Website</Link>}
                     {!!(theme.website && theme.invite) && (
-                        <span style={{ color: "var(--text-muted)" }}>â€¢</span>
+                        <span style={{ color: "var(--text-muted)" }}>•</span>
                     )}
                     {!!theme.invite && (
                         <Link
@@ -729,7 +729,7 @@ function ThemesTab() {
             />
 
             <Notice.Info className={Margins.bottom16} style={{ width: "100%" }}>
-                {t("Looking for themes? Check out")} <Link href="https://nightcord.st/themes">{t("NightCord Themes")}</Link> {t("or search on")} <Link href="https://github.com/search?q=discord+theme">GitHub</Link>. {t("When downloading from BetterDiscord, click \"Download\" and place the .theme.css file into your themes folder.")}
+                {t("Looking for themes? Check out")} <Link href="https://ghostcord.st/themes">{t("GhostCord Themes")}</Link> {t("or search on")} <Link href="https://github.com/search?q=discord+theme">GitHub</Link>. {t("When downloading from BetterDiscord, click \"Download\" and place the .theme.css file into your themes folder.")}
             </Notice.Info>
 
             <div className={cl("link-row")}>

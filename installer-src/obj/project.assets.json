@@ -243,23 +243,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\zzafi\\.nuget\\packages\\": {},
+    "C:\\Users\\o9\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "2.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\zzafi\\Desktop\\nightcord-main\\installer-src\\NightcordInstaller.csproj",
-      "projectName": "Nightcord-Installer",
-      "projectPath": "C:\\Users\\zzafi\\Desktop\\nightcord-main\\installer-src\\NightcordInstaller.csproj",
-      "packagesPath": "C:\\Users\\zzafi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\zzafi\\Desktop\\nightcord-main\\installer-src\\obj\\",
+      "projectUniqueName": "C:\\Users\\o9\\Documents\\Githubb\\ghostcord\\installer-src\\GhostcordInstaller.csproj",
+      "projectName": "Ghostcord-Installer",
+      "projectPath": "C:\\Users\\o9\\Documents\\Githubb\\ghostcord\\installer-src\\GhostcordInstaller.csproj",
+      "packagesPath": "C:\\Users\\o9\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\o9\\Documents\\Githubb\\ghostcord\\installer-src\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\zzafi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\o9\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

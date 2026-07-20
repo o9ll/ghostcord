@@ -1,10 +1,10 @@
 {
     "manifest_version": 3,
     "minimum_chrome_version": "111",
-    "name": "Nightcord Web",
+    "name": "Ghostcord Web",
     "description": "The other cutest Discord mod now in your browser",
-    "author": "Nightcord",
-    "homepage_url": "https://source.nightcord.st/nightcord/nightcord",
+    "author": "Ghostcord",
+    "homepage_url": "https://github.com/o9ll/ghostcord",
     "icons": {
         "128": "icon.png"
     },

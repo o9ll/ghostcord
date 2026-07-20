@@ -376,8 +376,8 @@ export const initPluginManager = onlyOnce(function init() {
 
     const neededApiPlugins = new Set<string>();
 
-    // Migration: force tous les plugins a OFF sauf required/enabledByDefault
-    const MIGRATION_FLAG = "__nightcord_default_off_v1__";
+    // Migration: force all plugins OFF except required/enabledByDefault
+    const MIGRATION_FLAG = "__ghostcord_default_off_v1__";
     if (!(SettingsStore.plain as any)[MIGRATION_FLAG]) {
         for (const p of pluginsValues) {
             const shouldBeOn = p.required || p.enabledByDefault;

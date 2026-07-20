@@ -146,12 +146,12 @@ const settings = definePluginSettings({
     includeIgnoredUsers: {
         type: OptionType.BOOLEAN,
         description: "Whether to show the typing indicator for ignored users.",
-        default: false
+        default: true
     },
     includeBlockedUsers: {
         type: OptionType.BOOLEAN,
         description: "Whether to show the typing indicator for blocked users.",
-        default: false
+        default: true
     },
     indicatorMode: {
         type: OptionType.SELECT,
@@ -170,6 +170,7 @@ export default definePlugin({
     tags: ["Notifications", "Appearance", "Servers"],
     authors: [Devs.Nuckyz, Devs.fawn, Devs.Sqaaakoi],
     isModified: true,
+    enabledByDefault: true,
     settings,
 
     patches: [

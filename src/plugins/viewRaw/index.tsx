@@ -115,8 +115,8 @@ const settings = definePluginSettings({
         description: "Change the button to view the raw content/data of any message.",
         type: OptionType.SELECT,
         options: [
-            { label: "Left Click to view the raw content.", value: "Left", default: true },
-            { label: "Right click to view the raw content.", value: "Right" }
+            { label: "Left Click to view the raw content.", value: "Left" },
+            { label: "Right click to view the raw content.", value: "Right", default: true }
         ]
     },
     messageContextMenu: {
@@ -176,6 +176,7 @@ export default definePlugin({
     dependencies: ["MessagePopoverAPI"],
     tags: ["Chat", "Developers"],
     authors: [Devs.KingFish, Devs.Ven, Devs.rad, Devs.ImLvna],
+    enabledByDefault: true,
     settings,
 
     contextMenus: {

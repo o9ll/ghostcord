@@ -17,7 +17,7 @@ const settings = definePluginSettings({
     color: {
         type: OptionType.BOOLEAN,
         description: "Color it red on open", // something extra
-        default: false,
+        default: true,
     },
     open: {
         type: OptionType.BOOLEAN,
@@ -86,6 +86,7 @@ export default definePlugin({
     tags: ["Chat", "Utility"],
     authors: [EquicordDevs.iamme],
     dependencies: ["ChatInputButtonAPI"],
+    enabledByDefault: true,
     settings: settings,
     startAt: StartAt.Init,
     chatBarButtonWrapper: {

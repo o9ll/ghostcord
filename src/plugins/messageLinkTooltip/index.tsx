@@ -44,12 +44,12 @@ const settings = definePluginSettings({
         options: [
             {
                 label: "Same as message",
-                value: "auto",
-                default: true
+                value: "auto"
             },
             {
                 label: "Compact",
-                value: "compact"
+                value: "compact",
+                default: true
             },
             {
                 label: "Cozy",
@@ -64,6 +64,7 @@ export default definePlugin({
     description: "Adds a tooltip with a message preview when hovering over message links, replies, and forwarded messages.",
     tags: ["Appearance", "Chat"],
     authors: [Devs.Kyuuhachi],
+    enabledByDefault: true,
 
     settings,
 

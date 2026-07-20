@@ -91,21 +91,21 @@ function openAboutWindow() {
     });
 }
 
-function createNightcordMenuItems(): MenuItemConstructorOptions[] {
+function createGhostcordMenuItems(): MenuItemConstructorOptions[] {
     return [
         {
-            label: "Nightcord",
+            label: "Ghostcord",
             submenu: [
                 {
-                    label: "About Nightcord",
+                    label: "About Ghostcord",
                     click: () => openAboutWindow()
                 },
                 {
-                    label: cachedUpdateAvailable ? "Update Nightcord" : "Check for Updates",
+                    label: cachedUpdateAvailable ? "Update Ghostcord" : "Check for Updates",
                     click: () => sendToRenderer(IpcEvents.TRAY_CHECK_UPDATES)
                 },
                 {
-                    label: "Repair Nightcord",
+                    label: "Repair Ghostcord",
                     click: () => sendToRenderer(IpcEvents.TRAY_REPAIR)
                 },
                 { type: "separator" },
@@ -124,5 +124,5 @@ function createNightcordMenuItems(): MenuItemConstructorOptions[] {
 }
 
 export function patchTrayMenu(): void {
-    // No longer patching tray menu — Nightcord manages its own tray in patcher.ts
+    // No longer patching tray menu — Ghostcord manages its own tray in patcher.ts
 }

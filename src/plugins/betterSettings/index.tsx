@@ -6,7 +6,7 @@
 
 import { definePluginSettings } from "@api/Settings";
 import { disableStyle, enableStyle } from "@api/Styles";
-import { buildPluginMenuEntries, buildThemeMenuEntries } from "@nightcordplugins/equicordToolbox/menu";
+import { buildPluginMenuEntries, buildThemeMenuEntries } from "@ghostcordplugins/equicordToolbox/menu";
 import { Devs } from "@utils/constants";
 import { classNameFactory } from "@utils/css";
 import { Logger } from "@utils/Logger";
@@ -79,6 +79,7 @@ export default definePlugin({
     description: "Enhances your settings-menu-opening experience",
     authors: [Devs.Kyuuhachi],
     tags: ["Appearance", "Customisation", "Organisation"],
+    enabledByDefault: true,
     settings,
 
     start() {

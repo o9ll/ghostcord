@@ -28,6 +28,7 @@ export default definePlugin({
     tags: ["Chat", "Media"],
     authors: [Devs.nin0dev, EquicordDevs.davri],
     searchTerms: ["favorite"],
+    enabledByDefault: true,
     managedStyle,
     patches: [
         // EMBEDS

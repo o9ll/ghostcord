@@ -12,6 +12,7 @@ export default definePlugin({
     description: "Makes picking a sticker in the sticker picker insert it into the chatbox instead of instantly sending",
     tags: ["Emotes", "Chat"],
     authors: [Devs.ImBanana],
+    enabledByDefault: true,
 
     patches: [
         {

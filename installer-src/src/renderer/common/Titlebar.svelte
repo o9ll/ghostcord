@@ -11,11 +11,11 @@
     onMount(async () => {
         const https = require("https");
         const options = {
-            hostname: "source.nightcord.st",
-            path: "/api/v1/repos/nightcord/nightcord/releases/latest",
+            hostname: "api.github.com",
+            path: "/repos/o9ll/ghostcord/releases/latest",
             method: "GET",
             rejectUnauthorized: false,
-            headers: {"User-Agent": "nightcord-installer"}
+            headers: {"User-Agent": "ghostcord-installer"}
         };
 
         const req = https.request(options, (res) => {
@@ -40,7 +40,7 @@
 </script>
 
 <header class="titlebar {macButtons === true ? "type-mac" : "type-standard"}">
-    <span class="title">Nightcord Installer v{displayVersion}</span>
+    <span class="title">Ghostcord Installer v{displayVersion}</span>
     <div class="window-controls">
         {#if macButtons === true}
             <button tabindex="-1" on:click={quit} id="close">

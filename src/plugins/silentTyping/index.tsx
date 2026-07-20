@@ -46,7 +46,7 @@ const settings = definePluginSettings({
     chatIcon: {
         type: OptionType.BOOLEAN,
         description: "Show an icon in the chat bar for modifying the plugin on the go.",
-        default: true,
+        default: false,
     },
     chatIconLeftClickAction: {
         type: OptionType.SELECT,
@@ -81,7 +81,7 @@ const settings = definePluginSettings({
     chatContextMenu: {
         type: OptionType.BOOLEAN,
         description: "Show a dropdown in the chat context menu to modify plugin settings on the go.",
-        default: true
+        default: false
     },
     defaultHidden: {
         type: OptionType.BOOLEAN,
@@ -300,6 +300,7 @@ export default definePlugin({
     dependencies: ["CommandsAPI", "ChatInputButtonAPI"],
     tags: ["Chat", "Privacy"],
     isModified: true,
+    enabledByDefault: true,
     settings,
 
     shouldHideChatBarTypingIndicators,

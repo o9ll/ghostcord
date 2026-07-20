@@ -5,7 +5,7 @@
  */
 
 import { isPluginEnabled } from "@api/PluginManager";
-import anonymiseFileNames, { tarExtMatcher } from "@nightcordplugins/antiMoveDeco/antiGroup/anonymiseFileNames";
+import anonymiseFileNames, { tarExtMatcher } from "@ghostcordplugins/antiMoveDeco/antiGroup/anonymiseFileNames";
 import { Devs } from "@utils/constants";
 import definePlugin, { ReporterTestable } from "@utils/types";
 import { CloudUpload } from "@vencord/discord-types";
@@ -30,6 +30,7 @@ export default definePlugin({
     authors: [Devs.thororen],
     description: "Fixes file extensions by renaming them to a compatible supported format if possible",
     tags: ["Media", "Utility"],
+    enabledByDefault: true,
     reporterTestable: ReporterTestable.None,
     patches: [
         // Taken from AnonymiseFileNames

@@ -21,8 +21,8 @@ async function Unwrap<T>(p: Promise<IpcRes<T>>): Promise<T> {
 }
 
 /**
- * Demande au main process s'il y a une version plus récente.
- * Met à jour isOutdated et changes.
+ * Ask the main process if there's a newer version.
+ * Updates isOutdated and changes.
  */
 export async function checkForUpdates(): Promise<boolean> {
     changes = await Unwrap(VencordNative.updater.getUpdates());
@@ -30,8 +30,8 @@ export async function checkForUpdates(): Promise<boolean> {
 }
 
 /**
- * Télécharge le Setup.exe (étape 1).
- * Retourne true si le téléchargement a réussi.
+ * Download the Setup.exe (step 1).
+ * Returns true if the download succeeded.
  */
 export async function update(): Promise<boolean> {
     if (!isOutdated) return true;
@@ -41,8 +41,8 @@ export async function update(): Promise<boolean> {
 }
 
 /**
- * Lance l'installeur téléchargé (étape 2).
- * L'app va se fermer et se relancer automatiquement après installation.
+ * Launch the downloaded installer (step 2).
+ * The app will close and restart automatically after installation.
  */
 export async function rebuild(): Promise<boolean> {
     return Unwrap(VencordNative.updater.rebuild());
@@ -51,7 +51,7 @@ export async function rebuild(): Promise<boolean> {
 export const getRepo = () => Unwrap(VencordNative.updater.getRepo());
 
 /**
- * Vérifie les mises à jour au démarrage et propose à l'utilisateur de mettre à jour.
+ * Check for updates on startup and prompt the user to update.
  */
 export async function maybePromptToUpdate(confirmMessage: string, checkForDev = false) {
     if (IS_WEB || IS_UPDATER_DISABLED) return;
@@ -60,12 +60,12 @@ export async function maybePromptToUpdate(confirmMessage: string, checkForDev = 
     try {
         const outdated = await checkForUpdates();
         if (outdated) {
-            // Mise à jour automatique sans confirmation
+            // Auto-update without confirmation
             const downloaded = await update();
             if (downloaded) await rebuild();
         }
     } catch (err) {
         UpdateLogger.error(err);
-        alert("La vérification des mises à jour a échoué. Vérifie ta connexion ou réinstalle Nightcord.");
+        alert("Update check failed. Check your connection or reinstall Ghostcord.");
     }
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# ─── Nightcord Installer — Build ─────────────────────────────────────────────
-# Equivalent bash de build-installer.ps1 (converti depuis build-installer.bat)
+# ─── Ghostcord Installer — Build ─────────────────────────────────────────────
+# Bash equivalent of build-installer.ps1 (converted from build-installer.bat)
 
 set -euo pipefail
 
@@ -8,70 +8,70 @@ cd "$(dirname "$0")"
 
 echo ""
 echo " ================================"
-echo "  Nightcord Installer - Build"
+echo "  Ghostcord Installer - Build"
 echo " ================================"
 echo ""
 
-# ── Vérifie que node est disponible ──────────────────────────────────────────
+# ── Check that node is available ─────────────────────────────────────────────
 if ! command -v node &>/dev/null; then
-    echo " [ERREUR] Node.js introuvable. Installez Node.js depuis https://nodejs.org"
+    echo " [ERROR] Node.js not found. Install Node.js from https://nodejs.org"
     exit 1
 fi
 
-# ── Crée le dossier de sortie si besoin ──────────────────────────────────────
+# ── Create output directory if needed ────────────────────────────────────────
 mkdir -p "release/installer"
 
-# ── Entre dans le dossier installer-src ──────────────────────────────────────
+# ── Enter the installer-src directory ────────────────────────────────────────
 cd installer-src
 
-# ── 1. Installe les dépendances si node_modules absent ───────────────────────
+# ── 1. Install dependencies if node_modules missing ──────────────────────────
 if [[ ! -d "node_modules" ]]; then
-    echo " [1/3] Installation des dependances npm..."
+    echo " [1/3] Installing npm dependencies..."
     if ! npm install --legacy-peer-deps; then
-        echo " [ERREUR] npm install a echoue."
+        echo " [ERROR] npm install failed."
         cd ..
         exit 1
     fi
-    echo " [1/3] Dependances installees."
+    echo " [1/3] Dependencies installed."
 else
-    echo " [1/3] Dependances deja presentes, on passe."
+    echo " [1/3] Dependencies already present, skipping."
 fi
 
-# ── 2. Compile avec electron-webpack ─────────────────────────────────────────
+# ── 2. Compile with electron-webpack ─────────────────────────────────────────
 echo ""
 echo " [2/3] Compilation webpack (electron-webpack)..."
 
 if ! npm run compile; then
-    echo " [ERREUR] Compilation webpack echouee."
+    echo " [ERROR] Webpack compilation failed."
     cd ..
     exit 1
 fi
 
-echo " [2/3] Compilation webpack reussie."
+echo " [2/3] Webpack compilation successful."
 
 # ── 3. Packaging electron-builder ────────────────────────────────────────────
 echo ""
 echo " [3/3] Packaging electron-builder..."
 
 if ! npx electron-builder --win -p never; then
-    echo " [ERREUR] electron-builder a echoue."
+    echo " [ERROR] electron-builder failed."
     cd ..
     exit 1
 fi
 
 cd ..
 
-# ── Vérification ─────────────────────────────────────────────────────────────
-if [[ ! -f "release/installer/Nightcord-Installer.exe" ]]; then
+# ── Verification ─────────────────────────────────────────────────────────────
+if [[ ! -f "release/installer/Ghostcord-Installer.exe" ]]; then
     echo ""
-    echo " [ERREUR] Nightcord-Installer.exe introuvable apres build."
+    echo " [ERROR] Ghostcord-Installer.exe not found after build."
     exit 1
 fi
 
-SIZE=$(stat -c%s "release/installer/Nightcord-Installer.exe" 2>/dev/null \
-    || stat -f%z "release/installer/Nightcord-Installer.exe")
+SIZE=$(stat -c%s "release/installer/Ghostcord-Installer.exe" 2>/dev/null \
+    || stat -f%z "release/installer/Ghostcord-Installer.exe")
 
 echo ""
-echo " [OK] Build reussi !"
-echo " Fichier : release/installer/Nightcord-Installer.exe  ($SIZE octets)"
+echo " [OK] Build successful!"
+echo " File: release/installer/Ghostcord-Installer.exe  ($SIZE bytes)"
 echo ""

@@ -1,0 +1,16 @@
+/* Stealth Mode - hide Ghostcord plugin UI (but NOT settings access) */
+
+/* Plugin buttons: header bar, channel toolbar, chat bar, user area */
+body.ghostcord-stealth .vc-header-bar-btns,
+body.ghostcord-stealth .vc-channel-toolbar-btns,
+body.ghostcord-stealth .vc-chat-bar-btns,
+body.ghostcord-stealth .vc-user-area-btns,
+
+/* Titlebar injected elements */
+body.ghostcord-stealth #ghostcord-titlebar-btn,
+body.ghostcord-stealth #ghostcord-titlebar-link-style,
+
+/* GhostcordAI nav button */
+body.ghostcord-stealth .nai-nav-item {
+    display: none !important;
+}

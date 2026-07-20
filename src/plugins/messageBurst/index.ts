@@ -69,6 +69,7 @@ export default definePlugin({
     dependencies: ["MessagePopoverAPI"],
     tags: ["Chat"],
     authors: [EquicordDevs.port22exposed],
+    enabledByDefault: true,
     settings,
     onBeforeMessageSend(channelId, message) {
         const messages = MessageStore.getMessages(channelId)._map;

@@ -1,12 +1,12 @@
-name: Build & Release Nightcord
+name: Build & Release Ghostcord
 
 on:
   push:
     tags:
-      - "v*"          # déclenché sur : git tag v1.0.0 && git push --tags
+      - "v*"          # triggered on: git tag v1.0.0 && git push --tags
 
 permissions:
-  contents: write    # nécessaire pour créer la GitHub Release
+  contents: write    # necessary to create the GitHub Release
 
 jobs:
   build:
@@ -41,13 +41,13 @@ jobs:
           node electron-builder.config.cjs || true
           npx electron-builder --config electron-builder.config.cjs --win --publish always
 
-      - name: Package nightcord-dist.zip
+      - name: Package ghostcord-dist.zip
         shell: pwsh
         run: |
-          # nightcord-dist.zip — structure attendue par l'installeur (Program.cs EnsureDistAsync) :
-          # la racine du zip = _distDir (%LOCALAPPDATA%\Nightcord\dist\)
+          # ghostcord-dist.zip — structure attendue par l'installeur (Program.cs EnsureDistAsync) :
+          # la racine du zip = _distDir (%LOCALAPPDATA%\Ghostcord\dist\)
           # => patcher.js DOIT être à la racine, pas dans un sous-dossier dist\desktop\
-          $staging = "nightcord-dist-staging"
+          $staging = "ghostcord-dist-staging"
           New-Item -ItemType Directory -Path $staging -Force | Out-Null
 
           # Fichiers JS compilés : on copie le CONTENU de dist\desktop\ à la racine du staging
@@ -64,13 +64,13 @@ jobs:
             Copy-Item "ghost-server" "$staging\ghost-server" -Recurse
           }
 
-          # Static assets from release/nightcord-dist (ffmpeg.dll, modules, mac/, multi-instance-icons/, etc.)
-          if (Test-Path "release\nightcord-dist") {
-            Copy-Item "release\nightcord-dist\*" "$staging\" -Recurse -Force
+          # Static assets from release/ghostcord-dist (ffmpeg.dll, modules, mac/, multi-instance-icons/, etc.)
+          if (Test-Path "release\ghostcord-dist") {
+            Copy-Item "release\ghostcord-dist\*" "$staging\" -Recurse -Force
           }
 
           # Entry-point files
-          foreach ($f in @("nightcord-index.js", "nightcord-preload.js")) {
+          foreach ($f in @("ghostcord-index.js", "ghostcord-preload.js")) {
             if (Test-Path $f) { Copy-Item $f "$staging\" }
           }
 
@@ -80,14 +80,14 @@ jobs:
             exit 1
           }
 
-          Compress-Archive -Path "$staging\*" -DestinationPath "nightcord-dist.zip" -Force
-          Write-Host "nightcord-dist.zip created ($($(Get-Item nightcord-dist.zip).Length / 1MB) MB)"
+          Compress-Archive -Path "$staging\*" -DestinationPath "ghostcord-dist.zip" -Force
+          Write-Host "ghostcord-dist.zip created ($($(Get-Item ghostcord-dist.zip).Length / 1MB) MB)"
 
-      - name: Upload nightcord-dist.zip to Release
+      - name: Upload ghostcord-dist.zip to Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            nightcord-dist.zip
+            ghostcord-dist.zip
             dist/desktop.asar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

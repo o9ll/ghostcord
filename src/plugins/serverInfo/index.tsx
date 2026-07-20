@@ -32,12 +32,12 @@ export const settings = definePluginSettings({
         options: [
             {
                 label: "Username",
-                value: "username"
+                value: "username",
+                default: true
             },
             {
                 label: "Display Name",
-                value: "displayname",
-                default: true
+                value: "displayname"
             },
             {
                 label: "Dont Sort",
@@ -55,6 +55,7 @@ export default definePlugin({
     dependencies: ["DynamicImageModalAPI"],
     searchTerms: ["guild", "info", "ServerProfile"],
     isModified: true,
+    enabledByDefault: true,
     contextMenus: {
         "guild-context": Patch,
         "guild-header-popout": Patch

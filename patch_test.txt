@@ -6,17 +6,17 @@ function CompactHeaderBarToggle() {
     useEffect(() => {
         const listener = () => forceUpdate(n => n + 1);
         compactListeners.add(listener);
-        window.addEventListener("nightcord-compact-change", listener);
+        window.addEventListener("ghostcord-compact-change", listener);
         return () => {
             compactListeners.delete(listener);
-            window.removeEventListener("nightcord-compact-change", listener);
+            window.removeEventListener("ghostcord-compact-change", listener);
         };
     }, []);
 
     return (
         <HeaderBarButton
             icon={GridVerticalIcon}
-            tooltip="Compact Mode — Click to expand Nightcord buttons"
+            tooltip="Compact Mode ï¿½ Click to expand Ghostcord buttons"
             onClick={toggleCompactMode}
             selected={false}
         />

@@ -1,16 +1,16 @@
 {
-    "name": "nightcord",
+    "name": "ghostcord",
     "private": "true",
     "version": "1.21.4",
     "description": "Everything Discord doesn't build, we create",
     "main": "dist/js/main.js",
-    "homepage": "https://source.nightcord.st/nightcord/nightcord",
+    "homepage": "https://github.com/o9ll/ghostcord",
     "bugs": {
-        "url": "https://source.nightcord.st/nightcord/nightcord/issues"
+        "url": "https://github.com/o9ll/ghostcord/issues"
     },
     "repository": {
         "type": "git",
-        "url": "https://source.nightcord.st/nightcord/nightcord.git"
+        "url": "https://github.com/o9ll/ghostcord.git"
     },
     "license": "GPL-3.0-or-later",
     "author": "Equicord",
@@ -30,7 +30,7 @@
         "dev": "pnpm watch",
         "watchWeb": "pnpm buildWeb --watch",
         "generateDevsList": "tsx scripts/generateDevsList.ts",
-        "generatePluginJson": "tsx scripts/generatePluginList.ts --nightcord plugins.json",
+        "generatePluginJson": "tsx scripts/generatePluginList.ts --ghostcord plugins.json",
         "generateEquicordPluginJson": "tsx scripts/generatePluginList.ts --equicord plugins.json",
         "generateVencordPluginJson": "tsx scripts/generatePluginList.ts --vencord plugins.json",
         "generateTypes": "tspc --emitDeclarationOnly --declaration --outDir packages/vencord-types --allowJs false",

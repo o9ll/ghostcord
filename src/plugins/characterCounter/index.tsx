@@ -38,6 +38,7 @@ export default definePlugin({
     description: "Adds a character counter to the chat input",
     authors: [Devs.thororen, EquicordDevs.creations],
     tags: ["Utility"],
+    enabledByDefault: true,
     settings,
     patches: [
         {

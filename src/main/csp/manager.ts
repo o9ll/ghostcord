@@ -37,10 +37,10 @@ function validate(url: string, directives: string[]) {
 function getMessage(url: string, directives: string[], callerName: string) {
     const domain = new URL(url).host;
 
-    const message = `${callerName} wants to allow connections to ${domain}`;
+    const message = `${callerName} wants to allow connections`;
 
     let detail =
-        `Unless you recognise and fully trust ${domain}, you should cancel this request!\n\n` +
+        `Unless you recognise and fully trust, you should cancel this request!\n\n` +
         `You will have to fully close and restart ${IS_DISCORD_DESKTOP ? "Discord" : "Vesktop"} for the changes to take effect.`;
 
     if (directives.length === 1 && directives[0] === "connect-src") {
@@ -64,7 +64,7 @@ function getMessage(url: string, directives: string[], callerName: string) {
         .sort()
         .join(", ");
 
-    detail = `The following types of content will be allowed to load from ${domain}:\n${contentTypes}\n\n${detail}`;
+    detail = `The following types of content will be allowed to load:\n${contentTypes}\n\n${detail}`;
 
     return { message, detail };
 }
@@ -94,11 +94,11 @@ async function _addCspRule(url: string, directives: string[], callerName: string
     const { checkboxChecked, response } = await dialog.showMessageBox({
         ...getMessage(url, directives, callerName),
         type: callerName ? "info" : "warning",
-        title: "Nightcord Host Permissions",
+        title: "Ghostcord Host Permissions",
         buttons: ["Cancel", "Allow"],
         defaultId: 0,
         cancelId: 0,
-        checkboxLabel: `I fully trust ${domain} and understand the risks of allowing connections to it.`,
+        checkboxLabel: `I fully understand the risks of allowing connections to it.`,
         checkboxChecked: false,
     });
 

@@ -3990,7 +3990,7 @@
         "Abbreviations"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\abreviation\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\abreviation\\index.tsx"
     },
     {
       "name": "AntiDeleteMessage",
@@ -4008,7 +4008,7 @@
         "Server Blacklist"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\antiDeleteMessage\\index.ts"
+      "file": "\\src\\ghostcordplugins\\antiDeleteMessage\\index.ts"
     },
     {
       "name": "AntiMoveDeco",
@@ -4017,7 +4017,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\antiMoveDeco\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\antiMoveDeco\\index.tsx"
     },
     {
       "name": "AntiNickname",
@@ -4029,7 +4029,7 @@
         "Show Toast"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\antiNickname\\index.ts"
+      "file": "\\src\\ghostcordplugins\\antiNickname\\index.ts"
     },
     {
       "name": "AudioLimiter",
@@ -4045,7 +4045,7 @@
         "Attack"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\audioLimiter\\index.ts"
+      "file": "\\src\\ghostcordplugins\\audioLimiter\\index.ts"
     },
     {
       "name": "AutoClaim",
@@ -4073,7 +4073,7 @@
         "Safe Mode: wait 3–4 seconds before claiming (less suspicious, recommended for shared servers).",
         "Cooldown between claims in seconds (0 = no cooldown)."
       ],
-      "file": "\\src\\nightcordplugins\\autoClaim\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\autoClaim\\index.tsx"
     },
     {
       "name": "AutoCorrect",
@@ -4081,7 +4081,7 @@
         "Enable automatic correction",
         "Correction language",
         "Correction level",
-        "Automatically corrects spelling and grammar before sending. Requires a free Groq API key configured in NightcordAI."
+        "Automatically corrects spelling and grammar before sending. Requires a free Groq API key configured in GhostcordAI."
       ],
       "settingKeys": [
         "Is Active",
@@ -4089,7 +4089,7 @@
         "Aggressiveness"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\autoCorrect\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\autoCorrect\\index.tsx"
     },
     {
       "name": "AutoReply",
@@ -4121,7 +4121,7 @@
         "Max Delay Ms"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\autoReply\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\autoReply\\index.tsx"
     },
     {
       "name": "AutoResponder",
@@ -4148,17 +4148,17 @@
         "Delay Max"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\autoResponder\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\autoResponder\\index.tsx"
     },
     {
-      "name": "AutoTranslateNightcord",
+      "name": "AutoTranslateGhostcord",
       "descriptions": [
-        "Automatic translation for Nightcord.",
+        "Automatic translation for Ghostcord.",
         "Automatically translate strings"
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\autoTranslateNightcord\\index.ts"
+      "file": "\\src\\ghostcordplugins\\autoTranslateGhostcord\\index.ts"
     },
     {
       "name": "AutoUnmute",
@@ -4167,7 +4167,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\autoUnmute\\index.ts"
+      "file": "\\src\\ghostcordplugins\\autoUnmute\\index.ts"
     },
     {
       "name": "Backpack",
@@ -4176,7 +4176,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\backpack\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\backpack\\index.tsx"
     },
     {
       "name": "BigFileUpload",
@@ -4206,7 +4206,7 @@
         "Custom Settings"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\bigFileUpload\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\bigFileUpload\\index.tsx"
     },
     {
       "name": "BulkFriendRemove",
@@ -4229,7 +4229,7 @@
         "Delete",
         "Friends deletion"
       ],
-      "file": "\\src\\nightcordplugins\\bulkFriendRemove\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\bulkFriendRemove\\index.tsx"
     },
     {
       "name": "CallTimer",
@@ -4253,7 +4253,7 @@
         "Watch Large Guilds"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\callTimer\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\callTimer\\index.tsx"
     },
     {
       "name": "ChannelWallpaper",
@@ -4262,7 +4262,7 @@
         "Wallpaper opacity (0 = invisible, 1 = full)",
         "Wallpaper blur (px)",
         "Default wallpaper URL (for channels without a custom one). Empty = none.",
-        "Sync wallpapers with Nightcord friends in DMs.",
+        "Sync wallpapers with Ghostcord friends in DMs.",
         "VPS URL (e.g. ws://your-vps:3000). Empty = use hidden messages.",
         "Password for the sync server.",
         "Allows for custom backgrounds for every individual channel."
@@ -4277,7 +4277,7 @@
         "Vps Password"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\channelWallpaper\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\channelWallpaper\\index.tsx"
     },
     {
       "name": "ClientDiagnostics",
@@ -4345,7 +4345,7 @@
         "Hide",
         "Details",
         "Impact analysis",
-        "This page interprets the metrics and flags plugins that may make Illegalcord lag.",
+        "This page interprets the metrics and flags plugins that may make Ghostcord lag.",
         "Copy report",
         "No suspicious plugins yet.",
         "Use the client for a few minutes, then come back here to see collected samples.",
@@ -4413,7 +4413,7 @@
         "This page explains what Client Diagnostics measures and how to read the numbers without knowing the code.",
         "What it is for",
         "Client Diagnostics helps find plugins that may cause lag, freezes, or extra memory usage. It measures time spent inside plugin functions, JavaScript memory growth, and resources that remain active.",
-        "The numbers are samples collected while you use Illegalcord. If a plugin is not used during collection, it may look light even if it does more work in other situations.",
+        "The numbers are samples collected while you use Ghostcord. If a plugin is not used during collection, it may look light even if it does more work in other situations.",
         "What the columns mean",
         "Monitor percentages",
         "Measurement limits",
@@ -4423,16 +4423,16 @@
         "Plugin monitor",
         "Guide"
       ],
-      "file": "\\src\\nightcordplugins\\ClientDiagnostics\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\ClientDiagnostics\\index.tsx"
     },
     {
       "name": "CompactMode",
       "descriptions": [
-        "Hides all Nightcord plugin buttons and replaces them with a single compact toggle icon. Click the icon to restore all buttons."
+        "Hides all Ghostcord plugin buttons and replaces them with a single compact toggle icon. Click the icon to restore all buttons."
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\compactMode\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\compactMode\\index.tsx"
     },
     {
       "name": "CrashHandler",
@@ -4446,7 +4446,7 @@
         "Attempt To Navigate To Home"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\crashHandler\\index.ts"
+      "file": "\\src\\ghostcordplugins\\crashHandler\\index.ts"
     },
     {
       "name": "CursorMacOS",
@@ -4460,7 +4460,7 @@
         "Size"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\cursorMacOS\\index.ts"
+      "file": "\\src\\ghostcordplugins\\cursorMacOS\\index.ts"
     },
     {
       "name": "CustomProfile",
@@ -4479,15 +4479,15 @@
         "Bug Hunter Lvl 2",
         "Verified Developer",
         "Active Developer",
-        "Nitro (0 mois)",
-        "Bronze (1 mois)",
-        "Argent (2 mois)",
-        "Or (3 mois)",
-        "Platine (6 mois)",
-        "Diamant (12 mois)",
-        "Émeraude (24 mois)",
-        "Rubis (36 mois)",
-        "Opale (72 mois)",
+        "Nitro (0 months)",
+        "Bronze (1 month)",
+        "Silver (2 months)",
+        "Gold (3 months)",
+        "Platinum (6 months)",
+        "Diamond (12 months)",
+        "Emerald (24 months)",
+        "Ruby (36 months)",
+        "Opal (72 months)",
         "Remove copy profile",
         "Copy this profile",
         "Image URL...",
@@ -4506,8 +4506,8 @@
         "None",
         "Custom Profile",
         "Share my Custom Profile",
-        "Lets other Nightcord users see your Custom Profile, and lets you see theirs",
-        "This requires Discord authorization. Once enabled, everyone using Nightcord will be able to see your Custom Profile, and you will be able to see theirs.",
+        "Lets other Ghostcord users see your Custom Profile, and lets you see theirs",
+        "This requires Discord authorization. Once enabled, everyone using Ghostcord will be able to see your Custom Profile, and you will be able to see theirs.",
         "Username",
         "Display name",
         "Profile picture",
@@ -4556,7 +4556,7 @@
         "Early Supporter",
         "Active Developer"
       ],
-      "file": "\\src\\nightcordplugins\\customProfile\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\customProfile\\index.tsx"
     },
     {
       "name": "DisableCallIdle",
@@ -4565,7 +4565,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\disableCallIdle\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\disableCallIdle\\index.tsx"
     },
     {
       "name": "DMBomb",
@@ -4574,7 +4574,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\DMBomb\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\DMBomb\\index.tsx"
     },
     {
       "name": "DoubleEmoji",
@@ -4583,7 +4583,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\doubleEmoji\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\doubleEmoji\\index.tsx"
     },
     {
       "name": "DynamicIslande",
@@ -4662,7 +4662,7 @@
         "Stop sharing",
         "Call active"
       ],
-      "file": "\\src\\nightcordplugins\\DynamicIslande\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\DynamicIslande\\index.tsx"
     },
     {
       "name": "EncryptedMessage",
@@ -4678,10 +4678,10 @@
         "Decrypt message",
         "Decrypt all"
       ],
-      "file": "\\src\\nightcordplugins\\encryptedMessage\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\encryptedMessage\\index.tsx"
     },
     {
-      "name": "NightcordHelper",
+      "name": "GhostcordHelper",
       "descriptions": [
         "Prevents the camera from being mirrored on your screen",
         "Removes the activity section above member list",
@@ -4692,7 +4692,7 @@
         "Adds back the Download button at the top right corner of files",
         "Stops you from typing markdown bullet points (stinky)",
         "Remove the 300ms long animation when opening or closing modals",
-        "Main Nightcord plugin: fixes Discord crashes, adds UI options and manages internal commands.",
+        "Main Ghostcord plugin: fixes Discord crashes, adds UI options and manages internal commands.",
         "Refresh Slash Commands"
       ],
       "settingKeys": [
@@ -4707,19 +4707,19 @@
         "No Modal Animation"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\equicordHelper\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\equicordHelper\\index.tsx"
     },
     {
       "name": "EquicordToolbox",
       "descriptions": [
         "Show the plugins menu in the toolbox",
-        "Adds a button next to the inbox button in the channel header that houses Nightcord quick actions"
+        "Adds a button next to the inbox button in the channel header that houses Ghostcord quick actions"
       ],
       "settingKeys": [
         "Show Plugin Menu"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\equicordToolbox\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\equicordToolbox\\index.tsx"
     },
     {
       "name": "EventLogs",
@@ -4740,14 +4740,14 @@
         "Friend +",
         "Friend -",
         "Request",
-        "Annulé",
+        "Cancelled",
         "Blocked",
         "Joined",
         "Left",
         "Banned",
-        "Exclu",
+        "Excluded",
         "Kick",
-        "Déco",
+        "Disconnected",
         "Ping",
         "Navigation failed",
         "Open Profile",
@@ -4768,7 +4768,7 @@
         "Filter...",
         "Save as .txt",
         "Clear",
-        "Aucun événement",
+        "No event",
         "Logs",
         "Mic muted",
         "Mic unmuted",
@@ -4789,11 +4789,11 @@
         "Left/Kick",
         "Left",
         "Banned",
-        "Débanni",
-        "Exclu temporairement (Timeout)",
-        "Déconnexion du account"
+        "Unbanned",
+        "Temporarily excluded (Timeout)",
+        "Account disconnected"
       ],
-      "file": "\\src\\nightcordplugins\\eventLogs\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\eventLogs\\index.tsx"
     },
     {
       "name": "ExportDM",
@@ -4846,7 +4846,7 @@
         "Export",
         "Export DMs"
       ],
-      "file": "\\src\\nightcordplugins\\exportDM\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\exportDM\\index.tsx"
     },
     {
       "name": "FakeSwitcher",
@@ -4855,7 +4855,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\fakeAccount\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\fakeAccount\\index.tsx"
     },
     {
       "name": "FakeDM",
@@ -4864,7 +4864,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\fakeDM\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\fakeDM\\index.tsx"
     },
     {
       "name": "FakeFriends",
@@ -4873,7 +4873,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\fakeFriends\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\fakeFriends\\index.tsx"
     },
     {
       "name": "FakePerm",
@@ -4885,7 +4885,7 @@
         "Replacement"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\fakePerm\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\fakePerm\\index.tsx"
     },
     {
       "name": "FakeVoice",
@@ -4907,7 +4907,7 @@
         "enabled",
         "disabled"
       ],
-      "file": "\\src\\nightcordplugins\\FakeVoice\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\FakeVoice\\index.tsx"
     },
     {
       "name": "FastDiscord",
@@ -4945,7 +4945,7 @@
         "Low End Mode"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\fastDiscord\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\fastDiscord\\index.tsx"
     },
     {
       "name": "FastPFP",
@@ -4962,7 +4962,7 @@
         "Add To PFP",
         "Add To Banner"
       ],
-      "file": "\\src\\nightcordplugins\\fastPFP\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\fastPFP\\index.tsx"
     },
     {
       "name": "FastPing",
@@ -4976,7 +4976,7 @@
         "Add a space after the mention once inserted",
         "Ping"
       ],
-      "file": "\\src\\nightcordplugins\\fastPing\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\fastPing\\index.tsx"
     },
     {
       "name": "FixScreenshare",
@@ -4985,7 +4985,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\fixScreenshare\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\fixScreenshare\\index.tsx"
     },
     {
       "name": "FloodPanel",
@@ -4999,7 +4999,7 @@
         "Default Shuffle"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\floodPanel\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\floodPanel\\index.tsx"
     },
     {
       "name": "FollowMe",
@@ -5008,7 +5008,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\followMe\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\followMe\\index.tsx"
     },
     {
       "name": "FollowUser",
@@ -5017,7 +5017,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\followUser\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\followUser\\index.tsx"
     },
     {
       "name": "GifConvertor",
@@ -5026,7 +5026,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\gifConvertor\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\gifConvertor\\index.tsx"
     },
     {
       "name": "HideMedia",
@@ -5035,7 +5035,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\hideAttachments\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\hideAttachments\\index.tsx"
     },
     {
       "name": "IconViewer",
@@ -5044,7 +5044,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\iconViewer\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\iconViewer\\index.tsx"
     },
     {
       "name": "IgnoreCalls",
@@ -5056,7 +5056,7 @@
         "Permanently Ignored Users"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\ignoreCalls\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\ignoreCalls\\index.tsx"
     },
     {
       "name": "ImageLink",
@@ -5065,7 +5065,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\imageLink\\index.ts"
+      "file": "\\src\\ghostcordplugins\\imageLink\\index.ts"
     },
     {
       "name": "ImageZoom",
@@ -5089,7 +5089,7 @@
         "Zoom Speed"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\imageZoom\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\imageZoom\\index.tsx"
     },
     {
       "name": "LastSeen",
@@ -5101,7 +5101,7 @@
         "Language"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\lastSeen\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\lastSeen\\index.tsx"
     },
     {
       "name": "LeaveAllServers",
@@ -5113,7 +5113,7 @@
         "Safe Mode"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\leaveAllServers\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\leaveAllServers\\index.tsx"
     },
     {
       "name": "LiveWallpaper",
@@ -5134,7 +5134,7 @@
         "Volume"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\liveWallpaper\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\liveWallpaper\\index.tsx"
     },
     {
       "name": "LockGroup",
@@ -5148,7 +5148,7 @@
         "Debug Mode"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\lockGroup\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\lockGroup\\index.tsx"
     },
     {
       "name": "MacOsButtons",
@@ -5157,7 +5157,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\macOsButtons\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\macOsButtons\\index.tsx"
     },
     {
       "name": "MassDM",
@@ -5168,7 +5168,7 @@
       "translationKeys": [
         "Exclude friends..."
       ],
-      "file": "\\src\\nightcordplugins\\massDM\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\massDM\\index.tsx"
     },
     {
       "name": "MemberCount",
@@ -5184,7 +5184,7 @@
         "Voice Activity"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\memberCount\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\memberCount\\index.tsx"
     },
     {
       "name": "MessageCleaner",
@@ -5212,7 +5212,7 @@
         "Max Age"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\messageCleaner\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\messageCleaner\\index.tsx"
     },
     {
       "name": "MessageLogger",
@@ -5248,7 +5248,7 @@
         "Separated Diffs"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\messageLogger\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\messageLogger\\index.tsx"
     },
     {
       "name": "MessageLoggerEnhanced",
@@ -5257,7 +5257,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\messageLoggerEnhanced\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\messageLoggerEnhanced\\index.tsx"
     },
     {
       "name": "SecureDNS",
@@ -5291,7 +5291,7 @@
         "Log Level"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\mullvadDNS\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\mullvadDNS\\index.tsx"
     },
     {
       "name": "MultiInstance",
@@ -5326,7 +5326,7 @@
         "Switch only",
         "Open"
       ],
-      "file": "\\src\\nightcordplugins\\multiInstance\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\multiInstance\\index.tsx"
     },
     {
       "name": "MuteAllServers",
@@ -5335,10 +5335,10 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\muteAllServers\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\muteAllServers\\index.tsx"
     },
     {
-      "name": "NightcordAI",
+      "name": "GhostcordAI",
       "descriptions": [
         "Groq API Key (console.groq.com/keys) — shared with AutoCorrect and VoiceDictation",
         "Custom model (empty = default)",
@@ -5355,34 +5355,34 @@
         "Temperature"
       ],
       "translationKeys": [
-        "Nightcord AI",
+        "Ghostcord AI",
         "Online",
         "⚠ API key missing",
         "Clear history",
         "How can I help you?",
         "Ask anything!",
-        "Configure your API key in Nightcord Settings > Plugins > NightcordAI",
+        "Configure your API key in Ghostcord Settings > Plugins > GhostcordAI",
         "🔑 Groq Key (free)",
         "Attach a file",
         "Send a message… (Enter = send, Ctrl+V = paste image)",
         "Configure your API key first…",
         "Shift+Enter for new line · Local history (100 messages)",
-        "Nightcord AI",
+        "Ghostcord AI",
         "How to get a Groq API key",
         "Create a free account on console.groq.com, then go to API Keys and click Create API Key. Copy the key and paste it in the Api Key field above.",
         "The Groq API is free and gives access to fast LLMs (Llama, Mixtral…).",
         "Create API Key"
       ],
-      "file": "\\src\\nightcordplugins\\nightcordAI\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\ghostcordAI\\index.tsx"
     },
     {
-      "name": "NightcordUpdater",
+      "name": "GhostcordUpdater",
       "descriptions": [
-        "Shows a banner when a new Nightcord version is available. Click Update to install."
+        "Shows a banner when a new Ghostcord version is available. Click Update to install."
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\nightcordUpdater\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\ghostcordUpdater\\index.tsx"
     },
     {
       "name": "NoDMWhileStreaming",
@@ -5396,21 +5396,21 @@
         "Debug Mode"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\noDMWhileStreaming\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\noDMWhileStreaming\\index.tsx"
     },
     {
       "name": "UI Optimisations",
       "descriptions": [
-        "Désactiver les animations spring de l'interface Discord (boutons, modals, etc.)",
-        "Désactiver les points \"X est en train d'écrire...\"",
-        "Bloquer les avatars GIF animés dans les listes et messages",
-        "Désactiver l'animation des emojis Discord",
-        "Empêcher l'autoplay des stickers animés Lottie",
-        "Masquer la section Activités (jeux, Spotify, etc.) dans le panneau membres",
-        "Bloquer l'autoplay des vidéos intégrées dans les messages (MP4, WebM)",
-        "Désactiver la prévisualisation audio du soundboard au survol",
-        "Vider le cache des messages des canaux inactifs",
-        "Limiter Discord à ~10 FPS quand la fenêtre est en arrière-plan",
+        "Disable Discord spring animations (buttons, modals, etc.)",
+        "Disable typing indicators",
+        "Block animated GIF avatars in lists and messages",
+        "Disable Discord emoji animation",
+        "Prevent Lottie animated sticker autoplay",
+        "Hide the Activities section (games, Spotify, etc.) in the member panel",
+        "Block autoplay of embedded videos in messages (MP4, WebM)",
+        "Disable soundboard audio preview on hover",
+        "Clear message cache of inactive channels",
+        "Limit Discord to ~10 FPS when the window is in the background",
         "Reduces resource consumption: animations, GIFs, message cache, background FPS."
       ],
       "settingKeys": [
@@ -5426,7 +5426,7 @@
         "Reduce Fps Background"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\optimisations\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\optimisations\\index.tsx"
     },
     {
       "name": "PasscodeLock",
@@ -5464,7 +5464,7 @@
         "seconds",
         "second"
       ],
-      "file": "\\src\\nightcordplugins\\passcodeLock\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\passcodeLock\\index.tsx"
     },
     {
       "name": "PinDMs",
@@ -5481,7 +5481,7 @@
         "User Based Category List"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\pinDms\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\pinDms\\index.tsx"
     },
     {
       "name": "PlatformIndicators",
@@ -5503,7 +5503,7 @@
         "Console Icon"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\platformIndicators\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\platformIndicators\\index.tsx"
     },
     {
       "name": "PlatformSpoofer",
@@ -5515,7 +5515,7 @@
         "Platform"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\platformSpoofer\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\platformSpoofer\\index.tsx"
     },
     {
       "name": "PrevNames",
@@ -5524,7 +5524,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\PrevNames\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\PrevNames\\index.tsx"
     },
     {
       "name": "RealtimeTimestamps",
@@ -5540,7 +5540,7 @@
         "Show In Compact"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\realtimeTimestamps\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\realtimeTimestamps\\index.tsx"
     },
     {
       "name": "ReverseImageSearch",
@@ -5549,7 +5549,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\reverseImageSearch\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\reverseImageSearch\\index.tsx"
     },
     {
       "name": "SaveProfile",
@@ -5589,7 +5589,7 @@
         "Rename",
         "Delete"
       ],
-      "file": "\\src\\nightcordplugins\\SaveProfile\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\SaveProfile\\index.tsx"
     },
     {
       "name": "SaveThem",
@@ -5624,7 +5624,7 @@
         "Remove",
         "Save to SaveThem"
       ],
-      "file": "\\src\\nightcordplugins\\SaveThem\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\SaveThem\\index.tsx"
     },
     {
       "name": "SecureBookmarks",
@@ -5633,7 +5633,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\SecureBookmarks\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\SecureBookmarks\\index.tsx"
     },
     {
       "name": "SelfDestruct",
@@ -5647,7 +5647,7 @@
         "Delay"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\selfDestruct\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\selfDestruct\\index.tsx"
     },
     {
       "name": "ServerCloner",
@@ -5678,7 +5678,7 @@
         "Stop",
         "Server Cloner"
       ],
-      "file": "\\src\\nightcordplugins\\serverCloner\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\serverCloner\\index.tsx"
     },
     {
       "name": "SharePerms",
@@ -5692,7 +5692,7 @@
         "Logs"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\sharePerms\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\sharePerms\\index.tsx"
     },
     {
       "name": "ShowHiddenChannels",
@@ -5708,7 +5708,7 @@
         "Default Allowed Users And Roles Dropdown State"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\showHiddenChannels\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\showHiddenChannels\\index.tsx"
     },
     {
       "name": "ShowHiddenThings",
@@ -5717,7 +5717,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\showHiddenThings\\index.ts"
+      "file": "\\src\\ghostcordplugins\\showHiddenThings\\index.ts"
     },
     {
       "name": "ShowID",
@@ -5726,7 +5726,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\showID\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\showID\\index.tsx"
     },
     {
       "name": "SilentDelete",
@@ -5754,7 +5754,7 @@
         "Successfully silently deleted {count} message(s).",
         "Silent Delete"
       ],
-      "file": "\\src\\nightcordplugins\\silentDelete\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\silentDelete\\index.tsx"
     },
     {
       "name": "SmoothType",
@@ -5770,7 +5770,7 @@
         "Caret Color"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\SmoothType\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\SmoothType\\index.tsx"
     },
     {
       "name": "SoundCord",
@@ -5796,7 +5796,7 @@
         "Remove from favorites",
         "Add to favorites"
       ],
-      "file": "\\src\\nightcordplugins\\soundcloudPlayer\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\soundcloudPlayer\\index.tsx"
     },
     {
       "name": "SpotifyCrack",
@@ -5810,7 +5810,7 @@
         "Keep Spotify Activity On Idle"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\spotifyCrack\\index.ts"
+      "file": "\\src\\ghostcordplugins\\spotifyCrack\\index.ts"
     },
     {
       "name": "StatusCycler",
@@ -5867,16 +5867,16 @@
         "Spicetify modifies the Spotify desktop client and adds support for themes, extensions, and custom apps. Marketplace is installed automatically.",
         "Import phrases from a TXT file, one per line."
       ],
-      "file": "\\src\\nightcordplugins\\statusCycler\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\statusCycler\\index.tsx"
     },
     {
       "name": "StealthMode",
       "descriptions": [
-        "Hides all plugin buttons without disabling them. Shortcut: Ctrl+Shift+H. The toggle is in Nightcord Settings."
+        "Hides all plugin buttons without disabling them. Shortcut: Ctrl+Shift+H. The toggle is in Ghostcord Settings."
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\stealthMode\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\stealthMode\\index.tsx"
     },
     {
       "name": "StereoInstaller",
@@ -5942,7 +5942,7 @@
         "Installs and reverts the Discord stereo voice module from selected method sources.",
         "Open StereoInstaller"
       ],
-      "file": "\\src\\nightcordplugins\\stereoInstaller.desktop\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\stereoInstaller.desktop\\index.tsx"
     },
     {
       "name": "StreamProof",
@@ -5954,7 +5954,7 @@
         "Auto Stream Proof"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\streamProof\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\streamProof\\index.tsx"
     },
     {
       "name": "Surveillance",
@@ -6000,7 +6000,7 @@
         "Add to Surveillance",
         "Open Surveillance"
       ],
-      "file": "\\src\\nightcordplugins\\Surveillance\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\Surveillance\\index.tsx"
     },
     {
       "name": "ThemeLibrary",
@@ -6009,7 +6009,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\themeLibrary\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\themeLibrary\\index.tsx"
     },
     {
       "name": "TokenImporter",
@@ -6023,7 +6023,7 @@
       "translationKeys": [
         "Search accounts..."
       ],
-      "file": "\\src\\nightcordplugins\\tokenImporter\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\tokenImporter\\index.tsx"
     },
     {
       "name": "Translate",
@@ -6032,7 +6032,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\translate\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\translate\\index.tsx"
     },
     {
       "name": "UnlimitedAccounts",
@@ -6044,7 +6044,7 @@
         "Max Accounts"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\unlimitedAccounts\\index.ts"
+      "file": "\\src\\ghostcordplugins\\unlimitedAccounts\\index.ts"
     },
     {
       "name": "FakeNitro",
@@ -6076,7 +6076,7 @@
         "Disable Embed Permission Check"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\unlockEmoji\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\unlockEmoji\\index.tsx"
     },
     {
       "name": "UserVoiceShow",
@@ -6092,7 +6092,7 @@
         "Show In Messages"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\userVoiceShow\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\userVoiceShow\\index.tsx"
     },
     {
       "name": "ValidUser",
@@ -6101,7 +6101,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\validUser\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\validUser\\index.tsx"
     },
     {
       "name": "ViewIcons",
@@ -6115,7 +6115,7 @@
         "Img Size"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\viewIcons\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\viewIcons\\index.tsx"
     },
     {
       "name": "VoiceChannelSearch",
@@ -6136,21 +6136,21 @@
         "more channels — use search",
         "Search voice channel"
       ],
-      "file": "\\src\\nightcordplugins\\voiceChannelSearch\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\voiceChannelSearch\\index.tsx"
     },
     {
       "name": "VoiceDictation",
       "descriptions": [
         "Transcription language. Auto-detect may occasionally hallucinate English.",
         "Audio segment duration (seconds). Shorter = more reactive but less precise.",
-        "Real-time voice dictation via Groq Whisper (free). API key shared with NightcordAI."
+        "Real-time voice dictation via Groq Whisper (free). API key shared with GhostcordAI."
       ],
       "settingKeys": [
         "Language",
         "Chunk Seconds"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\voiceDictation\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\voiceDictation\\index.tsx"
     },
     {
       "name": "VoiceDownload",
@@ -6159,7 +6159,7 @@
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\voiceDownload\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\voiceDownload\\index.tsx"
     },
     {
       "name": "VoiceMessages",
@@ -6173,7 +6173,7 @@
         "Echo Cancellation"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\voiceMessages\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\voiceMessages\\index.tsx"
     },
     {
       "name": "VolumeBooster",
@@ -6185,7 +6185,7 @@
         "Multiplier"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\VolumeBooster\\index.ts"
+      "file": "\\src\\ghostcordplugins\\VolumeBooster\\index.ts"
     },
     {
       "name": "WhosWatching",
@@ -6197,19 +6197,19 @@
         "Show Panel"
       ],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\whosWatching\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\whosWatching\\index.tsx"
     },
     {
       "name": "WordBomb",
       "descriptions": [
-        "Assistant BombParty/WordBomb avec overlay persistant, IA intégrée et alphabet track."
+        "BombParty/WordBomb assistant with persistent overlay, integrated AI and alphabet track."
       ],
       "settingKeys": [],
       "translationKeys": [],
-      "file": "\\src\\nightcordplugins\\wordBomb\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\wordBomb\\index.tsx"
     },
     {
-      "name": "Youtube in NightCord",
+      "name": "Youtube in GhostCord",
       "descriptions": [
         "Watch YouTube in Discord. Search, Dynamic Island, Watching Together."
       ],
@@ -6234,7 +6234,7 @@
         "YouTube In Discord",
         "Show watching activity status"
       ],
-      "file": "\\src\\nightcordplugins\\youtubePlayer\\index.tsx"
+      "file": "\\src\\ghostcordplugins\\youtubePlayer\\index.tsx"
     },
     {
       "name": "SilentEdit",
@@ -6254,7 +6254,7 @@
         "Accent color for the Silent Edit icon (hex code).",
         "Silent Edit"
       ],
-      "file": "\\src\\nightcordplugins\\silentEdit.tsx"
+      "file": "\\src\\ghostcordplugins\\silentEdit.tsx"
     }
   ],
   "allDescriptions": [
@@ -6344,7 +6344,7 @@
     "Adds a /petpet slash command to create headpet gifs from any image",
     "Adds a Dynamic Island for Spotify, SoundCord, calls, screen sharing, and notifications.",
     "Adds a button near mute to join a random voice channel.",
-    "Adds a button next to the inbox button in the channel header that houses Nightcord quick actions",
+    "Adds a button next to the inbox button in the channel header that houses Ghostcord quick actions",
     "Adds a button next to the mic and deafen button to toggle game activity.",
     "Adds a button to copy user's mention on the user context menu, works best with ValidUser.",
     "Adds a button to prevent being moved or disconnected from a voice channel.",
@@ -6510,7 +6510,7 @@
     "Announce when you start/stop streaming",
     "Announces when users join, leave, or move voice channels via narrator",
     "Announces when users join, leave, or move voice channels via narrator using TikTok TTS. Revamped and back from the dead.",
-    "Annulé",
+    "Cancelled",
     "AntiDeleteMessage",
     "AntiMoveDeco",
     "AntiNickname",
@@ -6525,12 +6525,12 @@
     "Apply the font to code blocks",
     "Are you sure you want to delete this profile configuration?",
     "Are you sure you want to remove ${name} from your saved users list?",
-    "Argent (2 mois)",
+    "Silver (2 months)",
     "Ask a yes/no question and get an answer",
     "Ask anything!",
     "Asked Timezone",
     "Asset URL",
-    "Assistant BombParty/WordBomb avec overlay persistant, IA intégrée et alphabet track.",
+    "BombParty/WordBomb assistant with persistent overlay, integrated AI and alphabet track.",
     "Async time",
     "At least one call exceeded the configured slow call threshold.",
     "Attach a file",
@@ -6539,7 +6539,7 @@
     "Attempt To Prevent Crashes",
     "Attempt to find emoji of same name in server before using ID in settings (useful if no nitro)",
     "Attempt to navigate to the channel you were in before switching accounts or loading Discord.",
-    "Aucun événement",
+    "No event",
     "Audio Source",
     "Audio segment duration (seconds). Shorter = more reactive but less precise.",
     "AudioLimiter",
@@ -6564,16 +6564,16 @@
     "AutoReply",
     "AutoResponder",
     "AutoResponder functional status",
-    "AutoTranslateNightcord",
+    "AutoTranslateGhostcord",
     "AutoUnmute",
     "AutoZipper",
     "Autolock Seconds",
     "Automated fingerprint/end text",
-    "Automatic translation for Nightcord.",
+    "Automatic translation for Ghostcord.",
     "Automatically caps the volume of other users — no more screaming or loud noises that pierce your ears.",
     "Automatically claim tickets by clicking a button on the bot's first message in a ticket channel.",
     "Automatically click a button on bot messages inside a ticket category.",
-    "Automatically corrects spelling and grammar before sending. Requires a free Groq API key configured in NightcordAI.",
+    "Automatically corrects spelling and grammar before sending. Requires a free Groq API key configured in GhostcordAI.",
     "Automatically deafems your mic when joining voice-channel.",
     "Automatically disable the silent message toggle again after sending one",
     "Automatically enable StreamProof when you start streaming",
@@ -6645,8 +6645,8 @@
     "Blocked Stickers",
     "Blocked Words",
     "Blocks messages containing specific user-defined keywords, as if the user sending them was blocked.",
-    "Bloquer l'autoplay des vidéos intégrées dans les messages (MP4, WebM)",
-    "Bloquer les avatars GIF animés dans les listes et messages",
+    "Block autoplay of embedded videos in messages (MP4, WebM)",
+    "Block animated GIF avatars in lists and messages",
     "Blur",
     "Blur All Channels",
     "Blur Amount",
@@ -6666,7 +6666,7 @@
     "Brightness",
     "Brings back the option to pause invites indefinitely that stupit Discord removed.",
     "Brings vscode-style codeblocks into Discord, powered by Shiki",
-    "Bronze (1 mois)",
+    "Bronze (1 month)",
     "Buddy",
     "Bug Hunter Lvl 1",
     "Bug Hunter Lvl 2",
@@ -6840,7 +6840,7 @@
     "Config: ",
     "Configuration Name (e.g. Work, Gaming, Halloween)...",
     "Configure your API key first…",
-    "Configure your API key in Nightcord Settings > Plugins > NightcordAI",
+    "Configure your API key in Ghostcord Settings > Plugins > GhostcordAI",
     "Console Icon",
     "ConsoleJanitor",
     "ConsoleShortcuts",
@@ -7002,7 +7002,7 @@
     "Details",
     "Detect Discord Kotlin",
     "Detect old Discord Android clients",
-    "Diamant (12 mois)",
+    "Diamond (12 months)",
     "Direct Messages",
     "Disable Av1 Codec",
     "Disable Discord emoji animations",
@@ -7122,13 +7122,13 @@
     "Duration for files on Litterbox",
     "Dynamic Island",
     "DynamicIslande",
-    "Débanni",
-    "Déco",
-    "Déconnexion du account",
-    "Désactiver l'animation des emojis Discord",
-    "Désactiver la prévisualisation audio du soundboard au survol",
-    "Désactiver les animations spring de l'interface Discord (boutons, modals, etc.)",
-    "Désactiver les points \"X est en train d'écrire...\"",
+    "Unbanned",
+    "Disconnected",
+    "Account disconnected",
+    "Disable Discord emoji animation",
+    "Disable soundboard audio preview on hover",
+    "Disable Discord spring animations (buttons, modals, etc.)",
+    "Disable typing indicators",
     "EXPORT FORMAT",
     "Each method has its own upstream source.",
     "Eager Load",
@@ -7146,7 +7146,7 @@
     "Emoji name (default (from Vencord Server): husk)",
     "Emoji to use for react actions.",
     "Emojis",
-    "Empêcher l'autoplay des stickers animés Lottie",
+    "Prevent Lottie animated sticker autoplay",
     "Enable Access to Experiments & other dev-only features in Discord!",
     "Enable Claim Ticket",
     "Enable Discord Preset Quotes",
@@ -7426,9 +7426,9 @@
     "HideMessages",
     "HideServers",
     "Hides DM and Group DM notifications and sidebar items while you are streaming",
-    "Hides all Nightcord plugin buttons and replaces them with a single compact toggle icon. Click the icon to restore all buttons.",
+    "Hides all Ghostcord plugin buttons and replaces them with a single compact toggle icon. Click the icon to restore all buttons.",
     "Hides all channels in collapsed categories, even if they have unread messages.",
-    "Hides all plugin buttons without disabling them. Shortcut: Ctrl+Shift+H. The toggle is in Nightcord Settings.",
+    "Hides all plugin buttons without disabling them. Shortcut: Ctrl+Shift+H. The toggle is in Ghostcord Settings.",
     "Hides messages, links, images, DMs, but not the screen share/voice grid. Toggle via chat bar button.",
     "Hides the Dearrow button from YouTube embeds",
     "Hides the button if there are no replies to the message",
@@ -7670,7 +7670,7 @@
     "Left/Kick",
     "Length Based Timeout",
     "Let it snow on Discord",
-    "Lets other Nightcord users see your Custom Profile, and lets you see theirs",
+    "Lets other Ghostcord users see your Custom Profile, and lets you see theirs",
     "Lets you add a custom color to any user, anywhere! Highly recommend to use with typingTweaks and roleColorEverywhere",
     "Lets you preview your message before sending it.",
     "Lets you zoom in to images and gifs. Use scroll wheel to zoom in and shift + scroll wheel to increase lens radius / size",
@@ -7679,7 +7679,7 @@
     "Lightness, in %. Change if the colors are too light or too dark",
     "Limit Msg Cache",
     "Limit app rendering to a few FPS when the window is in the background",
-    "Limiter Discord à ~10 FPS quand la fenêtre est en arrière-plan",
+    "Limit Discord to ~10 FPS when the window is in the background",
     "Links / Embeds",
     "List Mode",
     "List all your tags",
@@ -7733,7 +7733,7 @@
     "MD",
     "MacOsButtons",
     "Main",
-    "Main Nightcord plugin: fixes Discord crashes, adds UI options and manages internal commands.",
+    "Main Ghostcord plugin: fixes Discord crashes, adds UI options and manages internal commands.",
     "Make Discord not consider using AV1 for streaming.",
     "Make Discord not consider using H264 for streaming.",
     "Make Discord not consider using H265 for streaming.",
@@ -7765,7 +7765,7 @@
     "Many scheduled timeouts can create bursts of work later.",
     "Markdown",
     "MarkdownTables",
-    "Masquer la section Activités (jeux, Spotify, etc.) dans le panneau membres",
+    "Hide the Activities section (games, Spotify, etc.) in the member panel",
     "MassDM",
     "Match Mode",
     "Max",
@@ -7900,11 +7900,11 @@
     "NewGuildSettings",
     "Next track",
     "Nickname Color",
-    "Nightcord AI",
-    "NightcordAI",
-    "NightcordHelper",
-    "NightcordUpdater",
-    "Nitro (0 mois)",
+    "Ghostcord AI",
+    "GhostcordAI",
+    "GhostcordHelper",
+    "GhostcordUpdater",
+    "Nitro (0 months)",
     "Nitro First",
     "No Activities",
     "No Animated Emoji",
@@ -8006,7 +8006,7 @@
     "Only show trigger content on click instead of hover",
     "Only show users you've had DMs with",
     "Opacity",
-    "Opale (72 mois)",
+    "Opal (72 months)",
     "Open",
     "Open Apple Music links in the iTunes app",
     "Open Custom Profile",
@@ -8030,7 +8030,7 @@
     "Option to avoid states",
     "Option to include states",
     "Options",
-    "Or (3 mois)",
+    "Gold (3 months)",
     "OrbolayBridge",
     "Orbs — Apprentice",
     "Organize Menu",
@@ -8098,7 +8098,7 @@
     "Platform",
     "PlatformIndicators",
     "PlatformSpoofer",
-    "Platine (6 mois)",
+    "Platinum (6 months)",
     "Play",
     "Play a sound when a slot becomes available.",
     "Play soundboard sounds when you disconnect from voice.",
@@ -8196,7 +8196,7 @@
     "Reactions",
     "Reactors List",
     "Ready for your activities",
-    "Real-time voice dictation via Groq Whisper (free). API key shared with NightcordAI.",
+    "Real-time voice dictation via Groq Whisper (free). API key shared with GhostcordAI.",
     "RealtimeTimestamps",
     "Reasons",
     "Receive audio pings for @everyone and @here in group DMs",
@@ -8366,7 +8366,7 @@
     "Rotation interval must be at least 1 second.",
     "Rows",
     "Rows of quick reactions to display",
-    "Rubis (36 mois)",
+    "Ruby (36 months)",
     "Rules for replacing text using regular expressions.",
     "Rules for replacing text using string matching.",
     "Safe Mode",
@@ -8674,7 +8674,7 @@
     "ShowSongName",
     "ShowTimeoutDuration",
     "Shown Emojis",
-    "Shows a banner when a new Nightcord version is available. Click Update to install.",
+    "Shows a banner when a new Ghostcord version is available. Click Update to install.",
     "Shows a streak next to a user when you exchange DMs with them on consecutive days.",
     "Shows a text input instead of a select menu by default. (Equivalent to clicking the \"Other\" option)",
     "Shows a timestamp on replied-message previews",
@@ -8842,7 +8842,7 @@
     "Surveillance",
     "Switch only",
     "Sync With Friends",
-    "Sync wallpapers with Nightcord friends in DMs.",
+    "Sync wallpapers with Ghostcord friends in DMs.",
     "Sync your status to Steam! (Online, Away, Invisible, or Offline.)",
     "System Prompt",
     "TEXT TO UPPERCASE",
@@ -8891,7 +8891,7 @@
     "The mode used to display hidden channels.",
     "The name of the tag",
     "The number of times a measured plugin function was called.",
-    "The numbers are samples collected while you use Illegalcord. If a plugin is not used during collection, it may look light even if it does more work in other situations.",
+    "The numbers are samples collected while you use Ghostcord. If a plugin is not used during collection, it may look light even if it does more work in other situations.",
     "The order to display usernames, display names, nicknames, friend names, and custom names. Use the following placeholders: {user}, {display}, {nick}, {friend}, {custom}. You can provide multiple name options to use as fallbacks if one is unavailable by separating them with commas as such: {custom, friend, nick}. You can have up to three prefixes and three suffixes per name.",
     "The part of the url you want to search",
     "The plugin allows you to fully customize the cursor caret's visual settings, including adjustable transition delays and custom CSS animation effects.",
@@ -8917,7 +8917,7 @@
     "Thing to slap",
     "This downloads and runs the official Spicetify installer from GitHub in a terminal. Spicetify Marketplace will be selected automatically.",
     "This page explains what Client Diagnostics measures and how to read the numbers without knowing the code.",
-    "This page interprets the metrics and flags plugins that may make Illegalcord lag.",
+    "This page interprets the metrics and flags plugins that may make Ghostcord lag.",
     "This plugin allows you to enlarge stream previews",
     "This plugin allows you to perform multiple actions on an entire channel (move, mute, disconnect, etc.) (originally by dutake)",
     "This plugin consumed enough callback time to be worth checking.",
@@ -8925,7 +8925,7 @@
     "This plugin is associated with many observed JavaScript allocations.",
     "This plugin replaces local Discord voice files to enable higher audio quality. It keeps a backup so you can restore the original files when needed.",
     "This plugin still has runtime listeners registered.",
-    "This requires Discord authorization. Once enabled, everyone using Nightcord will be able to see your Custom Profile, and you will be able to see theirs.",
+    "This requires Discord authorization. Once enabled, everyone using Ghostcord will be able to see your Custom Profile, and you will be able to see theirs.",
     "This will copy index.js from StereoMethods/Discord-Voice into",
     "This will download the Discord Audio Collective Method files for your platform, save a backup, and replace the local Discord voice module to enable higher audio quality.",
     "This will use the local",
@@ -9254,7 +9254,7 @@
     "Your friendship is strong (6 Months)",
     "Your last.fm API key",
     "Your last.fm username",
-    "Youtube in NightCord",
+    "Youtube in GhostCord",
     "ZipPreview",
     "Zoom",
     "Zoom Multiplier",
@@ -9324,7 +9324,7 @@
     "was installed. Patch Discord voice again.",
     "which normailze option to use",
     "yoooo freaky",
-    "Émeraude (24 mois)",
+    "Emerald (24 months)",
     "૮ ˶ᵔ ᵕ ᵔ˶ ა",
     "ღゝ◡╹)ノ♡",
     "Ꮺ ָ࣪ ۰ ͙⊹",

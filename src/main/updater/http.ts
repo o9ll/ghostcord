@@ -11,15 +11,14 @@ import { exec } from "child_process";
 import { app,ipcMain } from "electron";
 import { rmSync,writeFileSync } from "original-fs";
 import { join } from "path";
-import {domain} from "../../../DOMAIN.json";
 import { serializeErrors } from "./common";
 
-const GITEA_BASE     = `https://source.${domain}`;
-const API_BASE      = `${GITEA_BASE}/api/v1/repos/nightcord/nightcord`;
-const REPO_URL      = `${GITEA_BASE}/nightcord/nightcord`;
+const RELEASES_REPO = `o9ll/ghostcord`;
+const API_BASE      = `https://api.github.com/repos/${RELEASES_REPO}`;
+const REPO_URL      = `https://github.com/${RELEASES_REPO}`;
 declare const VERSION: string;
 const CURRENT_VERSION = `v${VERSION}`;
-const ZIP_FILE = "nightcord-dist.zip";
+const ZIP_FILE = "ghostcord-dist.zip";
 
 let pendingDownloadUrl: string | null = null;
 let pendingVersion: string | null = null;
@@ -65,7 +64,7 @@ async function getUpdates() {
     if (!outdated) return [];
     return [{
         hash:    pendingVersion ?? "new",
-        author:  "Nightcord",
+        author:  "Ghostcord",
         message: `Nouvelle version disponible : ${pendingVersion}`
     }];
 }
@@ -79,7 +78,7 @@ async function applyUpdates(): Promise<boolean> {
         const data = await fetchBuffer(pendingDownloadUrl);
 
         // Save zip to temp
-        const zipPath = join(app.getPath("temp"), `nightcord-update-${Date.now()}.zip`);
+        const zipPath = join(app.getPath("temp"), `ghostcord-update-${Date.now()}.zip`);
         writeFileSync(zipPath, data, { flush: true });
 
         // The zip was created from dist/desktop/ with includeBaseDirectory=false,
@@ -89,7 +88,7 @@ async function applyUpdates(): Promise<boolean> {
 
         // Extract using PowerShell Expand-Archive (reliable ZIP support on all Windows 10/11)
         // We extract to a temp folder first, then move files over to avoid half-extracted state
-        const tmpExtract = join(app.getPath("temp"), `nightcord-extract-${Date.now()}`);
+        const tmpExtract = join(app.getPath("temp"), `ghostcord-extract-${Date.now()}`);
 
         return await new Promise<boolean>((resolve, reject) => {
             // Step 1 — extract zip to temp folder

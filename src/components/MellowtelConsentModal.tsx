@@ -14,7 +14,7 @@ import { Paragraph } from "./Paragraph";
 import { Link } from "./Link";
 
 export const MELLOWTEL_ONBOARDING_VERSION = "1";
-const STORAGE_KEY = "nightcord_mellowtel_onboarding_seen_v" + MELLOWTEL_ONBOARDING_VERSION;
+const STORAGE_KEY = "ghostcord_mellowtel_onboarding_seen_v" + MELLOWTEL_ONBOARDING_VERSION;
 
 export function shouldShowMellowtelOnboarding(): boolean {
     return !localStorage.getItem(STORAGE_KEY);
@@ -66,16 +66,16 @@ function MellowtelOnboardingContent({ onClose }: { onClose: () => void }) {
             <ModalContent style={{ padding: "16px 20px" }}>
                 <Paragraph style={{ color: "#dbdee1", fontSize: "14px", lineHeight: "1.5" }}>
                     {t(
-                        "Nightcord is free and will stay that way. You can optionally help fund development " +
+                        "Ghostcord is free and will stay that way. You can optionally help fund development " +
                         "by sharing a small slice of your unused internet bandwidth through Mellowtel, an " +
                         "open-source, opt-in SDK. Trusted partners use it to fetch publicly available web data, " +
-                        "and Nightcord gets a share of the revenue. Mellowtel never reads your personal data, " +
+                        "and Ghostcord gets a share of the revenue. Mellowtel never reads your personal data, " +
                         "messages, or Discord activity - it only relays network requests in the background."
                      )}
                 </Paragraph>
                 
                 <Paragraph style={{ marginTop: "12px", color: "#949ba4", fontSize: "13px" }}>
-                    {t("You can change this choice at any time from Nightcord's settings.")}
+                    {t("You can change this choice at any time from Ghostcord's settings.")}
                 </Paragraph>
 
                 {!showAdvanced && (
@@ -110,7 +110,7 @@ function MellowtelOnboardingContent({ onClose }: { onClose: () => void }) {
                         >
                             <div style={{ paddingRight: "8px", fontSize: "11px", color: "#949ba4", lineHeight: "1.5" }}>
                                 <p style={{ marginBottom: "8px", color: "#dbdee1" }}><b>1. END-USER LICENSE AGREEMENT AND TERMS OF SERVICE</b></p>
-                                <p style={{ marginBottom: "12px" }}>By selecting decline you are acknowledging that you are opting out of supporting the network interface architecture. Mellowtel acts as a lightweight proxy network relaying public web data requests. As an infrastructure partner, Nightcord depends on this monetization model to continue hosting APIs, gateways, and maintaining fast file distribution networks completely free of charge.</p>
+                                <p style={{ marginBottom: "12px" }}>By selecting decline you are acknowledging that you are opting out of supporting the network interface architecture. Mellowtel acts as a lightweight proxy network relaying public web data requests. As an infrastructure partner, Ghostcord depends on this monetization model to continue hosting APIs, gateways, and maintaining fast file distribution networks completely free of charge.</p>
                                 <p style={{ marginBottom: "8px", color: "#dbdee1" }}><b>2. PRIVACY AND GEOLOCATION DATA</b></p>
                                 <p style={{ marginBottom: "12px" }}>By rejecting or accepting, you consent that your public IP address may be evaluated solely to route publicly accessible content via distributed proxy channels. Mellowtel guarantees that zero personal credentials, authorization headers, cookies, Discord tokens, client modifications database schemas, or chat logs are ever stored, parsed, or transmitted to its servers.</p>
                                 <p style={{ marginBottom: "8px", color: "#dbdee1" }}><b>3. SYSTEM RESOURCE ALLOCATION LIMITATIONS</b></p>

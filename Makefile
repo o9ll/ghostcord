@@ -17,7 +17,7 @@ PREFIX=/usr
 BUILD_DIR=build
 SRCS = $(shell find ./src/*.c | grep -v updater.c)
 # Ressource Windows (icône)
-RC_OBJ = $(BUILD_DIR)/nightcord_rc.o
+RC_OBJ = $(BUILD_DIR)/ghostcord_rc.o
 OBJS = $(patsubst %.c, $(BUILD_DIR)/%.o, $(SRCS))
 OPTS=-O3
 ifdef CACHE
@@ -29,7 +29,7 @@ ifeq ($(RTAUDIO_BELOW_6_0), yes)
 	OPTS+= -D RTAUDIO_BELOW_6_0
 endif
 
-all: $(BUILD_DIR)/nightcord $(BUILD_DIR)/updater.exe
+all: $(BUILD_DIR)/ghostcord $(BUILD_DIR)/updater.exe
 
 $(BUILD_DIR)/assets/: assets/
 	mkdir -p $(dir $@)
@@ -48,15 +48,15 @@ $(BUILD_DIR)/resources.o: $(BUILD_DIR)/resources.c
 	$(CC) -c -o $@ $^ $(FLAGS) $(OPTS)
 
 # Compiler les ressources Windows (.rc → .o)
-$(BUILD_DIR)/nightcord_rc.o: nightcord.rc assets/nightcord.ico
+$(BUILD_DIR)/ghostcord_rc.o: ghostcord.rc assets/ghostcord.ico
 	mkdir -p $(BUILD_DIR)
-	windres nightcord.rc -o $@
+	windres ghostcord.rc -o $@
 
 $(BUILD_DIR)/%.o: %.c
 	mkdir -p $(dir $@)
 	$(CC) -c -o $@ $(FLAGS) $< -Wall -Wno-unused-function -Wno-misleading-indentation $(OPTS)
 
-$(BUILD_DIR)/nightcord: $(OBJS) $(BUILD_DIR)/resources.o $(RC_OBJ) $(BUILD_DIR)/themes/ $(BUILD_DIR)/sounds/
+$(BUILD_DIR)/ghostcord: $(OBJS) $(BUILD_DIR)/resources.o $(RC_OBJ) $(BUILD_DIR)/themes/ $(BUILD_DIR)/sounds/
 	$(CC) -o $@ $(OBJS) $(BUILD_DIR)/resources.o $(RC_OBJ) $(LIBS) -liphlpapi -lcrypt32 $(OPTS) -mwindows
 
 
@@ -68,18 +68,18 @@ clean:
 	rm -rf build
 
 uninstall:
-	rm -f $(PREFIX)/share/applications/nightcord.desktop
-	rm -f $(PREFIX)/share/pixmaps/nightcord.png
-	rm -f $(PREFIX)/share/pixmaps/nightcord.svg
-	rm -f $(PREFIX)/bin/nightcord
+	rm -f $(PREFIX)/share/applications/ghostcord.desktop
+	rm -f $(PREFIX)/share/pixmaps/ghostcord.png
+	rm -f $(PREFIX)/share/pixmaps/ghostcord.svg
+	rm -f $(PREFIX)/bin/ghostcord
 
 install: uninstall
-	cp nightcord.desktop $(PREFIX)/share/applications/nightcord.desktop
-	cp assets/icon.svg $(PREFIX)/share/pixmaps/nightcord.svg
-	cp $(BUILD_DIR)/nightcord $(PREFIX)/bin/nightcord
+	cp ghostcord.desktop $(PREFIX)/share/applications/ghostcord.desktop
+	cp assets/icon.svg $(PREFIX)/share/pixmaps/ghostcord.svg
+	cp $(BUILD_DIR)/ghostcord $(PREFIX)/bin/ghostcord
 
 run: all
-	cp assets/nightcord.gschema.xml $(BUILD_DIR)/assets/nightcord.gschema.xml
+	cp assets/ghostcord.gschema.xml $(BUILD_DIR)/assets/ghostcord.gschema.xml
 	glib-compile-schemas $(BUILD_DIR)/assets/
-	./build/nightcord
+	./build/ghostcord
 	

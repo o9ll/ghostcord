@@ -16,6 +16,7 @@ export default definePlugin({
     description: "Makes avatars take up the entire vc tile",
     tags: ["Appearance", "Voice"],
     authors: [EquicordDevs.mochienya],
+    enabledByDefault: true,
     patches: [
         {
             find: "\"data-selenium-video-tile\":",

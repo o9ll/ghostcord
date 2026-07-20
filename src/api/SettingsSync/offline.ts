@@ -104,7 +104,7 @@ export async function importSettings(data: string, type: BackupType = "all", clo
     }
 }
 
-// Champs sensibles à ne jamais exporter
+// Sensitive fields to never export
 const SENSITIVE_PLUGIN_KEYS = new Set([
     "apiKey",
     "groqApiKey",
@@ -122,7 +122,7 @@ const SENSITIVE_PLUGIN_KEYS = new Set([
 
 const SENSITIVE_DATASTORE_KEYS = new Set([
     "TokenImporter_accounts",
-    "nightcord-mi-token-cache",
+    "ghostcord-mi-token-cache",
     "ThemeLibrary_uniqueToken",
     "groq-shared-api-key",
 ]);
@@ -180,14 +180,14 @@ export async function exportSettings({ syncDataStore = true, type = "all", minif
 
 function getDiscordUsername(): string {
     try {
-        // Tente de récupérer le pseudo Discord depuis le store Redux
+        // Attempt to get Discord display name from Redux store
         const user = (window as any)?.DiscordNative?.nativeModules?.requireModule?.("UserStore")?.getCurrentUser?.();
         if (user?.username) return user.username;
-        // Fallback: cherche dans le state React si accessible
+        // Fallback: check in React state if accessible
         const usernameEl = document.querySelector('[class*="username"]');
         if (usernameEl?.textContent?.trim()) return usernameEl.textContent.trim().replace(/[^a-zA-Z0-9_-]/g, "");
     } catch { /* ignore */ }
-    return "nightcord";
+    return "ghostcord";
 }
 
 export async function downloadSettingsBackup(type: BackupType = "all", { minify }: { minify?: boolean; } = {}) {
@@ -195,7 +195,7 @@ export async function downloadSettingsBackup(type: BackupType = "all", { minify 
         const syncDataStore = type === "all" || type === "datastore";
         const backup = await exportSettings({ minify, type, syncDataStore });
         const discordName = getDiscordUsername();
-        const filename = `nightcord-${discordName}-${type}-${moment().format("YYYY-MM-DD")}.json`;
+        const filename = `ghostcord-${discordName}-${type}-${moment().format("YYYY-MM-DD")}.json`;
         const data = new TextEncoder().encode(backup);
 
         if (IS_DISCORD_DESKTOP) {
@@ -214,7 +214,7 @@ export async function uploadSettingsBackup(type: BackupType = "all", showToast =
     if (IS_DISCORD_DESKTOP) {
         const [file] = await DiscordNative.fileManager.openFiles({
             filters: [
-                { name: "Nightcord Settings Backup", extensions: ["json"] },
+                { name: "Ghostcord Settings Backup", extensions: ["json"] },
                 { name: "all", extensions: ["*"] }
             ]
         });

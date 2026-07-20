@@ -15,14 +15,14 @@ const settings = definePluginSettings({
         description: "Minutes before Discord goes idle (0 to disable auto-idle)",
         type: OptionType.SLIDER,
         markers: makeRange(0, 60, 5),
-        default: 10,
+        default: 0,
         stickToMarkers: false,
         restartNeeded: true // Because of the setInterval patch
     },
     remainInIdle: {
         description: "When you come back to Discord, remain idle until you confirm you want to go online",
         type: OptionType.BOOLEAN,
-        default: true
+        default: false
     }
 });
 
@@ -31,6 +31,7 @@ export default definePlugin({
     description: "Allows you to set the time before Discord goes idle (or disable auto-idle)",
     tags: ["Activity", "Customisation"],
     authors: [Devs.newwares],
+    enabledByDefault: true,
     settings,
     patches: [
         {

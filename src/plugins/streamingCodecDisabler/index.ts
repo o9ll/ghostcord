@@ -34,22 +34,22 @@ const settings = definePluginSettings({
     disableH265Codec: {
         description: "Make Discord not consider using H265 for streaming.",
         type: OptionType.BOOLEAN,
-        default: false
+        default: true
     },
     disableH264Codec: {
         description: "Make Discord not consider using H264 for streaming.",
         type: OptionType.BOOLEAN,
-        default: false
+        default: true
     },
     disableVP8Codec: {
         description: "Make Discord not consider using VP8 for streaming.",
         type: OptionType.BOOLEAN,
-        default: false
+        default: true
     },
     disableVP9Codec: {
         description: "Make Discord not consider using VP9 for streaming.",
         type: OptionType.BOOLEAN,
-        default: false
+        default: true
     },
 });
 
@@ -58,6 +58,7 @@ export default definePlugin({
     description: "Disable codecs for streaming of your choice",
     tags: ["Utility", "Voice"],
     authors: [EquicordDevs.davidkra230],
+    enabledByDefault: true,
     settings,
 
     patches: [

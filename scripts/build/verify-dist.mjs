@@ -1,4 +1,4 @@
-// verify-dist.mjs - Verifie dist/desktop avant de zipper
+// verify-dist.mjs - Check dist/desktop before zipping
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';

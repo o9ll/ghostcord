@@ -39,7 +39,7 @@ export const enum IpcEvents {
     BUILD = "VencordBuild",
     OPEN_MONACO_EDITOR = "VencordOpenMonacoEditor",
     GET_MONACO_THEME = "VencordGetMonacoTheme",
-    GET_INSTALLER_PREFS = "NightcordGetInstallerPrefs",
+    GET_INSTALLER_PREFS = "GhostcordGetInstallerPrefs",
 
     GET_PLUGIN_IPC_METHOD_MAP = "VencordGetPluginIpcMethodMap",
 
@@ -60,45 +60,45 @@ export const enum IpcEvents {
 
     GET_DESKTOP_SOURCES = "VencordGetDesktopSources",
 
-    SET_WINDOW_BACKGROUND_MATERIAL = "NightcordSetWindowBackgroundMaterial",
+    SET_WINDOW_BACKGROUND_MATERIAL = "GhostcordSetWindowBackgroundMaterial",
 
-    // SoundCord Player â€” thumbnail toolbar Windows
+    // SoundCord Player - thumbnail toolbar Windows
     SET_THUMBAR_BUTTONS = "SoundCordSetThumbarButtons",
     THUMBAR_BUTTON_CLICK = "SoundCordThumbarButtonClick",
 
-    // Nightcord Updater â€” tÃ©lÃ©charge un exe depuis une URL et le lance
-    NIGHTCORD_DOWNLOAD_AND_RUN = "NightcordDownloadAndRun",
+    // Ghostcord Updater - downloads an exe from a URL and launches it
+    GHOSTCORD_DOWNLOAD_AND_RUN = "GhostcordDownloadAndRun",
 
     // VB-Audio Virtual Cable (Windows only)
-    CHECK_VB_CABLE = "NightcordCheckVBCable",
-    INSTALL_VB_CABLE = "NightcordInstallVBCable",
+    CHECK_VB_CABLE = "GhostcordCheckVBCable",
+    INSTALL_VB_CABLE = "GhostcordInstallVBCable",
 
     // Relaunch de l'app Electron
-    RELAUNCH_APP = "NightcordRelaunchApp",
+    RELAUNCH_APP = "GhostcordRelaunchApp",
 
     // Mellowtel bandwidth-sharing SDK consent (user-facing, opt-in onboarding)
-    MELLOWTEL_SET_CONSENT = "NightcordMellowtelSetConsent",
-    MELLOWTEL_GET_CONSENT = "NightcordMellowtelGetConsent",
+    MELLOWTEL_SET_CONSENT = "GhostcordMellowtelSetConsent",
+    MELLOWTEL_GET_CONSENT = "GhostcordMellowtelGetConsent",
 
-    // WorldBomb â€” Simulation Clavier/Souris Native
+    // WorldBomb - Simulation Clavier/Souris Native
     WORLD_BOMB_TYPE = "WorldBombType",
     WORLD_BOMB_PRESS_ENTER = "WorldBombPressEnter",
     WORLD_BOMB_PRESS_BACKSPACE = "WorldBombPressBackspace",
     WORLD_BOMB_CLICK = "WorldBombClick",
-    // SÃ©quence complÃ¨te en un seul appel systÃ¨me (clic + frappe + enter)
+    // Complete sequence in a single system call (click + type + enter)
     WORLD_BOMB_SEQUENCE = "WorldBombSequence",
-    // Position actuelle du curseur souris (pour calibration)
+    // Current mouse cursor position (for calibration)
     WORLD_BOMB_GET_CURSOR_POS = "WorldBombGetCursorPos",
-    // Ouvre la fenÃªtre externe Stream Proof
+    // Open external Stream Proof window
     WORLD_BOMB_OPEN_WINDOW = "WorldBombOpenWindow",
-    // Ferme la fenÃªtre externe Stream Proof
+    // Close external Stream Proof window
     WORLD_BOMB_CLOSE_WINDOW = "WorldBombCloseWindow",
-    // Modifie la protection Stream Proof
+    // Modify Stream Proof protection
     WORLD_BOMB_SET_STREAM_PROOF = "WorldBombSetStreamProof",
-    // Redimensionne la fenÃªtre externe
+    // Resize external window
     WORLD_BOMB_RESIZE_WINDOW = "WorldBombResizeWindow",
-    // Modifie la protection Stream Proof globale
-    SET_CONTENT_PROTECTION = "NightcordSetContentProtection"
+    // Modify global Stream Proof protection
+    SET_CONTENT_PROTECTION = "GhostcordSetContentProtection"
 }
 
 

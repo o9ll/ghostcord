@@ -27,13 +27,13 @@ const settings = definePluginSettings({
     hideFriendRequestsCount: {
         type: OptionType.BOOLEAN,
         description: "Hide incoming friend requests count",
-        default: true,
+        default: false,
         restartNeeded: true
     },
     hideMessageRequestsCount: {
         type: OptionType.BOOLEAN,
         description: "Hide message requests count",
-        default: true,
+        default: false,
         restartNeeded: true
     },
     hidePremiumOffersCount: {
@@ -49,6 +49,7 @@ export default definePlugin({
     description: "Removes the ping count of incoming friend requests, message requests, and nitro offers.",
     tags: ["Notifications", "Appearance"],
     authors: [Devs.amia],
+    enabledByDefault: true,
 
     settings: settings,
 

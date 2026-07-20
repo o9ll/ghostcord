@@ -7,10 +7,10 @@
 import { Devs } from "@utils/constants";
 import definePlugin from "@utils/types";
 
-const STYLE_ID = "nightcord-hide-native-buttons";
+const STYLE_ID = "ghostcord-hide-native-buttons";
 
 const CSS = `
-/* ── Nightcord : suppression boutons natifs Discord non désirés ── */
+/* ── Ghostcord: hide unwanted native Discord buttons ── */
 [aria-label="Open Logs"],
 [aria-label="Help"],
 [aria-label="Aide"],

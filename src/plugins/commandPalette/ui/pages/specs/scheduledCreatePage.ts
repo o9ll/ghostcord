@@ -5,7 +5,7 @@
  */
 
 import { isPluginEnabled, plugins } from "@api/PluginManager";
-import { toggleEnabled } from "@nightcordplugins/equicordHelper/utils";
+import { toggleEnabled } from "@ghostcordplugins/equicordHelper/utils";
 import { addScheduledMessage } from "@plugins/scheduledMessages/utils";
 import { ChannelStore, SelectedChannelStore } from "@webpack/common";
 

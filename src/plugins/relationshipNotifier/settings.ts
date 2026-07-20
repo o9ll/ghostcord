@@ -23,7 +23,7 @@ export default definePluginSettings({
     notices: {
         type: OptionType.BOOLEAN,
         description: "Also show a notice at the top of your screen when removed (use this if you don't want to miss any notifications).",
-        default: false
+        default: true
     },
     offlineRemovals: {
         type: OptionType.BOOLEAN,

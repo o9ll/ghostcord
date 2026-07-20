@@ -30,6 +30,7 @@ export default definePlugin({
     description: "Join voice chats via double click instead of single click",
     tags: ["Voice"],
     authors: [Devs.Ven, Devs.D3SOX, Devs.sadan],
+    enabledByDefault: true,
     patches: [
         // Stage Channels & Voice Channels
         // the find is for stage channels, but it also handles voice

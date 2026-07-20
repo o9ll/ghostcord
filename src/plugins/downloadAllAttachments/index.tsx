@@ -85,6 +85,7 @@ export default definePlugin({
     tags: ["Utility", "Chat"],
     authors: [EquicordDevs.dhopcs],
     dependencies: ["MessagePopoverAPI"],
+    enabledByDefault: true,
     messagePopoverButton: {
         icon: CloudDownloadIcon,
         render(message: Message) {

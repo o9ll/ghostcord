@@ -19,6 +19,7 @@ export default definePlugin({
     description: "Allows you to search in blocked users list and makes names selectable in settings.",
     tags: ["Appearance", "Shortcuts"],
     authors: [EquicordDevs.TheArmagan],
+    enabledByDefault: true,
     patches: [
         {
             find: '"],{numberOfBlockedUsers:',

@@ -1,50 +1,50 @@
-# build-installer.ps1 — Build Nightcord-Installer.exe (Electron + electron-builder)
+# build-installer.ps1 — Build Ghostcord-Installer.exe (Electron + electron-builder)
 # Usage: .\build-installer.ps1
 
 $ErrorActionPreference = "Stop"
 $Root      = $PSScriptRoot
 $SrcDir    = Join-Path $Root "installer-src"
 $OutDir    = Join-Path $Root "release\installer"
-$OutExe    = Join-Path $OutDir "Nightcord-Installer.exe"
+$OutExe    = Join-Path $OutDir "Ghostcord-Installer.exe"
 
 Write-Host ""
-Write-Host "  [Nightcord] Building Electron installer..." -ForegroundColor Cyan
+Write-Host "  [Ghostcord] Building Electron installer..." -ForegroundColor Cyan
 
-# ── Prerequis ───────────────────────────────────────────────────────────────
+# ── Prerequisites ────────────────────────────────────────────────────────────
 $nodeOk = $null
 try { $nodeOk = & node --version 2>$null } catch {}
 if (-not $nodeOk) {
-    Write-Host "  [ERREUR] Node.js introuvable. Installez-le depuis https://nodejs.org" -ForegroundColor Red
+    Write-Host "  [ERROR] Node.js not found. Install it from https://nodejs.org" -ForegroundColor Red
     exit 1
 }
 Write-Host "  Node.js : $nodeOk" -ForegroundColor DarkGray
 
-# ── Dossier de sortie ────────────────────────────────────────────────────────
+# ── Output directory ─────────────────────────────────────────────────────────
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
 
-# ── Installer les dependances si besoin ──────────────────────────────────────
+# ── Install dependencies if needed ──────────────────────────────────────────
 $nodeModules = Join-Path $SrcDir "node_modules"
 if (-not (Test-Path $nodeModules)) {
     Write-Host "  [1/3] npm install --legacy-peer-deps..." -ForegroundColor DarkGray
     Push-Location $SrcDir
     & npm install --legacy-peer-deps
     if ($LASTEXITCODE -ne 0) {
-        Write-Host "  [ERREUR] npm install a echoue." -ForegroundColor Red
+        Write-Host "  [ERROR] npm install failed." -ForegroundColor Red
         Pop-Location
         exit 1
     }
     Pop-Location
-    Write-Host "  [1/3] Dependances installees." -ForegroundColor Green
+    Write-Host "  [1/3] Dependencies installed." -ForegroundColor Green
 } else {
-    Write-Host "  [1/3] node_modules present, installation ignoree." -ForegroundColor DarkGray
+    Write-Host "  [1/3] node_modules present, skipping install." -ForegroundColor DarkGray
 }
 
-# ── Compilation webpack ──────────────────────────────────────────────────────
+# ── Webpack compilation ──────────────────────────────────────────────────────
 Write-Host "  [2/3] electron-webpack (compilation)..." -ForegroundColor DarkGray
 Push-Location $SrcDir
 & npm run compile
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "  [ERREUR] Compilation webpack echouee." -ForegroundColor Red
+    Write-Host "  [ERROR] Webpack compilation failed." -ForegroundColor Red
     Pop-Location
     exit 1
 }
@@ -56,7 +56,7 @@ Write-Host "  [3/3] electron-builder --win (packaging)..." -ForegroundColor Dark
 Push-Location $SrcDir
 & npx electron-builder --win -p never
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "  [ERREUR] electron-builder a echoue." -ForegroundColor Red
+    Write-Host "  [ERROR] electron-builder failed." -ForegroundColor Red
     Pop-Location
     exit 1
 }
@@ -67,10 +67,10 @@ Write-Host "  [3/3] Packaging OK." -ForegroundColor Green
 if (Test-Path $OutExe) {
     $size = [math]::Round((Get-Item $OutExe).Length / 1KB, 0)
     Write-Host ""
-    Write-Host "  OK  Nightcord-Installer.exe compile ($size KB)" -ForegroundColor Green
+    Write-Host "  OK  Ghostcord-Installer.exe built ($size KB)" -ForegroundColor Green
     Write-Host "    -> $OutExe" -ForegroundColor DarkGray
     Write-Host ""
 } else {
-    Write-Host "  [ERREUR] Nightcord-Installer.exe introuvable apres compilation." -ForegroundColor Red
+    Write-Host "  [ERROR] Ghostcord-Installer.exe not found after build." -ForegroundColor Red
     exit 1
 }

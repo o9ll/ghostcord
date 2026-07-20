@@ -148,6 +148,7 @@ export default definePlugin({
     description: "Click on roles in user profiles and the member list to see which members have them.",
     tags: ["Appearance", "Roles"],
     authors: [Devs.prism],
+    enabledByDefault: true,
 
     patches: [
         {

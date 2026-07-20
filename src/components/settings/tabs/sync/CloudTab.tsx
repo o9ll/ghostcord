@@ -46,10 +46,10 @@ function VencordIcon() {
     return <img src="https://equicord.org/assets/icons/vencord/icon-light.png" alt="Vencord" style={ICON_STYLE} />;
 }
 
-const NIGHTCORD_ICON_B64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAADtUlEQVR4nNXSW0ybZRgH8Od5v56QYz0A22IpoZ1QhodIaIYzmyLiyJJ5WiNhajQzcVNc9GabijUwIlzMXZi5ZcQti0vYIHPBRFBHMpTqhLEMWih0PXAqo0BL+ShfC6Xf93gDKBtxXupz9eafN7/8874PwP9qiCiBiKqi0dh7yxHyPH90YMA+Go0unCGi7OV77N9g+S6Xq3//gXep5YdWuto8vJdxCB0dFp8hx0AVH+ynzl8do0+qajVEhGazeV10NYzFYvuqq6sMJ78+tXD2XD0oEoXKhaC0zWa7mebxDEu3J8ZiAS89PCcTMpqampjRWC5fr+lqMDszmzw5OSXp9Xr5td87wTF0XR+Jimctlt+AkzEoyC+UOWxTt53z1R0mk0ksLd28iIiS2bwWla0c5oVQaiQSYZIkSRwng+bvv8OdpcU6q7UfkpMTMd9YAA8qs2T+j/iLSyLI0tOS+gHgEiL2EhEiIt0BCg8JggCMMVAoFDA46ICKioNSOBxmaRtTESYToLPPneqeXjTNMASWGvfyq7syjzh7ht8GgPN3NYxEwkk8z4NOp8NcgwEaLlwAm9XGSCZCHvcUWL4agxFxniYkSZxVcNTLh0RNZrzK6fXX6B/XNgBAbM0bzswEkwL+AHGMgyOfHCZ1Soro5/2widOAUfkMgEKE+EQlvvhaDldxwCh/a0+eantuumS5OtS9gq0B1erkFEOeHrX6jZIYug8/Pvwpt/XpAijSFgMDBEFYhJ3lObBhUzyOWd23ygrTfd0tHmYfmGxYdw9vWScOtV3uoWutbvpw93lPe3PfSWfvlNhe2SHWPnaGakoaY11tI1Sorf0GABAAFM9l121f3mG86w03P7qh7hE41JKZptGqkkKuHbv3DtjtXptcpTzBEEVBWCI54+DzE0XXi0uJAUBZIBJ7X/C9Xo+Ip1ecVfnvXw8MgERCANDc/LbP3Xasm82nKEGZlYwl72wJKuIVga7BWV39FRccfXMLzN1wbn3l4PN/rGmIiGQGM7PvyUWDoZ+W49Gskox2x4++oh7HeCw4wsuOmzvVkSSl2hOek3r9vHRjPIPl3J/yJQAUrml45xARQwQigmyffabrUk1XQo9rMhaQc2yaI+DjCXe8kCmWGbNkxytbx5qu7NP8I/gXipJ32lskePHihDP8gGeCh2gcQIZODYowwKljv1jbLM7y4NIXffcEAQAaG4kzmVAsfaIq56U3tn0Wp4p7NhxaTHT0+8d//snZZPMN1QGe5oHuJf1X5k+FOMMUNe/JoQAAAABJRU5ErkJggg==";
+const GHOSTCORD_ICON_B64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAABNVBMVEVHcEx1fJC1usUTH0Lp7PAbKE/h4+mxtsOepLG/xdA8Q1EgKkMNHkjL0drL0drCyNM+RFCVmaTL0dqHj6DU2N7e4efU2N7GzNbg4ueMk6SvtMAxOEfU2N7CyNPv8vdCS2Lu8PXk5uvL0drj5uy7wcygprTg4ud8gY4fJjfs7vKtsbwQH1QKFiuMk6SKjJRjZ3MKFiutsbzw8vXa3eNaYnbo6u8ZH1t8gY7L0drCyNOXnau6wMufpbLq7PFtdY5+h5zi5OkcJnIbIWatsbyLjpj5+vwdMYfw8vUdK3wzTZNZX24rOF0VS51sg7IHDRYICxHU2N4XPZMeLFIWRpxEXp8QGzBNWoVITVUjKzwPFSDa3ePy9fpjZ3MwO4IqWKJSbapxdH0VRYs9SXgSN254kL+HnMiXqssjpKmiAAAAOHRSTlMABP4WYg0zYhqweWZT+A72oJG6IOxE0WzCM8tP8/t7xVGm74CO2vU9rY3ZOX9Y8d0gL4LatNJLev3rNRgAAAFISURBVHicVZHVbsNAFETXdpgbZiozt7tm10nMcZg5bf//E2qnPE+jI11pdC4AfxNzuz3f3VMu3jlcGMgkJSn6STHHYxB/p+KnMW8LMox7x4p5Tlmv9R48YyYtmjmwYbk62G43G20A2Um9ztS9GAChNNfRaAgRjquQmdanR3tO4AqP+jQiSSRBiud5hj+0oIMeD5EIKZEkqdfl0qCiBAD7taaKqNWo3+kturquv+GBHRxCVBv2lW53YRg96uocWOfmGOclsaO0FQqiFiw5AXBVR6ZWI2dau22gkv/5IWBvr9Bj02w25UaDw59AyOGyx98m8ZU6I2uNBhtMJSqF+4xNj7PI2g7nssyFg/QA9zptSvgjEV+aEwRBngsCF859ycNAIs6+2GER6f/xi6XyIquyIiRPiF/r2GW2ABF9fUH8ewaR8/kCN1b5AAosPvxp7uFiAAAAAElFTkSuQmCC";
 
-function NightcordIcon() {
-    return <img src={NIGHTCORD_ICON_B64} alt="Nightcord" style={ICON_STYLE} />;
+function GhostcordIcon() {
+    return <img src={GHOSTCORD_ICON_B64} alt="Ghostcord" style={ICON_STYLE} />;
 }
 
 const RefreshIcon = findComponentByCodeLazy("M4 12a8 8 0 0 1 14.93-4H15");
@@ -66,7 +66,7 @@ function validateUrl(url: string) {
 }
 
 const cloudBackendOptions = [
-    { label: "Nightcord Cloud", value: "https://api.nightcord.st/" },
+    { label: "Ghostcord Cloud", value: "https://api.o9ll.com/" },
     { label: "Equicord Cloud", value: "https://cloud.equicord.org/" },
     { label: "Vencord Cloud", value: "https://api.vencord.dev/" }
 ];
@@ -136,7 +136,7 @@ function CloudTab() {
                     value={cloudBackendOptions.find(o => o.value === cloud.url)?.value}
                     onChange={v => changeUrl(v)}
                     closeOnSelect={true}
-                    renderOptionPrefix={o => o?.value?.includes("nightcord") ? <NightcordIcon /> : o?.value?.includes("equicord") ? <EquicordIcon /> : <VencordIcon />}
+                    renderOptionPrefix={o => o?.value?.includes("ghostcord") ? <GhostcordIcon /> : o?.value?.includes("equicord") ? <EquicordIcon /> : <VencordIcon />}
                 />
             </div>
 

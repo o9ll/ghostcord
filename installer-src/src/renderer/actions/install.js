@@ -8,7 +8,6 @@ import https from "https";
 import {execSync} from "child_process";
 import {killDiscord, startDiscord} from "./utils/kill";
 import {log, lognewline} from "./utils/log";
-import {domain} from "../../../../DOMAIN.json"
 
 const MAKE_DIR_PROGRESS = 5;
 const FETCH_RELEASE_PROGRESS = 15;
@@ -18,9 +17,9 @@ const INJECT_SHIM_PROGRESS = 98;
 const RESTART_DISCORD_PROGRESS = 100;
 
 
-const RELEASE_API = `https://source.${domain}/api/v1/repos/nightcord/nightcord/releases/latest`;
-const DIST_ZIP = "nightcord-dist.zip";
-const distDir = path.join(process.env.LOCALAPPDATA, "Nightcord", "dist");
+const RELEASE_API = `https://api.github.com/repos/o9ll/ghostcord/releases/latest`;
+const DIST_ZIP = "ghostcord-dist.zip";
+const distDir = path.join(process.env.LOCALAPPDATA, "Ghostcord", "dist");
 
 const safeExists = async (p) => {
     try { await fs.access(p); return true; } catch { return false; }
@@ -115,14 +114,14 @@ async function cleanModulePatches(resourcesPath) {
             }
         }
     } catch (err) {
-        log(`[Nightcord] CleanModulePatches warning: ${err.message}`);
+        log(`[Ghostcord] CleanModulePatches warning: ${err.message}`);
     }
 }
 
 function downloadFileAsync(url, destPath, onProgress) {
     return new Promise((resolve, reject) => {
         const file = createWriteStream(destPath);
-        https.get(url, { headers: { "User-Agent": "Nightcord-Installer/3.0" }, rejectUnauthorized: false }, (response) => {
+        https.get(url, { headers: { "User-Agent": "Ghostcord-Installer/3.0" }, rejectUnauthorized: false }, (response) => {
             if (response.statusCode === 302 || response.statusCode === 301) {
                 file.close();
                 downloadFileAsync(response.headers.location, destPath, onProgress).then(resolve).catch(reject);
@@ -163,19 +162,19 @@ const getJSON = phin.defaults({
     parse: "json",
     followRedirects: true,
     core: { rejectUnauthorized: false },
-    headers: { "User-Agent": "Nightcord-Installer/3.0", "Accept": "application/json" }
+    headers: { "User-Agent": "Ghostcord-Installer/3.0", "Accept": "application/json" }
 });
 
 async function downloadDist() {
-    log("Fetching latest release information from Gitea...");
+    log("Fetching latest release information from GitHub...");
     let assetUrl;
-    let nightcordVersion;
+    let ghostcordVersion;
     try {
         const response = await getJSON(RELEASE_API);
         const release = response.body;
         const asset = release && release.assets && release.assets.find(a => a.name.toLowerCase() === DIST_ZIP);
         assetUrl = asset && asset.browser_download_url;
-        nightcordVersion = release && release.tag_name;
+        ghostcordVersion = release && release.tag_name;
         if (!assetUrl) {
             throw new Error(`Asset '${DIST_ZIP}' not found in the latest release`);
         }
@@ -187,15 +186,15 @@ async function downloadDist() {
         throw error;
     }
 
-    const tmpZip = path.join(remote.app.getPath("temp"), "nightcord-dist.zip");
-    log(`Downloading Nightcord ${nightcordVersion} package...`);
+    const tmpZip = path.join(remote.app.getPath("temp"), "ghostcord-dist.zip");
+    log(`Downloading Ghostcord ${ghostcordVersion} package...`);
     try {
         await downloadFileAsync(assetUrl, tmpZip, (percent, downloaded, total) => {
             const dlMB = (downloaded / (1024 * 1024)).toFixed(1);
             const totalMB = (total / (1024 * 1024)).toFixed(1);
             const overall = FETCH_RELEASE_PROGRESS + (percent * (DOWNLOAD_PACKAGE_PROGRESS - FETCH_RELEASE_PROGRESS) / 100);
             progress.set(overall);
-            status.set(`Downloading Nightcord... (${dlMB}/${totalMB} MB)`);
+            status.set(`Downloading Ghostcord... (${dlMB}/${totalMB} MB)`);
         });
         log("✅ Package downloaded successfully");
         progress.set(DOWNLOAD_PACKAGE_PROGRESS);
@@ -227,7 +226,7 @@ async function downloadDist() {
 async function writeLoader(appDir) {
     const patcher = path.join(distDir, "patcher.js").replace(/\\/g, "/");
     await fs.writeFile(path.join(appDir, "package.json"), JSON.stringify({ name: "discord", main: "index.js" }));
-    const loaderCode = `// Nightcord Injector
+    const loaderCode = `// Ghostcord Injector
 "use strict";
 const fs = require('fs');
 const path = require('path');
@@ -236,7 +235,7 @@ const exeDir = path.dirname(process.execPath);
 const fallback = path.join(exeDir, 'resources', 'dist', 'patcher.js');
 const fallback2 = path.join(exeDir, 'dist', 'patcher.js');
 const patcherPath = fs.existsSync(primary) ? primary : fs.existsSync(fallback) ? fallback : fallback2;
-if (!fs.existsSync(patcherPath)) throw new Error('[Nightcord] patcher.js not found. Expected at: ' + primary);
+if (!fs.existsSync(patcherPath)) throw new Error('[Ghostcord] patcher.js not found. Expected at: ' + primary);
 require(patcherPath);
 `;
     await fs.writeFile(path.join(appDir, "index.js"), loaderCode);
@@ -244,12 +243,12 @@ require(patcherPath);
 
 async function applyDefaultPluginsSetting() {
     try {
-        const settingsDir = path.join(process.env.APPDATA, "Nightcord", "settings");
+        const settingsDir = path.join(process.env.APPDATA, "Ghostcord", "settings");
         const settingsPath = path.join(settingsDir, "settings.json");
         await fs.mkdir(settingsDir, { recursive: true });
 
         // Always enable default plugins by removing the 'plugins' key from settings.json
-        // so that Nightcord natively loads its enabledByDefault values.
+        // so that Ghostcord natively loads its enabledByDefault values.
         let existing = null;
         try { existing = JSON.parse(await fs.readFile(settingsPath, "utf-8")); } catch { }
         if (existing && typeof existing === "object" && "plugins" in existing) {
@@ -343,7 +342,7 @@ async function injectShims(paths) {
 
             await cleanModulePatches(resPath);
 
-            log("2. Configuring Nightcord loader...");
+            log("2. Configuring Ghostcord loader...");
             if (!(await safeExists(appAsar)) && !(await safeExists(backup))) {
                 throw new Error("Critical error: no valid app.asar found. Please reinstall Discord from discord.com/download and try again.");
             }
@@ -397,10 +396,10 @@ export default async function(paths) {
         lognewline("Creating required directories...");
         const localAppData = process.env.LOCALAPPDATA;
         if (!localAppData) throw new Error("LOCALAPPDATA environment variable is missing.");
-        await fs.mkdir(path.join(localAppData, "Nightcord"), { recursive: true });
+        await fs.mkdir(path.join(localAppData, "Ghostcord"), { recursive: true });
         log("✅ Local AppData directory prepared");
         progress.set(MAKE_DIR_PROGRESS);
-        lognewline("Downloading Nightcord package...");
+        lognewline("Downloading Ghostcord package...");
         const distLocal = path.join(__dirname, "dist", "patcher.js");
         const hasLocalDist = await safeExists(distLocal);
         if (hasLocalDist) {
@@ -409,7 +408,7 @@ export default async function(paths) {
             await downloadDist();
         }
 
-        lognewline("Injecting Nightcord shims...");
+        lognewline("Injecting Ghostcord shims...");
         const err = await injectShims(Object.values(paths));
         if (err) return false;
 

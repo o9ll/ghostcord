@@ -23,6 +23,7 @@ export default definePlugin({
     description: "Removes Discord image mosaic",
     tags: ["Media", "Appearance", "Chat"],
     searchTerms: ["image", "mosaic", "media"],
+    enabledByDefault: true,
 
     settings,
 

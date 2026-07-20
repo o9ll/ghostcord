@@ -9,12 +9,12 @@
 
 /**
  * Maps a plugin's `name` to the basename (without extension) of its tutorial
- * video in https://source.nightcord.st/nightcord/nightcord-tutorials/src/branch/main/videos
+ * video in https://github.com/o9ll/tutorials
  *
  * These are NOT always identical: several videos were uploaded with a different
  * casing (or, in one case, a completely different name) than the plugin's actual
  * `name` field. Since the video URL has to match the file on disk exactly (the
- * Gitea file server is case-sensitive), we keep this explicit mapping instead of
+ * GitHub file server is case-sensitive), we keep this explicit mapping instead of
  * always assuming `${plugin.name}.mp4`.
  */
 export const TUTORIAL_VIDEOS: ReadonlyMap<string, string> = new Map([
@@ -68,7 +68,7 @@ export const TUTORIAL_VIDEOS: ReadonlyMap<string, string> = new Map([
     ["MessageLoggerEnhanced", "MessageLoggerEnhanced"],
     ["MultiInstance", "MultiInstance"],
     ["MuteAllServers", "MuteAllServers"],
-    ["NightcordAI", "nightcordai"],
+    ["GhostcordAI", "ghostcordai"],
     ["PasscodeLock", "passcodeLock"],
     ["PlatformIndicators", "PlatformIndicators"],
     ["PrevNames", "prevnames"],
@@ -100,7 +100,7 @@ export const TUTORIAL_VIDEOS: ReadonlyMap<string, string> = new Map([
 ]);
 
 /**
- * Set of plugin names that have a tutorial video available in nightcord-tutorials.
+ * Set of plugin names that have a tutorial video available in ghostcord-tutorials.
  * Derived from TUTORIAL_VIDEOS so there's a single source of truth.
  */
 export const TUTORIAL_PLUGIN_NAMES: ReadonlySet<string> = new Set(TUTORIAL_VIDEOS.keys());

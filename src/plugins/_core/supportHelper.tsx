@@ -27,7 +27,7 @@ import { Flex } from "@components/Flex";
 import { Link } from "@components/Link";
 import { Paragraph } from "@components/Paragraph";
 import { openSettingsTabModal, UpdaterTab } from "@components/settings";
-import { platformName } from "@nightcordplugins/equicordHelper/utils";
+import { platformName } from "@ghostcordplugins/equicordHelper/utils";
 import { gitHash, gitHashShort } from "@shared/vencordUserAgent";
 import { CONTRIB_ROLE_ID, Devs, DONOR_ROLE_ID, EQUICORD_TEAM, GUILD_ID, SUPPORT_CHANNEL_IDS, VC_CONTRIB_ROLE_ID, VC_DONOR_ROLE_ID, VC_GUILD_ID, VC_REGULAR_ROLE_ID, VENCORD_CONTRIB_ROLE_ID } from "@utils/constants";
 import { sendMessage } from "@utils/discord";
@@ -500,7 +500,7 @@ export default definePlugin({
     renderContributorDmWarningCard: ErrorBoundary.wrap(({ channel }) => {
         const userId = channel.getRecipientId();
 
-        // Groupe 1 : Message "Equicord & Vencord plugin developers" (comme la photo)
+        // Group 1: Message "Equicord & Vencord plugin developers" (like the screenshot)
         const originalDevIds = [
             "250322741406859265", "298295889720770563", "235834946571337729",
             "558481110330507294", "118437263754395652", "343383572805058560",
@@ -509,19 +509,18 @@ export default definePlugin({
             "929208515883569182", "848339671629299742"
         ];
 
-        // Groupe 2 : Message "Nightcord developers"
-        const nightcordGroupIds = [
-            "1512419601244356680", "1172305545554825259", "407134577748869122",
-            "1512419601244356680", "587626543874834463", "1188391631662108752"
+        // Group 2: Message "Ghostcord developers"
+        const ghostcordGroupIds = [
+            "1020801845490356245"
         ];
 
         const isOriginalDev = originalDevIds.includes(userId);
-        const isNightcordGroup = nightcordGroupIds.includes(userId);
+        const isGhostcordGroup = ghostcordGroupIds.includes(userId);
 
-        if (!isOriginalDev && !isNightcordGroup) return null;
+        if (!isOriginalDev && !isGhostcordGroup) return null;
         if (RelationshipStore.isFriend(userId) || isAnyPluginDev(UserStore.getCurrentUser()?.id)) return null;
 
-        const developerText = isOriginalDev ? "Equicord & Vencord plugin developers" : "Nightcord developers";
+        const developerText = isOriginalDev ? "Equicord & Vencord plugin developers" : "Ghostcord developers";
 
         return (
             <Card variant="warning" className={Margins.top8} defaultPadding>

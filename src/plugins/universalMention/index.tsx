@@ -15,7 +15,7 @@ const settings = definePluginSettings({
     globalMention: {
         type: OptionType.BOOLEAN,
         description: "Mention users from any server, not just the current one",
-        default: false,
+        default: true,
         restartNeeded: true
     },
     onlyDMUsers: {
@@ -40,6 +40,7 @@ export default definePlugin({
     authors: [EquicordDevs.justjxke],
     description: "Mention any user, regardless of channel access.",
     tags: ["Chat", "Servers", "Utility"],
+    enabledByDefault: true,
     settings,
     settingsAboutComponent: () => (
         <Notice.Warning>

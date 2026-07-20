@@ -4,4 +4,4 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-// Intentionnellement vide — Nightcord ne supporte pas le mode git updater.
+// Intentionnellement vide — Ghostcord ne supporte pas le mode git updater.

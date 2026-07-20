@@ -164,13 +164,13 @@ export const settings = definePluginSettings({
         type: OptionType.SELECT,
         description: "Action on double-click (your messages)",
         options: doubleClickOwnActions,
-        default: "EDIT"
+        default: "NONE"
     },
     doubleClickOthersAction: {
         type: OptionType.SELECT,
         description: "Action on double-click (others' messages)",
         options: doubleClickOthersActions,
-        default: "REPLY"
+        default: "NONE"
     },
     doubleClickModifier: {
         type: OptionType.SELECT,
@@ -182,7 +182,7 @@ export const settings = definePluginSettings({
         type: OptionType.SELECT,
         description: "Action on triple-click",
         options: actions,
-        default: "REACT"
+        default: "NONE"
     },
     tripleClickModifier: {
         type: OptionType.SELECT,
@@ -580,6 +580,7 @@ export default definePlugin({
     tags: ["Chat", "Shortcuts"],
     authors: [Devs.Ven, EquicordDevs.keircn, EquicordDevs.ZcraftElite, EquicordDevs.omaw],
     isModified: true,
+    enabledByDefault: true,
 
     settings,
 

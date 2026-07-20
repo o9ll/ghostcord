@@ -72,7 +72,7 @@ const settings = definePluginSettings({
     disableLoggers: {
         type: OptionType.BOOLEAN,
         description: "Disables Discords loggers",
-        default: false,
+        default: true,
         restartNeeded: true
     },
     disableSpotifyLogger: {
@@ -95,7 +95,7 @@ const settings = definePluginSettings({
         type: OptionType.COMPONENT,
         component: AllowLevelSettings,
         default: defineDefault<AllowLevels>({
-            error: true,
+            error: false,
             warn: false,
             trace: false,
             log: false,
@@ -110,6 +110,7 @@ export default definePlugin({
     description: "Disables annoying console messages/errors",
     authors: [Devs.Nuckyz, Devs.sadan],
     tags: ["Developers", "Console", "Utility"],
+    enabledByDefault: true,
     settings,
 
     startAt: StartAt.Init,

@@ -1,6 +1,6 @@
 # ==============================================================================
-#  Nightcord — Script d'injection Post-Installation
-#  Utilisé par l'installateur Inno Setup pour injecter Nightcord dans Discord.
+#  Ghostcord — Post-Installation Injection Script
+#  Used by Inno Setup installer to inject Ghostcord into Discord.
 # ==============================================================================
 
 param(
@@ -9,13 +9,13 @@ param(
 
 $ErrorActionPreference = "Continue"
 
-# 1. Localiser Discord Stable
+# 1. Locate Discord Stable
 $DiscordPath = Join-Path $env:LOCALAPPDATA "Discord"
 if (-not (Test-Path $DiscordPath)) {
     exit 0
 }
 
-# Trouver la version la plus récente (app-*)
+# Find the most recent version (app-*)
 $LatestApp = Get-ChildItem $DiscordPath -Filter "app-*" | Sort-Object Name -Descending | Select-Object -First 1
 if (-not $LatestApp) {
     exit 0
@@ -24,12 +24,12 @@ if (-not $LatestApp) {
 $CoreDir = Join-Path $LatestApp.FullName "resources"
 $InjectDir = Join-Path $CoreDir "app"
 
-# 2. Créer l'injection
+# 2. Create the injection
 if (-not (Test-Path $InjectDir)) {
     New-Item -ItemType Directory -Path $InjectDir -Force | Out-Null
 }
 
-# Générer le package.json d'injection
+# Generate package.json for injection
 $PackageJson = @{
     name = "discord"
     main = "index.js"
@@ -37,21 +37,21 @@ $PackageJson = @{
 
 Set-Content -Path (Join-Path $InjectDir "package.json") -Value $PackageJson
 
-# Générer le index.js d'injection
-# On pointe vers le patcher.js dans le dossier d'installation de Nightcord
-$NightcordPatcher = Join-Path $AppDir "dist\desktop\patcher.js"
-$NightcordPatcher = $NightcordPatcher.Replace("\", "\\")
+# Generate index.js for injection
+# Points to patcher.js in the Ghostcord installation directory
+$GhostcordPatcher = Join-Path $AppDir "dist\desktop\patcher.js"
+$GhostcordPatcher = $GhostcordPatcher.Replace("\", "\\")
 
 $IndexJs = @"
 \"use strict\";
 const path = require(\"path\");
 const fs = require(\"fs\");
 
-// Injection Nightcord
+// Injection Ghostcord
 try {
-    require(\"$NightcordPatcher\");
+    require(\"$GhostcordPatcher\");
 } catch (e) {
-    console.error(\"Nightcord injection failed:\", e);
+    console.error(\"Ghostcord injection failed:\", e);
     // Fallback sur Discord original si possible
     const originalAsar = path.join(__dirname, \"..\", \"_app.asar\");
     if (fs.existsSync(originalAsar)) {

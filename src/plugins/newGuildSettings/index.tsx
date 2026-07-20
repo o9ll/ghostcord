@@ -50,9 +50,9 @@ const settings = definePluginSettings({
         type: OptionType.SELECT,
         options: [
             { label: "All messages", value: 0 },
-            { label: "Only @mentions", value: 1 },
+            { label: "Only @mentions", value: 1, default: true },
             { label: "Nothing", value: 2 },
-            { label: "Server default", value: 3, default: true }
+            { label: "Server default", value: 3 }
         ],
     },
     everyone: {
@@ -155,6 +155,7 @@ export default definePlugin({
     searchTerms: ["MuteNewGuild", "mute", "server"],
     authors: [Devs.Glitch, Devs.Nuckyz, Devs.carince, Devs.Mopi, Devs.GabiRP],
     isModified: true,
+    enabledByDefault: true,
     contextMenus: {
         "guild-context": makeContextMenuPatch(false),
         "guild-header-popout": makeContextMenuPatch(true)

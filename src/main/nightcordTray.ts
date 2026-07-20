@@ -8,11 +8,11 @@ import electron, { app, Menu, nativeImage, Tray } from "electron";
 import { dirname, join } from "path";
 
 /**
- * Initializes the Nightcord system tray icon.
+ * Initializes the Ghostcord system tray icon.
  * Should only be called on Windows, outside overlay mode.
  * @param injectorPath - Path to the injector entry point (require.main.filename)
  */
-export function initNightcordTray(injectorPath: string) {
+export function initGhostcordTray(injectorPath: string) {
     if (process.platform !== "win32") return;
 
     app.whenReady().then(() => {
@@ -41,11 +41,11 @@ export function initNightcordTray(injectorPath: string) {
             }
 
             const tray = new Tray(icon);
-            tray.setToolTip("Nightcord");
+            tray.setToolTip("Ghostcord");
 
             const trayMenu = Menu.buildFromTemplate([
                 {
-                    label: "Open Nightcord",
+                    label: "Open Ghostcord",
                     click() {
                         const wins = electron.BrowserWindow.getAllWindows();
                         const main = wins.find(w => !w.isDestroyed()) ?? wins[0];
@@ -54,12 +54,12 @@ export function initNightcordTray(injectorPath: string) {
                 },
                 { type: "separator" },
                 {
-                    label: "Uninstall Nightcord",
+                    label: "Uninstall Ghostcord",
                     click() {
                         const uninstallerCandidates = [
-                            join(process.env.LOCALAPPDATA || "", "Programs", "nightcord", "Uninstall Nightcord.exe"),
-                            join(process.env.LOCALAPPDATA || "", "Programs", "Nightcord", "Uninstall Nightcord.exe"),
-                            join(process.env.PROGRAMFILES || "", "Nightcord", "Uninstall Nightcord.exe"),
+                            join(process.env.LOCALAPPDATA || "", "Programs", "ghostcord", "Uninstall Ghostcord.exe"),
+                            join(process.env.LOCALAPPDATA || "", "Programs", "Ghostcord", "Uninstall Ghostcord.exe"),
+                            join(process.env.PROGRAMFILES || "", "Ghostcord", "Uninstall Ghostcord.exe"),
                         ];
                         const { existsSync: fsExists } = require("original-fs");
                         const uninstaller = uninstallerCandidates.find(p => fsExists(p));
@@ -90,9 +90,9 @@ export function initNightcordTray(injectorPath: string) {
                 }
             });
 
-            console.log("[Nightcord] Tray created ✓", iconPath ?? "(icon from exe)");
+            console.log("[Ghostcord] Tray created ✓", iconPath ?? "(icon from exe)");
         } catch (e) {
-            console.error("[Nightcord] Failed to create tray:", e);
+            console.error("[Ghostcord] Failed to create tray:", e);
         }
     });
 }

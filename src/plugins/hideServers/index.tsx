@@ -79,6 +79,7 @@ export default definePlugin({
     tags: ["Servers", "Utility"],
     authors: [EquicordDevs.bep],
     searchTerms: ["guild", "server", "hide", "folder"],
+    enabledByDefault: true,
 
     dependencies: ["ServerListAPI"],
     contextMenus: {

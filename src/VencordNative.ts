@@ -47,7 +47,7 @@ export default {
         update: () => invoke<IpcRes<boolean>>(IpcEvents.UPDATE),
         rebuild: () => invoke<IpcRes<boolean>>(IpcEvents.BUILD),
         getRepo: () => invoke<IpcRes<string>>(IpcEvents.GET_REPO),
-        downloadAndRun: (url: string) => invoke<boolean>(IpcEvents.NIGHTCORD_DOWNLOAD_AND_RUN, url),
+        downloadAndRun: (url: string) => invoke<boolean>(IpcEvents.GHOSTCORD_DOWNLOAD_AND_RUN, url),
     },
 
     settings: {
@@ -99,7 +99,7 @@ export default {
         getSources: () => invoke<Array<{ id: string; name: string; }>>(IpcEvents.GET_DESKTOP_SOURCES),
     },
 
-    nightcord: {
+    ghostcord: {
         getInstallerPrefs: () => sendSync<{defaultPlugins: boolean, autoUpdate: boolean}>(IpcEvents.GET_INSTALLER_PREFS),
         checkVBCable: () => invoke<{ installed: boolean; }>(IpcEvents.CHECK_VB_CABLE),
         installVBCable: () => invoke<{ success: boolean; error?: string; }>(IpcEvents.INSTALL_VB_CABLE),
@@ -134,15 +134,15 @@ export default {
         type: (text: string, delay: number) => invoke(IpcEvents.WORLD_BOMB_TYPE, text, delay),
         pressEnter: () => invoke(IpcEvents.WORLD_BOMB_PRESS_ENTER),
         pressBackspace: () => invoke(IpcEvents.WORLD_BOMB_PRESS_BACKSPACE),
-        // SÃ©quence complÃ¨te en un seul processus PowerShell (clic auto au centre + frappe + enter)
-        // targetX/targetY : position calibrÃ©e du clic (-1 = centre de la fenÃªtre par dÃ©faut)
+        // Complete sequence in a single PowerShell process (auto click at center + type + enter)
+        // targetX/targetY: calibrated click position (-1 = default window center)
         sequence: (word: string, lps: number, humanChance: number, targetX: number = -1, targetY: number = -1) =>
             invoke(IpcEvents.WORLD_BOMB_SEQUENCE, word, lps, humanChance, targetX, targetY),
-        // Ouvre la fenÃªtre externe Stream Proof
+        // Open external Stream Proof window
         openWindow: (lps: number, humanChance: number, safeMode: boolean, theme: string, playMode: string, noSpace: boolean, groqKey: string, words: string[], streamProof: boolean) => invoke(IpcEvents.WORLD_BOMB_OPEN_WINDOW, lps, humanChance, safeMode, theme, playMode, noSpace, groqKey, words, streamProof),
-        // Ferme la fenÃªtre externe Stream Proof
+        // Close external Stream Proof window
         closeWindow: () => invoke(IpcEvents.WORLD_BOMB_CLOSE_WINDOW),
-        // Retourne la position actuelle du curseur (plus utilisÃ© mais gardÃ© au cas oÃ¹)
+        // Returns the current cursor position (no longer used but kept just in case)
         getCursorPos: (): Promise<{ x: number; y: number; }> => invoke(IpcEvents.WORLD_BOMB_GET_CURSOR_POS),
     },
     setContentProtection: (enabled: boolean) =>

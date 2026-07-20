@@ -135,7 +135,7 @@ const settings = definePluginSettings({
     avatarClick: {
         description: "Toggle clicking avatars in reactions",
         type: OptionType.BOOLEAN,
-        default: false,
+        default: true,
         restartNeeded: true
     }
 });
@@ -146,6 +146,7 @@ export default definePlugin({
     tags: ["Reactions", "Chat", "Appearance"],
     authors: [Devs.Ven, Devs.KannaDev, Devs.newwares],
     isModified: true,
+    enabledByDefault: true,
     settings,
     patches: [
         {

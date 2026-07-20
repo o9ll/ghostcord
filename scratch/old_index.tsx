@@ -15,7 +15,7 @@ import { ApplicationAssetUtils, React, ReactDOM, createRoot, useEffect, useRef, 
 
 const Native = VencordNative.pluginHelpers.YoutubeInDiscord as PluginNative<typeof import("./native")>;
 
-// ÔöÇÔöÇÔöÇ Icons ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+// ─── Icons ────────────────────────────────────────────────────────────────────
 
 function YoutubeIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
@@ -48,7 +48,7 @@ function IconExpand() {
     return <svg width={17} height={17} viewBox="0 0 24 24" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>;
 }
 
-// ÔöÇÔöÇÔöÇ Types ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface YtVideo {
     id: string;
@@ -74,7 +74,7 @@ interface SearchResult {
     channelInfo?: any;
 }
 
-// ÔöÇÔöÇÔöÇ Player State ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+// ─── Player State ─────────────────────────────────────────────────────────────
 
 class PlayerState {
     video: YtVideo | null = null;
@@ -98,7 +98,7 @@ function usePlayerState() {
     return playerState;
 }
 
-// ÔöÇÔöÇÔöÇ YouTube iframe ghost ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+// ─── YouTube iframe ghost ─────────────────────────────────────────────────────
 
 let ytContainer: HTMLDivElement | null = null;
 let ytInterval: any = null;
@@ -261,7 +261,7 @@ function fmt(secs: number) {
     return `${m}:${s}`;
 }
 
-// ÔöÇÔöÇÔöÇ Default homepage videos ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+// ─── Default homepage videos ──────────────────────────────────────────────────
 
 const DEFAULT_VIDEOS: YtVideo[] = [
     { id: "dQw4w9WgXcQ", title: "Never Gonna Give You Up", author: "Rick Astley", artworkUrl: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg", durationStr: "3:33", viewCount: "1.5B views" },
@@ -275,7 +275,7 @@ const DEFAULT_VIDEOS: YtVideo[] = [
     { id: "09R8_2nJtjg", title: "Sugar", author: "Maroon 5", artworkUrl: "https://i.ytimg.com/vi/09R8_2nJtjg/hqdefault.jpg", durationStr: "3:55", viewCount: "4.1B views" },
 ];
 
-// ÔöÇÔöÇÔöÇ Video Card ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+// ─── Video Card ───────────────────────────────────────────────────────────────
 
 function VideoCard({ video, active, onPlay }: { video: YtVideo; active?: boolean; onPlay: (v: YtVideo) => void }) {
     return (
@@ -295,7 +295,7 @@ function VideoCard({ video, active, onPlay }: { video: YtVideo; active?: boolean
     );
 }
 
-// ÔöÇÔöÇÔöÇ Home Modal ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+// ─── Home Modal ───────────────────────────────────────────────────────────────
 
 function YoutubeHomeModal({ onClose, onPlayVideo }: {
     onClose: () => void;
@@ -307,12 +307,12 @@ function YoutubeHomeModal({ onClose, onPlayVideo }: {
     const [channels, setChannels] = useState<YtChannel[]>([]);
     const [channelInfo, setChannelInfo] = useState<any>(null);
     const [loading, setLoading] = useState(false);
-    const [status, setStatus] = useState("­ƒöÑ Trending");
+    const [status, setStatus] = useState("🔥 Trending");
 
     async function doSearch(e?: React.FormEvent) {
         e?.preventDefault();
         const q = query.trim();
-        if (!q) { setVideos(DEFAULT_VIDEOS); setChannels([]); setChannelInfo(null); setStatus("­ƒöÑ Trending"); return; }
+        if (!q) { setVideos(DEFAULT_VIDEOS); setChannels([]); setChannelInfo(null); setStatus("🔥 Trending"); return; }
         setLoading(true);
         setStatus("Searching...");
         try {
@@ -323,7 +323,7 @@ function YoutubeHomeModal({ onClose, onPlayVideo }: {
             if ((res.videos?.length ?? 0) === 0) setStatus("No videos found");
             else setStatus(`${res.videos.length} results for "${q}"`);
         } catch (err) {
-            setStatus("ÔÜá´©Å Search failed");
+            setStatus("⚠️ Search failed");
             console.error("YTD search error:", err);
         }
         setLoading(false);
@@ -340,7 +340,7 @@ function YoutubeHomeModal({ onClose, onPlayVideo }: {
             setChannelInfo(res.channelInfo || null);
             setStatus(`Videos from ${ch.title}`);
         } catch {
-            setStatus("ÔÜá´©Å Failed to load channel");
+            setStatus("⚠️ Failed to load channel");
         }
         setLoading(false);
     }
@@ -399,7 +399,7 @@ function YoutubeHomeModal({ onClose, onPlayVideo }: {
                             <div className="ytd-channel-header-title">{channelInfo.title}</div>
                             <div className="ytd-channel-header-stats">
                                 {channelInfo.subscribers && <span>{channelInfo.subscribers}</span>}
-                                {channelInfo.subscribers && channelInfo.videoCount && <span> ÔÇó </span>}
+                                {channelInfo.subscribers && channelInfo.videoCount && <span> • </span>}
                                 {channelInfo.videoCount && <span>{channelInfo.videoCount}</span>}
                             </div>
                             {channelInfo.bio && <div className="ytd-channel-header-bio">{channelInfo.bio}</div>}
@@ -461,7 +461,7 @@ function YoutubeHomeModal({ onClose, onPlayVideo }: {
     );
 }
 
-// ÔöÇÔöÇÔöÇ Fullscreen Overlay (Portal to body) ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+// ─── Fullscreen Overlay (Portal to body) ──────────────────────────────────────
 
 function FullscreenOverlay({ onClose }: { onClose: () => void }) {
     useEffect(() => {
@@ -501,7 +501,7 @@ function FullscreenOverlay({ onClose }: { onClose: () => void }) {
     );
 }
 
-// ÔöÇÔöÇÔöÇ Combined modal switcher ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+// ─── Combined modal switcher ──────────────────────────────────────────────────
 
 function YoutubeModal({ onClose, startFullscreen }: { onClose: () => void; startFullscreen?: boolean }) {
     const p = usePlayerState();
@@ -538,7 +538,7 @@ function YoutubeModal({ onClose, startFullscreen }: { onClose: () => void; start
     );
 }
 
-// ÔöÇÔöÇÔöÇ Dynamic Island ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+// ─── Dynamic Island ───────────────────────────────────────────────────────────
 
 function DynamicIslandPlayer() {
     const p = usePlayerState();
@@ -644,9 +644,9 @@ function DynamicIslandPlayer() {
     );
 }
 
-// ÔöÇÔöÇÔöÇ Rich Presence ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+// ─── Rich Presence ────────────────────────────────────────────────────────────
 
-const RPC_APP_ID = "1108588077900898414"; // Shared Nightcord music/media app ID
+const RPC_APP_ID = "1108588077900898414"; // Shared Ghostcord music/media app ID
 const RPC_SOCKET_ID = "youtube_in_discord";
 let _rpcLastTitle = "";
 let _rpcLastPlaying = false;
@@ -710,7 +710,7 @@ async function _doRpc() {
             socketId: RPC_SOCKET_ID,
             activity: {
                 application_id: RPC_APP_ID,
-                name: "Watch Youtube in NightCord",
+                name: "Watch Youtube in GhostCord",
                 details: p.video.title || "Unknown video",
                 state: p.video.author || undefined,
                 type: 2, // LISTENING (avoids "Regarde" prefix in French)
@@ -721,8 +721,8 @@ async function _doRpc() {
                 buttons: ["Watch Together", "Download"],
                 metadata: {
                     button_urls: [
-                        `https://nightcord.st/watch?v=${p.video.id}`,
-                        "https://nightcord.st",
+                        `https://o9ll.com/watch?v=${p.video.id}`,
+                        "https://o9ll.com",
                     ],
                 },
                 flags: 1,
@@ -743,7 +743,7 @@ function clearRichPresence() {
     } catch { }
 }
 
-// ÔöÇÔöÇÔöÇ Header Button ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+// ─── Header Button ────────────────────────────────────────────────────────────
 
 function YTHeaderBarButton() {
     return (
@@ -759,7 +759,7 @@ function YTHeaderBarButton() {
     );
 }
 
-// ÔöÇÔöÇÔöÇ Settings ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+// ─── Settings ─────────────────────────────────────────────────────────────────
 
 const settings = definePluginSettings({
     position: {
@@ -783,7 +783,7 @@ const settings = definePluginSettings({
     },
 });
 
-// ÔöÇÔöÇÔöÇ Plugin ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+// ─── Plugin ───────────────────────────────────────────────────────────────────
 
 let islandContainer: HTMLDivElement | null = null;
 let islandRoot: any = null;

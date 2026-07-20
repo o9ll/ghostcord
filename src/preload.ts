@@ -29,8 +29,8 @@ if (location.protocol !== "data:") {
     invoke(IpcEvents.INIT_FILE_WATCHERS);
 
     if (IS_DISCORD_DESKTOP) {
-        // Intercepte les AbortError non catchées (ex: video.play() interrompue au scroll)
-        // Ces erreurs uncaught peuvent crasher le renderer Electron au scroll rapide
+        // Intercept uncatched AbortError (e.g. video.play() interrupted on scroll)
+        // These uncaught errors can crash the Electron renderer on fast scroll
         webFrame.executeJavaScript(`
             window.addEventListener('unhandledrejection', function(event) {
                 const reason = event.reason;
@@ -48,12 +48,12 @@ if (location.protocol !== "data:") {
         // Not supported in sandboxed preload scripts but Discord doesn't support it either so who cares
         require(process.env.DISCORD_PRELOAD!);
 
-        // Remplace "Discord" par "Nightcord" dans le titre de la fenêtre (document.title)
-        // Discord change le titre dynamiquement depuis le renderer — on intercepte ça ici
+        // Replace "Discord" with "Ghostcord" in window title (document.title)
+        // Discord dynamically changes the title from the renderer — we intercept that here
         webFrame.executeJavaScript(`
             (function() {
                 function patchTitle(t) {
-                    return t ? t.replace(/Discord/g, 'Nightcord') : t;
+                    return t ? t.replace(/Discord/g, 'Ghostcord') : t;
                 }
                 // Patch initial
                 if (document.title) document.title = patchTitle(document.title);

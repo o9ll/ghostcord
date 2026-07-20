@@ -19,7 +19,6 @@ import { HeadingPrimary } from "@components/Heading";
 import { Button } from "@components/Button";
 import { React, showToast, Text, Toasts, Tooltip, UserStore } from "@webpack/common";
 import { Settings } from "Vencord";
-import {domain} from "../../../../../DOMAIN.json";
 import { t } from "@api/i18n";
 import { tPlugin } from "@api/pluginI18n";
 
@@ -172,7 +171,7 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
         // through the mapping instead of assuming they are identical. Also always
         // URL-encode the segment since some filenames contain spaces (e.g. "Fake Voice Option.mp4").
         const videoName = getTutorialVideoName(plugin.name) ?? plugin.name;
-        const videoUrl = `https://git.${domain}/nightcord/nightcord-tutorials/raw/branch/main/videos/${encodeURIComponent(videoName)}.mp4`;
+        const videoUrl = `https://raw.githubusercontent.com/o9ll/tutorials/main/videos/${pluginName}.mp4`;
         openModal(props => (
             <ModalRoot {...props} size={ModalSize.DYNAMIC} className="nc-tutorial-modal">
                 <ModalHeader separator={false}>
@@ -270,14 +269,14 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
         </Tooltip>
     );
 
-    const isNightcord = !PluginMeta[plugin.name]?.userPlugin;
-    const iconType = isNightcord ? "nightcord" : "other";
+    const isGhostcord = !PluginMeta[plugin.name]?.userPlugin;
+    const iconType = isGhostcord ? "ghostcord" : "other";
 
-    // Le système de like ne s'applique qu'aux plugins Nightcord (pas Vencord/Equicord,
-    // pas User Plugins), et jamais aux plugins required (y compris ceux affichés comme
-    // required parce qu'une dépendance active en a besoin, d'où le check sur `disabled`).
-    const isNightcordFolderPlugin = PluginMeta[plugin.name]?.folderName?.startsWith("src/nightcordplugins/") ?? false;
-    const canShowLikeBadge = isNightcordFolderPlugin && !plugin.required && !disabled;
+    // Like system only applies to Ghostcord plugins (not Vencord/Equicord,
+    // not User Plugins), and never to required plugins (including those shown as
+    // required because an active dependency needs them, hence the `disabled` check).
+    const isGhostcordFolderPlugin = PluginMeta[plugin.name]?.folderName?.startsWith("src/ghostcordplugins/") ?? false;
+    const canShowLikeBadge = isGhostcordFolderPlugin && !plugin.required && !disabled;
 
     function openCreditsModal() {
         openModal(props => (
@@ -287,10 +286,10 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
                     <ModalCloseButton onClick={props.onClose} />
                 </ModalHeader>
                 <ModalContent style={{ padding: "16px", display: "flex", flexDirection: "column", gap: "16px", alignItems: "center" } as any}>
-                    {isNightcord ? (
-                        <a href="https://source.nightcord.st/nightcord/nightcord" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "12px", textDecoration: "none", color: "var(--text-normal)", fontSize: "20px", fontWeight: 600 }}>
-                            <img src="https://source.nightcord.st/assets/img/logo.svg" alt="Nightcord" style={{ width: 64, height: 64, borderRadius: "50%" }} />
-                            Nightcord
+                    {isGhostcord ? (
+                        <a href="https://github.com/o9ll/ghostcord" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "12px", textDecoration: "none", color: "var(--text-normal)", fontSize: "20px", fontWeight: 600 }}>
+                            <img src="https://github.githubassets.com/assets/pinned-octocat-093da3e6fa40.svg" alt="Ghostcord" style={{ width: 64, height: 64, borderRadius: "50%" }} />
+                            Ghostcord
                         </a>
                     ) : (
                         plugin.authors?.map(a => {
@@ -332,14 +331,14 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
             infoButton={
                 <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
                     {(plugin.name === "DynamicIslande" || plugin.name === "StereoInstaller" || plugin.name === "ClientDiagnostics" || plugin.name === "SecureBookmarks" || plugin.name === "StatusCycler" || plugin.name === "Surveillance" || plugin.name === "MutualScanner") && (
-                        <Tooltip text="This plugin comes from our partner (Illegalcord) then was modified by Nightcord.">
+                        <Tooltip text="This plugin modified by o9.">
                             {({ onMouseEnter, onMouseLeave }) => (
                                 <button
                                     role="button"
                                     className={cl("info-button")}
                                     onMouseEnter={onMouseEnter}
                                     onMouseLeave={onMouseLeave}
-                                    onClick={() => window.open("https://github.com/ImHisako/Illegalcord", "_blank")}
+                                    onClick={() => window.open("https://github.com/o9ll", "_blank")}
                                 >
                                     <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path fill="currentColor" d="M14.5 8a3 3 0 1 0-2.7-4.3c-.2.4.06.86.44 1.12a5 5 0 0 1 2.14 3.08c.01.06.06.1.12.1ZM18.44 17.27c.15.43.54.73 1 .73h1.06c.83 0 1.5-.67 1.5-1.5a7.5 7.5 0 0 0-6.5-7.43c-.55-.08-.99.38-1.1.92-.06.3-.15.6-.26.87-.23.58-.05 1.3.47 1.63a9.53 9.53 0 0 1 3.83 4.78ZM12.5 9a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM2 20.5a7.5 7.5 0 0 1 15 0c0 .83-.67 1.5-1.5 1.5a.2.2 0 0 1-.2-.16c-.2-.96-.56-1.87-.88-2.54-.1-.23-.42-.15-.42.1v2.1a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2.1c0-.25-.31-.33-.42-.1-.32.67-.67 1.58-.88 2.54a.2.2 0 0 1-.2.16A1.5 1.5 0 0 1 2 20.5Z" />

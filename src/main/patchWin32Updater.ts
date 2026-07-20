@@ -34,7 +34,7 @@ function isNewer($new: string, old: string) {
 // The absolute path to OUR OWN bundle (this very file, once compiled to
 // dist/desktop/patcher.js). This is exactly what the injector's index.js
 // require()'d to get us running in the first place, regardless of how
-// Nightcord was installed (dev-inject asar, the PS1/Inno installer, or
+// Ghostcord was installed (dev-inject asar, the PS1/Inno installer, or
 // Equilotl) — so it's the only value that's guaranteed to be correct.
 declare const __filename: string;
 const OUR_PATCHER_PATH = __filename;
@@ -57,7 +57,7 @@ function patchLatest() {
 
         if (!existsSync(appAsar) || statSync(appAsar).isDirectory()) return;
 
-        console.info("[Nightcord] Detected Host Update. Repatching...");
+        console.info("[Ghostcord] Detected Host Update. Repatching...");
 
         renameSync(appAsar, _appAsar);
         mkdirSync(appAsar);
@@ -71,14 +71,14 @@ function patchLatest() {
         // so a failed repatch can never crash the new Discord version or leave
         // it stuck relaunching into a broken/duplicate state.
         const indexJs = [
-            "// Nightcord repatch",
+            "// Ghostcord repatch",
             "\"use strict\";",
             "const path = require(\"path\");",
             "const fs = require(\"fs\");",
             "try {",
             `    require(${JSON.stringify(OUR_PATCHER_PATH)});`,
             "} catch (e) {",
-            "    console.error(\"[Nightcord] Repatch injection failed, falling back to vanilla Discord:\", e);",
+            "    console.error(\"[Ghostcord] Repatch injection failed, falling back to vanilla Discord:\", e);",
             "    const originalAsar = path.join(__dirname, \"..\", \"_app.asar\");",
             "    if (fs.existsSync(originalAsar)) {",
             "        require(originalAsar);",
@@ -89,7 +89,7 @@ function patchLatest() {
 
         writeFileSync(join(appAsar, "index.js"), indexJs);
     } catch (err) {
-        console.error("[Nightcord] Failed to repatch latest host update", err);
+        console.error("[Ghostcord] Failed to repatch latest host update", err);
     }
 }
 

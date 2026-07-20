@@ -25,7 +25,6 @@ import { join } from "path";
 import { DATA_DIR } from "./constants";
 import { crxToZip } from "./crxToZip";
 import { fetchBuffer } from "./http";
-import { domain } from "../../../DOMAIN.json";
 
 const extensionCacheDir = join(DATA_DIR, "ExtensionCache");
 
@@ -72,7 +71,7 @@ export async function installExt(id: string) {
 
         const buf = await fetchBuffer(url, {
             headers: {
-                "User-Agent": `Electron ${process.versions.electron} ~ Nightcord (https://git.${domain}/nightcord/nightcord)`
+                "User-Agent": `Electron ${process.versions.electron} ~ Ghostcord (https://github.com/o9ll/ghostcord)`
             }
         });
 

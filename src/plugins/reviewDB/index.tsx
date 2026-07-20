@@ -73,6 +73,7 @@ export default definePlugin({
     tags: ["Friends", "Servers"],
     authors: [Devs.mantikafasi, Devs.Ven],
     isModified: true,
+    enabledByDefault: true,
 
     settings,
     contextMenus: {

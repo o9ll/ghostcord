@@ -47,6 +47,7 @@ export default definePlugin({
     description: "Brings back the option to pause invites indefinitely that stupit Discord removed.",
     tags: ["Servers"],
     authors: [Devs.Dolfies, Devs.amia],
+    enabledByDefault: true,
 
     patches: [
         {

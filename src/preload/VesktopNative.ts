@@ -57,7 +57,7 @@ export const VesktopNative = {
             ipcRenderer.on(IpcEvents.VESKTOP_RENDERER_CSS_UPDATE, (_e, newCss: string) => cb(newCss));
         }
     },
-    nightcord: {
+    ghostcord: {
         relaunch: () => invoke<void>(IpcEvents.RELAUNCH_APP),
     },
     autostart: {
@@ -148,7 +148,7 @@ export const VesktopNative = {
         respond: (response: IpcResponse) => ipcRenderer.send(IpcEvents.IPC_COMMAND, response)
     },
 
-    // WorldBomb — exposé ici pour être accessible via window.VencordNative.worldBomb dans le renderer
+    // WorldBomb — exposed here to be accessible via window.VencordNative.worldBomb in the renderer
     worldBomb: {
         sequence: (word: string, lps: number, humanChance: number, targetX: number = -1, targetY: number = -1) =>
             invoke(IpcEvents.WORLD_BOMB_SEQUENCE, word, lps, humanChance, targetX, targetY),

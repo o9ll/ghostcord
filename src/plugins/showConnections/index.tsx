@@ -53,7 +53,7 @@ const settings = definePluginSettings({
     iconSpacing: {
         type: OptionType.SELECT,
         description: "Icon margin",
-        default: Spacing.COZY,
+        default: Spacing.COMPACT,
         options: [
             { label: "Compact", value: Spacing.COMPACT },
             { label: "Cozy", value: Spacing.COZY }, // US Spelling :/
@@ -163,6 +163,7 @@ export default definePlugin({
     description: "Show connected accounts in user popouts",
     tags: ["Friends", "Appearance"],
     authors: [Devs.TheKodeToad],
+    enabledByDefault: true,
     settings,
 
     patches: [

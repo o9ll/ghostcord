@@ -20,12 +20,12 @@ const settings = definePluginSettings({
     showOnMutedChannels: {
         description: "Show unread count on muted channels",
         type: OptionType.BOOLEAN,
-        default: false,
+        default: true,
     },
     notificationCountLimit: {
         description: "Show +99 instead of true amount",
         type: OptionType.BOOLEAN,
-        default: false,
+        default: true,
     },
 });
 
@@ -34,6 +34,7 @@ export default definePlugin({
     authors: [Devs.Joona],
     description: "Shows unread message count badges on channels in the channel list",
     tags: ["Appearance", "Customisation", "Servers"],
+    enabledByDefault: true,
     settings,
 
     patches: [

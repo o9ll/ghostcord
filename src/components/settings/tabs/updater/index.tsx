@@ -19,9 +19,8 @@ import { changes, checkForUpdates, rebuild, update, UpdateLogger } from "@utils/
 import { React, useState } from "@webpack/common";
 import { Toasts } from "@webpack/common";
 import { t } from "@api/i18n";
-import {domain} from "../../../../../DOMAIN.json";
 
-// Version locale depuis package.json (injectée au build)
+// Local version from package.json (injected at build)
 declare const VERSION: string;
 
 function UpdaterTab() {
@@ -91,12 +90,12 @@ function UpdaterTab() {
 
     return (
         <SettingsTab>
-            <Heading className={Margins.top16}>{t("Nightcord Updater")}</Heading>
+            <Heading className={Margins.top16}>{t("Ghostcord Updater")}</Heading>
             <Paragraph className={Margins.bottom20}>
-                {t("Check for new versions of Nightcord. Updates can be installed automatically.")}
+                {t("Check for new versions of Ghostcord. Updates can be installed automatically.")}
             </Paragraph>
 
-            {/* Version actuelle */}
+            {/* Current version */}
             <Card style={{ padding: "12px 16px", marginBottom: 12 }}>
                 <Flex style={{ alignItems: "center", justifyContent: "space-between" }}>
                     <div>
@@ -110,8 +109,8 @@ function UpdaterTab() {
                     <div>
                         <Span size="sm" color="text-subtle">{t("Website")}</Span>
                         <div>
-                            <Link href={`https://${domain}`} style={{ fontSize: 13 }}>
-                                {domain}
+                            <Link href={`https://github.com/o9ll/ghostcord`} style={{ fontSize: 13 }}>
+                                Ghostcord
                             </Link>
                         </div>
                     </div>
@@ -125,7 +124,7 @@ function UpdaterTab() {
                 </Card>
             )}
 
-            {/* Résultat vérification */}
+            {/* Update check result */}
             {checked && !error && (
                 outdated ? (
                     <Card style={{ padding: "10px 16px", marginBottom: 12, borderLeft: "3px solid var(--status-warning)" }}>

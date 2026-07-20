@@ -17,7 +17,6 @@
 */
 
 import "./fixDiscordBadgePadding.css";
-import {domain} from "../../../../DOMAIN.json"
 
 import { _getBadges, BadgePosition, BadgeUserArgs, ProfileBadge } from "@api/Badges";
 import { loadOwnHiddenBadgeSources } from "@api/BadgeVisibility";
@@ -84,8 +83,7 @@ const UserPluginContributorBadge: ProfileBadge = {
 
 let DonorBadges = {} as Record<string, Array<Record<"tooltip" | "badge", string>>>;
 let EquicordDonorBadges = {} as Record<string, Array<Record<"tooltip" | "badge", string>>>;
-let NightcordBadges = {} as Record<string, Array<{ icon: string; placeholder: string; uuid: string; }>>;
-let IllegalcordBadges = {} as Record<string, Array<Record<"tooltip" | "badge", string>>>;
+let GhostcordBadges = {} as Record<string, Array<Record<"tooltip" | "badge", string>>>;
 
 async function loadBadges(url: string, noCache = false) {
     const init = {} as RequestInit;
@@ -97,13 +95,11 @@ async function loadBadges(url: string, noCache = false) {
 async function loadAllBadges(noCache = false) {
     const vencordBadges = await loadBadges("https://badges.vencord.dev/badges.json", noCache).catch(() => ({}));
     const equicordBadges = await loadBadges("https://badge.equicord.org/badges.json", noCache).catch(() => ({}));
-    const nightcordBadges = await loadBadges(`https://api.${domain}/badges`, noCache).catch(() => ({}));
-    const illegalcordBadges = await loadBadges("https://raw.githubusercontent.com/ImHisako/ImHisako/refs/heads/main/Images/badges.json", noCache).catch(() => ({}));
+    const ghostcordBadges = await loadBadges("https://raw.githubusercontent.com/o9ll/ghostcord/refs/heads/master/badges.json", noCache).catch(() => ({}));
 
     DonorBadges = vencordBadges;
     EquicordDonorBadges = equicordBadges;
-    NightcordBadges = nightcordBadges;
-    IllegalcordBadges = illegalcordBadges;
+    GhostcordBadges = ghostcordBadges;
 }
 
 let intervalId: any;
@@ -175,8 +171,8 @@ export default definePlugin({
         return EquicordDonorBadges;
     },
 
-    get NightcordBadges() {
-        return NightcordBadges;
+    get GhostcordBadges() {
+        return GhostcordBadges;
     },
 
     toolboxActions: {
@@ -198,9 +194,9 @@ export default definePlugin({
         clearInterval(intervalId);
         intervalId = setInterval(loadAllBadges, 1000 * 60 * 30); // 30 minutes
 
-        // Charge la preference "badges caches" (locale + cloud) pour l'utilisateur courant.
-        // Sans cet appel, myHiddenSources reste vide en memoire a chaque redemarrage,
-        // meme si la sauvegarde existe deja dans localStorage/le cloud.
+        // Load "badges cache" preference (local + cloud) for the current user.
+        // Without this call, myHiddenSources stays empty in memory on every restart,
+        // even if the backup already exists in localStorage/the cloud.
         const currentUserId = UserStore.getCurrentUser()?.id;
         if (currentUserId) {
             loadOwnHiddenBadgeSources(currentUserId).catch(() => {});
@@ -295,16 +291,16 @@ export default definePlugin({
         } satisfies ProfileBadge));
     },
 
-    getNightcordBadges(userId: string) {
+    getGhostcordBadges(userId: string) {
         try {
-            const userBadges = NightcordBadges[userId];
+            const userBadges = GhostcordBadges[userId];
             if (!userBadges || !Array.isArray(userBadges)) return [];
 
             return userBadges
                 .filter(badge => badge && badge.icon)
                 .map(badge => ({
                     iconSrc: badge.icon,
-                    description: badge.placeholder ?? "Nightcord Badge",
+                    description: badge.placeholder ?? "Ghostcord Badge",
                     position: BadgePosition.START,
                     props: {
                         style: {
@@ -317,34 +313,13 @@ export default definePlugin({
                         ContextMenuApi.openContextMenu(event, () => <BadgeContextMenu badge={b as any} />);
                     },
                     onClick() {
-                        return GenericBadgeModal(badge, "Nightcord");
+                        return GenericBadgeModal(badge, "Ghostcord");
                     }
                 } satisfies ProfileBadge));
         } catch (e) {
-            console.error("[BadgeAPI] Error processing nightcord badges for", userId, e);
+            console.error("[BadgeAPI] Error processing ghostcord badges for", userId, e);
             return [];
         }
-    },
-
-    getIllegalcordBadges(userId: string) {
-        return IllegalcordBadges[userId]?.map(badge => ({
-            iconSrc: badge.badge,
-            description: badge.tooltip,
-            position: BadgePosition.START,
-            props: {
-                style: {
-                    borderRadius: "50%",
-                    maxHeight: "22px",
-                    maxWidth: "22px"
-                }
-            },
-            onContextMenu(event, badge) {
-                ContextMenuApi.openContextMenu(event, () => <BadgeContextMenu badge={badge} />);
-            },
-            onClick() {
-                return GenericBadgeModal(badge, "Illegalcord");
-            },
-        } satisfies ProfileBadge));
     }
 });
 

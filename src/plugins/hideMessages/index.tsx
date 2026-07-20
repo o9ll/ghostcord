@@ -9,8 +9,8 @@ import { isPluginEnabled } from "@api/PluginManager";
 import { definePluginSettings } from "@api/Settings";
 import ErrorBoundary from "@components/ErrorBoundary";
 import { EyeIcon } from "@components/Icons";
-import pinDms from "@nightcordplugins/pinDms";
-import { isPinned } from "@nightcordplugins/pinDms/data";
+import pinDms from "@ghostcordplugins/pinDms";
+import { isPinned } from "@ghostcordplugins/pinDms/data";
 import { EquicordDevs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
 import { Channel, Message } from "@vencord/discord-types";
@@ -89,7 +89,7 @@ const settings = definePluginSettings({
     hidePopoverButton: {
         type: OptionType.BOOLEAN,
         description: "Hide the hide button in the message popover.",
-        default: false
+        default: true
     }
 });
 
@@ -99,6 +99,7 @@ export default definePlugin({
     dependencies: ["MessagePopoverAPI"],
     tags: ["Chat", "Utility"],
     authors: [EquicordDevs.yash],
+    enabledByDefault: true,
     patches: [
         {
             find: '"dm-quick-launcher"===',

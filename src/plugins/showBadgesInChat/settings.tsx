@@ -10,27 +10,27 @@ import { OptionType } from "@utils/types";
 import { useEffect, UserStore, useState } from "@webpack/common";
 
 const settings = definePluginSettings({
-    showEquicordDonor: {
+    showDiscordProfile: {
         type: OptionType.BOOLEAN,
-        description: "Enable to show Equicord Donor badges in chat.",
+        description: "Enable to show Discord profile badges in chat.",
         hidden: true,
         default: true
     },
-    EquicordDonorPosition: {
+    DiscordProfilePosition: {
         type: OptionType.NUMBER,
-        description: "The position of the Equicord Donor badges.",
+        description: "The position of the Discord profile badges.",
         hidden: true,
         default: 0
     },
-    showEquicordContributor: {
+    showDiscordNitro: {
         type: OptionType.BOOLEAN,
-        description: "Enable to show Equicord Contributor badges in chat.",
+        description: "Enable to show Discord Nitro badges in chat.",
         hidden: true,
-        default: true
+        default: false
     },
-    EquicordContributorPosition: {
+    DiscordNitroPosition: {
         type: OptionType.NUMBER,
-        description: "The position of the Equicord Contributor badge.",
+        description: "The position of the Discord Nitro badge.",
         hidden: true,
         default: 1
     },
@@ -38,7 +38,7 @@ const settings = definePluginSettings({
         type: OptionType.BOOLEAN,
         description: "Enable to show Vencord donor badges in chat.",
         hidden: true,
-        default: true
+        default: false
     },
     VencordDonorPosition: {
         type: OptionType.NUMBER,
@@ -50,7 +50,7 @@ const settings = definePluginSettings({
         type: OptionType.BOOLEAN,
         description: "Enable to show Vencord contributor badges in chat.",
         hidden: true,
-        default: true
+        default: false
     },
     VencordContributorPosition: {
         type: OptionType.NUMBER,
@@ -58,27 +58,27 @@ const settings = definePluginSettings({
         hidden: true,
         default: 5
     },
-    showDiscordProfile: {
+    showEquicordDonor: {
         type: OptionType.BOOLEAN,
-        description: "Enable to show Discord profile badges in chat.",
+        description: "Enable to show Equicord Donor badges in chat.",
         hidden: true,
-        default: true
+        default: false
     },
-    DiscordProfilePosition: {
+    EquicordDonorPosition: {
         type: OptionType.NUMBER,
-        description: "The position of the Discord profile badges.",
+        description: "The position of the Equicord Donor badges.",
         hidden: true,
         default: 6
     },
-    showDiscordNitro: {
+    showEquicordContributor: {
         type: OptionType.BOOLEAN,
-        description: "Enable to show Discord Nitro badges in chat.",
+        description: "Enable to show Equicord Contributor badges in chat.",
         hidden: true,
-        default: true
+        default: false
     },
-    DiscordNitroPosition: {
+    EquicordContributorPosition: {
         type: OptionType.NUMBER,
-        description: "The position of the Discord Nitro badge.",
+        description: "The position of the Equicord Contributor badge.",
         hidden: true,
         default: 7
     },

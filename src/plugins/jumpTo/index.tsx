@@ -71,12 +71,12 @@ const ChannelMenuPatch: NavContextMenuPatchCallback = (
     children.push(
         <Menu.MenuItem
             id="vc-jump-to-first"
-            label="Jump To First Message"
+            label="Jump First"
             action={() => jumpToFirstMessage(targetChannel.id, targetChannel.guild_id)}
         />,
         <Menu.MenuItem
             id="vc-jump-to-last"
-            label="Jump To Last Message"
+            label="Jump Last"
             action={() => jumpToLastMessage(targetChannel.id, targetChannel.guild_id)}
         />
     );
@@ -123,6 +123,7 @@ export default definePlugin({
     description: "Adds context menu options to jump to the start or bottom of a channel/DM.",
     tags: ["Chat", "Utility"],
     authors: [Devs.Samwich, Devs.thororen],
+    enabledByDefault: true,
     contextMenus: {
         "channel-context": ChannelMenuPatch,
         "gdm-context": ChannelMenuPatch,

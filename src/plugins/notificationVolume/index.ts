@@ -13,7 +13,7 @@ const settings = definePluginSettings({
         type: OptionType.SLIDER,
         description: "Notification volume",
         markers: [0, 25, 50, 75, 100],
-        default: 100,
+        default: 50,
         stickToMarkers: false
     }
 });
@@ -23,6 +23,7 @@ export default definePlugin({
     description: "Save your ears and set a separate volume for notifications and in-app sounds",
     tags: ["Notifications", "Voice"],
     authors: [Devs.philipbry],
+    enabledByDefault: true,
     settings,
     patches: [
         {

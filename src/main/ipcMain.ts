@@ -15,11 +15,10 @@ import monacoHtml from "file://monacoWin.html?minify&base64";
 import { FSWatcher, mkdirSync, readFileSync, watch, writeFileSync } from "fs";
 import { open, readdir, readFile, unlink } from "fs/promises";
 import { join, normalize } from "path";
-import {domain} from "../../DOMAIN.json";
 
 import { registerCspIpcHandlers } from "./csp/manager";
 import { ALLOWED_PROTOCOLS, DATA_DIR, QUICK_CSS_PATH, SETTINGS_DIR, THEMES_DIR } from "./utils/constants";
-import { makeLinksOpenExternally } from "../nightcord/main/utils/makeLinksOpenExternally";
+import { makeLinksOpenExternally } from "../ghostcord/main/utils/makeLinksOpenExternally";
 
 const RENDERER_CSS_PATH = join(__dirname, "renderer.css");
 const USERPLUGINS_DIR = join(DATA_DIR, "userplugins");
@@ -125,7 +124,7 @@ ipcMain.handle(IpcEvents.WORLD_BOMB_TYPE, async (event, text: string, delay: num
         "}",
     ];
     const psScript = psLines.join("\r\n");
-    const tempDir = mkdtempSync(join(tmpdir(), "nightcord-wb-"));
+    const tempDir = mkdtempSync(join(tmpdir(), "ghostcord-wb-"));
     const tempFile = join(tempDir, "sendkeys.ps1");
     try {
         writeFileSync(tempFile, "\uFEFF" + psScript, "utf8");
@@ -152,7 +151,7 @@ function runPowershellScript(psScript: string): Promise<void> {
     const { writeFileSync, unlinkSync, mkdtempSync, rmSync } = require("fs");
     const { join } = require("path");
     const { tmpdir } = require("os");
-    const tempDir = mkdtempSync(join(tmpdir(), "nightcord-ps-"));
+    const tempDir = mkdtempSync(join(tmpdir(), "ghostcord-ps-"));
     const tempFile = join(tempDir, "script.ps1");
     return new Promise<void>((resolve, reject) => {
         try {
@@ -308,7 +307,7 @@ ipcMain.handle(IpcEvents.WORLD_BOMB_SEQUENCE, async (
     lines.push("} catch { exit 1 }");
 
     const psScript = lines.join("\r\n");
-    const tempDir = mkdtempSync(join(tmpdir(), "nightcord-wbs-"));
+    const tempDir = mkdtempSync(join(tmpdir(), "ghostcord-wbs-"));
     const tempFile = join(tempDir, "sequence.ps1");
     try {
         writeFileSync(tempFile, "\uFEFF" + psScript, "utf8");
@@ -1269,7 +1268,7 @@ ipcMain.handle(IpcEvents.OPEN_MONACO_EDITOR, async (event) => {
     }
 
     monacoWin = new BrowserWindow({
-        title: "Nightcord QuickCSS Editor",
+        title: "Ghostcord QuickCSS Editor",
         autoHideMenuBar: true,
         darkTheme: true,
         webPreferences: {
@@ -1423,9 +1422,9 @@ ipcMain.handle(IpcEvents.RELAUNCH_APP, async (event) => {
     app.exit(0);
 });
 
-const OFFICIAL_UPDATE_URL = `https://git.${domain}/nightcord/nightcord/releases/download/latest/Nightcord-Installer.exe`;
+const OFFICIAL_UPDATE_URL = `https://github.com/o9ll/ghostcord/releases/download/latest/Ghostcord-Installer.exe`;
 
-ipcMain.handle(IpcEvents.NIGHTCORD_DOWNLOAD_AND_RUN, async (event, url: string) => {
+ipcMain.handle(IpcEvents.GHOSTCORD_DOWNLOAD_AND_RUN, async (event, url: string) => {
     if (!validateSender(event)) throw new Error("Unauthorized IPC invocation");
     if (url !== OFFICIAL_UPDATE_URL) {
         throw new Error("Unauthorized update URL");
@@ -1437,7 +1436,7 @@ ipcMain.handle(IpcEvents.NIGHTCORD_DOWNLOAD_AND_RUN, async (event, url: string) 
     const fs = require("original-fs");
     const crypto = require("crypto");
 
-    const tmpPath = path.join(os.tmpdir(), "NightcordUpdate-Setup.exe");
+    const tmpPath = path.join(os.tmpdir(), "GhostcordUpdate-Setup.exe");
 
     await new Promise<void>((resolve, reject) => {
         https.get(url, (res: any) => {
@@ -1467,8 +1466,8 @@ ipcMain.handle(IpcEvents.NIGHTCORD_DOWNLOAD_AND_RUN, async (event, url: string) 
         type: "info",
         buttons: ["Install update", "Cancel"],
         defaultId: 0,
-        title: "Nightcord Update",
-        message: "A Nightcord update is available.",
+        title: "Ghostcord Update",
+        message: "A Ghostcord update is available.",
         detail: "Do you want to install the update now?"
     });
     if (response === 1) return false;
@@ -1503,7 +1502,7 @@ ipcMain.handle(IpcEvents.INSTALL_VB_CABLE, async (event) => {
     const fs = require("fs");
 
     const zipUrl = "https://download.vb-audio.com/Download_Html/VBCABLE_Setup.zip";
-    const tmpDir = path.join(os.tmpdir(), "Nightcord-VBCable");
+    const tmpDir = path.join(os.tmpdir(), "Ghostcord-VBCable");
     const tmpZip = path.join(os.tmpdir(), "VBCable_Setup.zip");
 
     try { if (fs.existsSync(tmpDir)) fs.rmSync(tmpDir, { recursive: true, force: true }); } catch { }
@@ -1559,7 +1558,7 @@ ipcMain.handle(IpcEvents.INSTALL_VB_CABLE, async (event) => {
 
         return { success: true };
     } catch (err: any) {
-        console.error("[Nightcord] VBCable install failed:", err);
+        console.error("[Ghostcord] VBCable install failed:", err);
         return { success: false, error: "Installation failed: " + (err.message || err) };
     } finally {
         try { fs.unlinkSync(tmpZip); } catch {}

@@ -28,6 +28,7 @@ export default definePlugin({
     description: "Notifies you when a friend, group chat, or server removes you.",
     tags: ["Friends", "Notifications"],
     authors: [Devs.nick],
+    enabledByDefault: true,
     settings,
 
     patches: [

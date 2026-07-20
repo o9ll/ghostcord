@@ -38,7 +38,7 @@ const settings = definePluginSettings({
     },
     showRoleColors: {
         type: OptionType.BOOLEAN,
-        default: true,
+        default: false,
         description: "Show role colors in the typing indicator"
     },
     alternativeFormatting: {
@@ -118,6 +118,7 @@ export default definePlugin({
     authors: [Devs.zt, Devs.sadan, EquicordDevs.MrDiamond],
     settings,
     isModified: true,
+    enabledByDefault: true,
 
     managedStyle,
 

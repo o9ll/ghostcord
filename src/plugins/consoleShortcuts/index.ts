@@ -246,6 +246,7 @@ export default definePlugin({
     authors: [Devs.Ven],
     tags: ["Developers", "Console", "Shortcuts", "Utility"],
     startAt: StartAt.Init,
+    enabledByDefault: true,
 
     patches: [
         {

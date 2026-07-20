@@ -1,11 +1,11 @@
 /*
- * Nightcord — Local injector for Discord Desktop
- * Injecte Nightcord dans une installation Discord existante en :
- * 1. Trouvant le répertoire resources de Discord
- * 2. Renommant app.asar → _app.asar (backup)
- * 3. Créant un dossier app/ avec un loader qui require le patcher.js de Nightcord
+ * Ghostcord — Local injector for Discord Desktop
+ * Injects Ghostcord into an existing Discord installation by:
+ * 1. Locating the Discord resources directory
+ * 2. Renaming app.asar → _app.asar (backup)
+ * 3. Creating an app/ folder with a loader that requires Ghostcord's patcher.js
  *
- * Usage: pnpm inject   (ou: node scripts/inject.mjs)
+ * Usage: pnpm inject (or: node scripts/inject.mjs)
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
@@ -61,7 +61,7 @@ function findAllDiscordResources() {
         );
     }
 
-    // Filtrer les paths qui existent et contiennent app.asar ou app/
+    // Filter paths that exist and contain app.asar or app/
     return candidates.filter(p => {
         if (!existsSync(p)) return false;
         return existsSync(join(p, "app.asar")) || existsSync(join(p, "app")) || existsSync(join(p, "_app.asar"));
@@ -72,8 +72,8 @@ function findAllDiscordResources() {
 function checkBuild() {
     const patcherPath = join(DIST_DIR, "patcher.js");
     if (!existsSync(patcherPath)) {
-        console.error("\x1b[31m[Nightcord] dist/desktop/patcher.js introuvable !\x1b[0m");
-        console.error("\x1b[33m           Lancez 'pnpm build' d'abord, puis réessayez.\x1b[0m");
+        console.error("\x1b[31m[Ghostcord] dist/desktop/patcher.js not found !\x1b[0m");
+        console.error("\x1b[33m           Run 'pnpm build' first, then try again.\x1b[0m");
         process.exit(1);
     }
 }
@@ -84,44 +84,44 @@ function inject(resourcesDir) {
     const backupPath = join(resourcesDir, "_app.asar");
     const appDirPath = join(resourcesDir, "app");
 
-    // Vérifier si déjà injecté
+    // Check if already injected
     if (existsSync(appDirPath) && existsSync(join(appDirPath, "index.js"))) {
         try {
             const indexContent = readFileSync(join(appDirPath, "index.js"), "utf-8");
-            if (indexContent.includes("Nightcord Injector") || indexContent.includes("Nightcord")) {
-                console.log("\x1b[33m[Nightcord] Déjà injecté ! Utilisez 'pnpm uninject' d'abord pour réinjecter.\x1b[0m");
+            if (indexContent.includes("Ghostcord Injector") || indexContent.includes("Ghostcord")) {
+                console.log("\x1b[33m[Ghostcord] Already injected! Use 'pnpm uninject' first to re-inject.\x1b[0m");
                 return false;
             }
         } catch { }
     }
 
-    // Étape 1 : Backup app.asar → _app.asar
+    // Step 1: Backup app.asar → _app.asar
     if (existsSync(appAsarPath) && !existsSync(backupPath)) {
         let isDir = false;
         try { isDir = statSync(appAsarPath).isDirectory(); } catch { }
         if (isDir) {
-            console.warn("\x1b[33m[Nightcord] app.asar est un dossier — un autre mod est peut-être installé.\x1b[0m");
-            console.warn("\x1b[33m            Abandon. Utilisez 'pnpm uninject' pour nettoyer d'abord.\x1b[0m");
+            console.warn("\x1b[33m[Ghostcord] app.asar is a directory — another mod may be installed.\x1b[0m");
+            console.warn("\x1b[33m            Aborting. Use 'pnpm uninject' to clean up first.\x1b[0m");
             return false;
         }
-        console.log("[Nightcord] Sauvegarde app.asar → _app.asar...");
+        console.log("[Ghostcord] Backing up app.asar → _app.asar...");
         renameSync(appAsarPath, backupPath);
     } else if (!existsSync(backupPath)) {
-        console.error("\x1b[31m[Nightcord] Aucun app.asar ou _app.asar trouvé dans resources !\x1b[0m");
+        console.error("\x1b[31m[Ghostcord] No app.asar or _app.asar found in resources!\x1b[0m");
         return false;
     }
 
-    // Étape 2 : Supprimer l'ancien app.asar s'il existe (pourrait être un dossier d'une injection précédente)
+    // Step 2: Delete old app.asar if it exists (could be a directory from previous injection)
     if (existsSync(appAsarPath)) {
         try {
             rmSync(appAsarPath, { recursive: true, force: true });
         } catch (e) {
-            console.error(`\x1b[31m[Nightcord] Impossible de supprimer l'ancien app.asar : ${e.message}\x1b[0m`);
+            console.error(`\x1b[31m[Ghostcord] Could not delete old app.asar: ${e.message}\x1b[0m`);
             return false;
         }
     }
 
-    // Étape 3 : Créer le dossier app/ avec le loader
+    // Step 3: Create app/ folder with loader
     mkdirSync(appDirPath, { recursive: true });
 
     writeFileSync(join(appDirPath, "package.json"), JSON.stringify({
@@ -129,15 +129,15 @@ function inject(resourcesDir) {
         main: "index.js"
     }, null, 2));
 
-    // Le loader require simplement le patcher Nightcord depuis dist/
+    // The loader simply requires Ghostcord patcher from dist/
     const patcherPath = join(DIST_DIR, "patcher.js").replace(/\\/g, "\\\\");
     writeFileSync(join(appDirPath, "index.js"),
-        `// Nightcord Injector — auto-generated, do not edit\n"use strict";\nrequire("${patcherPath}");\n`
+        `// Ghostcord Injector — auto-generated, do not edit\n"use strict";\nrequire("${patcherPath}");\n`
     );
 
-    console.log(`\x1b[32m[Nightcord] Injecté avec succès dans : ${resourcesDir}\x1b[0m`);
-    console.log(`\x1b[32m[Nightcord] Répertoire Nightcord dist : ${DIST_DIR}\x1b[0m`);
-    console.log("\x1b[36m[Nightcord] Redémarrez Discord pour appliquer les changements.\x1b[0m");
+    console.log(`\x1b[32m[Ghostcord] Successfully injected into: ${resourcesDir}\x1b[0m`);
+    console.log(`\x1b[32m[Ghostcord] Ghostcord dist directory: ${DIST_DIR}\x1b[0m`);
+    console.log("\x1b[36m[Ghostcord] Restart Discord to apply changes.\x1b[0m");
     return true;
 }
 
@@ -146,22 +146,22 @@ checkBuild();
 
 const allResources = findAllDiscordResources();
 if (allResources.length === 0) {
-    console.error("\x1b[31m[Nightcord] Aucune installation Discord trouvée !\x1b[0m");
-    console.error("\x1b[33m           Assurez-vous que Discord (Stable, PTB ou Canary) est installé.\x1b[0m");
+    console.error("\x1b[31m[Ghostcord] No Discord installation found!\x1b[0m");
+    console.error("\x1b[33m           Make sure Discord (Stable, PTB or Canary) is installed.\x1b[0m");
     process.exit(1);
 }
 
 if (allResources.length === 1) {
-    // Un seul Discord trouvé : injection directe
-    console.log(`[Nightcord] Discord trouvé : ${allResources[0]}`);
+    // Single Discord found: direct injection
+    console.log(`[Ghostcord] Discord trouvé : ${allResources[0]}`);
     inject(allResources[0]);
 } else {
-    // Plusieurs Discord trouvés : injecter dans tous
-    console.log(`[Nightcord] ${allResources.length} installations Discord trouvées :`);
+    // Multiple Discords found: inject into all
+    console.log(`[Ghostcord] ${allResources.length} Discord installations found:`);
     let injectedCount = 0;
     for (const res of allResources) {
         console.log(`\n  → ${res}`);
         if (inject(res)) injectedCount++;
     }
-    console.log(`\n\x1b[32m[Nightcord] ${injectedCount}/${allResources.length} injection(s) réussie(s).\x1b[0m`);
+    console.log(`\n\x1b[32m[Ghostcord] ${injectedCount}/${allResources.length} injection(s) successful.\x1b[0m`);
 }

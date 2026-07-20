@@ -7,7 +7,7 @@
 import { getPublicPluginConfig, saveOwnPluginConfig } from "./PluginSync";
 import { beginDiscordOAuth, getStoredToken, storeToken } from "./OAuth2";
 
-export type BadgeSource = "vencord" | "equicord" | "nightcord" | "globalbadges" | "illegalcord";
+export type BadgeSource = "vencord" | "equicord" | "ghostcord" | "globalbadges";
 
 const PLUGIN_KEY = "badge-visibility";
 
@@ -74,9 +74,9 @@ async function fetchHiddenBadgeSources(userId: string) {
 export async function loadOwnHiddenBadgeSources(userId: string) {
     myUserId = userId;
     
-    // 1. Charge la sauvegarde locale en premier pour éviter que ça clignote ou disparaisse sans compte
+    // 1. Load local backup first to prevent flickering or disappearing without an account
     try {
-        const localData = localStorage.getItem("nightcord_hidden_badges");
+        const localData = localStorage.getItem("ghostcord_hidden_badges");
         if (localData) {
             const parsed = JSON.parse(localData);
             if (Array.isArray(parsed)) {
@@ -95,10 +95,10 @@ export async function loadOwnHiddenBadgeSources(userId: string) {
         const result = await getOwnPluginConfig(PLUGIN_KEY, token);
         const hidden: BadgeSource[] = Array.isArray(result?.config?.settings?.hidden) ? result.config.settings.hidden : [];
         
-        // La version cloud a priorité si elle existe (et on met à jour le local)
+        // Cloud version takes priority if it exists (and we update the local one)
         if (result?.config?.settings?.hidden !== undefined) {
             myHiddenSources = hidden;
-            localStorage.setItem("nightcord_hidden_badges", JSON.stringify(hidden));
+            localStorage.setItem("ghostcord_hidden_badges", JSON.stringify(hidden));
         }
     } catch (e) {
         // no-op — keep defaults or local version
@@ -115,9 +115,9 @@ export async function loadOwnHiddenBadgeSources(userId: string) {
 export async function setOwnHiddenBadgeSources(hidden: BadgeSource[]) {
     myHiddenSources = hidden;
     
-    // Sauvegarde locale immédiate
+    // Immediate local backup
     try {
-        localStorage.setItem("nightcord_hidden_badges", JSON.stringify(hidden));
+        localStorage.setItem("ghostcord_hidden_badges", JSON.stringify(hidden));
     } catch { }
 
     emitBadgeVisibilityChange();
