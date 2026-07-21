@@ -1,15 +1,15 @@
 @echo off
-REM ---- Changer la taille du curseur Windows (Accessibilité) ----
-REM Taille du curseur :
-REM 1 = Petit, 2 = Moyen, 3 = Grand, 4 = Très grand
+REM Change the Windows cursor size (Accessibility)
+REM Cursor size:
+REM 1=Small, 2=Medium, 3=Large, 4=Extra Large
 
-set CURSOR_SIZE=4
+set CURSOR_SIZE=10
 
-REM Modifier la valeur de registre
+REM Modify the registry value
 REG ADD "HKCU\Control Panel\Cursors" /v "CursorBaseSize" /t REG_DWORD /d %CURSOR_SIZE% /f
 
-REM Forcer la réinitialisation du curseur
+REM Force cursor reset
 RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters
 
-echo Taille du curseur modifiée à %CURSOR_SIZE%.
+echo Cursor size changed to %CURSOR_SIZE%.
 pause

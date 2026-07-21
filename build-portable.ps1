@@ -1,5 +1,5 @@
 $ErrorActionPreference = "Stop"
-$Root = Split-Path $PSScriptRoot -Parent
+$Root = $PSScriptRoot
 $DISCORD = Get-ChildItem "$env:LOCALAPPDATA\Discord" -Directory -Filter "app-*" | Sort-Object { [version]($_.Name -replace '^app-', '') } -Descending | Select-Object -First 1 -ExpandProperty FullName
 $DISCORD_VERSION = (Split-Path $DISCORD -Leaf) -replace '^app-', ''
 $OUT = Join-Path $Root "release\win-unpacked"
@@ -7,7 +7,7 @@ $RES = Join-Path $OUT "resources"
 
 Write-Host "=== STEP 1 : Build ===" -ForegroundColor Cyan
 Set-Location $Root
-npx electron-builder --config scripts/electron-builder.config.cjs --win dir --x64
+npx electron-builder --config electron-builder.config.cjs --win dir --x64
 
 Write-Host "=== STEP 2 : Copy _app.asar ===" -ForegroundColor Cyan
 Copy-Item "$DISCORD\resources\_app.asar" "$RES\_app.asar" -Force
@@ -41,7 +41,7 @@ Copy-Item "$DISCORD\resources\_app.asar" "$APP_DIST\_app.asar" -Force
 Write-Host "app/dist/_app.asar OK"
 
 Write-Host "=== STEP 6 : Create portable exe ===" -ForegroundColor Cyan
-npx electron-builder --config scripts/electron-builder.config.cjs --win portable --x64 --prepackaged release\win-unpacked
+npx electron-builder --config electron-builder.config.cjs --win portable --x64 --prepackaged release\win-unpacked
 
 Write-Host "=== DONE ===" -ForegroundColor Green
-Write-Host "Fichier : release\Ghostcord-portable.exe" -ForegroundColor Green
+Get-ChildItem (Join-Path $Root "release\*.exe") | ForEach-Object { Write-Host "Fichier : $($_.FullName)" -ForegroundColor Green }

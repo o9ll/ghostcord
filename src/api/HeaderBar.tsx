@@ -243,7 +243,6 @@ export function _notifyStealthChange() {
 export function addStealthListener(fn: () => void) { stealthListeners.add(fn); }
 export function removeStealthListener(fn: () => void) { stealthListeners.delete(fn); }
 
-
 // ══════════════════════════════════════════════════════════════════
 // COMPACT MODE
 // ══════════════════════════════════════════════════════════════════
