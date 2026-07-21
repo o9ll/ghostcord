@@ -231,11 +231,6 @@ export default definePlugin({
     authors: [{ name: "Ghostcord", id: 0n }],
 
     start() {
-        const mountWhenReady = () => setTimeout(mountBanner, 1500);
-        if (document.readyState === "complete") mountWhenReady();
-        else window.addEventListener("load", mountWhenReady, { once: true });
-
-        setTimeout(() => checkForUpdates(), 15000);
     },
 
     stop() {
