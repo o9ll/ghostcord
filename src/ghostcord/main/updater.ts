@@ -124,3 +124,4 @@ function openUpdater(update: UpdateInfo) {
 
     loadView(updaterWindow, "updater/index.html");
 }
+

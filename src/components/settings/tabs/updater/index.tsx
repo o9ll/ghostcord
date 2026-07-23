@@ -171,3 +171,4 @@ function UpdaterTab() {
 }
 
 export default wrapTab(UpdaterTab, "Updater");
+

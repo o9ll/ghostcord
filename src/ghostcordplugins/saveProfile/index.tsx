@@ -449,3 +449,4 @@ export default definePlugin({
     tags: ["Appearance", "Customisation", "Utility"],
     settings
 });
+

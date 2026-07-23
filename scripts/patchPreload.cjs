@@ -31,3 +31,4 @@ writeFileSync(preloadPath, content, "utf-8");
 
 console.log(`[patch] Done. contextBridge replaced: ${before} → ${after}`);
 console.log(`[patch] DISCORD_PRELOAD safe: ${content.includes("process.env.DISCORD_PRELOAD &&")}`);
+

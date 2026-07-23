@@ -36,3 +36,4 @@ export const FloodPanelButton: ChatBarButtonFactory = ({ isMainChat, channel }) 
         </ChatBarButton>
     );
 };
+

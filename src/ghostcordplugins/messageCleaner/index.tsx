@@ -522,3 +522,4 @@ export default definePlugin({
         if (isCleaningInProgress) shouldStopCleaning = true;
     }
 });
+

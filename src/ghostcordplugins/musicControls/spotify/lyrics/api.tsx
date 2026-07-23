@@ -130,3 +130,4 @@ export async function migrateOldLyrics() {
     await DataStore.set(LyricsCacheKey, result);
     await DataStore.set("SpotifyLyricsCache", {});
 }
+

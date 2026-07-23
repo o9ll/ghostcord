@@ -18,6 +18,7 @@
 
 import "./fixDiscordBadgePadding.css";
 
+
 import { _getBadges, BadgePosition, BadgeUserArgs, ProfileBadge } from "@api/Badges";
 import { loadOwnHiddenBadgeSources } from "@api/BadgeVisibility";
 import ErrorBoundary from "@components/ErrorBoundary";
@@ -83,7 +84,7 @@ const UserPluginContributorBadge: ProfileBadge = {
 
 let DonorBadges = {} as Record<string, Array<Record<"tooltip" | "badge", string>>>;
 let EquicordDonorBadges = {} as Record<string, Array<Record<"tooltip" | "badge", string>>>;
-let GhostcordBadges = {} as Record<string, Array<Record<"tooltip" | "badge", string>>>;
+let GhostcordBadges = {} as Record<string, Array<{ icon: string; placeholder: string; uuid: string; }>>;
 
 async function loadBadges(url: string, noCache = false) {
     const init = {} as RequestInit;
@@ -297,10 +298,10 @@ export default definePlugin({
             if (!userBadges || !Array.isArray(userBadges)) return [];
 
             return userBadges
-                .filter(badge => badge && badge.badge)
+                .filter(badge => badge && badge.icon)
                 .map(badge => ({
-                    iconSrc: badge.badge,
-                    description: badge.tooltip ?? "Ghostcord Badge",
+                    iconSrc: badge.icon,
+                    description: badge.placeholder ?? "Ghostcord Badge",
                     position: BadgePosition.START,
                     props: {
                         style: {
@@ -322,5 +323,6 @@ export default definePlugin({
         }
     }
 });
+
 
 

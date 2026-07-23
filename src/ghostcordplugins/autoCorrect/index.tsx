@@ -49,7 +49,7 @@ const settings = definePluginSettings({
 // ── Correction via groqManager ────────────────────────────────────────────────
 
 const LANG_PROMPTS: Record<string, string> = {
-    fr: "You are a spell checker. Fix ONLY spelling and grammar mistakes. Return the corrected text without explanation or quotes. FORBIDDEN: adding words, changing meaning, rephrasing. If already correct, return as-is.",
+    fr: "Tu es un correcteur orthographique. Corrige UNIQUEMENT les fautes d'orthographe et de grammaire. Retourne le texte corrigé sans explication ni guillemets. INTERDIT: ajouter des mots, changer le sens, reformuler. Si le texte est correct, retourne-le identique.",
     en: "You are a spell-checker. Fix ONLY spelling and grammar mistakes. Return the corrected text without explanation or quotes. FORBIDDEN: adding words, changing meaning, rephrasing. If already correct, return as-is.",
     es: "Eres un corrector ortográfico. Corrige SOLO errores ortográficos y gramaticales. Devuelve el texto corregido sin explicación. PROHIBIDO: añadir palabras, cambiar el sentido.",
     de: "Du bist ein Rechtschreibprüfer. Korrigiere NUR Rechtschreib- und Grammatikfehler. Gib den korrigierten Text ohne Erklärung zurück. VERBOTEN: Wörter hinzufügen, Bedeutung ändern.",
@@ -190,3 +190,4 @@ export default definePlugin({
         }
     },
 });
+

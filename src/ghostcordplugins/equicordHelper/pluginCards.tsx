@@ -19,6 +19,8 @@ import { isEquicordGuild, isEquicordSupport } from "@utils/misc";
 import { Message } from "@vencord/discord-types";
 import { showToast, Tooltip, useMemo } from "@webpack/common";
 import { JSX } from "react";
+
+
 import plugins, { ExcludedPlugins } from "~plugins";
 
 export function ChatPluginCard({ url, description }: { url: string, description: string; }) {
@@ -140,7 +142,7 @@ export const PluginCards = ErrorBoundary.wrap(function PluginCards({ message }: 
         );
     });
 
-    // Process components - Equibot (equicord.org / vencord.dev)
+    // Process components — Equibot (equicord.org / vencord.dev)
     const components = (message.components?.[0] as any)?.components;
     if (message.author.id === EQUIBOT_USER_ID && components?.length >= 4) {
         const description = components[1]?.content;
@@ -165,21 +167,15 @@ export const PluginCards = ErrorBoundary.wrap(function PluginCards({ message }: 
         }
     }
 
-    // Process components - GhostCord Bot (domain, Component v2 Container format)
+    // Process components — GhostCord Bot (domain, Component v2 Container format)
     if (message.author.id === GHOSTCORD_BOT_USER_ID) {
         const containerComponents = (message.components?.[0] as any)?.components;
         if (containerComponents?.length >= 3) {
             // Find ActionRow by presence of nested components (same pattern as Equibot check above)
             const actionRow = containerComponents.find((c: any) => c?.components);
             const pluginUrl = actionRow?.components?.[0]?.url;
-            
-            // Check for either the ghostcordplugins or plugins directory on the GitHub repo
-            if (pluginUrl?.startsWith("https://github.com/o9ll/ghostcord/tree/master/src/ghostcordplugins/") || 
-                pluginUrl?.startsWith("https://github.com/o9ll/ghostcord/tree/master/src/plugins/")) {
-                
-                // Use .pop() to get the plugin name at the very end of the GitHub URL path
-                const pluginNameFromUrl = decodeURIComponent(new URL(pluginUrl).pathname.split("/").pop() || "");
-                
+            if (pluginUrl?.startsWith(`https://github.com/o9ll/ghostcord/plugins/`)) {
+                const pluginNameFromUrl = decodeURIComponent(new URL(pluginUrl).pathname.split("/")[2]);
                 const pluginNameNoSpaces = pluginNameFromUrl?.toLowerCase().replace(/\s+/g, "");
                 const actualPluginName =
                     Object.keys(plugins).find(name => name.toLowerCase() === pluginNameFromUrl?.toLowerCase()) ??
@@ -211,4 +207,5 @@ export const PluginCards = ErrorBoundary.wrap(function PluginCards({ message }: 
         </div>
     );
 }, { noop: true });
+
 

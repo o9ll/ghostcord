@@ -92,7 +92,7 @@ function toggleGroupLock(channelId: string) {
 
     if (!channel || channel.type !== 3 || !currentUserId) return;
 
-                    const channelName = channel.name || "Unnamed group";
+    const channelName = channel.name || "Unnamed group";
 
     if (channel.ownerId !== currentUserId) {
         if (settings.store.showNotifications) {
@@ -203,7 +203,7 @@ export default definePlugin({
                 if (lockedGroups.has(channelId)) {
                     const channel = ChannelStore.getChannel(channelId);
                     if (channel && channel.type === 3 && channel.ownerId === currentUserId) {
-    const channelName = channel.name || "Unnamed group";
+                        const channelName = channel.name || "Unnamed group";
                         const addedUserId = message.mentions?.[0]?.id;
                         const addedByUserId = message.author?.id;
 
@@ -253,3 +253,4 @@ export default definePlugin({
         lockedGroups.clear();
     }
 });
+

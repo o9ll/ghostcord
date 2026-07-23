@@ -155,3 +155,4 @@ onIpcCommand(IpcCommands.RPC_DEEP_LINK, async data => {
         return false;
     }
 });
+

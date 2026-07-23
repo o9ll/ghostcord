@@ -9,7 +9,7 @@ import definePlugin from "@utils/types";
 import { waitFor } from "@webpack";
 import { React, useEffect, useState } from "@webpack/common";
 // Config
-const REMOTE_VERSION_URL = "https://api.github.com/repos/o9ll/ghostcord/releases/latest";
+const REMOTE_VERSION_URL = `https://api.github.com/repos/o9ll/ghostcord/releases/latest`;
 
 // Version locale (injectee au build via define)
 declare const VERSION: string;

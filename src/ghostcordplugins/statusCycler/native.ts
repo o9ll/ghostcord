@@ -92,3 +92,4 @@ export async function installSpicetify(_event: IpcMainInvokeEvent): Promise<Inst
 
     return { success: false, error: "Spicetify installation is not supported on this operating system." };
 }
+

@@ -77,3 +77,4 @@ export async function installWatchingTogetherIntercept(_?: any) {
     if (_ytListenerInstalled) return;
     _ytListenerInstalled = true;
 }
+

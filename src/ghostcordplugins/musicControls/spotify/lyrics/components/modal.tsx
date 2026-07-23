@@ -78,3 +78,4 @@ export function LyricsModal({ props }: { props: RenderModalProps; }) {
         </Modal>
     );
 }
+

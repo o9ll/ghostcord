@@ -62,3 +62,4 @@ export function TranslationAccessory({ message }: { message: Message; }) {
         </span>
     );
 }
+

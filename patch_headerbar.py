@@ -1,4 +1,4 @@
-﻿import re
+import re
 
 with open(r"C:\Users\o9\Documents\Githubb\ghostcord\src\api\HeaderBar.tsx", "r", encoding="utf-8") as f:
     content = f.read()
@@ -119,3 +119,4 @@ else:
 
 with open(r"C:\Users\o9\Documents\Githubb\ghostcord\src\api\HeaderBar.tsx", "w", encoding="utf-8") as f:
     f.write(content)
+

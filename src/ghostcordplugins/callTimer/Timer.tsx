@@ -36,3 +36,4 @@ export function Timer({ time }: Readonly<{ time: number; }>) {
         );
     }
 }
+

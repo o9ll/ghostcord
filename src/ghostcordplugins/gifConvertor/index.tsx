@@ -398,3 +398,4 @@ export default definePlugin({
         render: GifConvertorChatBarButton,
     },
 });
+

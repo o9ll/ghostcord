@@ -114,3 +114,4 @@ export function useLyrics({ scroll = true }: { scroll?: boolean; } = {}) {
 
     return { track, lyricsInfo, lyricRefs, currLrcIndex, nextLyric };
 }
+

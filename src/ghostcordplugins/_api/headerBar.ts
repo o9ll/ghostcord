@@ -17,3 +17,4 @@ export default definePlugin({
     hidden: true,
     patches: []
 });
+

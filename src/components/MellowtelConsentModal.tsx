@@ -343,7 +343,7 @@ function MellowtelOnboardingContent({ onClose }: { onClose: () => void }) {
                     <Paragraph style={{ color: "#dbdee1", fontSize: "14px", lineHeight: "1.5", marginBottom: "24px" }}>
                         {t("Synchronize your Ghostcord settings, plugins, and custom profiles across all your devices securely through the cloud. This requires Discord authorization. Once enabled, everyone using Ghostcord will be able to see your Custom Profile, and you will be able to see theirs. You can also easily backup your configurations and automatically restore them on another device.")}
                     </Paragraph>
-
+                    
                     <div style={{ marginTop: "8px" }}>
                         <FormSwitch
                             value={settings.cloud?.settingsSync || false}

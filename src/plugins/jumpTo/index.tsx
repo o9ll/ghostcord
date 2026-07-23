@@ -71,12 +71,12 @@ const ChannelMenuPatch: NavContextMenuPatchCallback = (
     children.push(
         <Menu.MenuItem
             id="vc-jump-to-first"
-            label="Jump First"
+            label="Jump To First Message"
             action={() => jumpToFirstMessage(targetChannel.id, targetChannel.guild_id)}
         />,
         <Menu.MenuItem
             id="vc-jump-to-last"
-            label="Jump Last"
+            label="Jump To Last Message"
             action={() => jumpToLastMessage(targetChannel.id, targetChannel.guild_id)}
         />
     );

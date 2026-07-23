@@ -451,3 +451,4 @@ function isGroupStart(
 
     return timeDifferenceInMinutes >= 5;
 }
+

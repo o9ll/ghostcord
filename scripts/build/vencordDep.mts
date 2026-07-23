@@ -36,3 +36,4 @@ export default globalExternalsWithRegExp({
     },
     modulePathFilter: /^@[Gg]hostcord\/types.+$/
 });
+

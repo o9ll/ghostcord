@@ -8,3 +8,4 @@ export interface EnhancedLyric {
     time: number;
     text: string;
 }
+

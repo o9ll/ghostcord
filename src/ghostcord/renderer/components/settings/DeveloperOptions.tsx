@@ -119,3 +119,4 @@ const GhostcordLocationPicker: SettingsComponent = ({ settings }) => {
         </>
     );
 };
+

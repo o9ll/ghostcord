@@ -449,3 +449,4 @@ export default definePlugin({
         applyBgFpsPatch(false);
     }
 });
+

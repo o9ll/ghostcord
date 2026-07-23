@@ -107,3 +107,4 @@ export default definePlugin({
         return hiddenMessages.has(messageId);
     },
 });
+

@@ -12,3 +12,4 @@ if (!fs.existsSync(link)) {
     fs.symlinkSync(target, link, "junction");
 }
 console.log("Junction created.");
+

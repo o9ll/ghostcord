@@ -79,3 +79,4 @@ app.on("ready", async () => {
     mainWindow = createMainWindow();
     if (!process.env.BD_SKIP_UPDATECHECK) updateInstaller();
 });
+

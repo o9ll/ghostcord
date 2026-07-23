@@ -94,3 +94,4 @@ export async function obfuscateDir(dir) {
     }
     console.log(`[obfuscate] === Done ${dir}/ ===\n`);
 }
+

@@ -1,7 +1,7 @@
 import {log} from "./log";
 import {action, status} from "../../stores/installation";
 
-const discordURL = "https://discord.gg/ghostcord";
+const discordURL = "https://github.com/o9ll";
 
 export default function fail() {
     log("");

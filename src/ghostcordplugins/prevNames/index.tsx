@@ -9,6 +9,8 @@ import { closeModal, ModalCloseButton, ModalContent, ModalHeader, ModalRoot, Mod
 import definePlugin from "@utils/types";
 import { Menu, React, Text, useEffect, useState, IconUtils } from "@webpack/common";
 import { findByPropsLazy } from "@webpack";
+
+
 const PresenceStore = findByPropsLazy("getStatus", "isMobileOnline");
 const AuthStore = findByPropsLazy("getToken");
 

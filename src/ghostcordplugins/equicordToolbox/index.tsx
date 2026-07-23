@@ -45,3 +45,4 @@ export default definePlugin({
         priority: 1337
     }
 });
+

@@ -3,3 +3,4 @@
 title Ghostcord — Install
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0ghostcord-install.ps1"
 if %errorlevel% neq 0 pause
+

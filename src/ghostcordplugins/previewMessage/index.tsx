@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Ghostcord, a Discord client mod
  * Copyright (c) 2026 contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -50,17 +50,17 @@ function avatarUrl(userId: string, hash: string | null): string {
 
 function Tooltip({ channelId, rect }: { channelId: string; rect: DOMRect; }) {
     const [messages, setMessages] = React.useState<any[]>([]);
-
+    
     const unread: number = React.useMemo(() => {
         try { return ReadStateStore.getUnreadCount(channelId) ?? 0; } catch { return 0; }
     }, [channelId]);
 
     React.useEffect(() => {
         let isMounted = true;
-
+        
         const loadMessages = async () => {
             let msgs = MessageStore?.getMessages(channelId);
-
+            
             if (!msgs || !msgs._array || msgs._array.length === 0) {
                 try {
                     await MessageActions?.fetchMessages({ channelId });
@@ -69,7 +69,7 @@ function Tooltip({ channelId, rect }: { channelId: string; rect: DOMRect; }) {
                     console.warn("[PreviewMessage] Failed to fetch messages", e);
                 }
             }
-
+            
             if (isMounted) {
                 let localMsgs = [];
                 if (msgs && msgs._array && msgs._array.length > 0) {
@@ -272,6 +272,7 @@ function _onDocMouseLeave(e: Event) {
 
 export default definePlugin({
     name: "PreviewMessage",
+    enabledByDefault: true,
     description: "Hover over a DM in your inbox to preview unread messages without opening the conversation. Only shows when there are unread messages.",
     authors: [{ name: "Ghostcord",
      id: 0n }],
@@ -300,3 +301,4 @@ export default definePlugin({
         });
     },
 });
+

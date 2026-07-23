@@ -27,3 +27,4 @@ export async function makeDeeplTranslateRequest(_: IpcMainInvokeEvent, pro: bool
         return { status: -1, data: String(e) };
     }
 }
+

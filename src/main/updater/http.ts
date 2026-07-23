@@ -11,6 +11,7 @@ import { exec } from "child_process";
 import { app,ipcMain } from "electron";
 import { rmSync,writeFileSync } from "original-fs";
 import { join } from "path";
+
 import { serializeErrors } from "./common";
 
 const API_BASE = `https://api.github.com/repos/o9ll/ghostcord`;
@@ -124,3 +125,4 @@ ipcMain.handle(IpcEvents.GET_REPO, serializeErrors(() => REPO_URL));
 ipcMain.handle(IpcEvents.GET_UPDATES, serializeErrors(getUpdates));
 ipcMain.handle(IpcEvents.UPDATE, serializeErrors(fetchUpdates));
 ipcMain.handle(IpcEvents.BUILD, serializeErrors(applyUpdates));
+

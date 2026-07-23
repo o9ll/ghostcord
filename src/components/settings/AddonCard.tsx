@@ -126,3 +126,4 @@ export function AddonCard({ disabled, isNew, sourceBadge, tooltip, name, infoBut
         </div>
     );
 }
+

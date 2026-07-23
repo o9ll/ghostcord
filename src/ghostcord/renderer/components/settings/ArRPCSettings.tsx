@@ -11,3 +11,4 @@ import { SettingsComponent } from "./Settings";
 export const ArRPCSettingsButton: SettingsComponent = () => {
     return <Button onClick={() => VesktopNative.arrpc.openSettings()}>Configure Rich Presence</Button>;
 };
+

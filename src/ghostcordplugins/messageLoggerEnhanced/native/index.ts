@@ -195,3 +195,4 @@ export async function downloadAttachment(_event: IpcMainInvokeEvent, attachment:
         return { error: error.message, path: null };
     }
 }
+

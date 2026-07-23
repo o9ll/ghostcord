@@ -456,8 +456,8 @@ const channelContextMenuPatch: NavContextMenuPatchCallback = (children, { channe
 export default definePlugin({
     name: "ChannelWallpaper",
     enabledByDefault: true,
-    description: "Allows for custom backgrounds for every individual channel.",
     authors: [Devs.rushii, Devs.Nickyux],
+    description: "Allows for custom backgrounds for every individual channel.",
     settings,
 
     contextMenus: {
@@ -540,3 +540,4 @@ export default definePlugin({
         activeVideo = null;
     }
 });
+

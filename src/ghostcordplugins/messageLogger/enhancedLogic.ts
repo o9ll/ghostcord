@@ -252,3 +252,4 @@ export function stopEnhanced() {
     FluxDispatcher.unsubscribe("MESSAGE_CREATE", messageCreateHandler as any);
     FluxDispatcher.unsubscribe("LOAD_MESSAGES_SUCCESS", loadMessagesSuccessHandler as any);
 }
+

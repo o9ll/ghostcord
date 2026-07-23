@@ -42,3 +42,4 @@ export default definePlugin({
         removeFromArray(SettingsPlugin.settingsSectionMap, entry => entry[1] === "equicord_theme_library");
     },
 });
+

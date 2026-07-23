@@ -49,3 +49,4 @@ function waitForAndSubscribeToStore(name: string, cb?: (m: any) => void) {
 waitForAndSubscribeToStore("GuildReadStateStore", store => (GuildReadStateStore = store));
 waitForAndSubscribeToStore("NotificationSettingsStore", store => (NotificationSettingsStore = store));
 waitForAndSubscribeToStore("RelationshipStore");
+

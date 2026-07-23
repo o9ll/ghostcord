@@ -12,3 +12,4 @@ import { cl } from "./Settings";
 export function VesktopSettingsSwitch(props: ComponentProps<typeof FormSwitch>) {
     return <FormSwitch {...props} hideBorder className={cl("switch")} />;
 }
+

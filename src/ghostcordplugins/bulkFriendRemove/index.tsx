@@ -218,3 +218,4 @@ export default definePlugin({
      id: 0n }],
     headerBarButton: { icon: BulkRemoveIcon, render: BulkFriendRemoveButton, priority: 5 },
 });
+

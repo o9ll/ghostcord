@@ -108,3 +108,4 @@ function UserAreaButtons({ props }: { props: UserAreaRenderProps; }) {
 export function _renderButtons(props: UserAreaRenderProps) {
     return [<UserAreaButtons key="vc-user-area-buttons" props={props} />];
 }
+

@@ -74,3 +74,4 @@ if (Test-Path $OutExe) {
     Write-Host "  [ERROR] Ghostcord-Installer.exe not found after build." -ForegroundColor Red
     exit 1
 }
+

@@ -174,3 +174,4 @@ export const removeContextMenuBindings = () => {
     removeContextMenuPatch("guild-context", contextMenuPath);
     removeContextMenuPatch("gdm-context", contextMenuPath);
 };
+

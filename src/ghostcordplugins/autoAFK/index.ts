@@ -1,11 +1,11 @@
 /*
- * Vencord, a Discord client mod
+ * Ghostcord, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-import { tPlugin as t } from "@api/pluginI18n";
 import { definePluginSettings } from "@api/Settings";
+import { tPlugin as t } from "@api/pluginI18n";
 import { getUserSettingLazy } from "@api/UserSettings";
 import { Logger } from "@utils/Logger";
 import definePlugin, { OptionType } from "@utils/types";
@@ -185,3 +185,4 @@ export default definePlugin({
         }
     }
 });
+

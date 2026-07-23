@@ -762,3 +762,4 @@ export default definePlugin({
 
     headerBarButtons: []
 });
+

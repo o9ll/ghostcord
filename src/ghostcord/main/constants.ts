@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Vencord, a Discord client mod
  * Copyright (c) 2026 Vendicated and contributors
  * SPDX-License-Identifier: GPL-3.0-or-later
@@ -9,6 +9,8 @@ import { existsSync, mkdirSync } from "fs";
 import { dirname, join } from "path";
 
 import { CommandLine } from "./cli";
+
+
 const GhostcordDir = dirname(process.execPath);
 
 export const PORTABLE =
@@ -61,4 +63,5 @@ export const IS_FLATPAK = process.env.FLATPAK_ID !== undefined;
 export const isWayland =
     process.platform === "linux" && (process.env.XDG_SESSION_TYPE === "wayland" || !!process.env.WAYLAND_DISPLAY);
 export const isLinux = process.platform === "linux";
+
 

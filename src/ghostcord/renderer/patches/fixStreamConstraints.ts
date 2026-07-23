@@ -64,3 +64,4 @@ MediaStreamTrack.prototype.applyConstraints = function (constraints) {
     }
     return originalApplyConstraints.call(this, constraints);
 };
+

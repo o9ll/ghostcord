@@ -243,6 +243,7 @@ export function _notifyStealthChange() {
 export function addStealthListener(fn: () => void) { stealthListeners.add(fn); }
 export function removeStealthListener(fn: () => void) { stealthListeners.delete(fn); }
 
+
 // ══════════════════════════════════════════════════════════════════
 // COMPACT MODE
 // ══════════════════════════════════════════════════════════════════
@@ -617,3 +618,4 @@ export function _addHeaderBarButtons() {
 export function _addChannelToolbarButtons(children: any[]) {
     children.push(<ChannelToolbarButtons key="vc-channel-toolbar-buttons" />);
 }
+

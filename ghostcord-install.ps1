@@ -38,7 +38,7 @@ function Write-Step($n, $total, $msg) {
 }
 
 function Write-OK($msg) {
-    Write-Host "          [OK] " -NoNewline -ForegroundColor Green
+    Write-Host "          ✓ " -NoNewline -ForegroundColor Green
     Write-Host $msg
 }
 
@@ -68,10 +68,7 @@ if (Test-Path $EquilotlExe) {
     try {
         $head = Invoke-WebRequest -Uri $EquilotlUrl -Method Head -UseBasicParsing `
             -Headers @{ "User-Agent" = "Ghostcord-Installer/2.0" }
-            
-        $contentLength = $head.Headers["Content-Length"]
-        $remoteSize = if ($contentLength) { [long]$contentLength } else { 0 }
-        
+        $remoteSize = [long]($head.Headers["Content-Length"] ?? 0)
         $localSize  = (Get-Item $EquilotlExe).Length
         if ($remoteSize -gt 0 -and $remoteSize -eq $localSize) {
             $needDownload = $false
@@ -161,3 +158,4 @@ Write-Host ""
 Write-Host "  To uninstall: run ghostcord-uninstall.bat" -ForegroundColor DarkGray
 Write-Host ""
 Start-Sleep -Seconds 4
+

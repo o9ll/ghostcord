@@ -95,3 +95,4 @@ ${update ? "Click" : "Tap"} no to keep your current layout.`,
 
     await showLayout(appId);
 }
+

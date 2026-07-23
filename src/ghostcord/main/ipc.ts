@@ -286,3 +286,4 @@ handle(IpcEvents.VOICE_STATE_CHANGED, (_, variant: string) => {
 handle(IpcEvents.VOICE_CALL_STATE_CHANGED, (_, inCall: boolean) => {
     AppEvents.emit("voiceCallStateChanged", inCall);
 });
+

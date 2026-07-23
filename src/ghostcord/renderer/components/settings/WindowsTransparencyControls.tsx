@@ -49,3 +49,4 @@ export const WindowsTransparencyControls: SettingsComponent = ({ settings }) => 
         </div>
     );
 };
+

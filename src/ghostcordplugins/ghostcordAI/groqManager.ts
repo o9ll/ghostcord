@@ -204,3 +204,4 @@ async function _groqChat(opts: GroqCallOptions, attempt = 0): Promise<string> {
 export function getCurrentModel(): string {
     return GROQ_MODELS[currentModelIdx] ?? GROQ_MODELS[0];
 }
+

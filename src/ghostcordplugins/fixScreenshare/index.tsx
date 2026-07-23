@@ -46,3 +46,4 @@ export default definePlugin({
         FluxDispatcher.unsubscribe("VOICE_CHANNEL_SELECT", handleVoiceChannelSelect);
     }
 });
+

@@ -245,3 +245,4 @@ export async function uploadSettingsBackup(type: BackupType = "all", showToast =
         reader.readAsText(file);
     }
 }
+

@@ -198,3 +198,4 @@ export const VoiceChannelIndicator = ErrorBoundary.wrap(({ userId, isProfile, is
         </Tooltip>
     );
 }, { noop: true });
+

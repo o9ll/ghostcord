@@ -1,4 +1,4 @@
-﻿with open(r"C:\Users\o9\Documents\Githubb\ghostcord\src\api\HeaderBar.tsx", "rb") as f:
+with open(r"C:\Users\o9\Documents\Githubb\ghostcord\src\api\HeaderBar.tsx", "rb") as f:
     raw = f.read()
 content = raw.decode("utf-8-sig", errors="replace")
 
@@ -77,3 +77,4 @@ print("Replaced HeaderBarButtons OK")
 with open(r"C:\Users\o9\Documents\Githubb\ghostcord\src\api\HeaderBar.tsx", "w", encoding="utf-8") as f:
     f.write(content)
 print("File written OK")
+

@@ -34,3 +34,4 @@ export const AutoStartToggle: SettingsComponent = ({ settings }) => {
         </>
     );
 };
+

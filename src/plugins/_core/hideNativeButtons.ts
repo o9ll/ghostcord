@@ -49,3 +49,4 @@ export default definePlugin({
         document.getElementById(STYLE_ID)?.remove();
     },
 });
+

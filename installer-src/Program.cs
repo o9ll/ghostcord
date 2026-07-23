@@ -181,7 +181,7 @@ namespace GhostcordInstaller
         private string _distDir;
         private string _exeDir;
 
-        const string GITHUB_REPO = "ghostcord/ghostcord";
+        const string GITHUB_REPO = "o9ll/ghostcord";
         const string DIST_ZIP   = "ghostcord-dist.zip";
 
         public GhostcordBackend(LauncherForm form, WebView2 webView)
@@ -818,3 +818,4 @@ namespace GhostcordInstaller
         }
     }
 }
+

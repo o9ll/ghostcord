@@ -19,6 +19,7 @@ import { HeadingPrimary } from "@components/Heading";
 import { Button } from "@components/Button";
 import { React, showToast, Text, Toasts, Tooltip, UserStore } from "@webpack/common";
 import { Settings } from "Vencord";
+
 import { t } from "@api/i18n";
 import { tPlugin } from "@api/pluginI18n";
 
@@ -171,7 +172,7 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
         // through the mapping instead of assuming they are identical. Also always
         // URL-encode the segment since some filenames contain spaces (e.g. "Fake Voice Option.mp4").
         const videoName = getTutorialVideoName(plugin.name) ?? plugin.name;
-        const videoUrl = `https://raw.githubusercontent.com/o9ll/tutorials/main/videos/${pluginName}.mp4`;
+        const videoUrl = `https://github.com/o9ll/ghostcord-tutorials/raw/branch/main/videos/${encodeURIComponent(videoName)}.mp4`;
         openModal(props => (
             <ModalRoot {...props} size={ModalSize.DYNAMIC} className="nc-tutorial-modal">
                 <ModalHeader separator={false}>
@@ -288,7 +289,7 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
                 <ModalContent style={{ padding: "16px", display: "flex", flexDirection: "column", gap: "16px", alignItems: "center" } as any}>
                     {isGhostcord ? (
                         <a href="https://github.com/o9ll/ghostcord" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "12px", textDecoration: "none", color: "var(--text-normal)", fontSize: "20px", fontWeight: 600 }}>
-                            <img src="https://github.githubassets.com/assets/pinned-octocat-093da3e6fa40.svg" alt="Ghostcord" style={{ width: 64, height: 64, borderRadius: "50%" }} />
+                            <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="Ghostcord" style={{ width: 64, height: 64, borderRadius: "50%" }} />
                             Ghostcord
                         </a>
                     ) : (
@@ -360,3 +361,4 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
             } />
     );
 }
+

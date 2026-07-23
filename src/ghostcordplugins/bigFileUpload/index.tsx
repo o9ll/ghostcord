@@ -484,7 +484,7 @@ const ctxMenuPatch: NavContextMenuPatchCallback = (children, props) => {
 
 export default definePlugin({
     name: "BigFileUpload",
-    enabledByDefault: false,
+    enabledByDefault: true,
     description: "Bypasses Discord's upload limit via GoFile, Catbox, or a custom uploader. Button in the right-click menu or /fileupload command.",
     authors: [Devs.ScattrdBlade],
     settings,
@@ -513,3 +513,4 @@ export default definePlugin({
         },
     ],
 });
+

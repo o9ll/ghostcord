@@ -54,3 +54,4 @@ export default definePlugin({
         </svg>
     ),
 });
+

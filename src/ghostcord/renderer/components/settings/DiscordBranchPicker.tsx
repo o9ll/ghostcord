@@ -27,3 +27,4 @@ export const DiscordBranchPicker: SettingsComponent = ({ settings }) => {
         </SimpleErrorBoundary>
     );
 };
+

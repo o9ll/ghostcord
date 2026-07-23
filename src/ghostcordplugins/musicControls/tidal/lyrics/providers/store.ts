@@ -52,3 +52,4 @@ export const TidalLrcStore = proxyLazyWebpack(() => {
 
     return store;
 });
+

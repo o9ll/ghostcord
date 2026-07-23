@@ -13,3 +13,4 @@ export interface CssColorData {
 }
 
 export type IconSize = "xxs" | "xs" | "sm" | "md" | "lg";
+

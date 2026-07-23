@@ -3129,3 +3129,4 @@ export function tPlugin(key: string): string {
     if (!lang || lang === "en") return key;
     return pluginTranslations[key]?.[lang as keyof LangMap] ?? key;
 }
+

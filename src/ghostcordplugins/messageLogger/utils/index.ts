@@ -193,3 +193,4 @@ export function removeFromX(list: ListType, id: string) {
         settings.store[list] = items.join(",");
     }
 }
+

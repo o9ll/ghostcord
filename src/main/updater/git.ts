@@ -5,3 +5,4 @@
  */
 
 // Intentionnellement vide — Ghostcord ne supporte pas le mode git updater.
+

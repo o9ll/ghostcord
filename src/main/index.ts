@@ -115,3 +115,4 @@ if (!IS_VANILLA && !IS_EXTENSION) {
 if (IS_DISCORD_DESKTOP) {
     require("./patcher");
 }
+

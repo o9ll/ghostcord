@@ -151,3 +151,4 @@ writeFileSync(
 
 console.log(`Extracted ${unique.length} plugins, ${allStrings.size} unique strings.`);
 console.log("Output: scripts/pluginDescriptions.json");
+

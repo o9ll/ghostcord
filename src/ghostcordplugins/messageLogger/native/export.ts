@@ -55,3 +55,4 @@ export async function finishNativeLogExport(_event: IpcMainInvokeEvent, streamId
         });
     });
 }
+

@@ -247,3 +247,4 @@ await Promise.all([
     createPackage("dist/desktop", "dist/desktop.asar"),
     createPackage("dist/ghostcord", "dist/ghostcord.asar"),
 ]);
+

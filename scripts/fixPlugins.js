@@ -25,3 +25,4 @@ for (const p of plugins) {
         console.log(`Fixed ${p}`);
     }
 }
+

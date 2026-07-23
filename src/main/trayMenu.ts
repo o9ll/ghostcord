@@ -126,3 +126,4 @@ function createGhostcordMenuItems(): MenuItemConstructorOptions[] {
 export function patchTrayMenu(): void {
     // No longer patching tray menu — Ghostcord manages its own tray in patcher.ts
 }
+

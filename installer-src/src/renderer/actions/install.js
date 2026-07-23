@@ -9,6 +9,7 @@ import {execSync} from "child_process";
 import {killDiscord, startDiscord} from "./utils/kill";
 import {log, lognewline} from "./utils/log";
 
+
 const MAKE_DIR_PROGRESS = 5;
 const FETCH_RELEASE_PROGRESS = 15;
 const DOWNLOAD_PACKAGE_PROGRESS = 75;
@@ -421,3 +422,4 @@ export default async function(paths) {
         return false;
     }
 }
+

@@ -2,6 +2,7 @@ import {dialog, shell} from "electron";
 import phin from "phin";
 const semverGreaterThan = require("semver/functions/gt");
 const {version} = require("../../package.json");
+ 
 
 const getJSON = phin.defaults({
     method: "GET",
@@ -45,3 +46,4 @@ export default async function () {
         console.error("Failed to check for updates.", err);
     }
 }
+

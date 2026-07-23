@@ -22,3 +22,4 @@ export function addPatch<P extends PatchData>(p: P) {
 
     Object.assign(VesktopPatchGlobals, globals);
 }
+

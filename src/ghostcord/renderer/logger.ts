@@ -7,3 +7,4 @@
 import { Logger } from "@Ghostcord/types/utils";
 
 export const VesktopLogger = new Logger("Ghostcord", "#d3869b");
+

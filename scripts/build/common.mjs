@@ -480,3 +480,4 @@ export const commonRendererPlugins = [
     // @ts-expect-error this is never undefined
     ...commonOpts.plugins
 ];
+

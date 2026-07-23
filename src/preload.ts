@@ -88,3 +88,4 @@ else {
     contextBridge.exposeInMainWorld("getCurrentCss", VencordNative.quickCss.get);
     contextBridge.exposeInMainWorld("getTheme", VencordNative.quickCss.getEditorTheme);
 }
+

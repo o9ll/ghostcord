@@ -54,3 +54,4 @@ Write-Host "  │  Restart Discord to apply the changes.               │" -For
 Write-Host "  └──────────────────────────────────────────────────────┘" -ForegroundColor Green
 Write-Host ""
 Start-Sleep -Seconds 3
+

@@ -138,3 +138,4 @@ export async function isAuthorized(triggerModal: boolean = true) {
         return true;
     }
 }
+

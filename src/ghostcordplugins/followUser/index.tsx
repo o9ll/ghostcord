@@ -157,7 +157,7 @@ function onVoiceStateUpdates(data: any) {
         if (newCh !== followedChannel) {
             followedChannel = newCh;
             if (newCh) {
-                resetInactivityTimer(); // activity detected, restart timer
+                resetInactivityTimer();
                 const myCh = getCurrentUserChannel();
                 if (myCh !== newCh) {
                     if (isUserStreaming()) {
@@ -350,3 +350,4 @@ export default definePlugin({
         removeContextMenuPatch("gdm-context", ctxPatch);
     },
 });
+

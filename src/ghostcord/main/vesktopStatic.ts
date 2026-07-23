@@ -29,3 +29,4 @@ export function loadView(browserWindow: BrowserWindow, view: string, params?: UR
 
     return browserWindow.loadURL(url.toString());
 }
+

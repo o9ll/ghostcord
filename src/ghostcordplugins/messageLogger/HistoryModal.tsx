@@ -95,3 +95,4 @@ export function HistoryModal({ modalProps, message }: { modalProps: ModalProps; 
         </ModalRoot>
     );
 }
+

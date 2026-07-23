@@ -198,3 +198,4 @@ function emitBadgeVisibilityChange() {
         try { l(); } catch { }
     }
 }
+

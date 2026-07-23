@@ -148,3 +148,4 @@ export function createWordDiff(oldText: string, newText: string): DiffPart[] {
 export function createMessageDiff(previousContent: string, currentContent: string): DiffPart[] {
     return createWordDiff(previousContent, currentContent);
 }
+

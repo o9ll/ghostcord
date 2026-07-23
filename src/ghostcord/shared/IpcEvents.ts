@@ -101,3 +101,4 @@ export const enum IpcCommands {
 
     SCREEN_SHARE_PICKER = "screenshare:picker"
 }
+

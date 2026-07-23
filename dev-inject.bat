@@ -44,7 +44,7 @@ echo  [4/4] Restarting Discord...
 set "DISCORD_PATH=%LOCALAPPDATA%\Discord"
 if exist "%DISCORD_PATH%\Update.exe" (
     start "" "%DISCORD_PATH%\Update.exe" --processStart Discord.exe
-        echo        Discord restarted via Update.exe.
+    echo        Discord restarted via Update.exe.
 ) else (
     for /f "delims=" %%i in ('dir /b /ad /o-n "%DISCORD_PATH%\app-*" 2^>nul') do (
         set "LATEST_APP=%%i"
@@ -65,3 +65,4 @@ echo   Ghostcord updated and injected successfully!
 echo  ================================================
 echo.
 timeout /t 3 /nobreak >nul
+

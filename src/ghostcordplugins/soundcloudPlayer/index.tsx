@@ -1112,7 +1112,7 @@ export default definePlugin({
     description: "Integrated SoundCord player. Client ID is automatically fetched via native Electron process — no account required.",
     authors: [EquicordDevs.nobody],
     settings,
-
+    
     toolboxActions: {
         "Open SoundCord"() {
             openModal(props => (
@@ -1216,3 +1216,4 @@ export default definePlugin({
         playerInited = false;
     },
 });
+

@@ -31,3 +31,4 @@ echo   dist\browser\firefox-unpacked  (unpacked extension)
 echo   dist\extension-firefox.zip     (zip for publication)
 echo ========================================================
 pause
+

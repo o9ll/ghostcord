@@ -22,3 +22,4 @@ if (CommandLine.values.repair) {
 } else {
     require("./startup");
 }
+

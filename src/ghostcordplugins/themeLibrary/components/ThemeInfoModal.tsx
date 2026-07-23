@@ -257,3 +257,4 @@ export const ThemeInfoModal: React.FC<ThemeInfoModalProps> = ({ author, theme, .
         </ModalRoot>
     );
 };
+

@@ -5,7 +5,7 @@
  */
 
 import { BaseText } from "@Ghostcord/types/components";
-import { React, useRef, useState } from "@Ghostcord/types/webpack/common";
+import { React, useRef,useState } from "react";
 
 import { cl } from "./Settings";
 
@@ -157,3 +157,4 @@ export function ImportLegacySettingsButton({ settings }: { settings: any; }) {
         </div>
     );
 }
+

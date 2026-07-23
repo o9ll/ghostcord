@@ -60,3 +60,4 @@ export default definePlugin({
         if (!result.ok) { /* restore failed silently */ }
     },
 });
+

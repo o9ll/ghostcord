@@ -181,7 +181,7 @@ function StealthModeSection() {
             <Heading className={Margins.top20}>{t("Stealth Mode")}</Heading>
             <Paragraph className={Margins.bottom16}>
                 {enabled
-                    ? "Stealth mode is enabled - all Ghostcord visual elements are hidden. Shortcut: Ctrl+Shift+H"
+                    ? "Stealth mode is enabled — all Ghostcord visual elements are hidden. Shortcut: Ctrl+Shift+H"
                     : t("Hides all Ghostcord visual elements without disabling plugins. Shortcut: Ctrl+Shift+H")}
             </Paragraph>
             <Button
@@ -206,6 +206,7 @@ function StealthModeButton() {
         </Button>
     );
 }
+
 
 
 function MellowtelSupportSwitch() {
@@ -326,7 +327,7 @@ function EquicordSettings() {
             !IS_WEB && {
                 key: "disableAutoUpdate",
                 title: t("Disable Automatic Updates"),
-                description: t("Prevent Ghostcord from automatically checking, downloading, or prompting for updates on startup. You can still update manually."),
+                description: t("Prevent Ghostcord from automatically checking, downloading, or prompting for updates on startup. You can still update manually in the \"Updater\" settings tab."),
                 restartRequired: false,
                 warning: { enabled: false },
             },
@@ -513,6 +514,7 @@ function EquicordSettings() {
 }
 
 export default wrapTab(EquicordSettings, "Ghostcord Settings");
+
 
 
 

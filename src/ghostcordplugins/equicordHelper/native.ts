@@ -8,3 +8,4 @@ import { CspPolicies, CSPSrc } from "@main/csp";
 
 // Allow all domains to have the permissions from CSPSrc
 CspPolicies["*"] = CSPSrc;
+

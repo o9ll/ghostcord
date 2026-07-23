@@ -9,7 +9,7 @@
 
 /**
  * Maps a plugin's `name` to the basename (without extension) of its tutorial
- * video in https://github.com/o9ll/tutorials
+ * video in https://github.com/o9ll/ghostcord-tutorials/src/branch/main/videos
  *
  * These are NOT always identical: several videos were uploaded with a different
  * casing (or, in one case, a completely different name) than the plugin's actual

@@ -63,7 +63,7 @@ function uninject(resourcesDir) {
     if (existsSync(appDirPath)) {
         try {
             if (existsSync(join(appDirPath, "index.js"))) {
-                const indexContent = readFileSync(join(appDirPath, "index.js"), "utf-utf-8");
+                const indexContent = readFileSync(join(appDirPath, "index.js"), "utf-8");
                 if (!indexContent.includes("Ghostcord Injector") && !indexContent.includes("Ghostcord")) {
                     console.warn(`\x1b[33m[Ghostcord] The app/ directory exists but does not appear to have been created by Ghostcord.\x1b[0m`);
                     console.warn("\x1b[33m            Aborting to avoid breaking another mod.\x1b[0m");
@@ -111,3 +111,4 @@ if (uninjectCount === 0) {
 }
 
 console.log(`\n\x1b[32m[Ghostcord] ${uninjectCount}/${allResources.length} uninjection(s) successful.\x1b[0m`);
+

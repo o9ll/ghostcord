@@ -229,3 +229,4 @@ export const settings = definePluginSettings({
         restartNeeded: true,
     }
 });
+

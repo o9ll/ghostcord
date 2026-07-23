@@ -38,3 +38,4 @@ export function handle(event: IpcEvents | UpdaterIpcEvents, cb: (e: IpcMainInvok
         return cb(e, ...args);
     });
 }
+

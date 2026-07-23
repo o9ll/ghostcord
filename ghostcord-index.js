@@ -345,3 +345,4 @@ try {
 }
 
 require(path.join(__dirname, "dist", "desktop", "patcher.js"));
+

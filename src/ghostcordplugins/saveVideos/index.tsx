@@ -194,12 +194,12 @@ export default definePlugin({
     authors: [{ name: "ghostcord", id: 0n }],
     dependencies: ["MessagePopoverAPI"],
     enabledByDefault: true,
-
+    
     contextMenus: {
         "message": MessageContextMenuPatch,
         "message-actions": MessageContextMenuPatch
     },
-
+    
     messagePopoverButton: {
         icon: SaveIcon,
         render(message: Message) {
@@ -215,3 +215,4 @@ export default definePlugin({
         }
     }
 });
+

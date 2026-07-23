@@ -266,3 +266,4 @@ export default definePlugin({
         // Always OFF at startup — the button toggle is session-only
     },
 });
+

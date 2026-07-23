@@ -312,3 +312,4 @@ export const settings = definePluginSettings({
     },
 
 });
+

@@ -134,3 +134,4 @@ export const SpotifyLrcStore = proxyLazyWebpack(() => {
 
     return store;
 });
+

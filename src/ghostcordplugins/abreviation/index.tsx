@@ -229,7 +229,7 @@ function onPreSend(_channelId: string, messageObj: { content: string; }) {
 
 export default definePlugin({
     name: "Abbreviation",
-    enabledByDefault: false,
+    enabledByDefault: true,
     description: "Automatically replaces abbreviations with full sentences before sending the message.",
     authors: [{ name: "Ghostcord",
      id: 0n }],
@@ -245,3 +245,4 @@ export default definePlugin({
         removeMessagePreSendListener(onPreSend as any);
     },
 });
+

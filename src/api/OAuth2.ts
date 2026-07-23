@@ -46,3 +46,4 @@ export async function storeToken(token: string) {
 export async function clearToken() {
     await DataStore.del(OAUTH_TOKEN_KEY);
 }
+

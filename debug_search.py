@@ -1,4 +1,4 @@
-﻿with open(r"C:\Users\o9\Documents\Githubb\ghostcord\src\api\HeaderBar.tsx", "rb") as f:
+with open(r"C:\Users\o9\Documents\Githubb\ghostcord\src\api\HeaderBar.tsx", "rb") as f:
     raw = f.read()
 
 content = raw.decode("utf-8-sig", errors="replace")
@@ -13,3 +13,4 @@ import re
 idx = content.find("function HeaderBarButtons()")
 print("func starts at:", idx)
 print(repr(content[idx:idx+300]))
+

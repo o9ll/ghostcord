@@ -156,3 +156,4 @@ app.on("open-url", (_, url) => {
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit();
 });
+

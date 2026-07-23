@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Vencord, a modification for Discord's desktop app
  * Copyright (c) 2022 Vendicated and contributors
  *
@@ -25,6 +25,7 @@ import { join } from "path";
 import { DATA_DIR } from "./constants";
 import { crxToZip } from "./crxToZip";
 import { fetchBuffer } from "./http";
+
 
 const extensionCacheDir = join(DATA_DIR, "ExtensionCache");
 
@@ -82,4 +83,5 @@ export async function installExt(id: string) {
     // @ts-expect-error Electron 36 Deprecates session.defaultSession.loadExtension()
     session.defaultSession.extensions ? session.defaultSession.extensions.loadExtension(extDir) : session.defaultSession.loadExtension(extDir);
 }
+
 

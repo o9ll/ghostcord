@@ -121,3 +121,4 @@ if (watch) {
 		await obfuscateDistJs();
 	}
 }
+

@@ -148,3 +148,4 @@ export const VesktopNative = {
         respond: (response: IpcResponse) => ipcRenderer.send(IpcEvents.IPC_COMMAND, response)
     }
 };
+

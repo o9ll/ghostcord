@@ -81,3 +81,4 @@ export function invalidateRatingsCache() {
     ratingsCache = null;
     cacheTime = 0;
 }
+

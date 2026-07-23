@@ -389,3 +389,4 @@ export async function initTray(win: BrowserWindow, setIsQuitting: (val: boolean)
         tray = null;
     }
 }
+

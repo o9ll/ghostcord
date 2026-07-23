@@ -33,3 +33,4 @@ export default definePlugin({
         document.body.classList.remove("ghostcord-compact");
     },
 });
+

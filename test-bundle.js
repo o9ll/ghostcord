@@ -9167,7 +9167,7 @@ var require_httpExecutor = __commonJS({
         });
       }
       // noinspection JSUnusedLocalSymbols
-       
+      // eslint-disable-next-line
       addRedirectHandlers(request, options2, reject, redirectCount, handler) {
       }
       addErrorAndTimeoutHandlers(request, reject, timeout = 60 * 1e3) {
@@ -12244,7 +12244,7 @@ var require_int = __commonJS({
         decimal: function(obj) {
           return obj.toString(10);
         },
-         
+        /* eslint-disable max-len */
         hexadecimal: function(obj) {
           return obj >= 0 ? "0x" + obj.toString(16).toUpperCase() : "-0x" + obj.toString(16).toUpperCase().slice(1);
         }
@@ -21734,7 +21734,7 @@ var init_http3 = __esm({
 // src/ghostcord/main/utils/vencordLoader.ts
 async function downloadVencordAsar() {
   await downloadFile(
-    `https://github.com/o9ll/ghostcord/releases/latest/download/Ghostcord.asar`,
+    `https://github.com/o9ll/ghostcord/releases/latest/download/desktop.asar`,
     VENCORD_DIR,
     {},
     { retryOnNetworkError: true }
@@ -23626,7 +23626,7 @@ function handleExternalUrl(url, protocol3) {
       if (Settings.store.openLinksWithElectron) {
         return { action: "allow" };
       }
-     
+    // eslint-disable-next-line no-fallthrough
     case "mailto:":
     case "spotify:":
       if (isDeckGameMode) {
@@ -25776,7 +25776,7 @@ import_electron36.ipcMain.handle("GhostcordRelaunchApp" /* RELAUNCH_APP */, asyn
   import_electron36.app.relaunch();
   import_electron36.app.exit(0);
 });
-var OFFICIAL_UPDATE_URL = `https://github.com/o9ll/ghostcord/releases/download/latest/Ghostcord-Installer.exe`;
+var OFFICIAL_UPDATE_URL = `https://github.com/o9ll/ghostcord/releases/latest/download/Ghostcord-Installer.exe`;
 import_electron36.ipcMain.handle("GhostcordDownloadAndRun" /* GHOSTCORD_DOWNLOAD_AND_RUN */, async (event, url) => {
   if (!validateSender(event)) throw new Error("Unauthorized IPC invocation");
   if (url !== OFFICIAL_UPDATE_URL) {
@@ -26767,3 +26767,4 @@ if (IS_DISCORD_DESKTOP) {
 sax/lib/sax.js:
   (*! http://mths.be/fromcodepoint v0.1.0 by @mathias *)
 */
+

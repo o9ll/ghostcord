@@ -30,3 +30,4 @@ export async function clearData(win: BrowserWindow) {
     app.relaunch();
     app.quit();
 }
+

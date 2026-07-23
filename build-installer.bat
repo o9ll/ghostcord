@@ -81,3 +81,4 @@ for %%F in ("release\installer\Ghostcord-Installer.exe") do (
 explorer release\installer
 
 pause
+

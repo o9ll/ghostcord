@@ -283,3 +283,4 @@ try {
 if (!isUninstall) {
     launchInjectedDiscord();
 }
+

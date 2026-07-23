@@ -221,3 +221,4 @@ function GhostcordModal({ modalProps }: { modalProps: ModalProps; }) {
 export function openGhostcordModal() {
     openModal(modalProps => <GhostcordModal modalProps={modalProps} />);
 }
+

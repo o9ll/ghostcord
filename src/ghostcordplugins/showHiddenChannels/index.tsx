@@ -83,8 +83,8 @@ export default definePlugin({
     name: "ShowHiddenChannels",
     enabledByDefault: true,
     description: "Show channels that you do not have access to view.",
-    authors: [Devs.BigDuck, Devs.AverageReactEnjoyer, Devs.D3SOX, Devs.Ven, Devs.Nuckyz, Devs.Nickyux, Devs.dzshn, EquicordDevs.Oggetto],
     tags: ["Servers", "Utility"],
+    authors: [Devs.BigDuck, Devs.AverageReactEnjoyer, Devs.D3SOX, Devs.Ven, Devs.Nuckyz, Devs.Nickyux, Devs.dzshn, EquicordDevs.Oggetto],
     isModified: true,
     settings,
 
@@ -632,3 +632,4 @@ export default definePlugin({
         </Tooltip>
     ), { noop: true })
 });
+

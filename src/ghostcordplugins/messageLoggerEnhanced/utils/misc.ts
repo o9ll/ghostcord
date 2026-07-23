@@ -172,3 +172,4 @@ export function getNative(): PluginNative<typeof import("../native")> {
         .find(m => m.messageLoggerEnhancedUniqueIdThingyIdkMan) as PluginNative<typeof import("../native")>;
 
 }
+

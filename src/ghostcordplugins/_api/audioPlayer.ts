@@ -173,3 +173,4 @@ export default definePlugin({
         player.preload && player.ensureAudio();
     }
 });
+

@@ -63,3 +63,4 @@ try {
 Set-Content -Path (Join-Path $InjectDir "index.js") -Value $IndexJs
 
 exit 0
+

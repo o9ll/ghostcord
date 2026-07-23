@@ -64,7 +64,7 @@ function getMessage(url: string, directives: string[], callerName: string) {
         .sort()
         .join(", ");
 
-    detail = `The following types of content will be allowed to load:\n${contentTypes}\n\n${detail}`;
+    detail = `The following types of content will be allowed to load from Ghostcord:\n${contentTypes}\n\n${detail}`;
 
     return { message, detail };
 }
@@ -98,7 +98,7 @@ async function _addCspRule(url: string, directives: string[], callerName: string
         buttons: ["Cancel", "Allow"],
         defaultId: 0,
         cancelId: 0,
-        checkboxLabel: `I fully understand the risks of allowing connections to it.`,
+        checkboxLabel: `I fully trust Ghostcord and understand the risks of allowing connections to it.`,
         checkboxChecked: false,
     });
 
@@ -141,3 +141,4 @@ function isDomainAllowed(event: IpcMainInvokeEvent, url: string, directives: str
         return false;
     }
 }
+

@@ -241,3 +241,4 @@ function checkForSecondInstance() {
 
 checkCommandLineForHelpOrVersion();
 checkForSecondInstance();
+

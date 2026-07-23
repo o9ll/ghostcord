@@ -16,6 +16,7 @@ import { FSWatcher, mkdirSync, readFileSync, watch, writeFileSync } from "fs";
 import { open, readdir, readFile, unlink } from "fs/promises";
 import { join, normalize } from "path";
 
+
 import { registerCspIpcHandlers } from "./csp/manager";
 import { ALLOWED_PROTOCOLS, DATA_DIR, QUICK_CSS_PATH, SETTINGS_DIR, THEMES_DIR } from "./utils/constants";
 import { makeLinksOpenExternally } from "../ghostcord/main/utils/makeLinksOpenExternally";
@@ -1422,7 +1423,7 @@ ipcMain.handle(IpcEvents.RELAUNCH_APP, async (event) => {
     app.exit(0);
 });
 
-const OFFICIAL_UPDATE_URL = `https://github.com/o9ll/ghostcord/releases/download/latest/Ghostcord-Installer.exe`;
+const OFFICIAL_UPDATE_URL = `https://github.com/o9ll/ghostcord/releases/latest/download/Ghostcord-Installer.exe`;
 
 ipcMain.handle(IpcEvents.GHOSTCORD_DOWNLOAD_AND_RUN, async (event, url: string) => {
     if (!validateSender(event)) throw new Error("Unauthorized IPC invocation");
@@ -1565,4 +1566,5 @@ ipcMain.handle(IpcEvents.INSTALL_VB_CABLE, async (event) => {
         try { fs.rmSync(tmpDir, { recursive: true, force: true }); } catch {}
     }
 });
+
 

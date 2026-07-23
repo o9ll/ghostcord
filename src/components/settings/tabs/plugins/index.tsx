@@ -882,6 +882,13 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
                         </>
                     )}
 
+                    {(searchValue.status !== SearchStatus.GHOSTCORD && searchValue.status !== SearchStatus.OTHERS && searchValue.status !== SearchStatus.USER_PLUGINS) && (
+                        <div className={cl("grid")}>
+                            {ghostcordPlugins}
+                            {othersVisible}
+                        </div>
+                    )}
+
                     {ghostcordData.length === 0 && othersData.length === 0 && searchValue.status === SearchStatus.LIKED_PLUGINS && (
                         <div style={{ textAlign: "center", padding: "48px 16px", color: "var(--text-muted)" }}>
                             <div style={{ fontSize: 32, marginBottom: 12 }}>
@@ -891,13 +898,6 @@ export default function PluginSettings({ premiumOnly = false }: PluginSettingsPr
                             </div>
                             <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 8 }}>{t("No liked plugins yet")}</div>
                             <div style={{ fontSize: 13 }}>{t("Like a Ghostcord plugin from its card to see it here.")}</div>
-                        </div>
-                    )}
-
-                    {(searchValue.status !== SearchStatus.GHOSTCORD && searchValue.status !== SearchStatus.OTHERS && searchValue.status !== SearchStatus.USER_PLUGINS && searchValue.status !== SearchStatus.LIKED_PLUGINS) && (
-                        <div className={cl("grid")}>
-                            {ghostcordPlugins}
-                            {othersVisible}
                         </div>
                     )}
 
@@ -945,3 +945,4 @@ export function PluginDependencyList({ deps }: { deps: string[]; }) {
         </>
     );
 }
+

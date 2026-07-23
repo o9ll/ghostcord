@@ -11,3 +11,4 @@ import { join } from "path";
 export const VENCORD_DIR = app.isPackaged
     ? join(process.resourcesPath, "ghostcord.asar")
     : join(__dirname, "..", "..", "..", "dist", "ghostcord.asar");
+

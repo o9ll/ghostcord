@@ -162,3 +162,4 @@ export const VesktopNative = {
     setContentProtection: (enabled: boolean) =>
         invoke<boolean>(IpcEvents.SET_CONTENT_PROTECTION, enabled),
 };
+

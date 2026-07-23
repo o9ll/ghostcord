@@ -41,3 +41,4 @@ function Fallback() {
 export function SimpleErrorBoundary({ children }: PropsWithChildren<{ }>) {
     return <ErrorBoundary fallback={Fallback}>{children}</ErrorBoundary>;
 }
+

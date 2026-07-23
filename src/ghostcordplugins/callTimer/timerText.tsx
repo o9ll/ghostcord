@@ -13,3 +13,4 @@ export function TimerText({ text, className }: Readonly<{ text: string; classNam
         position: "relative",
     }}>{text}</div>;
 }
+

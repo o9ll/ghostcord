@@ -165,3 +165,4 @@ if (allResources.length === 1) {
     }
     console.log(`\n\x1b[32m[Ghostcord] ${injectedCount}/${allResources.length} injection(s) successful.\x1b[0m`);
 }
+

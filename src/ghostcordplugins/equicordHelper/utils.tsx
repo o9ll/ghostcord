@@ -129,3 +129,4 @@ export function platformName() {
     if (DiscordNative.process.platform === "linux") return `${navigator.platform} (${DiscordNative.os.release})`;
     return DiscordNative.process.platform;
 }
+

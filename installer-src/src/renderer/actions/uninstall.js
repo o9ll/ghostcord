@@ -126,3 +126,4 @@ export default async function(paths) {
         return false;
     }
 }
+

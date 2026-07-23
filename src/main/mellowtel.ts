@@ -68,3 +68,4 @@ ipcMain.handle(IpcEvents.MELLOWTEL_SET_CONSENT, async (_event, accepted: boolean
 ipcMain.on(IpcEvents.MELLOWTEL_GET_CONSENT, event => {
     event.returnValue = getStoredConsent();
 });
+

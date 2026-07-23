@@ -54,8 +54,8 @@
                 const y2 = s.y - s.dy * (s.len / s.speed);
 
                 const grad = ctx.createLinearGradient(x2, y2, s.x, s.y);
-                grad.addColorStop(0, `rgba(96, 165, 250, 0)`);
-                grad.addColorStop(1, `rgba(147, 197, 253, ${alpha})`);
+                grad.addColorStop(0, `rgba(180, 130, 255, 0)`);
+                grad.addColorStop(1, `rgba(220, 180, 255, ${alpha})`);
 
                 ctx.beginPath();
                 ctx.moveTo(x2, y2);
@@ -111,12 +111,12 @@
         --text-light: #f1f1f1;
         --text-normal: #bfc4c9;
         --text-muted: #95989d;
-        --text-link: #60a5fa;
+        --text-link: #a78bfa;
 
         /* Accent colors */
-        --accent: #3b82f6;
-        --accent-hover: #2563eb;
-        --accent-faded: rgba(59, 130, 246, 0.4);
+        --accent: #7c3aed;
+        --accent-hover: #6d28d9;
+        --accent-faded: rgba(124, 58, 237, 0.4);
 
         /* Danger colors */
         --danger: #c13a3a;

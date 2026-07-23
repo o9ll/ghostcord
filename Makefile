@@ -83,3 +83,4 @@ run: all
 	glib-compile-schemas $(BUILD_DIR)/assets/
 	./build/ghostcord
 	
+

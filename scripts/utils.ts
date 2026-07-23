@@ -288,3 +288,4 @@ export function isPluginFile({ name }: { name: string; }) {
     if (name === "index.ts") return false;
     return !name.startsWith("_") && !name.startsWith(".");
 }
+

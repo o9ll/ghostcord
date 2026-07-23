@@ -191,15 +191,13 @@ function obfuscateDesktop() {
     }
 }
 
-// ─── Run build (only when executed directly, not when required by electron-builder) ───
+// ─── Execution du build ───────────────────────────────────────────────────────
 
-if (require.main === module) {
-    killGhostcord();
-    const discord = findDiscordApp();
-    buildEquicord();
-    // obfuscateDesktop(); // Optional for open source
-    buildGhostcordFromDiscord(discord);
-}
+killGhostcord();
+const discord = findDiscordApp();
+buildEquicord();
+// obfuscateDesktop(); // Optionnel pour l'open source
+buildGhostcordFromDiscord(discord);
 
 module.exports = {
     appId: "com.ghostcord.app",
@@ -215,3 +213,4 @@ module.exports = {
         requestedExecutionLevel: "asInvoker"
     }
 };
+

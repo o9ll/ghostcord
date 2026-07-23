@@ -273,3 +273,4 @@ export default definePlugin({
         message.content = trans.text;
     }
 });
+

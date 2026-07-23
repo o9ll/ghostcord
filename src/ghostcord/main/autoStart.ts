@@ -98,3 +98,4 @@ Settings.addChangeListener("autoStartMinimized", () => {
 
     autoStart.enable();
 });
+

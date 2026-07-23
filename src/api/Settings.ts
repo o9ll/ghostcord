@@ -246,6 +246,7 @@ export const SettingsStore = new SettingsStoreClass(settings, {
             return target[key];
         }
 
+
         // Since the property is not set, check if this is a plugin's setting and if so, try to resolve
         // the default value.
         if (path.startsWith("plugins.")) {
@@ -448,3 +449,4 @@ type ResolveUseSettings<T extends object> = {
     : Key
     : never;
 };
+

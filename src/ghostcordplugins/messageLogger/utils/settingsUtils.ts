@@ -228,3 +228,4 @@ async function* iterateLogItems(): AsyncGenerator<any> {
         }
     }
 }
+

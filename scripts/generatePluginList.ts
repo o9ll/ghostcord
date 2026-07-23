@@ -84,3 +84,4 @@ import { getEntryPoint, isPluginFile, parseDevs, parseEquicordDevs, parseFile, P
         console.log(data);
     }
 })();
+

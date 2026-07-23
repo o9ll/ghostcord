@@ -278,3 +278,4 @@ export default definePlugin({
         return <p style={{ margin: 0, fontFamily: "var(--font-code)" }}>{formatDurationMs(time, settings.store.format === "human")}</p>;
     }
 });
+

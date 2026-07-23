@@ -212,3 +212,4 @@ export default ErrorBoundary.wrap(
             "Failed to render the Ghostcord Settings tab. If this issue persists, try to right click the Ghostcord tray icon, then click 'Repair Ghostcord'. And make sure your Ghostcord is up to date."
     }
 );
+

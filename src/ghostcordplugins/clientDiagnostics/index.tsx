@@ -1705,6 +1705,7 @@ function ClientDiagnosticsPage() {
     );
 }
 
+
 const DiagnosticsPageWrapped = ErrorBoundary.wrap(ClientDiagnosticsPage, { noop: true });
 
 export default definePlugin({
@@ -1747,3 +1748,4 @@ export default definePlugin({
         }
     }
 });
+

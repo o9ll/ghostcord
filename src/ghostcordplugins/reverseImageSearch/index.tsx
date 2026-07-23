@@ -120,3 +120,4 @@ export default definePlugin({
         "image-context": imageContextMenuPatch
     }
 });
+

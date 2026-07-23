@@ -566,3 +566,4 @@ export async function createWindows() {
     initArRPC();
     if (isLinux) initKeybinds();
 }
+

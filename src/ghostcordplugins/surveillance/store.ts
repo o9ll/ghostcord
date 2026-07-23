@@ -177,3 +177,4 @@ export async function trimEvents(limit: number) {
     await persistNow();
     notify();
 }
+

@@ -31,3 +31,4 @@ if (!IS_UPDATER_DISABLED) {
     ipcMain.handle(IpcEvents.GET_REPO, serializeErrors(() => `https://github.com/${gitRemote}`));
     ipcMain.handle(IpcEvents.GET_UPDATES, serializeErrors(() => []));
 }
+

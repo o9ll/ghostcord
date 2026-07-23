@@ -112,3 +112,4 @@ function Asset({ asset }: { asset: UserAssetType }) {
         </section>
     );
 }
+

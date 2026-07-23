@@ -355,3 +355,4 @@ if (!IS_VANILLA) {
 
 console.log("[Ghostcord] Loading original Discord app.asar");
 require(require.main!.filename);
+
